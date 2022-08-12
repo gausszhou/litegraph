@@ -1,13 +1,13 @@
 import {
-	distance,
-	colorToString,
-	hex2num,
-	num2hex,
-	compareObjects,
-	growBounding,
-	isInsideBounding,
-	overlapBounding,
-	isInsideRectangle
+  distance,
+  colorToString,
+  hex2num,
+  num2hex,
+  compareObjects,
+  growBounding,
+  isInsideBounding,
+  overlapBounding,
+  isInsideRectangle
 } from "./utils";
 
 import LiteGraph from ".";
@@ -32,15 +32,15 @@ import LLink from "./LLink";
  */
 
 export function LGraph(o) {
-	if (LiteGraph.debug) {
-		console.log("Graph created");
-	}
-	this.list_of_graphcanvas = null;
-	this.clear();
+  if (LiteGraph.debug) {
+    console.log("Graph created");
+  }
+  this.list_of_graphcanvas = null;
+  this.clear();
 
-	if (o) {
-		this.configure(o);
-	}
+  if (o) {
+    this.configure(o);
+  }
 }
 
 //default supported types
@@ -50,7 +50,7 @@ LGraph.STATUS_RUNNING = 2;
 
 //used to know which types of connections support this graph (some graphs do not allow certain types)
 LGraph.prototype.getSupportedTypes = function () {
-	return this.supported_types || LGraph.supported_types;
+  return this.supported_types || LGraph.supported_types;
 };
 
 /**
@@ -59,67 +59,67 @@ LGraph.prototype.getSupportedTypes = function () {
  */
 
 LGraph.prototype.clear = function () {
-	this.stop();
-	this.status = LGraph.STATUS_STOPPED;
+  this.stop();
+  this.status = LGraph.STATUS_STOPPED;
 
-	this.last_node_id = 0;
-	this.last_link_id = 0;
+  this.last_node_id = 0;
+  this.last_link_id = 0;
 
-	this._version = -1; //used to detect changes
+  this._version = -1; //used to detect changes
 
-	//safe clear
-	if (this._nodes) {
-		for (let i = 0; i < this._nodes.length; ++i) {
-			let node = this._nodes[i];
-			if (node.onRemoved) {
-				node.onRemoved();
-			}
-		}
-	}
+  //safe clear
+  if (this._nodes) {
+    for (let i = 0; i < this._nodes.length; ++i) {
+      let node = this._nodes[i];
+      if (node.onRemoved) {
+        node.onRemoved();
+      }
+    }
+  }
 
-	//nodes
-	this._nodes = [];
-	this._nodes_by_id = {};
-	this._nodes_in_order = []; //nodes sorted in execution order
-	this._nodes_executable = null; //nodes that contain onExecute sorted in execution order
+  //nodes
+  this._nodes = [];
+  this._nodes_by_id = {};
+  this._nodes_in_order = []; //nodes sorted in execution order
+  this._nodes_executable = null; //nodes that contain onExecute sorted in execution order
 
-	//other scene stuff
-	this._groups = [];
+  //other scene stuff
+  this._groups = [];
 
-	//links
-	this.links = {}; //container with all the links
+  //links
+  this.links = {}; //container with all the links
 
-	//iterations
-	this.iteration = 0;
+  //iterations
+  this.iteration = 0;
 
-	//custom data
-	this.config = {};
-	this.vars = {};
-	this.extra = {}; //to store custom data
+  //custom data
+  this.config = {};
+  this.vars = {};
+  this.extra = {}; //to store custom data
 
-	//timing
-	this.globaltime = 0;
-	this.runningtime = 0;
-	this.fixedtime = 0;
-	this.fixedtime_lapse = 0.01;
-	this.elapsed_time = 0.01;
-	this.last_update_time = 0;
-	this.starttime = 0;
+  //timing
+  this.globaltime = 0;
+  this.runningtime = 0;
+  this.fixedtime = 0;
+  this.fixedtime_lapse = 0.01;
+  this.elapsed_time = 0.01;
+  this.last_update_time = 0;
+  this.starttime = 0;
 
-	this.catch_errors = true;
+  this.catch_errors = true;
 
-	this.nodes_executing = [];
-	this.nodes_actioning = [];
-	this.nodes_executedAction = [];
+  this.nodes_executing = [];
+  this.nodes_actioning = [];
+  this.nodes_executedAction = [];
 
-	//subgraph_data
-	this.inputs = {};
-	this.outputs = {};
+  //subgraph_data
+  this.inputs = {};
+  this.outputs = {};
 
-	//notify canvas to redraw
-	this.change();
+  //notify canvas to redraw
+  this.change();
 
-	this.sendActionToCanvas("clear");
+  this.sendActionToCanvas("clear");
 };
 
 /**
@@ -129,19 +129,19 @@ LGraph.prototype.clear = function () {
  */
 
 LGraph.prototype.attachCanvas = function (graphcanvas) {
-	if (graphcanvas.constructor != LGraphCanvas) {
-		throw "attachCanvas expects a LGraphCanvas instance";
-	}
-	if (graphcanvas.graph && graphcanvas.graph != this) {
-		graphcanvas.graph.detachCanvas(graphcanvas);
-	}
+  if (graphcanvas.constructor != LGraphCanvas) {
+    throw "attachCanvas expects a LGraphCanvas instance";
+  }
+  if (graphcanvas.graph && graphcanvas.graph != this) {
+    graphcanvas.graph.detachCanvas(graphcanvas);
+  }
 
-	graphcanvas.graph = this;
+  graphcanvas.graph = this;
 
-	if (!this.list_of_graphcanvas) {
-		this.list_of_graphcanvas = [];
-	}
-	this.list_of_graphcanvas.push(graphcanvas);
+  if (!this.list_of_graphcanvas) {
+    this.list_of_graphcanvas = [];
+  }
+  this.list_of_graphcanvas.push(graphcanvas);
 };
 
 /**
@@ -150,16 +150,16 @@ LGraph.prototype.attachCanvas = function (graphcanvas) {
  * @param {GraphCanvas} graph_canvas
  */
 LGraph.prototype.detachCanvas = function (graphcanvas) {
-	if (!this.list_of_graphcanvas) {
-		return;
-	}
+  if (!this.list_of_graphcanvas) {
+    return;
+  }
 
-	let pos = this.list_of_graphcanvas.indexOf(graphcanvas);
-	if (pos == -1) {
-		return;
-	}
-	graphcanvas.graph = null;
-	this.list_of_graphcanvas.splice(pos, 1);
+  let pos = this.list_of_graphcanvas.indexOf(graphcanvas);
+  if (pos == -1) {
+    return;
+  }
+  graphcanvas.graph = null;
+  this.list_of_graphcanvas.splice(pos, 1);
 };
 
 /**
@@ -169,45 +169,45 @@ LGraph.prototype.detachCanvas = function (graphcanvas) {
  */
 
 LGraph.prototype.start = function (interval) {
-	if (this.status == LGraph.STATUS_RUNNING) {
-		return;
-	}
-	this.status = LGraph.STATUS_RUNNING;
+  if (this.status == LGraph.STATUS_RUNNING) {
+    return;
+  }
+  this.status = LGraph.STATUS_RUNNING;
 
-	if (this.onPlayEvent) {
-		this.onPlayEvent();
-	}
+  if (this.onPlayEvent) {
+    this.onPlayEvent();
+  }
 
-	this.sendEventToAllNodes("onStart");
+  this.sendEventToAllNodes("onStart");
 
-	//launch
-	this.starttime = LiteGraph.getTime();
-	this.last_update_time = this.starttime;
-	interval = interval || 0;
-	let that = this;
+  //launch
+  this.starttime = LiteGraph.getTime();
+  this.last_update_time = this.starttime;
+  interval = interval || 0;
+  let that = this;
 
-	//execute once per frame
-	if (interval == 0 && typeof window != "undefined" && window.requestAnimationFrame) {
-		function on_frame() {
-			if (that.execution_timer_id != -1) {
-				return;
-			}
-			window.requestAnimationFrame(on_frame);
-			if (that.onBeforeStep) that.onBeforeStep();
-			that.runStep(1, !that.catch_errors);
-			if (that.onAfterStep) that.onAfterStep();
-		}
-		this.execution_timer_id = -1;
-		on_frame();
-	} else {
-		//execute every 'interval' ms
-		this.execution_timer_id = setInterval(function () {
-			//execute
-			if (that.onBeforeStep) that.onBeforeStep();
-			that.runStep(1, !that.catch_errors);
-			if (that.onAfterStep) that.onAfterStep();
-		}, interval);
-	}
+  //execute once per frame
+  if (interval == 0 && typeof window != "undefined" && window.requestAnimationFrame) {
+    function on_frame() {
+      if (that.execution_timer_id != -1) {
+        return;
+      }
+      window.requestAnimationFrame(on_frame);
+      if (that.onBeforeStep) that.onBeforeStep();
+      that.runStep(1, !that.catch_errors);
+      if (that.onAfterStep) that.onAfterStep();
+    }
+    this.execution_timer_id = -1;
+    on_frame();
+  } else {
+    //execute every 'interval' ms
+    this.execution_timer_id = setInterval(function () {
+      //execute
+      if (that.onBeforeStep) that.onBeforeStep();
+      that.runStep(1, !that.catch_errors);
+      if (that.onAfterStep) that.onAfterStep();
+    }, interval);
+  }
 };
 
 /**
@@ -216,24 +216,24 @@ LGraph.prototype.start = function (interval) {
  */
 
 LGraph.prototype.stop = function () {
-	if (this.status == LGraph.STATUS_STOPPED) {
-		return;
-	}
+  if (this.status == LGraph.STATUS_STOPPED) {
+    return;
+  }
 
-	this.status = LGraph.STATUS_STOPPED;
+  this.status = LGraph.STATUS_STOPPED;
 
-	if (this.onStopEvent) {
-		this.onStopEvent();
-	}
+  if (this.onStopEvent) {
+    this.onStopEvent();
+  }
 
-	if (this.execution_timer_id != null) {
-		if (this.execution_timer_id != -1) {
-			clearInterval(this.execution_timer_id);
-		}
-		this.execution_timer_id = null;
-	}
+  if (this.execution_timer_id != null) {
+    if (this.execution_timer_id != -1) {
+      clearInterval(this.execution_timer_id);
+    }
+    this.execution_timer_id = null;
+  }
 
-	this.sendEventToAllNodes("onStop");
+  this.sendEventToAllNodes("onStop");
 };
 
 /**
@@ -245,84 +245,84 @@ LGraph.prototype.stop = function () {
  */
 
 LGraph.prototype.runStep = function (num, do_not_catch_errors, limit) {
-	num = num || 1;
+  num = num || 1;
 
-	let start = LiteGraph.getTime();
-	this.globaltime = 0.001 * (start - this.starttime);
+  let start = LiteGraph.getTime();
+  this.globaltime = 0.001 * (start - this.starttime);
 
-	let nodes = this._nodes_executable ? this._nodes_executable : this._nodes;
-	if (!nodes) {
-		return;
-	}
+  let nodes = this._nodes_executable ? this._nodes_executable : this._nodes;
+  if (!nodes) {
+    return;
+  }
 
-	limit = limit || nodes.length;
+  limit = limit || nodes.length;
 
-	if (do_not_catch_errors) {
-		//iterations
-		for (let i = 0; i < num; i++) {
-			for (let j = 0; j < limit; ++j) {
-				let node = nodes[j];
-				if (node.mode == LiteGraph.ALWAYS && node.onExecute) {
-					//wrap node.onExecute();
-					node.doExecute();
-				}
-			}
+  if (do_not_catch_errors) {
+    //iterations
+    for (let i = 0; i < num; i++) {
+      for (let j = 0; j < limit; ++j) {
+        let node = nodes[j];
+        if (node.mode == LiteGraph.ALWAYS && node.onExecute) {
+          //wrap node.onExecute();
+          node.doExecute();
+        }
+      }
 
-			this.fixedtime += this.fixedtime_lapse;
-			if (this.onExecuteStep) {
-				this.onExecuteStep();
-			}
-		}
+      this.fixedtime += this.fixedtime_lapse;
+      if (this.onExecuteStep) {
+        this.onExecuteStep();
+      }
+    }
 
-		if (this.onAfterExecute) {
-			this.onAfterExecute();
-		}
-	} else {
-		try {
-			//iterations
-			for (let i = 0; i < num; i++) {
-				for (let j = 0; j < limit; ++j) {
-					let node = nodes[j];
-					if (node.mode == LiteGraph.ALWAYS && node.onExecute) {
-						node.onExecute();
-					}
-				}
+    if (this.onAfterExecute) {
+      this.onAfterExecute();
+    }
+  } else {
+    try {
+      //iterations
+      for (let i = 0; i < num; i++) {
+        for (let j = 0; j < limit; ++j) {
+          let node = nodes[j];
+          if (node.mode == LiteGraph.ALWAYS && node.onExecute) {
+            node.onExecute();
+          }
+        }
 
-				this.fixedtime += this.fixedtime_lapse;
-				if (this.onExecuteStep) {
-					this.onExecuteStep();
-				}
-			}
+        this.fixedtime += this.fixedtime_lapse;
+        if (this.onExecuteStep) {
+          this.onExecuteStep();
+        }
+      }
 
-			if (this.onAfterExecute) {
-				this.onAfterExecute();
-			}
-			this.errors_in_execution = false;
-		} catch (err) {
-			this.errors_in_execution = true;
-			if (LiteGraph.throw_errors) {
-				throw err;
-			}
-			if (LiteGraph.debug) {
-				console.log("Error during execution: " + err);
-			}
-			this.stop();
-		}
-	}
+      if (this.onAfterExecute) {
+        this.onAfterExecute();
+      }
+      this.errors_in_execution = false;
+    } catch (err) {
+      this.errors_in_execution = true;
+      if (LiteGraph.throw_errors) {
+        throw err;
+      }
+      if (LiteGraph.debug) {
+        console.log("Error during execution: " + err);
+      }
+      this.stop();
+    }
+  }
 
-	let now = LiteGraph.getTime();
-	let elapsed = now - start;
-	if (elapsed == 0) {
-		elapsed = 1;
-	}
-	this.execution_time = 0.001 * elapsed;
-	this.globaltime += 0.001 * elapsed;
-	this.iteration += 1;
-	this.elapsed_time = (now - this.last_update_time) * 0.001;
-	this.last_update_time = now;
-	this.nodes_executing = [];
-	this.nodes_actioning = [];
-	this.nodes_executedAction = [];
+  let now = LiteGraph.getTime();
+  let elapsed = now - start;
+  if (elapsed == 0) {
+    elapsed = 1;
+  }
+  this.execution_time = 0.001 * elapsed;
+  this.globaltime += 0.001 * elapsed;
+  this.iteration += 1;
+  this.elapsed_time = (now - this.last_update_time) * 0.001;
+  this.last_update_time = now;
+  this.nodes_executing = [];
+  this.nodes_actioning = [];
+  this.nodes_executedAction = [];
 };
 
 /**
@@ -331,143 +331,143 @@ LGraph.prototype.runStep = function (num, do_not_catch_errors, limit) {
  * @method updateExecutionOrder
  */
 LGraph.prototype.updateExecutionOrder = function () {
-	this._nodes_in_order = this.computeExecutionOrder(false);
-	this._nodes_executable = [];
-	for (let i = 0; i < this._nodes_in_order.length; ++i) {
-		if (this._nodes_in_order[i].onExecute) {
-			this._nodes_executable.push(this._nodes_in_order[i]);
-		}
-	}
+  this._nodes_in_order = this.computeExecutionOrder(false);
+  this._nodes_executable = [];
+  for (let i = 0; i < this._nodes_in_order.length; ++i) {
+    if (this._nodes_in_order[i].onExecute) {
+      this._nodes_executable.push(this._nodes_in_order[i]);
+    }
+  }
 };
 
 //This is more internal, it computes the executable nodes in order and returns it
 LGraph.prototype.computeExecutionOrder = function (only_onExecute, set_level) {
-	let L = [];
-	let S = [];
-	let M = {};
-	let visited_links = {}; //to avoid repeating links
-	let remaining_links = {}; //to a
+  let L = [];
+  let S = [];
+  let M = {};
+  let visited_links = {}; //to avoid repeating links
+  let remaining_links = {}; //to a
 
-	//search for the nodes without inputs (starting nodes)
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		let node = this._nodes[i];
-		if (only_onExecute && !node.onExecute) {
-			continue;
-		}
+  //search for the nodes without inputs (starting nodes)
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    let node = this._nodes[i];
+    if (only_onExecute && !node.onExecute) {
+      continue;
+    }
 
-		M[node.id] = node; //add to pending nodes
+    M[node.id] = node; //add to pending nodes
 
-		let num = 0; //num of input connections
-		if (node.inputs) {
-			for (let j = 0, l2 = node.inputs.length; j < l2; j++) {
-				if (node.inputs[j] && node.inputs[j].link != null) {
-					num += 1;
-				}
-			}
-		}
+    let num = 0; //num of input connections
+    if (node.inputs) {
+      for (let j = 0, l2 = node.inputs.length; j < l2; j++) {
+        if (node.inputs[j] && node.inputs[j].link != null) {
+          num += 1;
+        }
+      }
+    }
 
-		if (num == 0) {
-			//is a starting node
-			S.push(node);
-			if (set_level) {
-				node._level = 1;
-			}
-		} //num of input links
-		else {
-			if (set_level) {
-				node._level = 0;
-			}
-			remaining_links[node.id] = num;
-		}
-	}
+    if (num == 0) {
+      //is a starting node
+      S.push(node);
+      if (set_level) {
+        node._level = 1;
+      }
+    } //num of input links
+    else {
+      if (set_level) {
+        node._level = 0;
+      }
+      remaining_links[node.id] = num;
+    }
+  }
 
-	while (true) {
-		if (S.length == 0) {
-			break;
-		}
+  while (true) {
+    if (S.length == 0) {
+      break;
+    }
 
-		//get an starting node
-		let node = S.shift();
-		L.push(node); //add to ordered list
-		delete M[node.id]; //remove from the pending nodes
+    //get an starting node
+    let node = S.shift();
+    L.push(node); //add to ordered list
+    delete M[node.id]; //remove from the pending nodes
 
-		if (!node.outputs) {
-			continue;
-		}
+    if (!node.outputs) {
+      continue;
+    }
 
-		//for every output
-		for (let i = 0; i < node.outputs.length; i++) {
-			let output = node.outputs[i];
-			//not connected
-			if (output == null || output.links == null || output.links.length == 0) {
-				continue;
-			}
+    //for every output
+    for (let i = 0; i < node.outputs.length; i++) {
+      let output = node.outputs[i];
+      //not connected
+      if (output == null || output.links == null || output.links.length == 0) {
+        continue;
+      }
 
-			//for every connection
-			for (let j = 0; j < output.links.length; j++) {
-				let link_id = output.links[j];
-				let link = this.links[link_id];
-				if (!link) {
-					continue;
-				}
+      //for every connection
+      for (let j = 0; j < output.links.length; j++) {
+        let link_id = output.links[j];
+        let link = this.links[link_id];
+        if (!link) {
+          continue;
+        }
 
-				//already visited link (ignore it)
-				if (visited_links[link.id]) {
-					continue;
-				}
+        //already visited link (ignore it)
+        if (visited_links[link.id]) {
+          continue;
+        }
 
-				let target_node = this.getNodeById(link.target_id);
-				if (target_node == null) {
-					visited_links[link.id] = true;
-					continue;
-				}
+        let target_node = this.getNodeById(link.target_id);
+        if (target_node == null) {
+          visited_links[link.id] = true;
+          continue;
+        }
 
-				if (set_level && (!target_node._level || target_node._level <= node._level)) {
-					target_node._level = node._level + 1;
-				}
+        if (set_level && (!target_node._level || target_node._level <= node._level)) {
+          target_node._level = node._level + 1;
+        }
 
-				visited_links[link.id] = true; //mark as visited
-				remaining_links[target_node.id] -= 1; //reduce the number of links remaining
-				if (remaining_links[target_node.id] == 0) {
-					S.push(target_node);
-				} //if no more links, then add to starters array
-			}
-		}
-	}
+        visited_links[link.id] = true; //mark as visited
+        remaining_links[target_node.id] -= 1; //reduce the number of links remaining
+        if (remaining_links[target_node.id] == 0) {
+          S.push(target_node);
+        } //if no more links, then add to starters array
+      }
+    }
+  }
 
-	//the remaining ones (loops)
-	for (let i in M) {
-		L.push(M[i]);
-	}
+  //the remaining ones (loops)
+  for (let i in M) {
+    L.push(M[i]);
+  }
 
-	if (L.length != this._nodes.length && LiteGraph.debug) {
-		console.warn("something went wrong, nodes missing");
-	}
+  if (L.length != this._nodes.length && LiteGraph.debug) {
+    console.warn("something went wrong, nodes missing");
+  }
 
-	let l = L.length;
+  let l = L.length;
 
-	//save order number in the node
-	for (let i = 0; i < l; ++i) {
-		L[i].order = i;
-	}
+  //save order number in the node
+  for (let i = 0; i < l; ++i) {
+    L[i].order = i;
+  }
 
-	//sort now by priority
-	L = L.sort(function (A, B) {
-		let Ap = A.constructor.priority || A.priority || 0;
-		let Bp = B.constructor.priority || B.priority || 0;
-		if (Ap == Bp) {
-			//if same priority, sort by order
-			return A.order - B.order;
-		}
-		return Ap - Bp; //sort by priority
-	});
+  //sort now by priority
+  L = L.sort(function (A, B) {
+    let Ap = A.constructor.priority || A.priority || 0;
+    let Bp = B.constructor.priority || B.priority || 0;
+    if (Ap == Bp) {
+      //if same priority, sort by order
+      return A.order - B.order;
+    }
+    return Ap - Bp; //sort by priority
+  });
 
-	//save order number in the node, again...
-	for (let i = 0; i < l; ++i) {
-		L[i].order = i;
-	}
+  //save order number in the node, again...
+  for (let i = 0; i < l; ++i) {
+    L[i].order = i;
+  }
 
-	return L;
+  return L;
 };
 
 /**
@@ -477,32 +477,32 @@ LGraph.prototype.computeExecutionOrder = function (only_onExecute, set_level) {
  * @return {Array} an array with all the LGraphNodes that affect this node, in order of execution
  */
 LGraph.prototype.getAncestors = function (node) {
-	let ancestors = [];
-	let pending = [node];
-	let visited = {};
+  let ancestors = [];
+  let pending = [node];
+  let visited = {};
 
-	while (pending.length) {
-		let current = pending.shift();
-		if (!current.inputs) {
-			continue;
-		}
-		if (!visited[current.id] && current != node) {
-			visited[current.id] = true;
-			ancestors.push(current);
-		}
+  while (pending.length) {
+    let current = pending.shift();
+    if (!current.inputs) {
+      continue;
+    }
+    if (!visited[current.id] && current != node) {
+      visited[current.id] = true;
+      ancestors.push(current);
+    }
 
-		for (let i = 0; i < current.inputs.length; ++i) {
-			let input = current.getInputNode(i);
-			if (input && ancestors.indexOf(input) == -1) {
-				pending.push(input);
-			}
-		}
-	}
+    for (let i = 0; i < current.inputs.length; ++i) {
+      let input = current.getInputNode(i);
+      if (input && ancestors.indexOf(input) == -1) {
+        pending.push(input);
+      }
+    }
+  }
 
-	ancestors.sort(function (a, b) {
-		return a.order - b.order;
-	});
-	return ancestors;
+  ancestors.sort(function (a, b) {
+    return a.order - b.order;
+  });
+  return ancestors;
 };
 
 /**
@@ -510,43 +510,43 @@ LGraph.prototype.getAncestors = function (node) {
  * @method arrange
  */
 LGraph.prototype.arrange = function (margin, layout) {
-	margin = margin || 100;
+  margin = margin || 100;
 
-	let nodes = this.computeExecutionOrder(false, true);
-	let columns = [];
-	for (let i = 0; i < nodes.length; ++i) {
-		let node = nodes[i];
-		let col = node._level || 1;
-		if (!columns[col]) {
-			columns[col] = [];
-		}
-		columns[col].push(node);
-	}
+  let nodes = this.computeExecutionOrder(false, true);
+  let columns = [];
+  for (let i = 0; i < nodes.length; ++i) {
+    let node = nodes[i];
+    let col = node._level || 1;
+    if (!columns[col]) {
+      columns[col] = [];
+    }
+    columns[col].push(node);
+  }
 
-	let x = margin;
+  let x = margin;
 
-	for (let i = 0; i < columns.length; ++i) {
-		let column = columns[i];
-		if (!column) {
-			continue;
-		}
-		let max_size = 100;
-		let y = margin + LiteGraph.NODE_TITLE_HEIGHT;
-		for (let j = 0; j < column.length; ++j) {
-			let node = column[j];
-			node.pos[0] = layout == LiteGraph.VERTICAL_LAYOUT ? y : x;
-			node.pos[1] = layout == LiteGraph.VERTICAL_LAYOUT ? x : y;
-			max_size_index = layout == LiteGraph.VERTICAL_LAYOUT ? 1 : 0;
-			if (node.size[max_size_index] > max_size) {
-				max_size = node.size[max_size_index];
-			}
-			node_size_index = layout == LiteGraph.VERTICAL_LAYOUT ? 0 : 1;
-			y += node.size[node_size_index] + margin + LiteGraph.NODE_TITLE_HEIGHT;
-		}
-		x += max_size + margin;
-	}
+  for (let i = 0; i < columns.length; ++i) {
+    let column = columns[i];
+    if (!column) {
+      continue;
+    }
+    let max_size = 100;
+    let y = margin + LiteGraph.NODE_TITLE_HEIGHT;
+    for (let j = 0; j < column.length; ++j) {
+      let node = column[j];
+      node.pos[0] = layout == LiteGraph.VERTICAL_LAYOUT ? y : x;
+      node.pos[1] = layout == LiteGraph.VERTICAL_LAYOUT ? x : y;
+      max_size_index = layout == LiteGraph.VERTICAL_LAYOUT ? 1 : 0;
+      if (node.size[max_size_index] > max_size) {
+        max_size = node.size[max_size_index];
+      }
+      node_size_index = layout == LiteGraph.VERTICAL_LAYOUT ? 0 : 1;
+      y += node.size[node_size_index] + margin + LiteGraph.NODE_TITLE_HEIGHT;
+    }
+    x += max_size + margin;
+  }
 
-	this.setDirtyCanvas(true, true);
+  this.setDirtyCanvas(true, true);
 };
 
 /**
@@ -555,7 +555,7 @@ LGraph.prototype.arrange = function (margin, layout) {
  * @return {number} number of milliseconds the graph has been running
  */
 LGraph.prototype.getTime = function () {
-	return this.globaltime;
+  return this.globaltime;
 };
 
 /**
@@ -565,7 +565,7 @@ LGraph.prototype.getTime = function () {
  */
 
 LGraph.prototype.getFixedTime = function () {
-	return this.fixedtime;
+  return this.fixedtime;
 };
 
 /**
@@ -576,7 +576,7 @@ LGraph.prototype.getFixedTime = function () {
  */
 
 LGraph.prototype.getElapsedTime = function () {
-	return this.elapsed_time;
+  return this.elapsed_time;
 };
 
 /**
@@ -586,47 +586,47 @@ LGraph.prototype.getElapsedTime = function () {
  * @param {Array} params parameters in array format
  */
 LGraph.prototype.sendEventToAllNodes = function (eventname, params, mode) {
-	mode = mode || LiteGraph.ALWAYS;
+  mode = mode || LiteGraph.ALWAYS;
 
-	let nodes = this._nodes_in_order ? this._nodes_in_order : this._nodes;
-	if (!nodes) {
-		return;
-	}
+  let nodes = this._nodes_in_order ? this._nodes_in_order : this._nodes;
+  if (!nodes) {
+    return;
+  }
 
-	for (let j = 0, l = nodes.length; j < l; ++j) {
-		let node = nodes[j];
+  for (let j = 0, l = nodes.length; j < l; ++j) {
+    let node = nodes[j];
 
-		if (node.constructor === LiteGraph.Subgraph && eventname != "onExecute") {
-			if (node.mode == mode) {
-				node.sendEventToAllNodes(eventname, params, mode);
-			}
-			continue;
-		}
+    if (node.constructor === LiteGraph.Subgraph && eventname != "onExecute") {
+      if (node.mode == mode) {
+        node.sendEventToAllNodes(eventname, params, mode);
+      }
+      continue;
+    }
 
-		if (!node[eventname] || node.mode != mode) {
-			continue;
-		}
-		if (params === undefined) {
-			node[eventname]();
-		} else if (params && params.constructor === Array) {
-			node[eventname].apply(node, params);
-		} else {
-			node[eventname](params);
-		}
-	}
+    if (!node[eventname] || node.mode != mode) {
+      continue;
+    }
+    if (params === undefined) {
+      node[eventname]();
+    } else if (params && params.constructor === Array) {
+      node[eventname].apply(node, params);
+    } else {
+      node[eventname](params);
+    }
+  }
 };
 
 LGraph.prototype.sendActionToCanvas = function (action, params) {
-	if (!this.list_of_graphcanvas) {
-		return;
-	}
+  if (!this.list_of_graphcanvas) {
+    return;
+  }
 
-	for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
-		let c = this.list_of_graphcanvas[i];
-		if (c[action]) {
-			c[action].apply(c, params);
-		}
-	}
+  for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
+    let c = this.list_of_graphcanvas[i];
+    if (c[action]) {
+      c[action].apply(c, params);
+    }
+  }
 };
 
 /**
@@ -636,63 +636,63 @@ LGraph.prototype.sendActionToCanvas = function (action, params) {
  */
 
 LGraph.prototype.add = function (node, skip_compute_order) {
-	if (!node) {
-		return;
-	}
+  if (!node) {
+    return;
+  }
 
-	//groups
-	if (node.constructor === LGraphGroup) {
-		this._groups.push(node);
-		this.setDirtyCanvas(true);
-		this.change();
-		node.graph = this;
-		this._version++;
-		return;
-	}
+  //groups
+  if (node.constructor === LGraphGroup) {
+    this._groups.push(node);
+    this.setDirtyCanvas(true);
+    this.change();
+    node.graph = this;
+    this._version++;
+    return;
+  }
 
-	//nodes
-	if (node.id != -1 && this._nodes_by_id[node.id] != null) {
-		console.warn("LiteGraph: there is already a node with this ID, changing it");
-		node.id = ++this.last_node_id;
-	}
+  //nodes
+  if (node.id != -1 && this._nodes_by_id[node.id] != null) {
+    console.warn("LiteGraph: there is already a node with this ID, changing it");
+    node.id = ++this.last_node_id;
+  }
 
-	if (this._nodes.length >= LiteGraph.MAX_NUMBER_OF_NODES) {
-		throw "LiteGraph: max number of nodes in a graph reached";
-	}
+  if (this._nodes.length >= LiteGraph.MAX_NUMBER_OF_NODES) {
+    throw "LiteGraph: max number of nodes in a graph reached";
+  }
 
-	//give him an id
-	if (node.id == null || node.id == -1) {
-		node.id = ++this.last_node_id;
-	} else if (this.last_node_id < node.id) {
-		this.last_node_id = node.id;
-	}
+  //give him an id
+  if (node.id == null || node.id == -1) {
+    node.id = ++this.last_node_id;
+  } else if (this.last_node_id < node.id) {
+    this.last_node_id = node.id;
+  }
 
-	node.graph = this;
-	this._version++;
+  node.graph = this;
+  this._version++;
 
-	this._nodes.push(node);
-	this._nodes_by_id[node.id] = node;
+  this._nodes.push(node);
+  this._nodes_by_id[node.id] = node;
 
-	if (node.onAdded) {
-		node.onAdded(this);
-	}
+  if (node.onAdded) {
+    node.onAdded(this);
+  }
 
-	if (this.config.align_to_grid) {
-		node.alignToGrid();
-	}
+  if (this.config.align_to_grid) {
+    node.alignToGrid();
+  }
 
-	if (!skip_compute_order) {
-		this.updateExecutionOrder();
-	}
+  if (!skip_compute_order) {
+    this.updateExecutionOrder();
+  }
 
-	if (this.onNodeAdded) {
-		this.onNodeAdded(node);
-	}
+  if (this.onNodeAdded) {
+    this.onNodeAdded(node);
+  }
 
-	this.setDirtyCanvas(true);
-	this.change();
+  this.setDirtyCanvas(true);
+  this.change();
 
-	return node; //to chain actions
+  return node; //to chain actions
 };
 
 /**
@@ -702,90 +702,90 @@ LGraph.prototype.add = function (node, skip_compute_order) {
  */
 
 LGraph.prototype.remove = function (node) {
-	if (node.constructor === LiteGraph.LGraphGroup) {
-		let index = this._groups.indexOf(node);
-		if (index != -1) {
-			this._groups.splice(index, 1);
-		}
-		node.graph = null;
-		this._version++;
-		this.setDirtyCanvas(true, true);
-		this.change();
-		return;
-	}
+  if (node.constructor === LiteGraph.LGraphGroup) {
+    let index = this._groups.indexOf(node);
+    if (index != -1) {
+      this._groups.splice(index, 1);
+    }
+    node.graph = null;
+    this._version++;
+    this.setDirtyCanvas(true, true);
+    this.change();
+    return;
+  }
 
-	if (this._nodes_by_id[node.id] == null) {
-		return;
-	} //not found
+  if (this._nodes_by_id[node.id] == null) {
+    return;
+  } //not found
 
-	if (node.ignore_remove) {
-		return;
-	} //cannot be removed
+  if (node.ignore_remove) {
+    return;
+  } //cannot be removed
 
-	this.beforeChange(); //sure? - almost sure is wrong
+  this.beforeChange(); //sure? - almost sure is wrong
 
-	//disconnect inputs
-	if (node.inputs) {
-		for (let i = 0; i < node.inputs.length; i++) {
-			let slot = node.inputs[i];
-			if (slot.link != null) {
-				node.disconnectInput(i);
-			}
-		}
-	}
+  //disconnect inputs
+  if (node.inputs) {
+    for (let i = 0; i < node.inputs.length; i++) {
+      let slot = node.inputs[i];
+      if (slot.link != null) {
+        node.disconnectInput(i);
+      }
+    }
+  }
 
-	//disconnect outputs
-	if (node.outputs) {
-		for (let i = 0; i < node.outputs.length; i++) {
-			let slot = node.outputs[i];
-			if (slot.links != null && slot.links.length) {
-				node.disconnectOutput(i);
-			}
-		}
-	}
+  //disconnect outputs
+  if (node.outputs) {
+    for (let i = 0; i < node.outputs.length; i++) {
+      let slot = node.outputs[i];
+      if (slot.links != null && slot.links.length) {
+        node.disconnectOutput(i);
+      }
+    }
+  }
 
-	//node.id = -1; //why?
+  //node.id = -1; //why?
 
-	//callback
-	if (node.onRemoved) {
-		node.onRemoved();
-	}
+  //callback
+  if (node.onRemoved) {
+    node.onRemoved();
+  }
 
-	node.graph = null;
-	this._version++;
+  node.graph = null;
+  this._version++;
 
-	//remove from canvas render
-	if (this.list_of_graphcanvas) {
-		for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
-			let canvas = this.list_of_graphcanvas[i];
-			if (canvas.selected_nodes[node.id]) {
-				delete canvas.selected_nodes[node.id];
-			}
-			if (canvas.node_dragged == node) {
-				canvas.node_dragged = null;
-			}
-		}
-	}
+  //remove from canvas render
+  if (this.list_of_graphcanvas) {
+    for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
+      let canvas = this.list_of_graphcanvas[i];
+      if (canvas.selected_nodes[node.id]) {
+        delete canvas.selected_nodes[node.id];
+      }
+      if (canvas.node_dragged == node) {
+        canvas.node_dragged = null;
+      }
+    }
+  }
 
-	//remove from containers
-	let pos = this._nodes.indexOf(node);
-	if (pos != -1) {
-		this._nodes.splice(pos, 1);
-	}
-	delete this._nodes_by_id[node.id];
+  //remove from containers
+  let pos = this._nodes.indexOf(node);
+  if (pos != -1) {
+    this._nodes.splice(pos, 1);
+  }
+  delete this._nodes_by_id[node.id];
 
-	if (this.onNodeRemoved) {
-		this.onNodeRemoved(node);
-	}
+  if (this.onNodeRemoved) {
+    this.onNodeRemoved(node);
+  }
 
-	//close panels
-	this.sendActionToCanvas("checkPanels");
+  //close panels
+  this.sendActionToCanvas("checkPanels");
 
-	this.setDirtyCanvas(true, true);
-	this.afterChange(); //sure? - almost sure is wrong
-	this.change();
+  this.setDirtyCanvas(true, true);
+  this.afterChange(); //sure? - almost sure is wrong
+  this.change();
 
-	this.updateExecutionOrder();
+  this.updateExecutionOrder();
 };
 
 /**
@@ -795,10 +795,10 @@ LGraph.prototype.remove = function (node) {
  */
 
 LGraph.prototype.getNodeById = function (id) {
-	if (id == null) {
-		return null;
-	}
-	return this._nodes_by_id[id];
+  if (id == null) {
+    return null;
+  }
+  return this._nodes_by_id[id];
 };
 
 /**
@@ -808,14 +808,14 @@ LGraph.prototype.getNodeById = function (id) {
  * @return {Array} a list with all the nodes of this type
  */
 LGraph.prototype.findNodesByClass = function (classObject, result) {
-	result = result || [];
-	result.length = 0;
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		if (this._nodes[i].constructor === classObject) {
-			result.push(this._nodes[i]);
-		}
-	}
-	return result;
+  result = result || [];
+  result.length = 0;
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    if (this._nodes[i].constructor === classObject) {
+      result.push(this._nodes[i]);
+    }
+  }
+  return result;
 };
 
 /**
@@ -825,15 +825,15 @@ LGraph.prototype.findNodesByClass = function (classObject, result) {
  * @return {Array} a list with all the nodes of this type
  */
 LGraph.prototype.findNodesByType = function (type, result) {
-	type = type.toLowerCase();
-	result = result || [];
-	result.length = 0;
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		if (this._nodes[i].type.toLowerCase() == type) {
-			result.push(this._nodes[i]);
-		}
-	}
-	return result;
+  type = type.toLowerCase();
+  result = result || [];
+  result.length = 0;
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    if (this._nodes[i].type.toLowerCase() == type) {
+      result.push(this._nodes[i]);
+    }
+  }
+  return result;
 };
 
 /**
@@ -843,12 +843,12 @@ LGraph.prototype.findNodesByType = function (type, result) {
  * @return {Node} the node or null
  */
 LGraph.prototype.findNodeByTitle = function (title) {
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		if (this._nodes[i].title == title) {
-			return this._nodes[i];
-		}
-	}
-	return null;
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    if (this._nodes[i].title == title) {
+      return this._nodes[i];
+    }
+  }
+  return null;
 };
 
 /**
@@ -858,13 +858,13 @@ LGraph.prototype.findNodeByTitle = function (title) {
  * @return {Array} a list with all the nodes with this name
  */
 LGraph.prototype.findNodesByTitle = function (title) {
-	let result = [];
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		if (this._nodes[i].title == title) {
-			result.push(this._nodes[i]);
-		}
-	}
-	return result;
+  let result = [];
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    if (this._nodes[i].title == title) {
+      result.push(this._nodes[i]);
+    }
+  }
+  return result;
 };
 
 /**
@@ -876,20 +876,20 @@ LGraph.prototype.findNodesByTitle = function (title) {
  * @return {LGraphNode} the node at this position or null
  */
 LGraph.prototype.getNodeOnPos = function (x, y, nodes_list, margin) {
-	nodes_list = nodes_list || this._nodes;
-	let nRet = null;
-	for (let i = nodes_list.length - 1; i >= 0; i--) {
-		let n = nodes_list[i];
-		if (n.isPointInside(x, y, margin)) {
-			// check for lesser interest nodes (TODO check for overlapping, use the top)
-			/*if (typeof n == "LGraphGroup"){
+  nodes_list = nodes_list || this._nodes;
+  let nRet = null;
+  for (let i = nodes_list.length - 1; i >= 0; i--) {
+    let n = nodes_list[i];
+    if (n.isPointInside(x, y, margin)) {
+      // check for lesser interest nodes (TODO check for overlapping, use the top)
+      /*if (typeof n == "LGraphGroup"){
                     nRet = n;
                 }else{*/
-			return n;
-			/*}*/
-		}
-	}
-	return nRet;
+      return n;
+      /*}*/
+    }
+  }
+  return nRet;
 };
 
 /**
@@ -900,13 +900,13 @@ LGraph.prototype.getNodeOnPos = function (x, y, nodes_list, margin) {
  * @return {LGraphGroup} the group or null
  */
 LGraph.prototype.getGroupOnPos = function (x, y) {
-	for (let i = this._groups.length - 1; i >= 0; i--) {
-		let g = this._groups[i];
-		if (g.isPointInside(x, y, 2, true)) {
-			return g;
-		}
-	}
-	return null;
+  for (let i = this._groups.length - 1; i >= 0; i--) {
+    let g = this._groups[i];
+    if (g.isPointInside(x, y, 2, true)) {
+      return g;
+    }
+  }
+  return null;
 };
 
 /**
@@ -915,49 +915,49 @@ LGraph.prototype.getGroupOnPos = function (x, y) {
  * @method checkNodeTypes
  */
 LGraph.prototype.checkNodeTypes = function () {
-	let changes = false;
-	for (let i = 0; i < this._nodes.length; i++) {
-		let node = this._nodes[i];
-		let ctor = LiteGraph.registered_node_types[node.type];
-		if (node.constructor == ctor) {
-			continue;
-		}
-		console.log("node being replaced by newer version: " + node.type);
-		let newnode = LiteGraph.createNode(node.type);
-		changes = true;
-		this._nodes[i] = newnode;
-		newnode.configure(node.serialize());
-		newnode.graph = this;
-		this._nodes_by_id[newnode.id] = newnode;
-		if (node.inputs) {
-			newnode.inputs = node.inputs.concat();
-		}
-		if (node.outputs) {
-			newnode.outputs = node.outputs.concat();
-		}
-	}
-	this.updateExecutionOrder();
+  let changes = false;
+  for (let i = 0; i < this._nodes.length; i++) {
+    let node = this._nodes[i];
+    let ctor = LiteGraph.registered_node_types[node.type];
+    if (node.constructor == ctor) {
+      continue;
+    }
+    console.log("node being replaced by newer version: " + node.type);
+    let newnode = LiteGraph.createNode(node.type);
+    changes = true;
+    this._nodes[i] = newnode;
+    newnode.configure(node.serialize());
+    newnode.graph = this;
+    this._nodes_by_id[newnode.id] = newnode;
+    if (node.inputs) {
+      newnode.inputs = node.inputs.concat();
+    }
+    if (node.outputs) {
+      newnode.outputs = node.outputs.concat();
+    }
+  }
+  this.updateExecutionOrder();
 };
 
 // ********** GLOBALS *****************
 
 LGraph.prototype.onAction = function (action, param, options) {
-	this._input_nodes = this.findNodesByClass(LiteGraph.GraphInput, this._input_nodes);
-	for (let i = 0; i < this._input_nodes.length; ++i) {
-		let node = this._input_nodes[i];
-		if (node.properties.name != action) {
-			continue;
-		}
-		//wrap node.onAction(action, param);
-		node.actionDo(action, param, options);
-		break;
-	}
+  this._input_nodes = this.findNodesByClass(LiteGraph.GraphInput, this._input_nodes);
+  for (let i = 0; i < this._input_nodes.length; ++i) {
+    let node = this._input_nodes[i];
+    if (node.properties.name != action) {
+      continue;
+    }
+    //wrap node.onAction(action, param);
+    node.actionDo(action, param, options);
+    break;
+  }
 };
 
 LGraph.prototype.trigger = function (action, param) {
-	if (this.onTrigger) {
-		this.onTrigger(action, param);
-	}
+  if (this.onTrigger) {
+    this.onTrigger(action, param);
+  }
 };
 
 /**
@@ -968,24 +968,24 @@ LGraph.prototype.trigger = function (action, param) {
  * @param {*} value [optional]
  */
 LGraph.prototype.addInput = function (name, type, value) {
-	let input = this.inputs[name];
-	if (input) {
-		//already exist
-		return;
-	}
+  let input = this.inputs[name];
+  if (input) {
+    //already exist
+    return;
+  }
 
-	this.beforeChange();
-	this.inputs[name] = { name: name, type: type, value: value };
-	this._version++;
-	this.afterChange();
+  this.beforeChange();
+  this.inputs[name] = { name: name, type: type, value: value };
+  this._version++;
+  this.afterChange();
 
-	if (this.onInputAdded) {
-		this.onInputAdded(name, type);
-	}
+  if (this.onInputAdded) {
+    this.onInputAdded(name, type);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
 };
 
 /**
@@ -995,11 +995,11 @@ LGraph.prototype.addInput = function (name, type, value) {
  * @param {*} data
  */
 LGraph.prototype.setInputData = function (name, data) {
-	let input = this.inputs[name];
-	if (!input) {
-		return;
-	}
-	input.value = data;
+  let input = this.inputs[name];
+  if (!input) {
+    return;
+  }
+  input.value = data;
 };
 
 /**
@@ -1009,11 +1009,11 @@ LGraph.prototype.setInputData = function (name, data) {
  * @return {*} the data
  */
 LGraph.prototype.getInputData = function (name) {
-	let input = this.inputs[name];
-	if (!input) {
-		return null;
-	}
-	return input.value;
+  let input = this.inputs[name];
+  if (!input) {
+    return null;
+  }
+  return input.value;
 };
 
 /**
@@ -1023,30 +1023,30 @@ LGraph.prototype.getInputData = function (name) {
  * @param {String} new_name
  */
 LGraph.prototype.renameInput = function (old_name, name) {
-	if (name == old_name) {
-		return;
-	}
+  if (name == old_name) {
+    return;
+  }
 
-	if (!this.inputs[old_name]) {
-		return false;
-	}
+  if (!this.inputs[old_name]) {
+    return false;
+  }
 
-	if (this.inputs[name]) {
-		console.error("there is already one input with that name");
-		return false;
-	}
+  if (this.inputs[name]) {
+    console.error("there is already one input with that name");
+    return false;
+  }
 
-	this.inputs[name] = this.inputs[old_name];
-	delete this.inputs[old_name];
-	this._version++;
+  this.inputs[name] = this.inputs[old_name];
+  delete this.inputs[old_name];
+  this._version++;
 
-	if (this.onInputRenamed) {
-		this.onInputRenamed(old_name, name);
-	}
+  if (this.onInputRenamed) {
+    this.onInputRenamed(old_name, name);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
 };
 
 /**
@@ -1056,19 +1056,19 @@ LGraph.prototype.renameInput = function (old_name, name) {
  * @param {String} type
  */
 LGraph.prototype.changeInputType = function (name, type) {
-	if (!this.inputs[name]) {
-		return false;
-	}
+  if (!this.inputs[name]) {
+    return false;
+  }
 
-	if (this.inputs[name].type && String(this.inputs[name].type).toLowerCase() == String(type).toLowerCase()) {
-		return;
-	}
+  if (this.inputs[name].type && String(this.inputs[name].type).toLowerCase() == String(type).toLowerCase()) {
+    return;
+  }
 
-	this.inputs[name].type = type;
-	this._version++;
-	if (this.onInputTypeChanged) {
-		this.onInputTypeChanged(name, type);
-	}
+  this.inputs[name].type = type;
+  this._version++;
+  if (this.onInputTypeChanged) {
+    this.onInputTypeChanged(name, type);
+  }
 };
 
 /**
@@ -1078,21 +1078,21 @@ LGraph.prototype.changeInputType = function (name, type) {
  * @param {String} type
  */
 LGraph.prototype.removeInput = function (name) {
-	if (!this.inputs[name]) {
-		return false;
-	}
+  if (!this.inputs[name]) {
+    return false;
+  }
 
-	delete this.inputs[name];
-	this._version++;
+  delete this.inputs[name];
+  this._version++;
 
-	if (this.onInputRemoved) {
-		this.onInputRemoved(name);
-	}
+  if (this.onInputRemoved) {
+    this.onInputRemoved(name);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
-	return true;
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
+  return true;
 };
 
 /**
@@ -1103,16 +1103,16 @@ LGraph.prototype.removeInput = function (name) {
  * @param {*} value
  */
 LGraph.prototype.addOutput = function (name, type, value) {
-	this.outputs[name] = { name: name, type: type, value: value };
-	this._version++;
+  this.outputs[name] = { name: name, type: type, value: value };
+  this._version++;
 
-	if (this.onOutputAdded) {
-		this.onOutputAdded(name, type);
-	}
+  if (this.onOutputAdded) {
+    this.onOutputAdded(name, type);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
 };
 
 /**
@@ -1122,11 +1122,11 @@ LGraph.prototype.addOutput = function (name, type, value) {
  * @param {String} value
  */
 LGraph.prototype.setOutputData = function (name, value) {
-	let output = this.outputs[name];
-	if (!output) {
-		return;
-	}
-	output.value = value;
+  let output = this.outputs[name];
+  if (!output) {
+    return;
+  }
+  output.value = value;
 };
 
 /**
@@ -1136,11 +1136,11 @@ LGraph.prototype.setOutputData = function (name, value) {
  * @return {*} the data
  */
 LGraph.prototype.getOutputData = function (name) {
-	let output = this.outputs[name];
-	if (!output) {
-		return null;
-	}
-	return output.value;
+  let output = this.outputs[name];
+  if (!output) {
+    return null;
+  }
+  return output.value;
 };
 
 /**
@@ -1150,26 +1150,26 @@ LGraph.prototype.getOutputData = function (name) {
  * @param {String} new_name
  */
 LGraph.prototype.renameOutput = function (old_name, name) {
-	if (!this.outputs[old_name]) {
-		return false;
-	}
+  if (!this.outputs[old_name]) {
+    return false;
+  }
 
-	if (this.outputs[name]) {
-		console.error("there is already one output with that name");
-		return false;
-	}
+  if (this.outputs[name]) {
+    console.error("there is already one output with that name");
+    return false;
+  }
 
-	this.outputs[name] = this.outputs[old_name];
-	delete this.outputs[old_name];
-	this._version++;
+  this.outputs[name] = this.outputs[old_name];
+  delete this.outputs[old_name];
+  this._version++;
 
-	if (this.onOutputRenamed) {
-		this.onOutputRenamed(old_name, name);
-	}
+  if (this.onOutputRenamed) {
+    this.onOutputRenamed(old_name, name);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
 };
 
 /**
@@ -1179,19 +1179,19 @@ LGraph.prototype.renameOutput = function (old_name, name) {
  * @param {String} type
  */
 LGraph.prototype.changeOutputType = function (name, type) {
-	if (!this.outputs[name]) {
-		return false;
-	}
+  if (!this.outputs[name]) {
+    return false;
+  }
 
-	if (this.outputs[name].type && String(this.outputs[name].type).toLowerCase() == String(type).toLowerCase()) {
-		return;
-	}
+  if (this.outputs[name].type && String(this.outputs[name].type).toLowerCase() == String(type).toLowerCase()) {
+    return;
+  }
 
-	this.outputs[name].type = type;
-	this._version++;
-	if (this.onOutputTypeChanged) {
-		this.onOutputTypeChanged(name, type);
-	}
+  this.outputs[name].type = type;
+  this._version++;
+  if (this.onOutputTypeChanged) {
+    this.onOutputTypeChanged(name, type);
+  }
 };
 
 /**
@@ -1200,59 +1200,59 @@ LGraph.prototype.changeOutputType = function (name, type) {
  * @param {String} name
  */
 LGraph.prototype.removeOutput = function (name) {
-	if (!this.outputs[name]) {
-		return false;
-	}
-	delete this.outputs[name];
-	this._version++;
+  if (!this.outputs[name]) {
+    return false;
+  }
+  delete this.outputs[name];
+  this._version++;
 
-	if (this.onOutputRemoved) {
-		this.onOutputRemoved(name);
-	}
+  if (this.onOutputRemoved) {
+    this.onOutputRemoved(name);
+  }
 
-	if (this.onInputsOutputsChange) {
-		this.onInputsOutputsChange();
-	}
-	return true;
+  if (this.onInputsOutputsChange) {
+    this.onInputsOutputsChange();
+  }
+  return true;
 };
 
 LGraph.prototype.triggerInput = function (name, value) {
-	let nodes = this.findNodesByTitle(name);
-	for (let i = 0; i < nodes.length; ++i) {
-		nodes[i].onTrigger(value);
-	}
+  let nodes = this.findNodesByTitle(name);
+  for (let i = 0; i < nodes.length; ++i) {
+    nodes[i].onTrigger(value);
+  }
 };
 
 LGraph.prototype.setCallback = function (name, func) {
-	let nodes = this.findNodesByTitle(name);
-	for (let i = 0; i < nodes.length; ++i) {
-		nodes[i].setTrigger(func);
-	}
+  let nodes = this.findNodesByTitle(name);
+  for (let i = 0; i < nodes.length; ++i) {
+    nodes[i].setTrigger(func);
+  }
 };
 
 //used for undo, called before any change is made to the graph
 LGraph.prototype.beforeChange = function (info) {
-	if (this.onBeforeChange) {
-		this.onBeforeChange(this, info);
-	}
-	this.sendActionToCanvas("onBeforeChange", this);
+  if (this.onBeforeChange) {
+    this.onBeforeChange(this, info);
+  }
+  this.sendActionToCanvas("onBeforeChange", this);
 };
 
 //used to resend actions, called after any change is made to the graph
 LGraph.prototype.afterChange = function (info) {
-	if (this.onAfterChange) {
-		this.onAfterChange(this, info);
-	}
-	this.sendActionToCanvas("onAfterChange", this);
+  if (this.onAfterChange) {
+    this.onAfterChange(this, info);
+  }
+  this.sendActionToCanvas("onAfterChange", this);
 };
 
 LGraph.prototype.connectionChange = function (node, link_info) {
-	this.updateExecutionOrder();
-	if (this.onConnectionChange) {
-		this.onConnectionChange(node);
-	}
-	this._version++;
-	this.sendActionToCanvas("onConnectionChange");
+  this.updateExecutionOrder();
+  if (this.onConnectionChange) {
+    this.onConnectionChange(node);
+  }
+  this._version++;
+  this.sendActionToCanvas("onConnectionChange");
 };
 
 /**
@@ -1261,17 +1261,17 @@ LGraph.prototype.connectionChange = function (node, link_info) {
  */
 
 LGraph.prototype.isLive = function () {
-	if (!this.list_of_graphcanvas) {
-		return false;
-	}
+  if (!this.list_of_graphcanvas) {
+    return false;
+  }
 
-	for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
-		let c = this.list_of_graphcanvas[i];
-		if (c.live_mode) {
-			return true;
-		}
-	}
-	return false;
+  for (let i = 0; i < this.list_of_graphcanvas.length; ++i) {
+    let c = this.list_of_graphcanvas[i];
+    if (c.live_mode) {
+      return true;
+    }
+  }
+  return false;
 };
 
 /**
@@ -1279,30 +1279,30 @@ LGraph.prototype.isLive = function () {
  * @method clearTriggeredSlots
  */
 LGraph.prototype.clearTriggeredSlots = function () {
-	for (let i in this.links) {
-		let link_info = this.links[i];
-		if (!link_info) {
-			continue;
-		}
-		if (link_info._last_time) {
-			link_info._last_time = 0;
-		}
-	}
+  for (let i in this.links) {
+    let link_info = this.links[i];
+    if (!link_info) {
+      continue;
+    }
+    if (link_info._last_time) {
+      link_info._last_time = 0;
+    }
+  }
 };
 
 /* Called when something visually changed (not the graph!) */
 LGraph.prototype.change = function () {
-	if (LiteGraph.debug) {
-		console.log("Graph changed");
-	}
-	this.sendActionToCanvas("setDirty", [true, true]);
-	if (this.on_change) {
-		this.on_change(this);
-	}
+  if (LiteGraph.debug) {
+    console.log("Graph changed");
+  }
+  this.sendActionToCanvas("setDirty", [true, true]);
+  if (this.on_change) {
+    this.on_change(this);
+  }
 };
 
 LGraph.prototype.setDirtyCanvas = function (fg, bg) {
-	this.sendActionToCanvas("setDirty", [fg, bg]);
+  this.sendActionToCanvas("setDirty", [fg, bg]);
 };
 
 /**
@@ -1311,14 +1311,14 @@ LGraph.prototype.setDirtyCanvas = function (fg, bg) {
  * @param {Number} link_id
  */
 LGraph.prototype.removeLink = function (link_id) {
-	let link = this.links[link_id];
-	if (!link) {
-		return;
-	}
-	let node = this.getNodeById(link.target_id);
-	if (node) {
-		node.disconnectInput(link.target_slot);
-	}
+  let link = this.links[link_id];
+  if (!link) {
+    return;
+  }
+  let node = this.getNodeById(link.target_id);
+  if (node) {
+    node.disconnectInput(link.target_slot);
+  }
 };
 
 //save and recover app state ***************************************
@@ -1328,49 +1328,49 @@ LGraph.prototype.removeLink = function (link_id) {
  * @return {Object} value of the node
  */
 LGraph.prototype.serialize = function () {
-	let nodes_info = [];
-	for (let i = 0, l = this._nodes.length; i < l; ++i) {
-		nodes_info.push(this._nodes[i].serialize());
-	}
+  let nodes_info = [];
+  for (let i = 0, l = this._nodes.length; i < l; ++i) {
+    nodes_info.push(this._nodes[i].serialize());
+  }
 
-	//pack link info into a non-verbose format
-	let links = [];
-	for (let i in this.links) {
-		//links is an OBJECT
-		let link = this.links[i];
-		if (!link.serialize) {
-			//weird bug I havent solved yet
-			console.warn("weird LLink bug, link info is not a LLink but a regular object");
-			let link2 = new LLink();
-			for (let j in link) {
-				link2[j] = link[j];
-			}
-			this.links[i] = link2;
-			link = link2;
-		}
+  //pack link info into a non-verbose format
+  let links = [];
+  for (let i in this.links) {
+    //links is an OBJECT
+    let link = this.links[i];
+    if (!link.serialize) {
+      //weird bug I havent solved yet
+      console.warn("weird LLink bug, link info is not a LLink but a regular object");
+      let link2 = new LLink();
+      for (let j in link) {
+        link2[j] = link[j];
+      }
+      this.links[i] = link2;
+      link = link2;
+    }
 
-		links.push(link.serialize());
-	}
+    links.push(link.serialize());
+  }
 
-	let groups_info = [];
-	for (let i = 0; i < this._groups.length; ++i) {
-		groups_info.push(this._groups[i].serialize());
-	}
+  let groups_info = [];
+  for (let i = 0; i < this._groups.length; ++i) {
+    groups_info.push(this._groups[i].serialize());
+  }
 
-	let data = {
-		last_node_id: this.last_node_id,
-		last_link_id: this.last_link_id,
-		nodes: nodes_info,
-		links: links,
-		groups: groups_info,
-		config: this.config,
-		extra: this.extra,
-		version: LiteGraph.VERSION
-	};
+  let data = {
+    last_node_id: this.last_node_id,
+    last_link_id: this.last_link_id,
+    nodes: nodes_info,
+    links: links,
+    groups: groups_info,
+    config: this.config,
+    extra: this.extra,
+    version: LiteGraph.VERSION
+  };
 
-	if (this.onSerialize) this.onSerialize(data);
+  if (this.onSerialize) this.onSerialize(data);
 
-	return data;
+  return data;
 };
 
 /**
@@ -1380,133 +1380,133 @@ LGraph.prototype.serialize = function () {
  * @param {Boolean} returns if there was any error parsing
  */
 LGraph.prototype.configure = function (data, keep_old) {
-	if (!data) {
-		return;
-	}
+  if (!data) {
+    return;
+  }
 
-	if (!keep_old) {
-		this.clear();
-	}
+  if (!keep_old) {
+    this.clear();
+  }
 
-	let nodes = data.nodes;
+  let nodes = data.nodes;
 
-	//decode links info (they are very verbose)
-	if (data.links && data.links.constructor === Array) {
-		let links = [];
-		for (let i = 0; i < data.links.length; ++i) {
-			let link_data = data.links[i];
-			if (!link_data) {
-				//weird bug
-				console.warn("serialized graph link data contains errors, skipping.");
-				continue;
-			}
-			let link = new LLink();
-			link.configure(link_data);
-			links[link.id] = link;
-		}
-		data.links = links;
-	}
+  //decode links info (they are very verbose)
+  if (data.links && data.links.constructor === Array) {
+    let links = [];
+    for (let i = 0; i < data.links.length; ++i) {
+      let link_data = data.links[i];
+      if (!link_data) {
+        //weird bug
+        console.warn("serialized graph link data contains errors, skipping.");
+        continue;
+      }
+      let link = new LLink();
+      link.configure(link_data);
+      links[link.id] = link;
+    }
+    data.links = links;
+  }
 
-	//copy all stored fields
-	for (let i in data) {
-		if (i == "nodes" || i == "groups")
-			//links must be accepted
-			continue;
-		this[i] = data[i];
-	}
+  //copy all stored fields
+  for (let i in data) {
+    if (i == "nodes" || i == "groups")
+      //links must be accepted
+      continue;
+    this[i] = data[i];
+  }
 
-	let error = false;
+  let error = false;
 
-	//create nodes
-	this._nodes = [];
-	if (nodes) {
-		for (let i = 0, l = nodes.length; i < l; ++i) {
-			let n_info = nodes[i]; //stored info
-			let node = LiteGraph.createNode(n_info.type, n_info.title);
-			if (!node) {
-				if (LiteGraph.debug) {
-					console.log("Node not found or has errors: " + n_info.type);
-				}
+  //create nodes
+  this._nodes = [];
+  if (nodes) {
+    for (let i = 0, l = nodes.length; i < l; ++i) {
+      let n_info = nodes[i]; //stored info
+      let node = LiteGraph.createNode(n_info.type, n_info.title);
+      if (!node) {
+        if (LiteGraph.debug) {
+          console.log("Node not found or has errors: " + n_info.type);
+        }
 
-				//in case of error we create a replacement node to avoid losing info
-				node = new LGraphNode();
-				node.last_serialization = n_info;
-				node.has_errors = true;
-				error = true;
-				//continue;
-			}
+        //in case of error we create a replacement node to avoid losing info
+        node = new LGraphNode();
+        node.last_serialization = n_info;
+        node.has_errors = true;
+        error = true;
+        //continue;
+      }
 
-			node.id = n_info.id; //id it or it will create a new id
-			this.add(node, true); //add before configure, otherwise configure cannot create links
-		}
+      node.id = n_info.id; //id it or it will create a new id
+      this.add(node, true); //add before configure, otherwise configure cannot create links
+    }
 
-		//configure nodes afterwards so they can reach each other
-		for (let i = 0, l = nodes.length; i < l; ++i) {
-			let n_info = nodes[i];
-			let node = this.getNodeById(n_info.id);
-			if (node) {
-				node.configure(n_info);
-			}
-		}
-	}
+    //configure nodes afterwards so they can reach each other
+    for (let i = 0, l = nodes.length; i < l; ++i) {
+      let n_info = nodes[i];
+      let node = this.getNodeById(n_info.id);
+      if (node) {
+        node.configure(n_info);
+      }
+    }
+  }
 
-	//groups
-	this._groups.length = 0;
-	if (data.groups) {
-		for (let i = 0; i < data.groups.length; ++i) {
-			let group = new LiteGraph.LGraphGroup();
-			group.configure(data.groups[i]);
-			this.add(group);
-		}
-	}
+  //groups
+  this._groups.length = 0;
+  if (data.groups) {
+    for (let i = 0; i < data.groups.length; ++i) {
+      let group = new LiteGraph.LGraphGroup();
+      group.configure(data.groups[i]);
+      this.add(group);
+    }
+  }
 
-	this.updateExecutionOrder();
+  this.updateExecutionOrder();
 
-	this.extra = data.extra || {};
+  this.extra = data.extra || {};
 
-	if (this.onConfigure) this.onConfigure(data);
+  if (this.onConfigure) this.onConfigure(data);
 
-	this._version++;
-	this.setDirtyCanvas(true, true);
-	return error;
+  this._version++;
+  this.setDirtyCanvas(true, true);
+  return error;
 };
 
 LGraph.prototype.load = function (url, callback) {
-	let that = this;
+  let that = this;
 
-	//from file
-	if (url.constructor === File || url.constructor === Blob) {
-		let reader = new FileReader();
-		reader.addEventListener("load", function (event) {
-			let data = JSON.parse(event.target.result);
-			that.configure(data);
-			if (callback) callback();
-		});
+  //from file
+  if (url.constructor === File || url.constructor === Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", function (event) {
+      let data = JSON.parse(event.target.result);
+      that.configure(data);
+      if (callback) callback();
+    });
 
-		reader.readAsText(url);
-		return;
-	}
+    reader.readAsText(url);
+    return;
+  }
 
-	//is a string, then an URL
-	let req = new XMLHttpRequest();
-	req.open("GET", url, true);
-	req.send(null);
-	req.onload = function (oEvent) {
-		if (req.status !== 200) {
-			console.error("Error loading graph:", req.status, req.response);
-			return;
-		}
-		let data = JSON.parse(req.response);
-		that.configure(data);
-		if (callback) callback();
-	};
-	req.onerror = function (err) {
-		console.error("Error loading graph:", err);
-	};
+  //is a string, then an URL
+  let req = new XMLHttpRequest();
+  req.open("GET", url, true);
+  req.send(null);
+  req.onload = function (oEvent) {
+    if (req.status !== 200) {
+      console.error("Error loading graph:", req.status, req.response);
+      return;
+    }
+    let data = JSON.parse(req.response);
+    that.configure(data);
+    if (callback) callback();
+  };
+  req.onerror = function (err) {
+    console.error("Error loading graph:", err);
+  };
 };
 
 LGraph.prototype.onNodeTrace = function (node, msg, color) {
-	//TODO
+  //TODO
 };
 
 export default LGraph;

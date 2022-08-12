@@ -1,205 +1,205 @@
 .litegraph-editor {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	color: #eee;
-	font-size: 14px;
-	font-family: Tahoma;
-	background-color: #333;
-	position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: #eee;
+  font-size: 14px;
+  font-family: Tahoma;
+  background-color: #333;
+  position: relative;
 }
 
 .litegraph-editor * {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .litegraph-editor h1 {
-	font-family: "Metro Light", Tahoma;
-	color: #ddd;
-	font-size: 28px;
-	padding-left: 10px;
-	margin: 0;
-	font-weight: normal;
+  font-family: "Metro Light", Tahoma;
+  color: #ddd;
+  font-size: 28px;
+  padding-left: 10px;
+  margin: 0;
+  font-weight: normal;
 }
 
 .litegraph-editor h1 span {
-	font-family: "Arial";
-	font-size: 14px;
-	font-weight: normal;
-	color: #aaa;
+  font-family: "Arial";
+  font-size: 14px;
+  font-weight: normal;
+  color: #aaa;
 }
 
 .litegraph-editor h2 {
-	font-family: "Metro Light";
-	padding: 5px;
-	margin-left: 10px;
+  font-family: "Metro Light";
+  padding: 5px;
+  margin-left: 10px;
 }
 
 .litegraph-editor .content {
-	position: relative;
-	width: 100%;
-	height: calc(100% - 42px);
-	background-color: #1a1a1a;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 42px);
+  background-color: #1a1a1a;
 }
 
 .litegraph-editor .header {
-	position: relative;
-	height: 40px;
-	background-color: #333;
-	overflow: hidden;
-	/*border-radius: 10px 10px 0 0;*/
+  position: relative;
+  height: 40px;
+  background-color: #333;
+  overflow: hidden;
+  /*border-radius: 10px 10px 0 0;*/
 }
 
 .litegraph-editor .tools,
 .litegraph-editor .tools-left,
 .litegraph-editor .tools-right {
-	position: absolute;
-	top: 2px;
-	right: 0px;
-	vertical-align: top;
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  vertical-align: top;
 
-	margin: 2px 5px 0 0px;
+  margin: 2px 5px 0 0px;
 }
 
 .litegraph-editor .tools-left {
-	right: auto;
-	left: 4px;
+  right: auto;
+  left: 4px;
 }
 
 .litegraph-editor .footer {
-	// height: 40px;
-	position: relative;
+  // height: 40px;
+  position: relative;
 }
 
 .litegraph-editor .miniwindow {
-	background-color: #333;
-	border: 1px solid #111;
+  background-color: #333;
+  border: 1px solid #111;
 }
 
 .litegraph-editor .miniwindow .corner-button {
-	position: absolute;
-	top: 2px;
-	right: 2px;
-	font-family: "Tahoma";
-	font-size: 14px;
-	color: #aaa;
-	cursor: pointer;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-family: "Tahoma";
+  font-size: 14px;
+  color: #aaa;
+  cursor: pointer;
 }
 
 /* BUTTONS **********************/
 
 .litegraph-editor .btn {
-	color: #ccc;
-	font-size: 20px;
-	min-width: 30px;
-	border: 0 solid #666;
-	background-color: #3f3f3f;
-	padding: 4px 10px;
-	cursor: pointer;
-	transition: all 1s;
-	-moz-transition: all 1s;
-	-webkit-transition: all 0.4s;
+  color: #ccc;
+  font-size: 20px;
+  min-width: 30px;
+  border: 0 solid #666;
+  background-color: #3f3f3f;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 1s;
+  -moz-transition: all 1s;
+  -webkit-transition: all 0.4s;
 }
 
 .litegraph-editor button:hover {
-	background-color: #999;
-	color: #fff;
-	transition: all 1s;
-	-moz-transition: all 1s;
-	-webkit-transition: all 0.4s;
+  background-color: #999;
+  color: #fff;
+  transition: all 1s;
+  -moz-transition: all 1s;
+  -webkit-transition: all 0.4s;
 }
 
 .litegraph-editor button:active {
-	background-color: white;
+  background-color: white;
 }
 
 .litegraph-editor button.fixed {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	font-size: 1.2em;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.2em;
 }
 
 .litegraph-editor button img {
-	margin: -4px;
-	vertical-align: top;
-	opacity: 0.8;
-	transition: all 1s;
+  margin: -4px;
+  vertical-align: top;
+  opacity: 0.8;
+  transition: all 1s;
 }
 
 .litegraph-editor button:hover img {
-	opacity: 1;
+  opacity: 1;
 }
 
 .litegraph-editor .header button {
-	height: 32px;
-	vertical-align: top;
+  height: 32px;
+  vertical-align: top;
 }
 
 .litegraph-editor .toolbar-widget {
-	display: inline-block;
+  display: inline-block;
 }
 
 .litegraph-editor .editor-area {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* METER *********************/
 
 .litegraph-editor .loadmeter {
-	font-family: "Tahoma";
-	color: #aaa;
-	font-size: 12px;
-	border-radius: 2px;
-	width: 130px;
-	vertical-align: top;
+  font-family: "Tahoma";
+  color: #aaa;
+  font-size: 12px;
+  border-radius: 2px;
+  width: 130px;
+  vertical-align: top;
 }
 
 .litegraph-editor .strong {
-	vertical-align: top;
-	padding: 3px;
-	width: 30px;
-	display: inline-block;
-	line-height: 8px;
+  vertical-align: top;
+  padding: 3px;
+  width: 30px;
+  display: inline-block;
+  line-height: 8px;
 }
 
 .litegraph-editor .cpuload .bgload,
 .litegraph-editor .gpuload .bgload {
-	display: inline-block;
-	width: 90px;
-	height: 15px;
-	background-image: url("../editor/imgs/load-progress-empty.png");
+  display: inline-block;
+  width: 90px;
+  height: 15px;
+  background-image: url("../editor/imgs/load-progress-empty.png");
 }
 
 .litegraph-editor .cpuload .fgload,
 .litegraph-editor .gpuload .fgload {
-	display: inline-block;
-	width: 4px;
-	height: 15px;
-	max-width: 90px;
-	background-image: url("../editor/imgs/load-progress-full.png");
+  display: inline-block;
+  width: 4px;
+  height: 15px;
+  max-width: 90px;
+  background-image: url("../editor/imgs/load-progress-full.png");
 }
 
 .litegraph-editor textarea.code,
 .litegraph-editor div.code {
-	height: 100%;
-	width: 100%;
-	background-color: black;
-	padding: 4px;
-	font: 16px monospace;
-	overflow: auto;
-	resize: none;
-	outline: none;
-	color: #ddd;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  padding: 4px;
+  font: 16px monospace;
+  overflow: auto;
+  resize: none;
+  outline: none;
+  color: #ddd;
 }
 
 .litegraph-editor .codeflask {
-	background-color: #2a2a2a;
+  background-color: #2a2a2a;
 }
 
 .litegraph-editor .codeflask textarea {
-	opacity: 0;
+  opacity: 0;
 }

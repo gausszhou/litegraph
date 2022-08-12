@@ -15,7 +15,7 @@ import widgets from "../litegraph/nodes/Widgets";
 const List = [Audio, Base, config, Events, GamepadInput, logic, math, math3d, MIDI, network, StringToTable, widgets];
 
 List.forEach(item => {
-	LiteGraph.use(item);
+  LiteGraph.use(item);
 });
 
 LiteGraph.debug = false;
