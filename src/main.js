@@ -1,10 +1,14 @@
+import "./main.scss";
+
 import LiteGraph from "./utils/defaults";
-import MidiParser from "midi-parser-js";
+import Editor from "./litegraph-editor";
+LiteGraph.Editor = Editor;
 
 function demo() {
 	multiConnection();
 }
 
+// demo()
 function multiConnection() {
 	var node_button = LiteGraph.createNode("widget/button");
 	node_button.pos = [100, 400];

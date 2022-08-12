@@ -7031,8 +7031,8 @@ LGraphCanvas.prototype.adjustMouseEvent = function (e) {
 		clientY_rel = e.clientY;
 	}
 
-	e.deltaX = clientX_rel - this.last_mouse_position[0];
-	e.deltaY = clientY_rel - this.last_mouse_position[1];
+	// e.deltaX = clientX_rel - this.last_mouse_position[0];
+	// e.deltaY = clientY_rel - this.last_mouse_position[1];
 
 	this.last_mouse_position[0] = clientX_rel;
 	this.last_mouse_position[1] = clientY_rel;
