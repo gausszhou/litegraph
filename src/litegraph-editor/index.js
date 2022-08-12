@@ -1,3 +1,5 @@
+import LiteGraph from "../litegraph/core";
+
 //Creates an interface to access extra features from a graph (like play, stop, live, etc)
 function Editor(container_id, options) {
 	options = options || {};
@@ -20,8 +22,8 @@ function Editor(container_id, options) {
 	var canvas = (this.canvas = root.querySelector(".graphcanvas"));
 
 	//create graph
-	var graph = (this.graph = new LGraph());
-	var graphcanvas = (this.graphcanvas = new LGraphCanvas(canvas, graph));
+	var graph = (this.graph = new LiteGraph.LGraph());
+	var graphcanvas = (this.graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph));
 	graphcanvas.background_image = "imgs/grid.png";
 	graph.onAfterExecute = function () {
 		graphcanvas.draw(true);
@@ -87,7 +89,7 @@ Editor.prototype.addLoadCounter = function () {
 
 	setInterval(function () {
 		meter.querySelector(".cpuload .fgload").style.width = 2 * self.graph.execution_time * 90 + "px";
-		if (self.graph.status == LGraph.STATUS_RUNNING) {
+		if (self.graph.status == LiteGraph.LGraph.STATUS_RUNNING) {
 			meter.querySelector(".gpuload .fgload").style.width = self.graphcanvas.render_time * 10 * 90 + "px";
 		} else {
 			meter.querySelector(".gpuload .fgload").style.width = 4 + "px";
@@ -253,7 +255,5 @@ Editor.prototype.addMultiview = function () {
 	this.graphcanvas2 = graphcanvas;
 	this.graphcanvas2.viewport = [canvas.width * 0.5, 0, canvas.width * 0.5, canvas.height];
 };
-
-// LiteGraph.Editor = Editor;
 
 export default Editor;

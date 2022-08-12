@@ -1,4 +1,5 @@
-import LiteGraph from "../index";
+import LiteGraph from "../litegraph/index";
+
 LiteGraph.debug = false;
 LiteGraph.catch_exceptions = true;
 LiteGraph.throw_errors = true;

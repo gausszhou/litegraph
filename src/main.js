@@ -1,7 +1,8 @@
+import "./litegraph-editor/index.scss";
 import "./main.scss";
-
 import LiteGraph from "./utils/defaults";
-import Editor from "./litegraph-editor";
+import Editor from "./litegraph-editor/index";
+
 LiteGraph.Editor = Editor;
 
 function demo() {

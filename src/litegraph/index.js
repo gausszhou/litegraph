@@ -1,4 +1,4 @@
 import "./styles/index.scss";
-import LiteGraph from "./packages/litegraph";
+import LiteGraph from "./core";
 
 export default LiteGraph;

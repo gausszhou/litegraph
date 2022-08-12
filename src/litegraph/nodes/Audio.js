@@ -1,8 +1,8 @@
-import LiteGraph from "../litegraph";
-let global = window;
+import LiteGraph from "../core";
 
-const LGAudio = {};
-global.LGAudio = LGAudio;
+// Audio Singlton Object
+
+export const LGAudio = {};
 
 LGAudio.getAudioContext = function () {
 	if (!this._audio_context) {
@@ -227,9 +227,9 @@ LGAudio.loadSound = function (url, on_complete, on_error) {
 	return request;
 };
 
-//****************************************************
+// Aduio Node
 
-function LGAudioSource() {
+export function LGAudioSource() {
 	this.properties = {
 		src: "",
 		gain: 0.5,
@@ -474,11 +474,10 @@ LGAudioSource.prototype.onDropFile = function (file) {
 
 LGAudioSource.title = "Source";
 LGAudioSource.desc = "Plays audio";
-LiteGraph.registerNodeType("audio/source", LGAudioSource);
 
 //****************************************************
 
-function LGAudioMediaSource() {
+export function LGAudioMediaSource() {
 	this.properties = {
 		gain: 0.5
 	};
@@ -620,11 +619,11 @@ LGAudioMediaSource.prototype.onGetInputs = function () {
 
 LGAudioMediaSource.title = "MediaSource";
 LGAudioMediaSource.desc = "Plays microphone";
-LiteGraph.registerNodeType("audio/media_source", LGAudioMediaSource);
 
-//*****************************************************
-
-function LGAudioAnalyser() {
+/**
+ * AnalyeserNode 分析器
+ */
+export function LGAudioAnalyser() {
 	this.properties = {
 		fftSize: 2048,
 		minDecibels: -100,
@@ -712,7 +711,10 @@ LiteGraph.registerNodeType("audio/analyser", LGAudioAnalyser);
 
 //*****************************************************
 
-function LGAudioGain() {
+/**
+ * Gain 音频增益
+ */
+export function LGAudioGain() {
 	//default
 	this.properties = {
 		gain: 1
@@ -744,7 +746,10 @@ LGAudioGain.title = "Gain";
 LGAudioGain.desc = "Audio gain";
 LiteGraph.registerNodeType("audio/gain", LGAudioGain);
 
-function LGAudioConvolver() {
+/**
+ * Convolver 卷积器
+ */
+export function LGAudioConvolver() {
 	//default
 	this.properties = {
 		impulse_src: "",
@@ -812,9 +817,8 @@ LGAudioConvolver.prototype.loadImpulse = function (url) {
 
 LGAudioConvolver.title = "Convolver";
 LGAudioConvolver.desc = "Convolves the signal (used for reverb)";
-LiteGraph.registerNodeType("audio/convolver", LGAudioConvolver);
 
-function LGAudioDynamicsCompressor() {
+export function LGAudioDynamicsCompressor() {
 	//default
 	this.properties = {
 		threshold: -50,
@@ -1302,7 +1306,7 @@ LGAudioBandSignal.title = "Signal";
 LGAudioBandSignal.desc = "extract the signal of some frequency";
 LiteGraph.registerNodeType("audio/signal", LGAudioBandSignal);
 
-function LGAudioScript() {
+export function LGAudioScript() {
 	if (!LGAudioScript.default_code) {
 		var code = LGAudioScript.default_function.toString();
 		var index = code.indexOf("{") + 1;
@@ -1316,7 +1320,7 @@ function LGAudioScript() {
 	};
 
 	//create node
-	var ctx = LGAudio.getAudioContext();
+	const ctx = LGAudio.getAudioContext();
 	if (ctx.createScriptProcessor) {
 		this.audionode = ctx.createScriptProcessor(4096, 1, 1);
 	}
@@ -1370,7 +1374,7 @@ LGAudioScript.prototype.onRemoved = function () {
 
 LGAudioScript.prototype.processCode = function () {
 	try {
-		var func = new Function("properties", this.properties.code);
+		const func = new Function("properties", this.properties.code);
 		this._script = new func(this.properties);
 		this._old_code = this.properties.code;
 		this._callback = this._script.onaudioprocess;
@@ -1417,13 +1421,21 @@ LGAudio.createAudioNodeWrapper(LGAudioScript);
 
 LGAudioScript.title = "Script";
 LGAudioScript.desc = "apply script to signal";
-LiteGraph.registerNodeType("audio/script", LGAudioScript);
 
-function LGAudioDestination() {
+export function LGAudioDestination() {
 	this.audionode = LGAudio.getAudioContext().destination;
 	this.addInput("in", "audio");
 }
-
 LGAudioDestination.title = "Destination";
 LGAudioDestination.desc = "Audio output";
-LiteGraph.registerNodeType("audio/destination", LGAudioDestination);
+
+
+const install = LiteGraph => {
+	LiteGraph.registerNodeType("audio/source", LGAudioSource);
+	LiteGraph.registerNodeType("audio/media_source", LGAudioMediaSource);
+	LiteGraph.registerNodeType("audio/convolver", LGAudioConvolver);
+	LiteGraph.registerNodeType("audio/script", LGAudioScript);
+	LiteGraph.registerNodeType("audio/destination", LGAudioDestination);
+};
+
+export { install };

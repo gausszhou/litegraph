@@ -1,4 +1,4 @@
-import LiteGraph from "../litegraph";
+import LiteGraph from "../core";
 
 //Subgraph: a node that contains a graph
 export function Subgraph() {

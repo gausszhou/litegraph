@@ -1,4 +1,4 @@
-import LiteGraph from "../litegraph";
+import LiteGraph from "../core";
 
 // Event Node like rxjs pipe operator
 
@@ -15,8 +15,6 @@ LogEvent.desc = "Log event in console";
 LogEvent.prototype.onAction = function (action, param, options) {
 	console.log(action, param);
 };
-
-
 
 // convert to Event if the value is true
 
@@ -43,7 +41,6 @@ TriggerEvent.prototype.onExecute = function (param, options) {
 	if (changed) this.triggerSlot(1, param, null, options);
 	this.prev = v;
 };
-
 
 //Sequence of events
 export function Sequence() {
@@ -85,8 +82,6 @@ Sequence.prototype.onAction = function (action, param, options) {
 		}
 	}
 };
-
-
 
 //Sequencer for events
 export function Stepper() {
@@ -147,7 +142,6 @@ Stepper.prototype.onAction = function (action, param) {
 	}
 };
 
-LiteGraph.registerNodeType("events/stepper", Stepper);
 
 // Filter events
 export function FilterEvent() {
@@ -187,9 +181,9 @@ FilterEvent.prototype.onAction = function (action, param, options) {
 	this.triggerSlot(0, param, null, options);
 };
 
-LiteGraph.registerNodeType("events/filter", FilterEvent);
 
-function EventBranch() {
+
+export function EventBranch() {
 	this.addInput("in", LiteGraph.ACTION);
 	this.addInput("cond", "boolean");
 	this.addOutput("true", LiteGraph.EVENT);
@@ -210,19 +204,19 @@ EventBranch.prototype.onAction = function (action, param, options) {
 	this.triggerSlot(this._value ? 0 : 1, param, null, options);
 };
 
-LiteGraph.registerNodeType("events/branch", EventBranch);
 
-// 
+
+//
 export function EventCounter() {
 	this.addInput("inc", LiteGraph.ACTION);
 	this.addInput("dec", LiteGraph.ACTION);
 	this.addInput("reset", LiteGraph.ACTION);
-	
+
 	this.addOutput("change", LiteGraph.EVENT);
 	this.addOutput("num", "number");
-	
+
 	this.addProperty("doCountExecution", false, "boolean", { name: "Count Executions" });
-	
+
 	this.addWidget("toggle", "Count Exec.", this.properties.doCountExecution, "doCountExecution");
 	this.num = 0;
 }
@@ -251,7 +245,6 @@ EventCounter.prototype.onAction = function (action, param, options) {
 	}
 };
 
-
 EventCounter.prototype.onExecute = function () {
 	if (this.properties.doCountExecution) {
 		this.num += 1;
@@ -269,10 +262,10 @@ EventCounter.prototype.onDrawBackground = function (ctx) {
 	ctx.fillText(this.num, this.size[0] * 0.5, this.size[1] * 0.5);
 };
 
-LiteGraph.registerNodeType("events/counter", EventCounter);
+
 
 //Show value inside the debug console
-function DelayEvent() {
+export function DelayEvent() {
 	this.size = [60, 30];
 	this.addProperty("time_in_ms", 1000);
 	this.addInput("event", LiteGraph.ACTION);
@@ -323,10 +316,9 @@ DelayEvent.prototype.onGetInputs = function () {
 	];
 };
 
-LiteGraph.registerNodeType("events/delay", DelayEvent);
 
 
-function TimerEvent() {
+export function TimerEvent() {
 	this.addProperty("interval", 1000);
 	this.addProperty("event", "tick");
 	this.addOutput("on_tick", LiteGraph.EVENT);
@@ -385,22 +377,19 @@ TimerEvent.prototype.onGetOutputs = function () {
 	return [["tick", "boolean"]];
 };
 
-
-
-
 // 信号量
 export function SemaphoreEvent() {
 	this.addInput("go", LiteGraph.ACTION);
 	this.addInput("green", LiteGraph.ACTION);
 	this.addInput("red", LiteGraph.ACTION);
-	
+
 	this.addOutput("continue", LiteGraph.EVENT);
 	this.addOutput("blocked", LiteGraph.EVENT);
 	this.addOutput("is_green", "boolean");
 	this.properties = {};
 	this._ready = false;
-	
-	this.addWidget("button", "reset", "",  ()=> {
+
+	this.addWidget("button", "reset", "", () => {
 		this._ready = false;
 	});
 }
@@ -419,9 +408,6 @@ SemaphoreEvent.prototype.onExecute = function () {
 	this.boxcolor = this._ready ? "#9F9" : "#FA5";
 };
 
-
-
-
 export function DataStore() {
 	this.addInput("data", 0);
 	this.addInput("assign", LiteGraph.ACTION);
@@ -429,8 +415,8 @@ export function DataStore() {
 
 	this.properties = { data: null, serialize: true };
 	this._last_value = null;
-	
-	this.addWidget("button", "store", "",  ()=> {
+
+	this.addWidget("button", "store", "", () => {
 		this.properties.data = this._last_value;
 	});
 }
@@ -460,11 +446,22 @@ DataStore.prototype.onSerialize = function (o) {
 		o.data = null;
 };
 
-LiteGraph.registerNodeType("events/log", LogEvent);
-LiteGraph.registerNodeType("events/trigger", TriggerEvent);
-LiteGraph.registerNodeType("events/sequence", Sequence);
+const install = LiteGraph => {
+	LiteGraph.registerNodeType("events/log", LogEvent);
+	LiteGraph.registerNodeType("events/trigger", TriggerEvent);
+	LiteGraph.registerNodeType("events/sequence", Sequence);
+	LiteGraph.registerNodeType("events/stepper", Stepper);
 
-LiteGraph.registerNodeType("events/timer", TimerEvent);
-LiteGraph.registerNodeType("events/semaphore", SemaphoreEvent);
-LiteGraph.registerNodeType("basic/data_store", DataStore);
 
+	LiteGraph.registerNodeType("events/filter", FilterEvent);
+	LiteGraph.registerNodeType("events/branch", EventBranch);
+	LiteGraph.registerNodeType("events/counter", EventCounter);
+
+	LiteGraph.registerNodeType("events/delay", DelayEvent);
+	LiteGraph.registerNodeType("events/timer", TimerEvent);
+	LiteGraph.registerNodeType("events/semaphore", SemaphoreEvent);
+	
+	LiteGraph.registerNodeType("basic/data_store", DataStore);
+};
+
+export { install };
