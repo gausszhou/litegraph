@@ -1,6 +1,4 @@
-(function (global) {
-	var LiteGraph = global.LiteGraph;
-
+const install = LiteGraph => {
 	function Selector() {
 		this.addInput("sel", "number");
 		this.addInput("A");
@@ -190,4 +188,5 @@
 		}
 	};
 	LiteGraph.registerNodeType("logic/IF", logicBranch);
-})(this);
+};
+export default { install };

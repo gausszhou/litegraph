@@ -319,8 +319,6 @@ LGraphPoints3D.generateInsideSphere = function (points, size, radius) {
 	}
 };
 
-
-
 LGraphPoints3D.generateFromObject = function (points, normals, size, obj, evenly) {
 	if (!obj) return;
 
@@ -430,8 +428,6 @@ LGraphPoints3D.generateFromInsideObject = function (points, size, mesh) {
 		i += 3;
 	}
 };
-
-
 
 export function LGraphPointsToInstances() {
 	this.addInput("points", "geometry");
@@ -558,9 +554,7 @@ LGraphPointsToInstances.prototype.updateInstances = function (geometry) {
 	this._geometry_id = geometry._id;
 };
 
-LiteGraph.registerNodeType("geometry/points_to_instances", LGraphPointsToInstances);
-
-function LGraphGeometryTransform() {
+export function LGraphGeometryTransform() {
 	this.addInput("in", "geometry,[mat4]");
 	this.addInput("mat4", "mat4");
 	this.addOutput("out", "geometry");
@@ -677,8 +671,6 @@ LGraphGeometryTransform.prototype.updateGeometry = function (geometry, model) {
 	this.geometry._version++;
 };
 
-LiteGraph.registerNodeType("geometry/transform", LGraphGeometryTransform);
-
 function LGraphGeometryPolygon() {
 	this.addInput("sides", "number");
 	this.addInput("radius", "number");
@@ -739,8 +731,6 @@ LGraphGeometryPolygon.prototype.updateGeometry = function (sides, radius) {
 	this.last_info.sides = sides;
 	this.last_info.radius = radius;
 };
-
-LiteGraph.registerNodeType("geometry/polygon", LGraphGeometryPolygon);
 
 function LGraphGeometryExtrude() {
 	this.addInput("", "geometry");
@@ -828,8 +818,6 @@ LGraphGeometryExtrude.prototype.extrudeGeometry = function (geo) {
 
 	return out_geo;
 };
-
-LiteGraph.registerNodeType("geometry/extrude", LGraphGeometryExtrude);
 
 function LGraphGeometryEval() {
 	this.addInput("in", "geometry");
@@ -932,75 +920,63 @@ LGraphGeometryEval.prototype.onExecute = function () {
 	this.setOutputData(0, this.geometry);
 };
 
-LiteGraph.registerNodeType("geometry/eval", LGraphGeometryEval);
-
-/*
 function LGraphGeometryDisplace() {
-		this.addInput("in", "geometry");
-		this.addInput("img", "image");
-		this.addOutput("out", "geometry");
+	this.addInput("in", "geometry");
+	this.addInput("img", "image");
+	this.addOutput("out", "geometry");
 
-		this.properties = {
-			grid_size: 1
-		};
+	this.properties = {
+		grid_size: 1
+	};
 
-		this.geometry = null;
-		this.geometry_id = -1;
-		this.version = -1;
-		this.must_update = true;
+	this.geometry = null;
+	this.geometry_id = -1;
+	this.version = -1;
+	this.must_update = true;
 
-		this.vertices = null;
+	this.vertices = null;
+}
+
+LGraphGeometryDisplace.title = "displace";
+LGraphGeometryDisplace.desc = "displace points";
+
+LGraphGeometryDisplace.prototype.onExecute = function () {
+	let geometry = this.getInputData(0);
+	let image = this.getInputData(1);
+	if (!geometry) return;
+
+	if (!image) {
+		this.setOutputData(0, geometry);
+		return;
 	}
 
-	LGraphGeometryDisplace.title = "displace";
-	LGraphGeometryDisplace.desc = "displace points";
+	if (this.geometry_id != geometry._id || this.version != geometry._version || this.must_update) {
+		this.must_update = false;
+		this.geometry_id = geometry._id;
+		this.version = geometry._version;
 
-	LGraphGeometryDisplace.prototype.onExecute = function() {
-		let geometry = this.getInputData(0);
-		let image = this.getInputData(1);
-		if(!geometry)
-			return;
+		//copy
+		this.geometry = {};
+		for (let i in geometry) this.geometry[i] = geometry[i];
+		this.geometry._id = geometry._id;
+		this.geometry._version = geometry._version + 1;
 
-		if(!image)
-		{
-			this.setOutputData(0,geometry);
-			return;
-		}
-
-		if( this.geometry_id != geometry._id || this.version != geometry._version || this.must_update )
-		{
-			this.must_update = false;
-			this.geometry_id = geometry._id;
-			this.version = geometry._version;
-
-			//copy
-			this.geometry = {};
-			for(let i in geometry)
-				this.geometry[i] = geometry[i];
-			this.geometry._id = geometry._id;
-			this.geometry._version = geometry._version + 1;
-
-			let grid_size = this.properties.grid_size;
-			if(grid_size != 0)
-			{
-				let vertices = this.vertices;
-				if(!vertices || this.vertices.length != this.geometry.vertices.length)
-					vertices = this.vertices = new Float32Array( this.geometry.vertices );
-				for(let i = 0; i < vertices.length; i+=3)
-				{
-					vertices[i] = Math.round(vertices[i]/grid_size) * grid_size;
-					vertices[i+1] = Math.round(vertices[i+1]/grid_size) * grid_size;
-					vertices[i+2] = Math.round(vertices[i+2]/grid_size) * grid_size;
-				}
-				this.geometry.vertices = vertices;
+		let grid_size = this.properties.grid_size;
+		if (grid_size != 0) {
+			let vertices = this.vertices;
+			if (!vertices || this.vertices.length != this.geometry.vertices.length)
+				vertices = this.vertices = new Float32Array(this.geometry.vertices);
+			for (let i = 0; i < vertices.length; i += 3) {
+				vertices[i] = Math.round(vertices[i] / grid_size) * grid_size;
+				vertices[i + 1] = Math.round(vertices[i + 1] / grid_size) * grid_size;
+				vertices[i + 2] = Math.round(vertices[i + 2] / grid_size) * grid_size;
 			}
+			this.geometry.vertices = vertices;
 		}
-
-		this.setOutputData(0,this.geometry);
 	}
 
-	LiteGraph.registerNodeType( "geometry/displace", LGraphGeometryDisplace );
-*/
+	this.setOutputData(0, this.geometry);
+};
 
 function LGraphConnectPoints() {
 	this.addInput("in", "geometry");
@@ -1073,13 +1049,6 @@ LGraphConnectPoints.prototype.onExecute = function () {
 		this.setOutputData(0, this.geometry);
 	} else this.setOutputData(0, null);
 };
-
-LiteGraph.registerNodeType("geometry/connectPoints", LGraphConnectPoints);
-
-//Works with Litegl.js to create WebGL nodes
-if (typeof GL == "undefined")
-	//LiteGL RELATED **********************************************
-	return;
 
 function LGraphToGeometry() {
 	this.addInput("mesh", "mesh");
@@ -1177,8 +1146,6 @@ LGraphGeometryToMesh.prototype.onExecute = function () {
 	if (this.version != geometry._version || this.geometry_id != geometry._id) this.updateMesh(geometry);
 	this.setOutputData(0, this.mesh);
 };
-
-LiteGraph.registerNodeType("geometry/toMesh", LGraphGeometryToMesh);
 
 function LGraphRenderMesh() {
 	this.addInput("mesh", "mesh");
@@ -1281,8 +1248,6 @@ LGraphRenderMesh.prototype.onExecute = function () {
 	gl.depthMask(true);
 };
 
-LiteGraph.registerNodeType("geometry/render_mesh", LGraphRenderMesh);
-
 //**************************
 
 function LGraphGeometryPrimitive() {
@@ -1372,8 +1337,6 @@ LGraphGeometryPrimitive.prototype.updateMesh = function (type, size, subdivision
 	this.last_info.subdivisions = subdivisions;
 	this._mesh.version = this.version++;
 };
-
-LiteGraph.registerNodeType("geometry/mesh_primitive", LGraphGeometryPrimitive);
 
 function LGraphRenderPoints() {
 	this.addInput("in", "geometry");
@@ -1778,12 +1741,27 @@ LGraphRenderGeometryDOF.fragment_shader_code = '\
 ';
 */
 
-const install = LiteGraph =>{
+const install = LiteGraph => {
 	LiteGraph.LGraphRender = {
 		// overwrite with your 3D engine specifics, it will receive (view_matrix, projection_matrix,viewprojection_matrix) and must be filled
-		onRequestCameraMatrices: null 
-	};	
-	LiteGraph.registerNodeType("geometry/points3D", LGraphPoints3D);
-}
+		onRequestCameraMatrices: null
+	};
 
-export default {install}
+	LiteGraph.registerNodeType("geometry/points3D", LGraphPoints3D);
+	LiteGraph.registerNodeType("geometry/points_to_instances", LGraphPointsToInstances);
+	LiteGraph.registerNodeType("geometry/transform", LGraphGeometryTransform);
+	LiteGraph.registerNodeType("geometry/polygon", LGraphGeometryPolygon);
+	LiteGraph.registerNodeType("geometry/extrude", LGraphGeometryExtrude);
+	LiteGraph.registerNodeType("geometry/eval", LGraphGeometryEval);
+	LiteGraph.registerNodeType("geometry/displace", LGraphGeometryDisplace);
+	LiteGraph.registerNodeType("geometry/connectPoints", LGraphConnectPoints);
+
+	// Works with Litegl.js to create WebGL nodes
+	if (typeof GL == "undefined") return false;
+
+	LiteGraph.registerNodeType("geometry/toMesh", LGraphGeometryToMesh);
+	LiteGraph.registerNodeType("geometry/render_mesh", LGraphRenderMesh);
+	LiteGraph.registerNodeType("geometry/mesh_primitive", LGraphGeometryPrimitive);
+};
+
+export default { install };

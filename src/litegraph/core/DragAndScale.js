@@ -1,5 +1,3 @@
-
-
 import {
 	distance,
 	colorToString,
@@ -33,8 +31,6 @@ export function DragAndScale(element, skip_events) {
 		}
 	}
 }
-
-
 
 DragAndScale.prototype.bindEvents = function (element) {
 	this.last_mouse = new Float32Array(2);

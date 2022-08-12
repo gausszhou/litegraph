@@ -1,4 +1,5 @@
 import { toArray } from "lodash-es";
+
 import {
 	distance,
 	colorToString,
@@ -11,7 +12,6 @@ import {
 	isInsideRectangle
 } from "./utils";
 
-
 import CurveEditor from "./CurveEditor";
 import ContextMenu from "./ContextMenu";
 import DragAndScale from "./DragAndScale";
@@ -20,7 +20,7 @@ import LGraphCanvas from "./LGraphCanvas";
 import LGraphGroup from "./LGraphGroup";
 import LGraphNode from "./LGraphNode";
 import LLink from "./LLink";
-
+import Subgraph from "./Subgraph";
 /**
  * The Global Scope. It contains all the registered node classes.
  * 全局单例，包含所有注册的节点
@@ -921,23 +921,22 @@ LiteGraph.pointerListenerRemove = function (oDOM, sEvent, fCall, capture = false
 
 LiteGraph.use = function (plugin) {
 	// 获取已经安装的插件
-	const installedPlugins = (this._installedPlugins || (this._installedPlugins = []))
+	const installedPlugins = this._installedPlugins || (this._installedPlugins = []);
 	// 看看插件是否已经安装，如果安装了直接返回
 	if (installedPlugins.indexOf(plugin) > -1) {
-		return this
+		return this;
 	}
 
-	const args = toArray(arguments, 1)
-	args.unshift(this)
-	if (typeof plugin.install === 'function') {
-		plugin.install.apply(plugin, args)
-	} else if (typeof plugin === 'function') {
-		plugin.apply(null, args)
+	const args = toArray(arguments, 1);
+	args.unshift(this);
+	if (typeof plugin.install === "function") {
+		plugin.install.apply(plugin, args);
+	} else if (typeof plugin === "function") {
+		plugin.apply(null, args);
 	}
-	installedPlugins.push(plugin)
-	return this
-}
-
+	installedPlugins.push(plugin);
+	return this;
+};
 
 // timer that works everywhere
 if (typeof performance != "undefined") {
@@ -973,4 +972,5 @@ Math.clamp = function (v, a, b) {
 	return a > v ? a : b < v ? b : v;
 };
 
+LiteGraph.use(Subgraph);
 export default LiteGraph;

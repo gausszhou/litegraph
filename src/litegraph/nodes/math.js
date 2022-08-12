@@ -1,6 +1,4 @@
-(function (global) {
-	var LiteGraph = global.LiteGraph;
-
+const install = LiteGraph => {
 	//Converter
 	function Converter() {
 		this.addInput("in", 0);
@@ -1330,4 +1328,5 @@
 	};
 
 	LiteGraph.registerNodeType("math3d/xyzw-to-vec4", Math3DXYZWToVec4);
-})(this);
+};
+export default { install };

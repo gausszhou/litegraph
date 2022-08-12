@@ -1,7 +1,3 @@
-// TODO remove this @is-ignore
-// @ts-ignore
-import LiteGraph from "../litegraph";
-
 export function toString(a: any): string {
 	if (a && a.constructor === Object) {
 		try {
@@ -65,11 +61,14 @@ export function toFixed(a: number): string | number {
 	return a;
 }
 
-LiteGraph.wrapFunctionAsNode("string/toString", toString, [""], "string");
-LiteGraph.wrapFunctionAsNode("string/compare", compare, ["string", "string"], "boolean");
-LiteGraph.wrapFunctionAsNode("string/concatenate", concatenate, ["string", "string"], "string");
-LiteGraph.wrapFunctionAsNode("string/contains", contains, ["string", "string"], "boolean");
-LiteGraph.wrapFunctionAsNode("string/toUpperCase", toUpperCase, ["string"], "string");
+const install = (LiteGraph: any) => {
+	LiteGraph.wrapFunctionAsNode("string/toString", toString, [""], "string");
+	LiteGraph.wrapFunctionAsNode("string/compare", compare, ["string", "string"], "boolean");
+	LiteGraph.wrapFunctionAsNode("string/concatenate", concatenate, ["string", "string"], "string");
+	LiteGraph.wrapFunctionAsNode("string/contains", contains, ["string", "string"], "boolean");
+	LiteGraph.wrapFunctionAsNode("string/toUpperCase", toUpperCase, ["string"], "string");
+	LiteGraph.wrapFunctionAsNode("string/split", split, ["string,array", "string"], "array", { separator: "," });
+	LiteGraph.wrapFunctionAsNode("string/toFixed", toFixed, ["number"], "string", { precision: 0 });
+};
 
-LiteGraph.wrapFunctionAsNode("string/split", split, ["string,array", "string"], "array", { separator: "," });
-LiteGraph.wrapFunctionAsNode("string/toFixed", toFixed, ["number"], "string", { precision: 0 });
+export default { install };

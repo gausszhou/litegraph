@@ -10,7 +10,7 @@ import {
 	isInsideRectangle
 } from "./utils";
 
-import LiteGraph from "./index"
+import LiteGraph from "./index";
 // *************************************************************
 //   Node CLASS                                          *******
 // *************************************************************
@@ -72,11 +72,9 @@ supported callbacks:
  * @param {String} name a name for the node
  */
 
- function LGraphNode(title) {
+function LGraphNode(title) {
 	this._ctor(title);
 }
-
-
 
 LGraphNode.prototype._ctor = function (title) {
 	this.title = title || "Unnamed";
@@ -1600,8 +1598,8 @@ LGraphNode.prototype.findSlotByType = function (input, type, returnObj, preferFr
 		let aSource = (type + "").toLowerCase().split(",");
 		let aDest = aSlots[i].type == "0" || aSlots[i].type == "*" ? "0" : aSlots[i].type;
 		aDest = (aDest + "").toLowerCase().split(",");
-		for (sI = 0; sI < aSource.length; sI++) {
-			for (dI = 0; dI < aDest.length; dI++) {
+		for (let sI = 0; sI < aSource.length; sI++) {
+			for (let dI = 0; dI < aDest.length; dI++) {
 				if (aSource[sI] == "_event_") aSource[sI] = LiteGraph.EVENT;
 				if (aDest[sI] == "_event_") aDest[sI] = LiteGraph.EVENT;
 				if (aSource[sI] == "*") aSource[sI] = 0;

@@ -1,4 +1,3 @@
-
 import {
 	distance,
 	colorToString,
@@ -10,7 +9,6 @@ import {
 	overlapBounding,
 	isInsideRectangle
 } from "./utils";
-
 
 //this is the class in charge of storing link information
 export function LLink(id, type, origin_id, origin_slot, target_id, target_slot) {

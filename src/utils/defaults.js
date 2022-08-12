@@ -1,4 +1,22 @@
 import LiteGraph from "../litegraph/index";
+import Audio from "../litegraph/nodes/Audio";
+import Base from "../litegraph/nodes/Base";
+import config from "../litegraph/nodes/config";
+import Events from "../litegraph/nodes/Events";
+import GamepadInput from "../litegraph/nodes/GamepadInput";
+import logic from "../litegraph/nodes/logic";
+import math from "../litegraph/nodes/Math";
+import math3d from "../litegraph/nodes/Math3d";
+import MIDI from "../litegraph/nodes/MIDI";
+import network from "../litegraph/nodes/Network";
+import StringToTable from "../litegraph/nodes/StringToTable";
+import widgets from "../litegraph/nodes/Widgets";
+
+const List = [Audio, Base, config, Events, GamepadInput, logic, math, math3d, MIDI, network, StringToTable, widgets];
+
+List.forEach(item => {
+	LiteGraph.use(item);
+});
 
 LiteGraph.debug = false;
 LiteGraph.catch_exceptions = true;

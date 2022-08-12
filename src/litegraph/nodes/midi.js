@@ -1,5 +1,4 @@
-(function (global) {
-	var LiteGraph = global.LiteGraph;
+const install = LiteGraph => {
 	var MIDI_COLOR = "#243";
 
 	function MIDIEvent(data) {
@@ -308,7 +307,8 @@
 	};
 
 	MIDIEvent.commands_reversed = {};
-	for (var i in MIDIEvent.commands) {
+	
+	for (let i in MIDIEvent.commands) {
 		MIDIEvent.commands_reversed[MIDIEvent.commands[i]] = i;
 	}
 
@@ -1517,4 +1517,6 @@
 	function now() {
 		return window.performance.now();
 	}
-})(this);
+};
+
+export default { install };

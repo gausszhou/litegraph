@@ -1,4 +1,3 @@
-
 import {
 	distance,
 	colorToString,
@@ -10,7 +9,6 @@ import {
 	overlapBounding,
 	isInsideRectangle
 } from "./utils";
-
 
 //used by some widgets to render a curve editor
 export function CurveEditor(points) {

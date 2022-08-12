@@ -1,4 +1,3 @@
-
 import {
 	distance,
 	colorToString,
@@ -15,7 +14,7 @@ import LiteGraph from ".";
 import LGraphNode from "./LGraphNode";
 import LGraphGroup from "./LGraphGroup";
 import LGraphCanvas from "./LGraphCanvas";
-import LLink from "./LLink"
+import LLink from "./LLink";
 //*********************************************************************************
 // LGraph CLASS
 //*********************************************************************************
@@ -43,7 +42,6 @@ export function LGraph(o) {
 		this.configure(o);
 	}
 }
-
 
 //default supported types
 LGraph.supported_types = ["number", "string", "boolean"];

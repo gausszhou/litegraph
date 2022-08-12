@@ -1,5 +1,3 @@
-
-
 import {
 	distance,
 	colorToString,
@@ -11,7 +9,6 @@ import {
 	overlapBounding,
 	isInsideRectangle
 } from "./utils";
-
 
 import LiteGraph from ".";
 /**
@@ -26,7 +23,7 @@ import LiteGraph from ".";
  * - ignore_item_callbacks: ignores the callback inside the item, it just calls the options.callback
  * - event: you can pass a MouseEvent, this way the ContextMenu appears in that position
  */
- export function ContextMenu(values, options) {
+export function ContextMenu(values, options) {
 	options = options || {};
 	this.options = options;
 	let that = this;
@@ -367,7 +364,6 @@ ContextMenu.prototype.close = function (e, ignore_parent_menu) {
 	// TODO implement : LiteGraph.contextMenuClosed(); :: keep track of opened / closed / current ContextMenu
 	// on key press, allow filtering/selecting the context menu elements
 };
-
 
 //returns the top most menu
 ContextMenu.prototype.getTopMenu = function () {

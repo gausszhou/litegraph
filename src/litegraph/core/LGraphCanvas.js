@@ -1,4 +1,3 @@
-
 import {
 	distance,
 	colorToString,
@@ -2959,13 +2958,12 @@ LGraphCanvas.prototype.drawNode = function (node, ctx) {
 
 	let color = node.color || node.constructor.color || LiteGraph.NODE_DEFAULT_COLOR;
 	let bgcolor = node.bgcolor || node.constructor.bgcolor || LiteGraph.NODE_DEFAULT_BGCOLOR;
-  let low_quality = this.ds.scale < 0.6; //zoomed out
+	let low_quality = this.ds.scale < 0.6; //zoomed out
 
 	// shadow and glow
 	if (node.mouseOver) {
 		glow = true;
 	}
-
 
 	//only render if it forces it to do it
 	if (this.live_mode) {
@@ -6583,9 +6581,8 @@ LGraphCanvas.prototype.showShowNodePanel = function (node) {
 	this.SELECTED_NODE = node;
 	this.closePanels();
 	let ref_window = this.getCanvasWindow();
-	let that = this;
 	let graphcanvas = this;
-	panel = this.createPanel(node.title || "", {
+	let panel = this.createPanel(node.title || "", {
 		closable: true,
 		window: ref_window,
 		onOpen: function () {

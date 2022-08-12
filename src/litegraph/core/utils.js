@@ -61,7 +61,6 @@ export function compareObjects(a, b) {
 	return true;
 }
 
-
 // [minx,miny,maxx,maxy]
 export function growBounding(bounding, x, y) {
 	if (x < bounding[0]) {
@@ -85,7 +84,6 @@ export function isInsideBounding(p, bb) {
 	return true;
 }
 
-
 //bounding overlap, format: [ startx, starty, width, height ]
 export function overlapBounding(a, b) {
 	let A_end_x = a[0] + a[2];
@@ -105,5 +103,3 @@ export function isInsideRectangle(x, y, left, top, width, height) {
 	}
 	return false;
 }
-
-

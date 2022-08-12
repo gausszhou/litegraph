@@ -1,6 +1,4 @@
-(function (global) {
-	var LiteGraph = global.LiteGraph;
-
+const install = LiteGraph => {
 	function GamepadInput() {
 		this.addOutput("left_x_axis", "number");
 		this.addOutput("left_y_axis", "number");
@@ -294,4 +292,6 @@
 	};
 
 	LiteGraph.registerNodeType("input/gamepad", GamepadInput);
-})(this);
+};
+
+export default { install };

@@ -1,7 +1,5 @@
 //event related nodes
-(function (global) {
-	var LiteGraph = global.LiteGraph;
-
+const install = LiteGraph => {
 	function LGWebSocket() {
 		this.size = [60, 20];
 		this.addInput("send", LiteGraph.ACTION);
@@ -332,4 +330,6 @@
 	};
 
 	LiteGraph.registerNodeType("network/sillyclient", LGSillyClient);
-})(this);
+};
+
+export default { install };
