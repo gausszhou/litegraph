@@ -1,9 +1,9 @@
-(function (global) {
+// (function (global) {
   var LiteGraph = global.LiteGraph;
   var LGraphTexture = global.LGraphTexture;
 
   //Works with Litegl.js to create WebGL nodes
-  if (typeof GL != "undefined") {
+  if (typeof GL == "undefined") return false;
     // Texture Lens *****************************************
     function LGraphFXLens() {
       this.addInput("Texture", "Texture");
@@ -756,5 +756,5 @@
 
     LiteGraph.registerNodeType("fx/vigneting", LGraphFXVigneting);
     global.LGraphFXVigneting = LGraphFXVigneting;
-  }
-})(this);
+  
+// })(this);

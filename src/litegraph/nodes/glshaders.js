@@ -1,6 +1,6 @@
 (function (global) {
-  if (typeof GL == "undefined") return;
 
+  if (typeof GL == "undefined") return;
   var LiteGraph = global.LiteGraph;
   var LGraphCanvas = global.LGraphCanvas;
 
@@ -1792,3 +1792,8 @@ float iqnoise( in vec2 x, float u, float v ){\n\
 
   registerShaderNode("math/remap", LGraphShaderRemap);
 })(this);
+
+const install = ()=>{
+  
+}
+export default {install}

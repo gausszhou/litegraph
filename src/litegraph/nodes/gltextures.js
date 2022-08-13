@@ -1,4 +1,4 @@
-(function (global) {
+// (function (global) {
   var LiteGraph = global.LiteGraph;
   var LGraphCanvas = global.LGraphCanvas;
 
@@ -5216,4 +5216,9 @@ void main(void){\n\
   };
 
   LiteGraph.registerNodeType("texture/cubemapToTexture2D", LGraphCubemapToTexture2D);
-})(this);
+
+// })(this);
+const install = ()=>{
+  
+}
+export default {install}
