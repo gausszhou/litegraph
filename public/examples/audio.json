@@ -60,7 +60,7 @@
       ],
       "outputs": [{ "name": "out", "type": "audio", "links": [0] }],
       "properties": {
-        "src": "demodata/audio.wav",
+        "src": "https://static.gausszhou.top/data/audio/music/Faded_96kbs_120sec.mp3",
         "gain": 0.5,
         "loop": true,
         "autoplay": true,

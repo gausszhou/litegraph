@@ -54,7 +54,7 @@
       "mode": 0,
       "inputs": [{ "name": "in", "type": "audio", "link": 7 }],
       "outputs": [{ "name": "out", "type": "audio", "links": [8] }],
-      "properties": { "impulse_src": "demodata/impulse.wav", "normalize": true }
+      "properties": { "impulse_src": "https://static.gausszhou.top/data/audio/music/Faded_96kbs_120sec.mp3", "normalize": true }
     },
     {
       "id": 1,
@@ -94,7 +94,7 @@
       "mode": 0,
       "inputs": [{ "name": "gain", "type": "number", "link": null }],
       "outputs": [{ "name": "out", "type": "audio", "links": [0, 7] }],
-      "properties": { "src": "demodata/audio.wav", "gain": 0.5, "loop": true, "autoplay": true, "playbackRate": 1 },
+      "properties": { "src": "https://static.gausszhou.top/data/audio/music/Faded_96kbs_120sec.mp3", "gain": 0.5, "loop": true, "autoplay": true, "playbackRate": 1 },
       "boxcolor": "#AA4"
     }
   ],

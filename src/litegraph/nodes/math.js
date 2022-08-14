@@ -989,7 +989,6 @@ const install = LiteGraph => {
 
     this.addProperty("amplitude", 1);
     this.addProperty("offset", 0);
-    this.bgImageUrl = "nodes/imgs/icon-sin.png";
   }
 
   MathTrigonometry.title = "Trigonometry";

@@ -9,7 +9,7 @@ import {
   overlapBounding,
   isInsideRectangle
 } from "./utils";
-
+import LLink from "./LLink";
 import LiteGraph from "./index";
 // *************************************************************
 //   Node CLASS                                          *******

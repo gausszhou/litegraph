@@ -4,7 +4,6 @@ const install = LiteGraph => {
   LiteGraph.slot_types_in.forEach((el)=>{ s+ = el + "\n"; });
   console.log(s); 
   */
-
   if (typeof LiteGraph.slot_types_default_in == "undefined") {
     LiteGraph.slot_types_default_in = {}; //[];
   }
