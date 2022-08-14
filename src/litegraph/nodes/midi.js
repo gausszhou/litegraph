@@ -1,3 +1,4 @@
+import {AudioSynth} from "../lib/Audiosynth"
 const install = LiteGraph => {
   var MIDI_COLOR = "#243";
 

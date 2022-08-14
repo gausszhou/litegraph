@@ -1,7 +1,8 @@
 import "./litegraph-editor/index.scss";
 import "./main.scss";
-import LiteGraph from "./utils/defaults";
+import LiteGraph from "./defaults";
 import Editor from "./litegraph-editor/index";
+// import LGraph from "./litegraph/core/LGraph";
 
 LiteGraph.Editor = Editor;
 
@@ -275,8 +276,9 @@ elem.querySelector("#download").addEventListener("click", function () {
 });
 
 elem.querySelector("#webgl").addEventListener("click", enableWebGL);
+
 elem.querySelector("#multiview").addEventListener("click", function () {
-  editor.addMultiview();
+  editor.toggleMultiview();
 });
 
 function addDemo(name, url) {

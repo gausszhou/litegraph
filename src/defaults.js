@@ -1,18 +1,22 @@
-import LiteGraph from "../litegraph/index";
-import Audio from "../litegraph/nodes/Audio";
-import Base from "../litegraph/nodes/Base";
-import config from "../litegraph/nodes/config";
-import Events from "../litegraph/nodes/Events";
-import GamepadInput from "../litegraph/nodes/GamepadInput";
-import logic from "../litegraph/nodes/logic";
-import math from "../litegraph/nodes/Math";
-import math3d from "../litegraph/nodes/Math3d";
-import MIDI from "../litegraph/nodes/MIDI";
-import network from "../litegraph/nodes/Network";
-import StringToTable from "../litegraph/nodes/StringToTable";
-import widgets from "../litegraph/nodes/Widgets";
+import LiteGraph from "./litegraph/index";
+import Audio from "./litegraph/nodes/Audio";
+import Base from "./litegraph/nodes/Base";
+import config from "./litegraph/nodes/config";
+import Events from "./litegraph/nodes/Events";
+import GamepadInput from "./litegraph/nodes/GamepadInput";
+import logic from "./litegraph/nodes/logic";
+import math from "./litegraph/nodes/Math";
+import math3d from "./litegraph/nodes/Math3d";
+import MIDI from "./litegraph/nodes/MIDI";
+import network from "./litegraph/nodes/Network";
+import StringToTable from "./litegraph/nodes/StringToTable";
+import widgets from "./litegraph/nodes/Widgets";
+import GLFX from "./litegraph/nodes/GLFX";
+import GLShaders from "./litegraph/nodes/GLShaders";
+import GLTextures from "./litegraph/nodes/GLTextures";
+import Graphics from "./litegraph/nodes/Graphics";
 
-const List = [Audio, Base, config, Events, GamepadInput, logic, math, math3d, MIDI, network, StringToTable, widgets];
+const List = [Audio, Base, config, Events, GamepadInput, logic, math, math3d, MIDI, network, StringToTable,GLFX,GLShaders,GLTextures,Graphics, widgets];
 
 List.forEach(item => {
   LiteGraph.use(item);
@@ -36,11 +40,12 @@ LiteGraph.search_filter_enabled = true; // [true!] enable filtering slots type i
 LiteGraph.search_show_all_on_open = true; // [true!] opens the results list when opening the search widget
 
 LiteGraph.auto_load_slot_types = true; // [if want false; use true; run; get vars values to be statically set; than disable] nodes types and nodeclass association with node types need to be calculated; if dont want this; calculate once and set registered_slot_[in/out]_types and slot_types_[in/out]
-/*// set these values if not using auto_load_slot_types
+
+// set these values if not using auto_load_slot_types
 LiteGraph.registered_slot_in_types = {}; // slot types for nodeclass
 LiteGraph.registered_slot_out_types = {}; // slot types for nodeclass
 LiteGraph.slot_types_in = []; // slot types IN
-LiteGraph.slot_types_out = []; // slot types OUT*/
+LiteGraph.slot_types_out = []; // slot types OUT
 
 LiteGraph.alt_drag_do_clone_nodes = true; // [true!] very handy; ALT click to clone and drag the new node
 LiteGraph.do_add_triggers_slots = true; // [true!] will create and connect event slots when using action/events connections; !WILL CHANGE node mode when using onTrigger (enable mode colors); onExecuted does not need this

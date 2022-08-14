@@ -19,8 +19,7 @@ function Editor(container_id, options = {}) {
     </div>
   </div>`;
 
-  var root = document.createElement("div");
-  // const root = document.getElementById(container_id)
+  const root = document.getElementById(container_id)
   if (!root) {
     console.warn("need root element id ");
   }
@@ -32,13 +31,16 @@ function Editor(container_id, options = {}) {
   this.footer = root.querySelector(".footer");
   this.tools = root.querySelector(".tools");
 
-  var canvas = (this.canvas = root.querySelector(".graphcanvas"));
+  const canvas = (this.canvas = root.querySelector(".graphcanvas"));
   this.canvas = canvas;
-  var graph = (this.graph = new LiteGraph.LGraph());
+  const graph = (this.graph = new LiteGraph.LGraph());
   this.graph = graph;
-  var graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph);
-  this.graphcanvas = graphcanvas;
+  
+  const graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph);
   graphcanvas.background_image = "imgs/grid.png";
+  this.graphcanvas = graphcanvas;
+  
+
   graph.onAfterExecute = function () {
     graphcanvas.draw(true);
   };
@@ -50,6 +52,7 @@ function Editor(container_id, options = {}) {
   // this.addToolsButton("loadsession_button","Load","imgs/icon-load.png", this.onLoadButton.bind(this), ".tools-left" );
   // this.addToolsButton("savesession_button","Save","imgs/icon-save.png", this.onSaveButton.bind(this), ".tools-left" );
   this.addToolsButton("playnode_button", "Play", "imgs/icon-play.png", this.onPlayButton.bind(this), ".tools-right");
+  
   this.addToolsButton(
     "playstepnode_button",
     "Step",
@@ -82,36 +85,48 @@ function Editor(container_id, options = {}) {
     this.addMiniWindow(300, 200);
   }
 
-  //append to DOM
-  var parent = document.getElementById(container_id);
-  if (parent) {
-    parent.appendChild(root);
-  }
-
   graphcanvas.resize();
-  //graphcanvas.draw(true,true);
 }
 
 Editor.prototype.addLoadCounter = function () {
-  var meter = document.createElement("div");
+  const meter = document.createElement("div");
   meter.className = "headerpanel loadmeter toolbar-widget";
-
-  var html = "<div class='cpuload'><strong>CPU</strong> <div class='bgload'><div class='fgload'></div></div></div>";
-  html += "<div class='gpuload'><strong>GFX</strong> <div class='bgload'><div class='fgload'></div></div></div>";
+  
+  const html = `
+  <div class='cpuload'>
+    <strong>CPU</strong>
+    <div class='bgload'>
+      <div class='fgload'></div>
+    </div>
+  </div>
+  <div class='gpuload'>
+    <strong>GFX</strong>
+    <div class='bgload'>
+      <div class='fgload'></div>
+    </div>
+  </div>`;
 
   meter.innerHTML = html;
-  this.root.querySelector(".header .tools-left").appendChild(meter);
-  var self = this;
+  this.root.querySelector(".footer .tools-left").appendChild(meter);
 
-  setInterval(function () {
-    meter.querySelector(".cpuload .fgload").style.width = 2 * self.graph.execution_time * 90 + "px";
-    if (self.graph.status == LiteGraph.LGraph.STATUS_RUNNING) {
-      meter.querySelector(".gpuload .fgload").style.width = self.graphcanvas.render_time * 10 * 90 + "px";
+  setInterval( ()=> {
+    meter.querySelector(".cpuload .fgload").style.width = 2 * this.graph.execution_time * 90 + "px";
+    if (this.graph.status == LiteGraph.LGraph.STATUS_RUNNING) {
+      meter.querySelector(".gpuload .fgload").style.width = this.graphcanvas.render_time * 10 * 90 + "px";
     } else {
       meter.querySelector(".gpuload .fgload").style.width = 4 + "px";
     }
-  }, 200);
+  }, 100);
 };
+
+/**
+ * 
+ * @param {String} id 
+ * @param {String} name 
+ * @param {Sting} icon_url 
+ * @param {Function} callback 
+ * @param {String} container 
+ */
 
 Editor.prototype.addToolsButton = function (id, name, icon_url, callback, container) {
   if (!container) {
@@ -140,13 +155,15 @@ Editor.prototype.onLoadButton = function () {
   this.root.appendChild(panel);
 };
 
-Editor.prototype.onSaveButton = function () {};
+Editor.prototype.onSaveButton = function () {
+  // TODO
+};
 
 Editor.prototype.onPlayButton = function () {
   var graph = this.graph;
   var button = this.root.querySelector("#playnode_button");
 
-  if (graph.status == LGraph.STATUS_STOPPED) {
+  if (graph.status == LiteGraph.LGraph.STATUS_STOPPED) {
     button.innerHTML = "<img src='imgs/icon-stop.png'/> Stop";
     graph.start();
   } else {
@@ -174,7 +191,7 @@ Editor.prototype.onDropItem = function (e) {
   var that = this;
   for (var i = 0; i < e.dataTransfer.files.length; ++i) {
     var file = e.dataTransfer.files[i];
-    var ext = LGraphCanvas.getFileExtension(file.name);
+    var ext = LiteGraph.LGraphCanvas.getFileExtension(file.name);
     var reader = new FileReader();
     if (ext == "json") {
       reader.onload = function (event) {
@@ -231,7 +248,7 @@ Editor.prototype.addMiniWindow = function (w, h) {
   var canvas = miniwindow.querySelector("canvas");
   var that = this;
 
-  var graphcanvas = new LGraphCanvas(canvas, this.graph);
+  var graphcanvas = new LiteGraph.LGraphCanvas(canvas, this.graph);
   graphcanvas.show_info = false;
   graphcanvas.background_image = "imgs/grid.png";
   graphcanvas.scale = 0.25;
@@ -277,15 +294,38 @@ Editor.prototype.addMiniWindow = function (w, h) {
 };
 
 Editor.prototype.addMultiview = function () {
-  var canvas = this.canvas;
+  const canvas = this.canvas;
+  const graph = this.graph
   this.graphcanvas.ctx.fillStyle = "black";
   this.graphcanvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
   this.graphcanvas.viewport = [0, 0, canvas.width * 0.5 - 2, canvas.height];
 
-  var graphcanvas = new LGraphCanvas(canvas, this.graph);
-  graphcanvas.background_image = "imgs/grid.png";
-  this.graphcanvas2 = graphcanvas;
-  this.graphcanvas2.viewport = [canvas.width * 0.5, 0, canvas.width * 0.5, canvas.height];
+  const graphcanvas_new = new LiteGraph.LGraphCanvas(canvas, graph);
+  graphcanvas_new.background_image = "imgs/grid.png";
+  graphcanvas_new.viewport = [canvas.width * 0.5, 0, canvas.width * 0.5, canvas.height];
+  this.graphcanvas2 = graphcanvas_new;
+  this.isMultiview = true
 };
+
+
+Editor.prototype.removeMultiview = function () {
+  const canvas = this.canvas;
+  const graph = this.graph
+  const graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph);
+  graphcanvas.background_image = "imgs/grid.png";
+  this.graphcanvas = graphcanvas;
+  this.graphcanvas2 = null
+  this.isMultiview = false
+};
+
+
+Editor.prototype.toggleMultiview = function () {
+  if(this.isMultiview){
+    this.removeMultiview()
+  }else {
+    this.addMultiview()
+  }
+};
+
 
 export default Editor;

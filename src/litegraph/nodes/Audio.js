@@ -1,3 +1,4 @@
+
 const install = LiteGraph => {
   // Audio Singlton Object
 
@@ -264,7 +265,7 @@ const install = LiteGraph => {
   LGAudioSource.supported_extensions = ["wav", "ogg", "mp3"];
 
   LGAudioSource.prototype.onAdded = function (graph) {
-    if (graph.status === LGraph.STATUS_RUNNING) {
+    if (graph.status === LiteGraph.LGraph.STATUS_RUNNING) {
       this.onStart();
     }
   };
@@ -431,11 +432,11 @@ const install = LiteGraph => {
     this.boxcolor = "#AA4";
 
     function inner(buffer) {
-      this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
+      that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
       that._audiobuffer = buffer;
       that._loading_audio = false;
       //if is playing, then play it
-      if (that.graph && that.graph.status === LGraph.STATUS_RUNNING) {
+      if (that.graph && that.graph.status === LiteGraph.LGraph.STATUS_RUNNING) {
         that.onStart();
       } //this controls the autoplay already
     }
@@ -549,8 +550,8 @@ const install = LiteGraph => {
     var that = this;
     function onFailSoHard(err) {
       console.log("Media rejected", err);
-      that._media_stream = false;
-      that.boxcolor = "red";
+      this._media_stream = false;
+      this.boxcolor = "red";
     }
   };
 

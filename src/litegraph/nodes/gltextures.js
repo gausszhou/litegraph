@@ -1,9 +1,11 @@
-// (function (global) {
-  var LiteGraph = global.LiteGraph;
-  var LGraphCanvas = global.LGraphCanvas;
-
-  //Works with Litegl.js to create WebGL nodes
-  global.LGraphTexture = null;
+const install = LiteGraph => {
+  // (function (global) {
+  // var LiteGraph = global.LiteGraph;
+  // var LGraphCanvas = global.LGraphCanvas;
+  // console.log(LiteGraph)
+  // LGraphCanvas = LiteGraph.LGraphCanvas
+  // Works with Litegl.js to create WebGL nodes
+  LiteGraph.LGraphTexture = null;
 
   if (typeof GL == "undefined") return;
 
@@ -16,7 +18,7 @@
     this.size = [LGraphTexture.image_preview_size, LGraphTexture.image_preview_size];
   }
 
-  global.LGraphTexture = LGraphTexture;
+  LiteGraph.LGraphTexture = LGraphTexture;
 
   LGraphTexture.title = "Texture";
   LGraphTexture.desc = "Texture";
@@ -5217,8 +5219,6 @@ void main(void){\n\
 
   LiteGraph.registerNodeType("texture/cubemapToTexture2D", LGraphCubemapToTexture2D);
 
-// })(this);
-const install = ()=>{
-  
-}
-export default {install}
+  // })(this);
+};
+export default { install };

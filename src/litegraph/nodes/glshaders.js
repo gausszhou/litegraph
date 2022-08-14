@@ -1,8 +1,9 @@
-(function (global) {
+const install = LiteGraph => {
+  // (function (global) {
 
   if (typeof GL == "undefined") return;
-  var LiteGraph = global.LiteGraph;
-  var LGraphCanvas = global.LGraphCanvas;
+  // var LiteGraph = global.LiteGraph;
+  // var LGraphCanvas = global.LGraphCanvas;
 
   var SHADERNODES_COLOR = "#345";
 
@@ -113,34 +114,34 @@
       };
 
     /*
-		if(!node_ctor.prototype.onGetCode)
-			node_ctor.prototype.onGetCode = function()
-			{
-				//check destination to avoid lonely nodes
-				if(!this.shader_destination)
-					return;
-				//grab inputs with types
-				var inputs = [];
-				if(this.inputs)
-				for(var i = 0; i < this.inputs.length; ++i)
-					inputs.push({ type: this.getInputData(i), name: getInputLinkID(this,i) });
-				var outputs = [];
-				if(this.outputs)
-				for(var i = 0; i < this.outputs.length; ++i)
-					outputs.push({ name: getOutputLinkID(this,i) });
-				//pass to code func
-				var results = this.extractCode(inputs);
-				//grab output, pass to next
-				if(results)
-				for(var i = 0; i < results.length; ++i)
-				{
-					var r = results[i];
-					if(!r)
-						continue;
-					this.setOutputData(i,r.value);
-				}
-			}
-		*/
+    if(!node_ctor.prototype.onGetCode)
+      node_ctor.prototype.onGetCode = function()
+      {
+        //check destination to avoid lonely nodes
+        if(!this.shader_destination)
+          return;
+        //grab inputs with types
+        var inputs = [];
+        if(this.inputs)
+        for(var i = 0; i < this.inputs.length; ++i)
+          inputs.push({ type: this.getInputData(i), name: getInputLinkID(this,i) });
+        var outputs = [];
+        if(this.outputs)
+        for(var i = 0; i < this.outputs.length; ++i)
+          outputs.push({ name: getOutputLinkID(this,i) });
+        //pass to code func
+        var results = this.extractCode(inputs);
+        //grab output, pass to next
+        if(results)
+        for(var i = 0; i < results.length; ++i)
+        {
+          var r = results[i];
+          if(!r)
+            continue;
+          this.setOutputData(i,r.value);
+        }
+      }
+    */
 
     LiteGraph.registerNodeType("shader::" + type, node_ctor);
   }
@@ -1171,32 +1172,32 @@ gl_FragColor = fragcolor;\n\
   registerShaderNode("output/fragcolor", LGraphShaderFragColor);
 
   /*
-	function LGraphShaderDiscard()
-	{
-		this.addInput("v","T");
-		this.addInput("min","T");
-		this.properties = { min_value: 0.0 };
-		this.addWidget("number","min",0,{ step: 0.01, property: "min_value" });
-	}
+  function LGraphShaderDiscard()
+  {
+    this.addInput("v","T");
+    this.addInput("min","T");
+    this.properties = { min_value: 0.0 };
+    this.addWidget("number","min",0,{ step: 0.01, property: "min_value" });
+  }
 
-	LGraphShaderDiscard.title = "Discard";
+  LGraphShaderDiscard.title = "Discard";
 
-	LGraphShaderDiscard.prototype.onGetCode = function( context )
-	{
-		if(!this.isOutputConnected(0))
-			return;
+  LGraphShaderDiscard.prototype.onGetCode = function( context )
+  {
+    if(!this.isOutputConnected(0))
+      return;
 
-		var inlink = getInputLinkID(this,0);
-		var inlink1 = getInputLinkID(this,1);
+    var inlink = getInputLinkID(this,0);
+    var inlink1 = getInputLinkID(this,1);
 
-		if(!inlink && !inlink1) //not connected
-			return;
-		context.addCode("code", return_type + " " + outlink + " = ( (" + inlink + " - "+minv+") / ("+ maxv+" - "+minv+") ) * ("+ maxv2+" - "+minv2+") + " + minv2 + ";", this.shader_destination );
-		this.setOutputData( 0, return_type );
-	}
+    if(!inlink && !inlink1) //not connected
+      return;
+    context.addCode("code", return_type + " " + outlink + " = ( (" + inlink + " - "+minv+") / ("+ maxv+" - "+minv+") ) * ("+ maxv2+" - "+minv2+") + " + minv2 + ";", this.shader_destination );
+    this.setOutputData( 0, return_type );
+  }
 
-	registerShaderNode( "output/discard", LGraphShaderDiscard );
-	*/
+  registerShaderNode( "output/discard", LGraphShaderDiscard );
+  */
 
   // *************************************************
 
@@ -1791,9 +1792,6 @@ float iqnoise( in vec2 x, float u, float v ){\n\
   };
 
   registerShaderNode("math/remap", LGraphShaderRemap);
-})(this);
-
-const install = ()=>{
-  
-}
-export default {install}
+  // })(this);
+};
+export default { install };

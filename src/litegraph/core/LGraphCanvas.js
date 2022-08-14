@@ -37,7 +37,10 @@ let temp_margin_vec4 = new Float32Array(4); // store canvas margin area
 let temp_size_vec2 = new Float32Array(2); // strore size
 let temp_slot_a_vec2 = new Float32Array(2);
 let temp_slot_b_vec2 = new Float32Array(2);
-
+let selIn,selOut, sIn,sOut
+let sV
+let filtered_extra;
+let slot;
 /* LGraphCanvas render */
 
 export function LGraphCanvas(canvas, graph, options) {
@@ -3272,9 +3275,9 @@ LGraphCanvas.prototype.drawNode = function (node, ctx) {
       }
       ctx.fillStyle = "#686";
       ctx.beginPath();
-      if (slot.type === LiteGraph.EVENT || slot.shape === LiteGraph.BOX_SHAPE) {
+      if (slot && (slot.type === LiteGraph.EVENT || slot.shape === LiteGraph.BOX_SHAPE)) {
         ctx.rect(x - 7 + 0.5, y - 4, 14, 8);
-      } else if (slot.shape === LiteGraph.ARROW_SHAPE) {
+      } else if (slot && slot.shape === LiteGraph.ARROW_SHAPE) {
         ctx.moveTo(x + 8, y);
         ctx.lineTo(x + -4, y - 4);
         ctx.lineTo(x + -4, y + 4);
@@ -5505,7 +5508,7 @@ LGraphCanvas.prototype.prompt = function (title, value, callback, event, multili
 LGraphCanvas.search_limit = -1;
 LGraphCanvas.prototype.showSearchBox = function (event, options) {
   // proposed defaults
-  def_options = {
+  const def_options = {
     slot_from: null,
     node_from: null,
     node_to: null,
@@ -5545,8 +5548,8 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
   // dialog element has been appended
 
   if (options.do_type_filter) {
-    let selIn = dialog.querySelector(".slot_in_type_filter");
-    let selOut = dialog.querySelector(".slot_out_type_filter");
+    selIn = dialog.querySelector(".slot_in_type_filter");
+    selOut = dialog.querySelector(".slot_out_type_filter");
   }
 
   dialog.close = function () {
@@ -5901,11 +5904,11 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
 
       // filter by type preprocess
       if (options.do_type_filter && that.search_box) {
-        let sIn = that.search_box.querySelector(".slot_in_type_filter");
-        let sOut = that.search_box.querySelector(".slot_out_type_filter");
+        sIn = that.search_box.querySelector(".slot_in_type_filter");
+        sOut = that.search_box.querySelector(".slot_out_type_filter");
       } else {
-        let sIn = false;
-        let sOut = false;
+        sIn = false;
+        sOut = false;
       }
 
       //extras
@@ -5926,8 +5929,8 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
       let filtered = null;
       if (Array.prototype.filter) {
         //filter supported
-        let keys = Object.keys(LiteGraph.registered_node_types); //types
-        let filtered = keys.filter(inner_test_filter);
+       let  keys = Object.keys(LiteGraph.registered_node_types); //types
+        filtered = keys.filter(inner_test_filter);
       } else {
         filtered = [];
         for (let i in LiteGraph.registered_node_types) {
