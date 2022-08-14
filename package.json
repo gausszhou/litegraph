@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc &&  vite build --base=/litegraph/",
     "lib": "rollup -c rollup.config.js",
     "format": "prettier --write src/**/*.{js,ts,css,scss}",

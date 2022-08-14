@@ -1,29 +1,43 @@
 import LiteGraph from "../litegraph/core";
 
 //Creates an interface to access extra features from a graph (like play, stop, live, etc)
-function Editor(container_id, options) {
-  options = options || {};
-
+function Editor(container_id, options = {}) {
   //fill container
-  var html = "<div class='header'><div class='tools tools-left'></div><div class='tools tools-right'></div></div>";
-  html +=
-    "<div class='content'><div class='editor-area'><canvas class='graphcanvas' width='1000' height='500' tabindex=10></canvas></div></div>";
-  html += "<div class='footer'><div class='tools tools-left'></div><div class='tools tools-right'></div></div>";
+  var html = `
+  <div class='header'>
+    <div class='tools tools-left'></div>
+    <div class='tools tools-right'></div>
+  </div>
+  <div class='content'>
+    <div class='editor-area'>
+      <canvas class='graphcanvas' width='1000' height='500' tabindex=10></canvas>
+    </div>
+  </div>
+  <div class='footer'>
+    <div class='tools tools-left'></div>
+    <div class='tools tools-right'>
+    </div>
+  </div>`;
 
   var root = document.createElement("div");
-  this.root = root;
+  // const root = document.getElementById(container_id)
+  if (!root) {
+    console.warn("need root element id ");
+  }
   root.className = "litegraph litegraph-editor";
   root.innerHTML = html;
-
-  this.tools = root.querySelector(".tools");
+  this.root = root;
+  this.header = root.querySelector(".header");
   this.content = root.querySelector(".content");
   this.footer = root.querySelector(".footer");
+  this.tools = root.querySelector(".tools");
 
   var canvas = (this.canvas = root.querySelector(".graphcanvas"));
-
-  //create graph
+  this.canvas = canvas;
   var graph = (this.graph = new LiteGraph.LGraph());
-  var graphcanvas = (this.graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph));
+  this.graph = graph;
+  var graphcanvas = new LiteGraph.LGraphCanvas(canvas, graph);
+  this.graphcanvas = graphcanvas;
   graphcanvas.background_image = "imgs/grid.png";
   graph.onAfterExecute = function () {
     graphcanvas.draw(true);
@@ -32,9 +46,9 @@ function Editor(container_id, options) {
   graphcanvas.onDropItem = this.onDropItem.bind(this);
 
   //add stuff
-  //this.addToolsButton("loadsession_button","Load","imgs/icon-load.png", this.onLoadButton.bind(this), ".tools-left" );
-  //this.addToolsButton("savesession_button","Save","imgs/icon-save.png", this.onSaveButton.bind(this), ".tools-left" );
   this.addLoadCounter();
+  // this.addToolsButton("loadsession_button","Load","imgs/icon-load.png", this.onLoadButton.bind(this), ".tools-left" );
+  // this.addToolsButton("savesession_button","Save","imgs/icon-save.png", this.onSaveButton.bind(this), ".tools-left" );
   this.addToolsButton("playnode_button", "Play", "imgs/icon-play.png", this.onPlayButton.bind(this), ".tools-right");
   this.addToolsButton(
     "playstepnode_button",
@@ -53,6 +67,7 @@ function Editor(container_id, options) {
       ".tools-right"
     );
   }
+
   if (!options.skip_maximize) {
     this.addToolsButton(
       "maximize_button",
@@ -62,6 +77,7 @@ function Editor(container_id, options) {
       ".tools-right"
     );
   }
+
   if (options.miniwindow) {
     this.addMiniWindow(300, 200);
   }
@@ -101,7 +117,6 @@ Editor.prototype.addToolsButton = function (id, name, icon_url, callback, contai
   if (!container) {
     container = ".tools";
   }
-
   var button = this.createButton(name, icon_url, callback);
   button.id = id;
   this.root.querySelector(container).appendChild(button);
@@ -181,15 +196,32 @@ Editor.prototype.goFullscreen = function () {
   } else {
     throw "Fullscreen not supported";
   }
-
-  var self = this;
-  setTimeout(function () {
-    self.graphcanvas.resize();
-  }, 100);
+};
+Editor.prototype.exitFullscreen = function () {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else {
+    throw "Fullscreen not supported";
+  }
 };
 
 Editor.prototype.onFullscreenButton = function () {
-  this.goFullscreen();
+  if (this.isFull) {
+    this.exitFullscreen();
+    this.isFull = false;
+  } else {
+    this.goFullscreen();
+    this.isFull = true;
+  }
+  setTimeout(() => {
+    this.graphcanvas.resize();
+  }, 100);
 };
 
 Editor.prototype.addMiniWindow = function (w, h) {
