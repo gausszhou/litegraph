@@ -2,6 +2,8 @@
 
 > Make something professional
 
+[![](https://static.gausszhou.top/data/image/project/litegraph.png)](https://gausszhou.github.io/litegraph/)
+
 ## TODO
 
 - [x] 优化代码，拆分App和Lib
