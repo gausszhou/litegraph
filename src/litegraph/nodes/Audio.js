@@ -244,7 +244,7 @@ const install = LiteGraph => {
     this._last_sourcenode = null; //the last AudioBufferSourceNode (there could be more if there are several sounds playing)
 
     this.addOutput("out", "audio");
-    this.addInput("gain", "number");
+    // this.addInput("gain", "number");
 
     //init context
     var context = LGAudio.getAudioContext();

@@ -1,5 +1,9 @@
 const install = LiteGraph => {
-  /* in types :: run in console :: var s=""; LiteGraph.slot_types_in.forEach(function(el){s+=el+"\n";}); console.log(s); */
+  /* in types :: run in console :: 
+  var s=""; 
+  LiteGraph.slot_types_in.forEach((el)=>{ s+ = el + "\n"; });
+  console.log(s); 
+  */
 
   if (typeof LiteGraph.slot_types_default_in == "undefined") {
     LiteGraph.slot_types_default_in = {}; //[];
@@ -47,6 +51,7 @@ const install = LiteGraph => {
   LiteGraph.slot_types_default_out["vec2"] = "math3d/vec2-to-xy";
   LiteGraph.slot_types_default_out["vec3"] = "math3d/vec3-to-xyz";
   LiteGraph.slot_types_default_out["vec4"] = "math3d/vec4-to-xyzw";
+
 };
 
 export default { install };

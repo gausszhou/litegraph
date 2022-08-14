@@ -1,4 +1,5 @@
 import {AudioSynth} from "../lib/Audiosynth"
+import MidiParser from "midi-parser-js";
 const install = LiteGraph => {
   var MIDI_COLOR = "#243";
 

@@ -31,9 +31,7 @@
     "vite": "^3.0.6"
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.6",
-    "gl-matrix": "^3.4.3",
-    "litegl": "^0.1.0",
+    "gl-matrix": "^2.8.1",
     "lodash-es": "^4.17.21",
     "midi-parser-js": "^4.0.4"
   }

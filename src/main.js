@@ -1,295 +1,57 @@
 import "./litegraph-editor/index.scss";
 import "./main.scss";
-import LiteGraph from "./defaults";
+import LiteGraph from "./litegraph/defaults";
 import Editor from "./litegraph-editor/index";
-// import LGraph from "./litegraph/core/LGraph";
+import Fetaures from "./features";
+
+import  "./litegraph/lib/litegl"
 
 LiteGraph.Editor = Editor;
+LiteGraph.use(Fetaures);
+//enable scripting
+LiteGraph.allow_scripts = true;
+LiteGraph.node_images_path = "./nodes_data/imgs/";
 
-// function demo() {
-//   multiConnection();
-// }
+let webgl_canvas = null;
+const editor = new LiteGraph.Editor("main", { miniwindow: false });
 
-// demo()
-// function multiConnection() {
-//   var node_button = LiteGraph.createNode("widget/button");
-//   node_button.pos = [100, 400];
-//   graph.add(node_button);
-
-//   var node_console = LiteGraph.createNode("basic/console");
-//   node_console.pos = [400, 400];
-//   graph.add(node_console);
-//   node_button.connect(0, node_console);
-
-//   var node_const_A = LiteGraph.createNode("basic/const");
-//   node_const_A.pos = [200, 200];
-//   graph.add(node_const_A);
-//   node_const_A.setValue(4.5);
-
-//   var node_const_B = LiteGraph.createNode("basic/const");
-//   node_const_B.pos = [200, 300];
-//   graph.add(node_const_B);
-//   node_const_B.setValue(10);
-
-//   var node_math = LiteGraph.createNode("math/operation");
-//   node_math.pos = [400, 200];
-//   graph.add(node_math);
-
-//   var node_watch = LiteGraph.createNode("basic/watch");
-//   node_watch.pos = [700, 200];
-//   graph.add(node_watch);
-
-//   var node_watch2 = LiteGraph.createNode("basic/watch");
-//   node_watch2.pos = [700, 300];
-//   graph.add(node_watch2);
-
-//   node_const_A.connect(0, node_math, 0);
-//   node_const_B.connect(0, node_math, 1);
-//   node_math.connect(0, node_watch, 0);
-//   node_math.connect(0, node_watch2, 0);
-// }
-
-// function sortTest() {
-//   var rand = LiteGraph.createNode("math/rand", null, { pos: [10, 100] });
-//   graph.add(rand);
-
-//   var nodes = [];
-//   for (var i = 4; i >= 1; i--) {
-//     var n = LiteGraph.createNode("basic/watch", null, { pos: [i * 120, 100] });
-//     graph.add(n);
-//     nodes[i - 1] = n;
-//   }
-
-//   rand.connect(0, nodes[0], 0);
-
-//   for (var i = 0; i < nodes.length - 1; i++) nodes[i].connect(0, nodes[i + 1], 0);
-// }
-
-// function benchmark() {
-//   var num_nodes = 200;
-//   var nodes = [];
-//   for (var i = 0; i < num_nodes; i++) {
-//     var n = LiteGraph.createNode("basic/watch", null, {
-//       pos: [(2000 * Math.random()) | 0, (2000 * Math.random()) | 0]
-//     });
-//     graph.add(n);
-//     nodes.push(n);
-//   }
-
-//   for (var i = 0; i < nodes.length; i++)
-//     nodes[(Math.random() * nodes.length) | 0].connect(0, nodes[(Math.random() * nodes.length) | 0], 0);
-// }
-
-//Show value inside the debug console
-function TestWidgetsNode() {
-  this.addOutput("", "number");
-  this.properties = {};
-  var that = this;
-  this.slider = this.addWidget("slider", "Slider", 0.5, function (v) {}, { min: 0, max: 1 });
-  this.number = this.addWidget("number", "Number", 0.5, function (v) {}, { min: 0, max: 100 });
-  this.combo = this.addWidget("combo", "Combo", "red", function (v) {}, { values: ["red", "green", "blue"] });
-  this.text = this.addWidget("text", "Text", "edit me", function (v) {}, {});
-  this.text2 = this.addWidget("text", "Text", "multiline", function (v) {}, { multiline: true });
-  this.toggle = this.addWidget("toggle", "Toggle", true, function (v) {}, { on: "enabled", off: "disabled" });
-  this.button = this.addWidget("button", "Button", null, function (v) {}, {});
-  this.toggle2 = this.addWidget("toggle", "Disabled", true, function (v) {}, { on: "enabled", off: "disabled" });
-  this.toggle2.disabled = true;
-  this.size = this.computeSize();
-  this.serialize_widgets = true;
-}
-
-TestWidgetsNode.title = "Widgets";
-
-LiteGraph.registerNodeType("features/widgets", TestWidgetsNode);
-
-//Show value inside the debug console
-function TestSpecialNode() {
-  this.addInput("", "number");
-  this.addOutput("", "number");
-  this.properties = {};
-  var that = this;
-  this.size = this.computeSize();
-  this.enabled = false;
-  this.visible = false;
-}
-
-TestSpecialNode.title = "Custom Shapes";
-TestSpecialNode.title_mode = LiteGraph.TRANSPARENT_TITLE;
-TestSpecialNode.slot_start_y = 20;
-
-TestSpecialNode.prototype.onDrawBackground = function (ctx) {
-  if (this.flags.collapsed) return;
-
-  ctx.fillStyle = "#555";
-  ctx.fillRect(0, 0, this.size[0], 20);
-
-  if (this.enabled) {
-    ctx.fillStyle = "#AFB";
-    ctx.beginPath();
-    ctx.moveTo(this.size[0] - 20, 0);
-    ctx.lineTo(this.size[0] - 25, 20);
-    ctx.lineTo(this.size[0], 20);
-    ctx.lineTo(this.size[0], 0);
-    ctx.fill();
-  }
-
-  if (this.visible) {
-    ctx.fillStyle = "#ABF";
-    ctx.beginPath();
-    ctx.moveTo(this.size[0] - 40, 0);
-    ctx.lineTo(this.size[0] - 45, 20);
-    ctx.lineTo(this.size[0] - 25, 20);
-    ctx.lineTo(this.size[0] - 20, 0);
-    ctx.fill();
-  }
-
-  ctx.strokeStyle = "#333";
-  ctx.beginPath();
-  ctx.moveTo(0, 20);
-  ctx.lineTo(this.size[0] + 1, 20);
-  ctx.moveTo(this.size[0] - 20, 0);
-  ctx.lineTo(this.size[0] - 25, 20);
-  ctx.moveTo(this.size[0] - 40, 0);
-  ctx.lineTo(this.size[0] - 45, 20);
-  ctx.stroke();
-
-  if (this.mouseOver) {
-    ctx.fillStyle = "#AAA";
-    ctx.fillText("Example of helper", 0, this.size[1] + 14);
-  }
-};
-
-TestSpecialNode.prototype.onMouseDown = function (e, pos) {
-  if (pos[1] > 20) return;
-
-  if (pos[0] > this.size[0] - 20) this.enabled = !this.enabled;
-  else if (pos[0] > this.size[0] - 40) this.visible = !this.visible;
-};
-
-TestSpecialNode.prototype.onBounding = function (rect) {
-  if (!this.flags.collapsed && this.mouseOver) rect[3] = this.size[1] + 20;
-};
-
-LiteGraph.registerNodeType("features/shape", TestSpecialNode);
-
-//Show value inside the debug console
-function TestSlotsNode() {
-  this.addInput("C", "number");
-  this.addOutput("A", "number");
-  this.addOutput("B", "number");
-  this.horizontal = true;
-  this.size = [100, 40];
-}
-
-TestSlotsNode.title = "Flat Slots";
-
-LiteGraph.registerNodeType("features/slots", TestSlotsNode);
-
-//Show value inside the debug console
-function TestPropertyEditorsNode() {
-  this.properties = {
-    name: "foo",
-    age: 10,
-    alive: true,
-    children: ["John", "Emily", "Charles"],
-    skills: {
-      speed: 10,
-      dexterity: 100
-    }
-  };
-
-  var that = this;
-  this.addWidget("button", "Log", null, function () {
-    console.log(that.properties);
-  });
-}
-
-TestPropertyEditorsNode.title = "Properties";
-
-LiteGraph.registerNodeType("features/properties_editor", TestPropertyEditorsNode);
-
-var webgl_canvas = null;
-
-LiteGraph.node_images_path = "../nodes_data/";
-
-var editor = new LiteGraph.Editor("main", { miniwindow: false });
+// window
+window.LiteGraph = LiteGraph;
 window.graphcanvas = editor.graphcanvas;
 window.graph = editor.graph;
+
 window.addEventListener("resize", function () {
   editor.graphcanvas.resize();
 });
-//window.addEventListener("keydown", editor.graphcanvas.processKey.bind(editor.graphcanvas) );
+
+// store data
 window.onbeforeunload = function () {
-  var data = JSON.stringify(graph.serialize());
+  var data = JSON.stringify(editor.graph.serialize());
   localStorage.setItem("litegraphg demo backup", data);
 };
 
-//enable scripting
-LiteGraph.allow_scripts = true;
+// create scene selector
+var leftTools = document.createElement("span");
+leftTools.id = "LGEditorTopBarLeftTools";
+leftTools.className = "selector";
+leftTools.innerHTML = `
+Scene 
+<select>
+  <option>Empty</option>
+</select>
+<button class='btn' id='save'>Save</button>
+<button class='btn' id='load'>Load</button>
+<button class='btn' id='download'>Download</button>
+| 
+<button class='btn' id='webgl'>WebGL</button>
+<button class='btn' id='multiview'>Multiview</button>
+`;
 
-//test
-//editor.graphcanvas.viewport = [200,200,400,400];
+editor.tools.appendChild(leftTools);
 
-//create scene selector
-var elem = document.createElement("span");
-elem.id = "LGEditorTopBarSelector";
-elem.className = "selector";
-elem.innerHTML = "";
-elem.innerHTML +=
-  "Demo <select><option>Empty</option></select> <button class='btn' id='save'>Save</button><button class='btn' id='load'>Load</button><button class='btn' id='download'>Download</button> | <button class='btn' id='webgl'>WebGL</button> <button class='btn' id='multiview'>Multiview</button>";
-editor.tools.appendChild(elem);
-var select = elem.querySelector("select");
-select.addEventListener("change", function (e) {
-  var option = this.options[this.selectedIndex];
-  var url = option.dataset["url"];
+const select = leftTools.querySelector("select");
 
-  if (url) graph.load(url);
-  else if (option.callback) option.callback();
-  else graph.clear();
-});
-
-elem.querySelector("#save").addEventListener("click", function () {
-  console.log("saved");
-  localStorage.setItem("graphdemo_save", JSON.stringify(graph.serialize()));
-});
-
-elem.querySelector("#load").addEventListener("click", function () {
-  var data = localStorage.getItem("graphdemo_save");
-  if (data) graph.configure(JSON.parse(data));
-  console.log("loaded");
-});
-
-elem.querySelector("#download").addEventListener("click", function () {
-  var data = JSON.stringify(graph.serialize());
-  var file = new Blob([data]);
-  var url = URL.createObjectURL(file);
-  var element = document.createElement("a");
-  element.setAttribute("href", url);
-  element.setAttribute("download", "graph.JSON");
-  element.style.display = "none";
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
-  setTimeout(function () {
-    URL.revokeObjectURL(url);
-  }, 1000 * 60); //wait one minute to revoke url
-});
-
-elem.querySelector("#webgl").addEventListener("click", enableWebGL);
-
-elem.querySelector("#multiview").addEventListener("click", function () {
-  editor.toggleMultiview();
-});
-
-function addDemo(name, url) {
-  var option = document.createElement("option");
-  if (url.constructor === String) option.dataset["url"] = url;
-  else option.callback = url;
-  option.innerHTML = name;
-  select.appendChild(option);
-}
-
-//some examples
+// some examples
 addDemo("Features", "examples/features.json");
 addDemo("Benchmark", "examples/benchmark.json");
 addDemo("Subgraph", "examples/subgraph.json");
@@ -297,11 +59,58 @@ addDemo("Audio", "examples/audio.json");
 addDemo("Audio Delay", "examples/audio_delay.json");
 addDemo("Audio Reverb", "examples/audio_reverb.json");
 addDemo("MIDI Generation", "examples/midi_generation.json");
-addDemo("autobackup", function () {
-  var data = localStorage.getItem("litegraphg demo backup");
-  if (!data) return;
-  var graph_data = JSON.parse(data);
-  graph.configure(graph_data);
+
+function addDemo(name, url) {
+  const option = document.createElement("option");
+  if (url.constructor === String) option.dataset["url"] = url;
+  else option.callback = url;
+  option.innerHTML = name;
+  select.appendChild(option);
+}
+
+select.addEventListener("change", function () {
+  var option = this.options[this.selectedIndex];
+  var url = option.dataset["url"];
+  if (url) editor.graph.load(url);
+  else if (option.callback) option.callback();
+  else editor.graph.clear();
+});
+
+// other button
+leftTools.querySelector("#save").addEventListener("click", function () {
+  console.log("saved");
+  localStorage.setItem("graphdemo_save", JSON.stringify(editor.graph.serialize()));
+});
+
+leftTools.querySelector("#load").addEventListener("click", function () {
+  var data = localStorage.getItem("graphdemo_save");
+  if (data) editor.graph.configure(JSON.parse(data));
+  console.log("loaded");
+});
+
+leftTools.querySelector("#download").addEventListener("click", function () {
+  const data = JSON.stringify(editor.graph.serialize());
+  const file = new Blob([data]);
+  const url = URL.createObjectURL(file);
+  var element = document.createElement("a");
+  element.setAttribute("href", url);
+  element.setAttribute("download", "graph.json");
+  element.style.display = "none";
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+  //wait one minute to revoke url
+  setTimeout(function () {
+    URL.revokeObjectURL(url);
+  }, 1000 * 60);
+});
+
+leftTools.querySelector("#webgl").addEventListener("click", ()=>{
+  enableWebGL()
+});
+
+leftTools.querySelector("#multiview").addEventListener("click",  ()=> {
+  editor.toggleMultiview();
 });
 
 //allows to use the WebGL nodes like textures
@@ -310,30 +119,8 @@ function enableWebGL() {
     webgl_canvas.style.display = webgl_canvas.style.display == "none" ? "block" : "none";
     return;
   }
-
-  var libs = [
-    "js/libs/gl-matrix-min.js",
-    "js/libs/litegl.js",
-    "../src/nodes/gltextures.js",
-    "../src/nodes/glfx.js",
-    "../src/nodes/glshaders.js",
-    "../src/nodes/geometry.js"
-  ];
-
-  function fetchJS() {
-    if (libs.length == 0) return on_ready();
-
-    var script = null;
-    script = document.createElement("script");
-    script.onload = fetchJS;
-    script.src = libs.shift();
-    document.head.appendChild(script);
-  }
-
-  fetchJS();
-
+  on_ready();
   function on_ready() {
-    console.log(this.src);
     if (!window.GL) return;
     webgl_canvas = document.createElement("canvas");
     webgl_canvas.width = 400;
@@ -362,6 +149,7 @@ function enableWebGL() {
     editor.graph.onBeforeStep = ondraw;
 
     console.log("webgl ready");
+
     function ondraw() {
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);

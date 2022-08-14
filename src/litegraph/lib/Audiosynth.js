@@ -1,9 +1,8 @@
-export let Synth
+export let Synth;
 export let AudioSynth;
 export let AudioSynthInstrument;
 
 (function () {
-
   const URL = window.URL || window.webkitURL;
   const Blob = window.Blob;
   if (!URL || !Blob) {
@@ -269,7 +268,7 @@ export let AudioSynthInstrument;
   });
   setPub("loadModulationFunction", function () {
     for (var i = 0, len = arguments.length; i < len; i++) {
-     let f = arguments[i];
+      let f = arguments[i];
       if (typeof f != "function") {
         throw new Error("Invalid modulation function.");
       }

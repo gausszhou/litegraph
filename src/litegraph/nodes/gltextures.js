@@ -7,9 +7,9 @@ const install = LiteGraph => {
   // Works with Litegl.js to create WebGL nodes
   LiteGraph.LGraphTexture = null;
 
-  if (typeof GL == "undefined") return;
+  // if (typeof GL == "undefined") return;
 
-  LGraphCanvas.link_type_colors["Texture"] = "#987";
+  LiteGraph.LGraphCanvas.link_type_colors["Texture"] = "#987";
 
   function LGraphTexture() {
     this.addOutput("tex", "Texture");
