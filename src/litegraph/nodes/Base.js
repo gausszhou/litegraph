@@ -548,20 +548,6 @@ const install = LiteGraph => {
 
   Watch.title = "Watch";
   Watch.desc = "Show value of input";
-
-  Watch.prototype.onExecute = function () {
-    if (this.inputs[0]) {
-      this.value = this.getInputData(0);
-    }
-  };
-
-  Watch.prototype.getTitle = function () {
-    if (this.flags.collapsed) {
-      return this.inputs[0].label;
-    }
-    return this.title;
-  };
-
   Watch.toString = function (o) {
     if (o == null) {
       return "null";
@@ -578,9 +564,24 @@ const install = LiteGraph => {
       return String(o);
     }
   };
+  
+  Watch.prototype.getTitle = function () {
+    if (this.flags.collapsed) {
+      return this.inputs[0].label;
+    }
+    return this.title;
+  };
 
+  Watch.prototype.onExecute = function () {
+    if (this.inputs[0]) {
+      this.value = this.getInputData(0);
+    }
+  };
+
+
+
+  // show the current value
   Watch.prototype.onDrawBackground = function (ctx) {
-    //show the current value
     this.inputs[0].label = Watch.toString(this.value);
   };
 

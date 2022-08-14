@@ -10,7 +10,7 @@
       "flags": {},
       "mode": 0,
       "outputs": [{ "name": "", "type": "number", "links": [8, 9] }],
-      "properties": { "min": 0, "max": 4, "value": 0.24000000000000002, "wcolor": "#7AF", "size": 50 },
+      "properties": { "min": 0, "max": 4, "value": 1, "wcolor": "#7AF", "size": 50 },
       "boxcolor": "rgba(128,128,128,1.0)"
     },
     {
@@ -22,7 +22,7 @@
       "mode": 0,
       "inputs": [{ "name": "value", "type": 0, "link": 9, "label": "0.000" }],
       "outputs": [{ "name": "value", "type": 0, "links": null, "label": "" }],
-      "properties": { "value": 0.24000000000000002 }
+      "properties": { "value": 1 }
     },
     {
       "id": 1,
@@ -64,7 +64,7 @@
         "gain": 0.5,
         "loop": true,
         "autoplay": true,
-        "playbackRate": 0.24000000000000002
+        "playbackRate": 1
       },
       "boxcolor": "#AA4"
     },

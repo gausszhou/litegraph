@@ -44,10 +44,10 @@ Scene
 <button class='btn' id='save'>Save</button>
 <button class='btn' id='load'>Load</button>
 <button class='btn' id='download'>Download</button>
-| 
-<button class='btn' id='webgl'>WebGL</button>
-<button class='btn' id='multiview'>Multiview</button>
 `;
+// | 
+// <button class='btn' id='webgl'>WebGL</button>
+{/* <button class='btn' id='multiview'>Multiview</button> */}
 
   editor.tools.appendChild(leftTools);
 
@@ -107,13 +107,13 @@ Scene
     }, 1000 * 60);
   });
 
-  leftTools.querySelector("#webgl").addEventListener("click", () => {
-    enableWebGL();
-  });
+  // leftTools.querySelector("#webgl").addEventListener("click", () => {
+  //   enableWebGL();
+  // });
 
-  leftTools.querySelector("#multiview").addEventListener("click", () => {
-    editor.toggleMultiview();
-  });
+  // leftTools.querySelector("#multiview").addEventListener("click", () => {
+  //   editor.toggleMultiview();
+  // });
 
   //allows to use the WebGL nodes like textures
   function enableWebGL() {

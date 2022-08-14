@@ -29,7 +29,7 @@ import Subgraph from "./Subgraph";
  */
 
 const LiteGraph = {
-  VERSION: 0.4,
+  VERSION: "0.0.1",
 
   CANVAS_GRID_SIZE: 10,
 
@@ -75,7 +75,7 @@ const LiteGraph = {
   CARD_SHAPE: 4,
   ARROW_SHAPE: 5,
   GRID_SHAPE: 6, // intended for slot arrays
-
+  DEFAULT_SHAPE: 1,
   //enums
   INPUT: 1,
   OUTPUT: 2,

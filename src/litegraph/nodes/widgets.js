@@ -531,17 +531,17 @@ const install = LiteGraph => {
   WidgetProgress.desc = "Shows data in linear progress";
 
   WidgetProgress.prototype.onExecute = function () {
-    var v = this.getInputData(0);
+    const v = this.getInputData(0);
     if (v != undefined) {
       this.properties["value"] = v;
     }
   };
 
   WidgetProgress.prototype.onDrawForeground = function (ctx) {
-    //border
+    // border
     ctx.lineWidth = 1;
     ctx.fillStyle = this.properties.color;
-    var v = (this.properties.value - this.properties.min) / (this.properties.max - this.properties.min);
+    let v = (this.properties.value - this.properties.min) / (this.properties.max - this.properties.min);
     v = Math.min(1, v);
     v = Math.max(0, v);
     ctx.fillRect(2, 2, (this.size[0] - 4) * v, this.size[1] - 4);

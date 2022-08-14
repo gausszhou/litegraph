@@ -3379,7 +3379,7 @@ LGraphCanvas.prototype.drawNodeShape = function (node, ctx, size, fgcolor, bgcol
   let low_quality = this.ds.scale < 0.5;
 
   //render node area depending on shape
-  let shape = node._shape || node.constructor.shape || LiteGraph.ROUND_SHAPE;
+  let shape = node._shape || node.constructor.shape || LiteGraph.DEFAULT_SHAPE;
 
   let title_mode = node.constructor.title_mode;
 

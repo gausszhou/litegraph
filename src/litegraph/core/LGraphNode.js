@@ -1651,7 +1651,7 @@ LGraphNode.prototype.connectByType = function (slot, target_node, target_slotTyp
   if (target_node && target_node.constructor === Number) {
     target_node = this.graph.getNodeById(target_node);
   }
-  target_slot = target_node.findInputSlotByType(target_slotType, false, true);
+  let target_slot = target_node.findInputSlotByType(target_slotType, false, true);
   if (target_slot >= 0 && target_slot !== null) {
     //console.debug("CONNbyTYPE type "+target_slotType+" for "+target_slot)
     return this.connect(slot, target_node, target_slot);
@@ -2037,68 +2037,80 @@ LGraphNode.prototype.disconnectOutput = function (slot, target_node) {
  * @return {boolean} if it was disconnected successfully
  */
 LGraphNode.prototype.disconnectInput = function (slot) {
-  //seek for the output slot
+  // seek for the output slot
   if (slot.constructor === String) {
-    slot = this.findInputSlot(slot);
+    slot = this.findInputSlot(slot); // number
     if (slot == -1) {
       if (LiteGraph.debug) {
         console.log("Connect: Error, no slot of name " + slot);
       }
       return false;
     }
-  } else if (!this.inputs || slot >= this.inputs.length) {
+  }
+  // number > length 
+  if (!this.inputs || slot >= this.inputs.length) {
     if (LiteGraph.debug) {
       console.log("Connect: Error, slot number not found");
     }
     return false;
   }
+  // normal slot number
 
   let input = this.inputs[slot];
-  if (!input) {
-    return false;
-  }
+  if (!input)  return false;
 
   let link_id = this.inputs[slot].link;
+
   if (link_id != null) {
-    this.inputs[slot].link = null;
+  this.inputs[slot].link = null;
 
-    //remove other side
+    // remove other side
     let link_info = this.graph.links[link_id];
+
     if (link_info) {
-      let target_node = this.graph.getNodeById(link_info.origin_id);
-      if (!target_node) {
-        return false;
-      }
-
-      let output = target_node.outputs[link_info.origin_slot];
-      if (!output || !output.links || output.links.length == 0) {
-        return false;
-      }
-
-      //search in the inputs list for this link
-      for (let i = 0, l = output.links.length; i < l; i++) {
+      let origin_node = this.graph.getNodeById(link_info.origin_id);
+      if (!origin_node)  return false;
+      
+      let output = origin_node.outputs[link_info.origin_slot];
+      if (!output || !output.links || output.links.length == 0)  return false;
+      
+      
+      // search in the inputs list for this link and remove this link
+      // stroe link number
+      let origin_node_output_link = -1
+      for ( let i = 0, l = output.links.length; i < l; i++) {
         if (output.links[i] == link_id) {
+          origin_node_output_link = i
           output.links.splice(i, 1);
           break;
         }
       }
 
-      delete this.graph.links[link_id]; //remove from the pool
+      // remove link from the pool
+      delete this.graph.links[link_id]; 
+
+      // update version
       if (this.graph) {
         this.graph._version++;
       }
+      
+      // callback
+      
       if (this.onConnectionsChange) {
         this.onConnectionsChange(LiteGraph.INPUT, slot, false, link_info, input);
       }
-      if (target_node.onConnectionsChange) {
-        target_node.onConnectionsChange(LiteGraph.OUTPUT, i, false, link_info, output);
+
+      if (origin_node.onConnectionsChange) {
+        origin_node.onConnectionsChange(LiteGraph.OUTPUT, origin_node_output_link, false, link_info, output);
       }
+
       if (this.graph && this.graph.onNodeConnectionChange) {
-        this.graph.onNodeConnectionChange(LiteGraph.OUTPUT, target_node, i);
+        this.graph.onNodeConnectionChange(LiteGraph.OUTPUT, target_node, origin_node_output_link);
         this.graph.onNodeConnectionChange(LiteGraph.INPUT, this, slot);
       }
     }
-  } //link != null
+  } 
+  //link != null
 
   this.setDirtyCanvas(false, true);
   if (this.graph) this.graph.connectionChange(this);
