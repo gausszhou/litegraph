@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 export default defineConfig({
-  base: "/docs",
+  base: "/litegraph/docs",
   outDir: "../dist/docs",
   title: "LiteGraph",
   description: "",
@@ -14,7 +14,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: "https://github.com/gausszhou/litegraph/docs/:path",
+      pattern: "https://github.com/gausszhou/litegraph/edit/master/docs/:path",
       text: "Edit this page on GitHub"
     },
 
@@ -30,8 +30,12 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "指南",
-      link: "/guide/"
+      text: "Guide",
+      link: "/guide/introduction"
+    },
+    {
+      text: "Demo",
+      link: "https://gausszhou.github.io/litegraph/demo/"
     }
   ];
 }
