@@ -574,7 +574,6 @@ const install = LiteGraph => {
     }
     this.properties.samples = Math.round(value);
     var old = this._values;
-
     this._values = new Float32Array(this.properties.samples);
     if (old.length <= this._values.length) {
       this._values.set(old);
@@ -742,7 +741,7 @@ const install = LiteGraph => {
     ctx.font = "40px Arial";
     ctx.fillStyle = "#666";
     ctx.textAlign = "center";
-    ctx.fillText(this.properties.OP, this.size[0] * 0.5, (this.size[1] + LiteGraph.NODE_TITLE_HEIGHT) * 0.5);
+    // ctx.fillText(this.properties.OP, this.size[0] * 0.5, (this.size[1] + LiteGraph.NODE_TITLE_HEIGHT) * 0.5);
     ctx.textAlign = "left";
   };
 

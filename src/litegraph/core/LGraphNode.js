@@ -1618,7 +1618,7 @@ LGraphNode.prototype.findSlotByType = function (input, type, returnObj, preferFr
       let aSource = (type + "").toLowerCase().split(",");
       let aDest = aSlots[i].type == "0" || aSlots[i].type == "*" ? "0" : aSlots[i].type;
       aDest = (aDest + "").toLowerCase().split(",");
-      for (sI = 0; sI < aSource.length; sI++) {
+      for (let sI = 0; sI < aSource.length; sI++) {
         for (dI = 0; dI < aDest.length; dI++) {
           if (aSource[sI] == "*") aSource[sI] = 0;
           if (aDest[sI] == "*") aDest[sI] = 0;

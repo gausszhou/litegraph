@@ -12,23 +12,26 @@
     }
   },
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc &&  vite build --base=/litegraph/",
     "lib": "rollup -c rollup.config.js",
     "format": "prettier --write src/**/*.{js,ts,css,scss}",
-    "preview": "vite preview"
+    "demo:dev": "vite --host",
+    "demo:build": "tsc &&  vite build",
+    "demo:preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.4",
     "prettier": "^2.7.1",
     "rollup": "^2.77.3",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-uglify": "^6.0.4",
     "sass": "^1.54.4",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",
-    "vite": "^3.0.6"
+    "vite": "^3.0.6",
+    "vitepress": "^1.0.0-alpha.13"
   },
   "dependencies": {
     "gl-matrix": "^2.8.1",

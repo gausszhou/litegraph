@@ -1,3 +1,5 @@
+import * as GLM from "gl-matrix";
+
 const install = LiteGraph => {
   // (function (global) {
   // var LiteGraph = global.LiteGraph;
@@ -1064,8 +1066,8 @@ void main() {\n\
       u_texture: 0,
       u_textureB: 1,
       u_factor: 1,
-      u_scale: vec2.create(),
-      u_offset: vec2.create()
+      u_scale: GLM.vec2.create(),
+      u_offset: GLM.vec2.create()
     };
   }
 

@@ -2,7 +2,13 @@
 
 > Make something professional
 
-[![](https://static.gausszhou.top/data/image/project/litegraph.png)](https://gausszhou.github.io/litegraph/)
+## Preview
+
+[Demo](https://gausszhou.github.io/litegraph/demo)
+
+[Docs](https://gausszhou.github.io/litegraph/docs)
+
+![](https://static.gausszhou.top/data/image/project/litegraph.png)
 
 ## TODO
 
@@ -12,3 +18,5 @@
 - [ ] 优化样式，并且所有 Demo 正常工作
 - [ ] 优化代码，全面使用 AnyScript
 - [ ] 优化代码，全面使用 TypeScript
+- [ ] 新功能：多语言显示
+- [ ] 新功能：节点自动重排

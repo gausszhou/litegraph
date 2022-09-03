@@ -1,10 +1,11 @@
-// import { glMatrix } from "gl-matrix/gl-matrix";
 import * as GLM from "gl-matrix";
-// import {glMatrix} from "gl-matrix";
-//packer version
-//litegl.js by Javi Agenjo 2014 @tamat (tamats.com)
-//forked from lightgl.js by Evan Wallace (madebyevan.com)
-// "use strict";
+
+// packer version
+// litegl.js by Gauss Zhou 2022 @gausszhou (gausszhou.top)
+// forked from litegl.js by Javi Agenjo 2014 @tamat (tamats.com)
+// forked from lightgl.js by Evan Wallace (madebyevan.com)
+
+"use strict";
 
 (function (global) {
   const vec2 = {};
@@ -18,7 +19,6 @@ import * as GLM from "gl-matrix";
 
   const glMatrix = GLM.glMatrix;
 
-  console.log(GLM);
 
   if (typeof GLM.glMatrix == "undefined") throw "litegl.js requires gl-matrix to work. It must be included before litegl.";
   else if (!GLM.vec2) {

@@ -1,7 +1,7 @@
-import { uglify } from "rollup-plugin-uglify";
 import typescript from '@rollup/plugin-typescript';
+import { uglify } from "rollup-plugin-uglify";
 import postcss from 'rollup-plugin-postcss';
-// import scss from 'rollup-plugin-scss'
+
 export default [
   {
     input: "src/litegraph/index",

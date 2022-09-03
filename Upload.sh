@@ -3,7 +3,8 @@
 set -e 
 
 rm -rf dist
-npm run build
+yarn demo:build
+yarn docs:build
 
 if [ ! -d "dist" ]
 then
@@ -18,10 +19,11 @@ git config --local user.name "gausszhou"
 git config --local user.email gausszhou@qq.com
 git add .
 time=$(date "+%Y-%m-%d %H:%m")
-git commit -m "$time deploy"
+git commit -m "$time gh-pages build"
 git checkout -b gh-pages
 git push  git@github.com:gausszhou/litegraph.git gh-pages -f
 
 fi
 
 cd -
+

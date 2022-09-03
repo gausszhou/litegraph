@@ -2953,7 +2953,10 @@ LGraphCanvas.prototype.drawBackCanvas = function () {
 /**
  * draws the given node inside the canvas
  * @method drawNode
- **/
+ * @param {*} node 
+ * @param {*} ctx 
+ * @returns 
+ */
 LGraphCanvas.prototype.drawNode = function (node, ctx) {
   let glow = false;
 
@@ -5526,17 +5529,17 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
   //console.log(options);
 
   let that = this;
-  let input_html = "";
   let graphcanvas = LGraphCanvas.active_canvas;
   let canvas = graphcanvas.canvas;
   let root_document = canvas.ownerDocument || document;
 
   let dialog = document.createElement("div");
-  dialog.className = "litegraph litesearchbox graphdialog rounded";
-  dialog.innerHTML = "<span class='name'>Search</span> <input autofocus type='text' class='value rounded'/>";
+  dialog.className = "litegraph litesearchbox graphdialog";
+  dialog.innerHTML = `<span class='name'>Search</span><input autofocus type='text' class='value'/>`;
   if (options.do_type_filter) {
-    dialog.innerHTML += "<select class='slot_in_type_filter'><option value=''></option></select>";
-    dialog.innerHTML += "<select class='slot_out_type_filter'><option value=''></option></select>";
+    dialog.innerHTML += `
+    <select class='slot_in_type_filter'><option value=''></option></select>
+    <select class='slot_out_type_filter'><option value=''></option></select>`
   }
   dialog.innerHTML += "<div class='helper'></div>";
 
@@ -5545,6 +5548,7 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
     root_document.body.appendChild(dialog);
     root_document.body.style.overflow = "hidden";
   }
+
   // dialog element has been appended
 
   if (options.do_type_filter) {
@@ -5566,9 +5570,9 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
     }
   };
 
-  if (this.ds.scale > 1) {
-    dialog.style.transform = "scale(" + this.ds.scale + ")";
-  }
+  // if (this.ds.scale > 1) {
+  //   dialog.style.transform = "scale(" + this.ds.scale + ")";
+  // }
 
   // hide on mouse leave
   if (options.hide_on_mouse_leave) {
@@ -5628,16 +5632,17 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
       this.focus();
     });
     input.addEventListener("keydown", function (e) {
-      if (e.keyCode == 38) {
-        //UP
+      const UP = 38
+      const DOWN = 40
+      const ESC = 27
+      const ENTER = 13
+      if (e.keyCode == UP) {
         changeSelection(false);
-      } else if (e.keyCode == 40) {
-        //DOWN
+      } else if (e.keyCode == DOWN) {
         changeSelection(true);
-      } else if (e.keyCode == 27) {
-        //ESC
+      } else if (e.keyCode == ESC) {
         dialog.close();
-      } else if (e.keyCode == 13) {
+      } else if (e.keyCode == ENTER) {
         if (selected) {
           select(selected.innerHTML);
         } else if (first) {
@@ -5730,24 +5735,6 @@ LGraphCanvas.prototype.showSearchBox = function (event, options) {
 
   //To avoid out of screen problems
   if (event.layerY > rect.height - 200) helper.style.maxHeight = rect.height - event.layerY - 20 + "px";
-
-  /*
-    let offsetx = -20;
-    let offsety = -20;
-    if (rect) {
-        offsetx -= rect.left;
-        offsety -= rect.top;
-    }
-
-    if (event) {
-        dialog.style.left = event.clientX + offsetx + "px";
-        dialog.style.top = event.clientY + offsety + "px";
-    } else {
-        dialog.style.left = canvas.width * 0.5 + offsetx + "px";
-        dialog.style.top = canvas.height * 0.5 + offsety + "px";
-    }
-    canvas.parentNode.appendChild(dialog);
-    */
 
   input.focus();
   if (options.show_all_on_open) refreshHelper();
