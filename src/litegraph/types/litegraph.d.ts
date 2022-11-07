@@ -111,6 +111,7 @@ export interface IContextMenuOptions {
 }
 
 export type ContextMenuItem = IContextMenuItem | null;
+
 export type ContextMenuEventListener = (
   value: ContextMenuItem,
   options: IContextMenuOptions,

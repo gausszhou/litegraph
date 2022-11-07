@@ -33,6 +33,7 @@ const List = [
   Graphics,
   Widgets
 ];
+
 const install = LiteGraph =>{
   List.forEach(item => {
     LiteGraph.use(item);

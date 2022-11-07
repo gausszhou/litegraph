@@ -8,7 +8,7 @@ const install = LiteGraph => {
   // LGraphCanvas = LiteGraph.LGraphCanvas
   // Works with Litegl.js to create WebGL nodes
   LiteGraph.LGraphTexture = null;
-
+  
   // if (typeof GL == "undefined") return;
 
   LiteGraph.LGraphCanvas.link_type_colors["Texture"] = "#987";
@@ -5221,6 +5221,5 @@ void main(void){\n\
 
   LiteGraph.registerNodeType("texture/cubemapToTexture2D", LGraphCubemapToTexture2D);
 
-  // })(this);
 };
 export default { install };

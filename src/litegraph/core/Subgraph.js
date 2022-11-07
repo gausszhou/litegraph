@@ -573,12 +573,14 @@ Subgraph.prototype.onMouseDown = function(e, pos, graphcanvas) {
     return this.title;
   };
 
-  LiteGraph.Subgraph = Subgraph;
+  // 
   LiteGraph.registerNodeType("graph/subgraph", Subgraph);
   LiteGraph.GraphInput = GraphInput;
   LiteGraph.registerNodeType("graph/input", GraphInput);
   LiteGraph.GraphOutput = GraphOutput;
   LiteGraph.registerNodeType("graph/output", GraphOutput);
+  // 
+  LiteGraph.Subgraph = Subgraph;
 };
 
 export default { install };
