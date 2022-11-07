@@ -1,14 +1,14 @@
 {
-  "name": "litegraph",
+  "name": "@gausszhou/litegraph",
   "private": false,
   "version": "0.0.0",
   "type": "module",
-  "main": "./lib/bundle.umd.cjs",
-  "module": "./lib/bundle.esm.js",
+  "main": "./lib/litegraph.umd.js",
+  "module": "./lib/litegraph.esm.js",
   "exports": {
     ".": {
-      "import": "./dist/bundle.esm.js",
-      "require": "./dist/bundle.umd.cjs"
+      "import": "./dist/litegraph.esm.js",
+      "require": "./dist/litegraph.umd.js"
     }
   },
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.4",
+    "@types/lodash-es": "^4.17.6",
     "prettier": "^2.7.1",
     "rollup": "^2.77.3",
     "rollup-plugin-postcss": "^4.0.2",

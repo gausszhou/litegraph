@@ -8,12 +8,12 @@ export default [
     output: [
       {
         format: "umd",
-        file: "lib/bundle.umd.js",
+        file: "lib/litegraph.umd.js",
         name: "litegraph"
       },
       {
         format: "esm",
-        file: "lib/bundle.esm.js"
+        file: "lib/litegraph.esm.js"
       }
     ],
     plugins: [uglify(), typescript(), postcss()]
