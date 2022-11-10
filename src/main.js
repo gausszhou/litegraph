@@ -1,6 +1,6 @@
 import "./litegraph-editor/index.scss";
 import "./main.scss";
-import LiteGraph from "./litegraph";
+import LiteGraph from "./litegraph-desktop";
 import Features from "./features";
 import Editor from "./litegraph-editor/index";
 

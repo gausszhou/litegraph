@@ -1268,7 +1268,7 @@ const install = LiteGraph => {
 
   LGMIDIFromFile.prototype.loadMIDIFile = function (url) {
     var that = this;
-    LiteGraph.fetchFile(
+    LiteGraph.loadFile(
       url,
       "arraybuffer",
       function (data) {

@@ -1,4 +1,4 @@
-import LiteGraph  from "../core/index";
+import LiteGraph  from "../core";
 
 /**
  * ContextMenu from LiteGUI

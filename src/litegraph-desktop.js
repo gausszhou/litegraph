@@ -1,10 +1,9 @@
 // only export core
 import "./styles/index.scss";
-import LiteGraph from "./core";
+import LiteGraph from "./litegraph/core";
 
 LiteGraph.debug = false;
 LiteGraph.catch_exceptions = true;
-LiteGraph.throw_errors = true;
 LiteGraph.allow_scripts = false; //if set to true some nodes like Formula would be allowed to evaluate code that comes from unsafe sources (like node configuration); which could lead to exploits
 
 LiteGraph.searchbox_extras = {}; //used to add extra features to the search box
