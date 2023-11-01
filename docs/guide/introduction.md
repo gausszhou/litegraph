@@ -1,11 +1,5 @@
 # What is LiteGraph?
 
-<script setup>
-import Demo1 from "./demos/Demo1.vue"
-</script>
-
-<Demo1/>
-
 ## 摘要
 
 LiteGraph 是一个 JavaScript 库，用于在类似于 Unreal Blueprints 虚幻蓝图的浏览器中创建图形。
