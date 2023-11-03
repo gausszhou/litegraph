@@ -1,6 +1,14 @@
+/**
+ * 获取两个坐标点的直线距离
+ * @param a 
+ * @param b 
+ * @returns number
+ * @example distance([0, 0], [0, 5])
+ */
 export function distance(a: number[], b: number[]): number {
   return Math.sqrt((b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]));
 }
+
 
 export function colorToString(c: number[]) {
   return (
@@ -52,6 +60,12 @@ export function num2hex(triplet: number[]) {
   return hex;
 }
 
+/**
+ * 比较两个对象是否相等
+ * @param a 
+ * @param b 
+ * @returns 
+ */
 export function compareObjects(a: any, b: any): boolean {
   for (let i in a) {
     if (a[i] != b[i]) {
@@ -76,7 +90,12 @@ export function growBounding(bounding: number[], x: number, y: number) {
   }
 }
 
-// point inside bounding box
+/**
+ * point inside bounding box
+ * @param p [x, y]
+ * @param bb [[x1, y1], [x2, y2]]
+ * @returns 
+ */
 export function isInsideBounding(p: number[], bb: number[][]): boolean {
   if (p[0] < bb[0][0] || p[1] < bb[0][1] || p[0] > bb[1][0] || p[1] > bb[1][1]) {
     return false;
@@ -84,8 +103,13 @@ export function isInsideBounding(p: number[], bb: number[][]): boolean {
   return true;
 }
 
-//bounding overlap, format: [ startx, starty, width, height ]
-export function overlapBounding(a: number[], b: number[]) {
+/**
+ * 判断两个矩形是否重叠
+ * @param a bounding overlap, format: [ startx, starty, width, height ]
+ * @param b bounding overlap, format: [ startx, starty, width, height ]
+ * @returns 
+ */
+export function overlapBounding(a: number[] | Float32Array, b: number[] | Float32Array) {
   let A_end_x = a[0] + a[2];
   let A_end_y = a[1] + a[3];
   let B_end_x = b[0] + b[2];
@@ -97,6 +121,16 @@ export function overlapBounding(a: number[], b: number[]) {
   return true;
 }
 
+/**
+ * 判断坐标点是否在矩形范围内
+ * @param x 
+ * @param y 
+ * @param left 
+ * @param top 
+ * @param width 
+ * @param height 
+ * @returns 
+ */
 export function isInsideRectangle(
   x: number,
   y: number,
@@ -111,10 +145,21 @@ export function isInsideRectangle(
   return false;
 }
 
+/**
+ * 获取当前时间戳
+ * @returns 
+ */
 export function getTime(): number {
   return new Date().getTime();
 }
 
+/**
+ * 控制 v 的数值在 a 和 b 之间
+ * @param v 
+ * @param a 
+ * @param b 
+ * @returns 
+ */
 export function clamp(v: number, a: number, b: number): number {
   return a > v ? a : b < v ? b : v;
 }
