@@ -1,5 +1,4 @@
 import { toArray } from "lodash-es";
-
 import {
   distance,
   colorToString,
@@ -16,13 +15,14 @@ import {
 import CurveEditor from "../tools/CurveEditor";
 import ContextMenu from "../tools/ContextMenu";
 import DragAndScale from "../tools/DragAndScale";
-
-// import LGraph from "./LGraph";
-// import LGraphCanvas from "./LGraphCanvas";
-// import LGraphGroup from "./LGraphGroup";
+import LLink from "./LLink";
+import LGraph from "./LGraph";
 import LGraphNode from "./LGraphNode";
-// import LLink from "./LLink";
-// import Subgraph from "./Subgraph";
+import LGraphGroup from "./LGraphGroup";
+import LGraphCanvas from "./LGraphCanvas";
+import Subgraph from "./Subgraph";
+import GraphInput from "./GraphInput";
+import GraphOutput from "./GraphOutput";
 
 /**
  * The Global Scope. It contains all the registered node classes.
@@ -32,15 +32,26 @@ import LGraphNode from "./LGraphNode";
  */
 
 class LiteGraph {
+
   VERSION = "0.0.1";
+  LLink: LLink | null = null;
+  LGraph: LGraph | null = null;
+  LGraphNode: LGraphNode | null = null;
+  LGraphGroup: LGraphGroup | null = null;
+  LGraphCanvas: LGraphCanvas | null = null;
+  Subgraph: Subgraph | null = null;
+  GraphInput: GraphInput | null = null;
+  GraphOutput: GraphOutput | null = null;
+
   static ContextMenu = ContextMenu;
   static CurveEditor = CurveEditor
   static DragAndScale = DragAndScale
-
-  static use: Function;
+  static node_images_path = ""
+  static do_add_triggers_slots = true;
   static _installedPlugins: any[];
-  static extendClass: Function;
-  static closeAllContextMenus: Function;
+  // static use: Function;
+  // static extendClass: Function;
+  // static closeAllContextMenus: Function;
   static registerNodeType: Function;
   static getNodeTypesCategories: Function;
   static pointerListenerAdd: Function;
@@ -61,44 +72,41 @@ class LiteGraph {
   static hex2num = hex2num;
   static num2hex = num2hex;
 
-  CANVAS_GRID_SIZE = 10;
+  static CANVAS_GRID_SIZE = 10;
+  static NODE_TITLE_HEIGHT = 30;
+  static NODE_TITLE_TEXT_Y = 20;
+  static NODE_SLOT_HEIGHT = 20;
+  static NODE_WIDGET_HEIGHT = 20;
+  static NODE_WIDTH = 140;
+  static NODE_MIN_WIDTH = 50;
+  static NODE_COLLAPSED_RADIUS = 10;
+  static NODE_COLLAPSED_WIDTH = 80;
+  static NODE_TITLE_COLOR = "#999";
+  static NODE_SELECTED_TITLE_COLOR = "#FFF";
+  static NODE_TEXT_SIZE = 14;
+  static NODE_TEXT_COLOR = "#AAA";
+  static NODE_SUBTEXT_SIZE = 12;
+  static NODE_DEFAULT_COLOR = "#333";
+  static NODE_DEFAULT_BGCOLOR = "#353535";
+  static NODE_DEFAULT_BOXCOLOR = "#666";
+  static NODE_DEFAULT_SHAPE = "box";
+  static NODE_BOX_OUTLINE_COLOR = "#FFF";
 
-  NODE_TITLE_HEIGHT = 30;
+  static DEFAULT_SHADOW_COLOR = "rgba(0,0,0,0.5)";
+  static DEFAULT_GROUP_FONT = 24;
 
-  NODE_TITLE_TEXT_Y = 20;
+  static WIDGET_BGCOLOR = "#222";
+  static WIDGET_OUTLINE_COLOR = "#666";
+  static WIDGET_TEXT_COLOR = "#DDD";
+  static WIDGET_SECONDARY_TEXT_COLOR = "#999";
 
-  NODE_SLOT_HEIGHT = 20;
-  NODE_WIDGET_HEIGHT = 20;
-  NODE_WIDTH = 140;
-  NODE_MIN_WIDTH = 50;
-  NODE_COLLAPSED_RADIUS = 10;
-  NODE_COLLAPSED_WIDTH = 80;
-  NODE_TITLE_COLOR = "#999";
-  NODE_SELECTED_TITLE_COLOR = "#FFF";
-  NODE_TEXT_SIZE = 14;
-  NODE_TEXT_COLOR = "#AAA";
-  NODE_SUBTEXT_SIZE = 12;
-  NODE_DEFAULT_COLOR = "#333";
-  NODE_DEFAULT_BGCOLOR = "#353535";
-  NODE_DEFAULT_BOXCOLOR = "#666";
-  NODE_DEFAULT_SHAPE = "box";
-  NODE_BOX_OUTLINE_COLOR = "#FFF";
+  static LINK_COLOR = "#9A9";
+  static EVENT_LINK_COLOR = "#A86";
+  static CONNECTING_LINK_COLOR = "#AFA";
 
-  DEFAULT_SHADOW_COLOR = "rgba(0,0,0,0.5)";
-  DEFAULT_GROUP_FONT = 24;
-
-  WIDGET_BGCOLOR = "#222";
-  WIDGET_OUTLINE_COLOR = "#666";
-  WIDGET_TEXT_COLOR = "#DDD";
-  WIDGET_SECONDARY_TEXT_COLOR = "#999";
-
-  LINK_COLOR = "#9A9";
-  EVENT_LINK_COLOR = "#A86";
-  CONNECTING_LINK_COLOR = "#AFA";
-
-  MAX_NUMBER_OF_NODES = 1000; // avoid infinite loops
+  static MAX_NUMBER_OF_NODES = 1000; // avoid infinite loops
   static DEFAULT_POSITION = [100, 100]; //default node position
-  VALID_SHAPES = ["default", "box", "round", "card"]; //"circle"
+  static VALID_SHAPES = ["default", "box", "round", "card"]; //"circle"
 
   //shapes are used for nodes but also for slots
   static BOX_SHAPE = 1;
@@ -109,14 +117,14 @@ class LiteGraph {
   static GRID_SHAPE = 6; // intended for slot arrays
   static DEFAULT_SHAPE = 1;
   //enums
-  INPUT = 1;
-  OUTPUT = 2;
+  static INPUT = 1;
+  static OUTPUT = 2;
 
   static EVENT = "-1"; // for outputs
   static ACTION = "-1"; // for inputs
 
-  NODE_MODES = ["Always", "On Event", "Never", "On Trigger"]; // helper, will add "On Request" and more in the future
-  NODE_MODES_COLORS = ["#666", "#422", "#333", "#224", "#626"]; // use with node_box_coloured_by_mode
+  static NODE_MODES = ["Always", "On Event", "Never", "On Trigger"]; // helper, will add "On Request" and more in the future
+  static NODE_MODES_COLORS = ["#666", "#422", "#333", "#224", "#626"]; // use with node_box_coloured_by_mode
 
   static ALWAYS = 0;
   static ON_EVENT = 1;
@@ -130,15 +138,15 @@ class LiteGraph {
   static CENTER = 5;
 
   static LINK_RENDER_MODES = ["Straight", "Linear", "Spline"]; // helper
-  STRAIGHT_LINK = 0;
-  LINEAR_LINK = 1;
-  SPLINE_LINK = 2;
+  static STRAIGHT_LINK = 0;
+  static LINEAR_LINK = 1;
+  static SPLINE_LINK = 2;
 
-  NORMAL_TITLE = 0;
-  NO_TITLE = 1;
-  TRANSPARENT_TITLE = 2;
-  AUTOHIDE_TITLE = 3;
-  VERTICAL_LAYOUT = "vertical"; // arrange nodes vertically
+  static NORMAL_TITLE = 0;
+  static NO_TITLE = 1;
+  static TRANSPARENT_TITLE = 2;
+  static AUTOHIDE_TITLE = 3;
+  static VERTICAL_LAYOUT = "vertical"; // arrange nodes vertically
 
   static proxy = null; // used to redirect calls
   node_images_path = "";
@@ -240,7 +248,7 @@ class LiteGraph {
       //is a class
       for (let i in LGraphNode.prototype) {
         if (!baseClass.prototype[i]) {
-          baseClass.prototype[i] = LGraphNode.prototype[i];
+          baseClass.prototype[i] = (LGraphNode.prototype as any)[i];
         }
       }
     }
@@ -347,45 +355,45 @@ class LiteGraph {
    * @param {String|Object} type name of the node or the node constructor itself
    * @param {String} slot_type name of the slot type (variable type), eg. string, number, array, boolean, ..
    */
-  registerNodeAndSlotType(type: string, slot_type: string, out: string | boolean) {
-    out = out || false;
-    let baseClass =
-      type.constructor === String && this.registered_node_types[type] !== "anonymous"
-        ? this.registered_node_types[type]
-        : type;
-
-    let sCN = baseClass.constructor.type;
-    let aTypes;
-    if (typeof slot_type == "string") {
-      aTypes = slot_type.split(",");
-    } else if (slot_type == LiteGraph.EVENT || slot_type == LiteGraph.ACTION) {
-      aTypes = ["_event_"];
+  registerNodeAndSlotType(type: string , slot_type: string, out: string | boolean = false) {
+    let baseClass = {};
+    if (typeof type === "string" && this.registered_node_types[type] !== "anonymous") {
+      baseClass = this.registered_node_types[type]
     } else {
-      aTypes = ["*"];
+      baseClass = type
+    }
+    const slotNoeType = (baseClass.constructor as unknown as LGraphNode).type;
+    let allTypes;
+    if (typeof slot_type == "string") {
+      allTypes = slot_type.split(",");
+    } else if (slot_type == LiteGraph.EVENT || slot_type == LiteGraph.ACTION) {
+      allTypes = ["_event_"];
+    } else {
+      allTypes = ["*"];
     }
 
-    for (let i = 0; i < aTypes.length; ++i) {
-      let sT = aTypes[i];
-      if (sT === "") {
-        sT = "*";
+    for (let i = 0; i < allTypes.length; ++i) {
+      let slotType = allTypes[i];
+      if (slotType === "") {
+        slotType = "*";
       }
       type slotTypes = "registered_slot_out_types" | "registered_slot_in_types";
       let registerTo: slotTypes = out ? "registered_slot_out_types" : "registered_slot_in_types";
-      if (typeof this[registerTo][sT] === "undefined") {
-        this[registerTo][sT] = { nodes: [] };
+      if (typeof this[registerTo][slotType] === "undefined") {
+        this[registerTo][slotType] = { nodes: [] };
       }
 
-      this[registerTo][sT].nodes.push(sCN);
+      this[registerTo][slotType].nodes.push(slotNoeType);
 
       // check if is a new type
       if (!out) {
-        if (!this.slot_types_in.includes(sT.toLowerCase())) {
-          this.slot_types_in.push(sT.toLowerCase());
+        if (!this.slot_types_in.includes(slotType.toLowerCase())) {
+          this.slot_types_in.push(slotType.toLowerCase());
           this.slot_types_in.sort();
         }
       } else {
-        if (!this.slot_types_out.includes(sT.toLowerCase())) {
-          this.slot_types_out.push(sT.toLowerCase());
+        if (!this.slot_types_out.includes(slotType.toLowerCase())) {
+          this.slot_types_out.push(slotType.toLowerCase());
           this.slot_types_out.sort();
         }
       }
@@ -445,7 +453,7 @@ class LiteGraph {
    * @param {Function} func
    */
   addNodeMethod(name: string, func: Function) {
-    LGraphNode.prototype[name] = func;
+    (LGraphNode.prototype as any)[name] = func;
     for (let i in this.registered_node_types) {
       let type = this.registered_node_types[i];
       if (type.prototype[name]) {
@@ -462,7 +470,7 @@ class LiteGraph {
    * @param {Object} options to set options
    */
 
-  createNode(type: string, title: string, options: any) {
+  createNode(type: string, title: string = "", options: any = {}) {
     let baseClass = this.registered_node_types[type];
     if (!baseClass) {
       if (LiteGraph.debug) {
@@ -632,7 +640,7 @@ class LiteGraph {
     }
   }
   //separated just to improve if it doesn't work
-  cloneObject(obj: any, target?: any) {
+  static cloneObject(obj: any, target?: any) {
     if (obj == null) {
       return null;
     }
@@ -653,7 +661,7 @@ class LiteGraph {
    * @param {String} type_b
    * @return {Boolean} true if they can be connected
    */
-  isValidConnection(type_a: string, type_b: string): boolean {
+  static isValidConnection(type_a: string, type_b: string): boolean {
     if (type_a === "" || type_a === "*") return true;
     if (type_b === "" || type_b === "*") return true;
     // same type (is valid for triggers)
@@ -731,192 +739,193 @@ class LiteGraph {
     return null;
   }
 
-}
+  /* LiteGraph GUI elements used for canvas editing *************************************/
+  // TODO Refactor
+  static closeAllContextMenus(refWindow: Window | null) {
+    refWindow = refWindow || window;
 
-/* LiteGraph GUI elements used for canvas editing *************************************/
-// TODO Refactor
-LiteGraph.closeAllContextMenus = (refWindow: Window | null) => {
-  refWindow = refWindow || window;
-
-  const elements = refWindow.document.querySelectorAll(".litecontextmenu");
-  if (!elements.length) {
-    return;
-  }
-
-  const menus = [];
-  for (let i = 0; i < elements.length; i++) {
-    menus.push(elements[i]);
-  }
-
-  for (let i = 0; i < menus.length; i++) {
-    const menu = menus[i]
-    if (menu.parentNode) {
-      menu.parentNode.removeChild(menu);
+    const elements = refWindow.document.querySelectorAll(".litecontextmenu");
+    if (!elements.length) {
+      return;
     }
-  }
-};
 
-LiteGraph.extendClass = (target: any, origin: any) => {
-  for (let i in origin) {
-    //copy class properties
-    if (target.hasOwnProperty(i)) {
-      continue;
+    const menus = [];
+    for (let i = 0; i < elements.length; i++) {
+      menus.push(elements[i]);
     }
-    target[i] = origin[i];
-  }
 
-  if (origin.prototype) {
-    //copy prototype properties
-    for (let i in origin.prototype) {
-      //only enumerable
-      if (!origin.prototype.hasOwnProperty(i)) {
+    for (let i = 0; i < menus.length; i++) {
+      const menu = menus[i]
+      if (menu.parentNode) {
+        menu.parentNode.removeChild(menu);
+      }
+    }
+  };
+
+  static extendClass(target: any, origin: any) {
+    for (let i in origin) {
+      //copy class properties
+      if (target.hasOwnProperty(i)) {
         continue;
       }
+      target[i] = origin[i];
+    }
 
-      if (target.prototype.hasOwnProperty(i)) {
-        //avoid overwriting existing ones
-        continue;
-      }
+    if (origin.prototype) {
+      //copy prototype properties
+      for (let i in origin.prototype) {
+        //only enumerable
+        if (!origin.prototype.hasOwnProperty(i)) {
+          continue;
+        }
 
-      //copy getters
-      if (origin.prototype.__lookupGetter__(i)) {
-        target.prototype.__defineGetter__(i, origin.prototype.__lookupGetter__(i));
-      } else {
-        target.prototype[i] = origin.prototype[i];
-      }
+        if (target.prototype.hasOwnProperty(i)) {
+          //avoid overwriting existing ones
+          continue;
+        }
 
-      //and setters
-      if (origin.prototype.__lookupSetter__(i)) {
-        target.prototype.__defineSetter__(i, origin.prototype.__lookupSetter__(i));
+        //copy getters
+        if (origin.prototype.__lookupGetter__(i)) {
+          target.prototype.__defineGetter__(i, origin.prototype.__lookupGetter__(i));
+        } else {
+          target.prototype[i] = origin.prototype[i];
+        }
+
+        //and setters
+        if (origin.prototype.__lookupSetter__(i)) {
+          target.prototype.__defineSetter__(i, origin.prototype.__lookupSetter__(i));
+        }
       }
     }
-  }
-};
+  };
 
-/* helper for interaction: pointer, touch, mouse Listeners
-used by LGraphCanvas DragAndScale ContextMenu*/
-LiteGraph.pointerListenerAdd = function (oDOM: HTMLElement, sEvIn: string, callback: EventListenerOrEventListenerObject, capture = false) {
-  if (!oDOM || !oDOM.addEventListener || !sEvIn || typeof callback !== "function") {
-    //console.log("cant pointerListenerAdd "+oDOM+", "+sEvent+", "+fCall);
-    return; // -- break --
-  }
 
-  let sMethod = LiteGraph.pointerevents_method;
-  let sEvent = sEvIn;
-
-  // UNDER CONSTRUCTION
-  // convert pointerevents to touch event when not available
-  if (sMethod == "pointer" && !window.PointerEvent) {
-    console.warn("sMethod=='pointer' && !window.PointerEvent");
-    console.log(
-      "Converting pointer[" + sEvent + "] : down move up cancel enter TO touchstart touchmove touchend, etc .."
-    );
-    switch (sEvent) {
-      case "down": {
-        sMethod = "touch";
-        sEvent = "start";
-        break;
-      }
-      case "move": {
-        sMethod = "touch";
-        //sEvent = "move";
-        break;
-      }
-      case "up": {
-        sMethod = "touch";
-        sEvent = "end";
-        break;
-      }
-      case "cancel": {
-        sMethod = "touch";
-        //sEvent = "cancel";
-        break;
-      }
-      case "enter": {
-        console.log("debug: Should I send a move event?"); // ???
-        break;
-      }
-      // case "over": case "out": not used at now
-      default: {
-        console.warn("PointerEvent not available in this browser ? The event " + sEvent + " would not be called");
-      }
+  static use(plugin: any) {
+    // 获取已经安装的插件
+    const installedPlugins = LiteGraph._installedPlugins || (LiteGraph._installedPlugins = []);
+    // 看看插件是否已经安装，如果安装了直接返回
+    if (installedPlugins.indexOf(plugin) > -1) {
+      return this;
     }
-  }
 
-  switch (sEvent) {
-    //both pointer and move events
-    case "down":
-    case "up":
-    case "move":
-    case "over":
-    case "out":
-    case "enter": {
-      oDOM.addEventListener(sMethod + sEvent, callback, capture);
+    const args = toArray(arguments);
+    args.unshift(this);
+    if (typeof plugin.install === "function") {
+      plugin.install.apply(plugin, args);
+    } else if (typeof plugin === "function") {
+      plugin.apply(null, args);
     }
-    // only pointerevents
-    case "leave":
-    case "cancel":
-    case "gotpointercapture":
-    case "lostpointercapture": {
-      if (sMethod != "mouse") {
-        return oDOM.addEventListener(sMethod + sEvent, callback, capture);
-      }
-    }
-    // not "pointer" || "mouse"
-    default:
-      return oDOM.addEventListener(sEvent, callback, capture);
-  }
-};
-
-LiteGraph.pointerListenerRemove = function (oDOM: HTMLElement, sEvent: string, callback: EventListenerOrEventListenerObject, capture = false) {
-  if (!oDOM || !oDOM.removeEventListener || !sEvent || typeof callback !== "function") {
-    //console.log("cant pointerListenerRemove "+oDOM+", "+sEvent+", "+fCall);
-    return; // -- break --
-  }
-  switch (sEvent) {
-    //both pointer and move events
-    case "down":
-    case "up":
-    case "move":
-    case "over":
-    case "out":
-    case "enter": {
-      if (LiteGraph.pointerevents_method == "pointer" || LiteGraph.pointerevents_method == "mouse") {
-        oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, callback, capture);
-      }
-    }
-    // only pointerevents
-    case "leave":
-    case "cancel":
-    case "gotpointercapture":
-    case "lostpointercapture": {
-      if (LiteGraph.pointerevents_method == "pointer") {
-        return oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, callback, capture);
-      }
-    }
-    // not "pointer" || "mouse"
-    default:
-      return oDOM.removeEventListener(sEvent, callback, capture);
-  }
-};
-
-LiteGraph.use = function (plugin: any) {
-  // 获取已经安装的插件
-  const installedPlugins = LiteGraph._installedPlugins || (LiteGraph._installedPlugins = []);
-  // 看看插件是否已经安装，如果安装了直接返回
-  if (installedPlugins.indexOf(plugin) > -1) {
+    installedPlugins.push(plugin);
     return this;
-  }
+  };
 
-  const args = toArray(arguments);
-  args.unshift(this);
-  if (typeof plugin.install === "function") {
-    plugin.install.apply(plugin, args);
-  } else if (typeof plugin === "function") {
-    plugin.apply(null, args);
-  }
-  installedPlugins.push(plugin);
-  return this;
-};
+
+  pointerListenerRemove(oDOM: HTMLElement, sEvent: string, callback: EventListenerOrEventListenerObject, capture = false) {
+    if (!oDOM || !oDOM.removeEventListener || !sEvent || typeof callback !== "function") {
+      //console.log("cant pointerListenerRemove "+oDOM+", "+sEvent+", "+fCall);
+      return; // -- break --
+    }
+    switch (sEvent) {
+      //both pointer and move events
+      case "down":
+      case "up":
+      case "move":
+      case "over":
+      case "out":
+      case "enter": {
+        if (LiteGraph.pointerevents_method == "pointer" || LiteGraph.pointerevents_method == "mouse") {
+          oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, callback, capture);
+        }
+      }
+      // only pointerevents
+      case "leave":
+      case "cancel":
+      case "gotpointercapture":
+      case "lostpointercapture": {
+        if (LiteGraph.pointerevents_method == "pointer") {
+          return oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, callback, capture);
+        }
+      }
+      // not "pointer" || "mouse"
+      default:
+        return oDOM.removeEventListener(sEvent, callback, capture);
+    }
+  };
+
+  /* helper for interaction: pointer, touch, mouse Listeners
+used by LGraphCanvas DragAndScale ContextMenu*/
+  pointerListenerAdd(oDOM: HTMLElement, sEvIn: string, callback: EventListenerOrEventListenerObject, capture = false) {
+    if (!oDOM || !oDOM.addEventListener || !sEvIn || typeof callback !== "function") {
+      //console.log("cant pointerListenerAdd "+oDOM+", "+sEvent+", "+fCall);
+      return; // -- break --
+    }
+
+    let sMethod = LiteGraph.pointerevents_method;
+    let sEvent = sEvIn;
+
+    // UNDER CONSTRUCTION
+    // convert pointerevents to touch event when not available
+    if (sMethod == "pointer" && !window.PointerEvent) {
+      console.warn("sMethod=='pointer' && !window.PointerEvent");
+      console.log(
+        "Converting pointer[" + sEvent + "] : down move up cancel enter TO touchstart touchmove touchend, etc .."
+      );
+      switch (sEvent) {
+        case "down": {
+          sMethod = "touch";
+          sEvent = "start";
+          break;
+        }
+        case "move": {
+          sMethod = "touch";
+          //sEvent = "move";
+          break;
+        }
+        case "up": {
+          sMethod = "touch";
+          sEvent = "end";
+          break;
+        }
+        case "cancel": {
+          sMethod = "touch";
+          //sEvent = "cancel";
+          break;
+        }
+        case "enter": {
+          console.log("debug: Should I send a move event?"); // ???
+          break;
+        }
+        // case "over": case "out": not used at now
+        default: {
+          console.warn("PointerEvent not available in this browser ? The event " + sEvent + " would not be called");
+        }
+      }
+    }
+
+    switch (sEvent) {
+      //both pointer and move events
+      case "down":
+      case "up":
+      case "move":
+      case "over":
+      case "out":
+      case "enter": {
+        oDOM.addEventListener(sMethod + sEvent, callback, capture);
+      }
+      // only pointerevents
+      case "leave":
+      case "cancel":
+      case "gotpointercapture":
+      case "lostpointercapture": {
+        if (sMethod != "mouse") {
+          return oDOM.addEventListener(sMethod + sEvent, callback, capture);
+        }
+      }
+      // not "pointer" || "mouse"
+      default:
+        return oDOM.addEventListener(sEvent, callback, capture);
+    }
+  };
+}
 
 export default LiteGraph;
