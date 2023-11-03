@@ -10,23 +10,40 @@ import {
   isInsideRectangle
 } from "./utils";
 
-const install = LiteGraph => {
-  const { LGraphNode, LGraphCanvas } = LiteGraph;
 
-  function LGraphGroup(title) {
-    this._ctor(title);
-  }
+import LGraphCanvas from "./LGraphCanvas"
+import LGraphNode from "./LGraphNode";
+import LGraph from "./LGraph";
+import LiteGraph from ".";
 
-  LGraphGroup.prototype._ctor = function (title) {
+interface LGraphGroupOption {
+  title: string;
+  bounding: number[];
+  color: string;
+  font: string;
+}
+
+class LGraphGroup {
+  title: string = "Group";
+  color: string = "#AAA";
+  pos: any;
+  size: any;
+  font = '';
+  font_size = 24;
+  graph: LGraph | null = null;
+  private _bounding: Float32Array = new Float32Array([10, 10, 140, 80]);
+  private _pos!: Float32Array;
+  private _size!: Float32Array;
+  private _nodes: LGraphNode[] = [];
+
+  constructor(title: string) {
     this.title = title || "Group";
-    this.font_size = 24;
     this.color = LGraphCanvas.node_colors.pale_blue ? LGraphCanvas.node_colors.pale_blue.groupcolor : "#AAA";
     this._bounding = new Float32Array([10, 10, 140, 80]);
     this._pos = this._bounding.subarray(0, 2);
     this._size = this._bounding.subarray(2, 4);
     this._nodes = [];
     this.graph = null;
-
     Object.defineProperty(this, "pos", {
       set: function (v) {
         if (!v || v.length < 2) {
@@ -54,16 +71,30 @@ const install = LiteGraph => {
       },
       enumerable: true
     });
-  };
+  }
+  // 
+  isPointInside = LGraphNode.prototype.isPointInside;
+  setDirtyCanvas = LGraphNode.prototype.setDirtyCanvas;
 
-  LGraphGroup.prototype.configure = function (o) {
+  move(deltax: number, deltay: number, ignore_nodes = false) {
+    this._pos[0] += deltax;
+    this._pos[1] += deltay;
+    if (ignore_nodes) {
+      return;
+    }
+    for (let i = 0; i < this._nodes.length; ++i) {
+      let node = this._nodes[i];
+      node._pos[0] += deltax;
+      node._pos[1] += deltay;
+    }
+  };
+  configure(o: LGraphGroupOption) {
     this.title = o.title;
     this._bounding.set(o.bounding);
     this.color = o.color;
     this.font = o.font;
   };
-
-  LGraphGroup.prototype.serialize = function () {
+  serialize() {
     let b = this._bounding;
     return {
       title: this.title,
@@ -72,24 +103,10 @@ const install = LiteGraph => {
       font: this.font
     };
   };
-
-  LGraphGroup.prototype.move = function (deltax, deltay, ignore_nodes) {
-    this._pos[0] += deltax;
-    this._pos[1] += deltay;
-    if (ignore_nodes) {
-      return;
-    }
-    for (let i = 0; i < this._nodes.length; ++i) {
-      let node = this._nodes[i];
-      node.pos[0] += deltax;
-      node.pos[1] += deltay;
-    }
-  };
-
-  LGraphGroup.prototype.recomputeInsideNodes = function () {
+  recomputeInsideNodes () {
     this._nodes.length = 0;
-    let nodes = this.graph._nodes;
-    let node_bounding = new Float32Array(4);
+    const nodes = this.graph?._nodes || [];
+    const node_bounding = new Float32Array(4);
 
     for (let i = 0; i < nodes.length; ++i) {
       let node = nodes[i];
@@ -101,9 +118,11 @@ const install = LiteGraph => {
     }
   };
 
-  LGraphGroup.prototype.isPointInside = LGraphNode.prototype.isPointInside;
-  LGraphGroup.prototype.setDirtyCanvas = LGraphNode.prototype.setDirtyCanvas;
-  LiteGraph.LGraphGroup = LGraphGroup
-};
+  static install  (LiteGraph: LiteGraph) {
+    LiteGraph.LGraphGroup = LGraphGroup
+  };
+}
 
-export default install;
+
+
+export default LGraphGroup;
