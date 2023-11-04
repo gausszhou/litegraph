@@ -1,16 +1,28 @@
-//Scale and Offset
-const install = LiteGraph => {
-  function DragAndScale(element, skip_events) {
-    this.offset = new Float32Array([0, 0]);
-    this.scale = 1;
-    this.max_scale = 10;
-    this.min_scale = 0.1;
-    this.onredraw = null;
-    this.enabled = true;
-    this.last_mouse = [0, 0];
-    this.element = null;
-    this.visible_area = new Float32Array(4);
+import LiteGraph from "../core/LiteGraph"
 
+//Scale and Offset
+
+class DragAndScale {
+
+  static install() {
+    LiteGraph.DragAndScale = DragAndScale;
+  };
+
+
+  scale = 1;
+  max_scale = 10;
+  min_scale = 0.1;
+
+  enabled = true;
+  dragging = false;
+  element: HTMLCanvasElement | null = null;
+  offset = new Float32Array([0, 0]);
+  last_mouse = new Float32Array([0, 0]);
+  visible_area = new Float32Array(4);
+  viewport: number[] = []
+  _binded_mouse_callback: any = null;
+
+  constructor(element?: HTMLCanvasElement, skip_events: boolean = false) {
     if (element) {
       this.element = element;
       if (!skip_events) {
@@ -19,8 +31,8 @@ const install = LiteGraph => {
     }
   }
 
-  DragAndScale.prototype.bindEvents = function (element) {
-    this.last_mouse = new Float32Array(2);
+  bindEvents(element: HTMLCanvasElement) {
+    this.last_mouse = new Float32Array([0, 0]);
 
     this._binded_mouse_callback = this.onMouse.bind(this);
 
@@ -31,8 +43,7 @@ const install = LiteGraph => {
     element.addEventListener("mousewheel", this._binded_mouse_callback, false);
     element.addEventListener("wheel", this._binded_mouse_callback, false);
   };
-
-  DragAndScale.prototype.computeVisibleArea = function (viewport) {
+  computeVisibleArea(viewport: number[]) {
     if (!this.element) {
       this.visible_area[0] = this.visible_area[1] = this.visible_area[2] = this.visible_area[3] = 0;
       return;
@@ -55,17 +66,17 @@ const install = LiteGraph => {
     this.visible_area[3] = endy - starty;
   };
 
-  DragAndScale.prototype.onMouse = function (e) {
+  onMouse(e:any) {
     if (!this.enabled) {
       return;
     }
-
-    let canvas = this.element;
+    const canvas = this.element as HTMLCanvasElement;
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
-    e.canvasx = x;
-    e.canvasy = y;
+
+    e.canvasX = x;
+    e.canvasY = y;
     e.dragging = this.dragging;
 
     let is_inside =
@@ -76,13 +87,12 @@ const install = LiteGraph => {
         y >= this.viewport[1] &&
         y < this.viewport[1] + this.viewport[3]);
 
-    //console.log("pointerevents: DragAndScale onMouse "+e.type+" "+is_inside);
+    // console.log("pointerevents: DragAndScale onMouse "+e.type+" "+is_inside);
 
     let ignore = false;
     if (this.onmouse) {
       ignore = this.onmouse(e);
     }
-
     if (e.type == LiteGraph.pointerevents_method + "down" && is_inside) {
       this.dragging = true;
       LiteGraph.pointerListenerRemove(canvas, "move", this._binded_mouse_callback);
@@ -124,24 +134,23 @@ const install = LiteGraph => {
     }
   };
 
-  DragAndScale.prototype.toCanvasContext = function (ctx) {
+  toCanvasContext(ctx: CanvasRenderingContext2D) {
     ctx.scale(this.scale, this.scale);
     ctx.translate(this.offset[0], this.offset[1]);
   };
 
-  DragAndScale.prototype.convertOffsetToCanvas = function (pos) {
+  convertOffsetToCanvas(pos: number[]) {
     //return [pos[0] / this.scale - this.offset[0], pos[1] / this.scale - this.offset[1]];
     return [(pos[0] + this.offset[0]) * this.scale, (pos[1] + this.offset[1]) * this.scale];
   };
 
-  DragAndScale.prototype.convertCanvasToOffset = function (pos, out) {
-    out = out || [0, 0];
+  convertCanvasToOffset(pos: number[], out = [0, 0]) {
     out[0] = pos[0] / this.scale - this.offset[0];
     out[1] = pos[1] / this.scale - this.offset[1];
     return out;
   };
 
-  DragAndScale.prototype.mouseDrag = function (x, y) {
+  mouseDrag(x: number, y: number) {
     this.offset[0] += x / this.scale;
     this.offset[1] += y / this.scale;
 
@@ -150,7 +159,7 @@ const install = LiteGraph => {
     }
   };
 
-  DragAndScale.prototype.changeScale = function (value, zooming_center) {
+  changeScale(value: number, zooming_center = [0,0]) {
     if (value < this.min_scale) {
       value = this.min_scale;
     } else if (value > this.max_scale) {
@@ -188,15 +197,22 @@ const install = LiteGraph => {
     }
   };
 
-  DragAndScale.prototype.changeDeltaScale = function (value, zooming_center) {
+  changeDeltaScale(value: number, zooming_center: number[] = [0,0]) {
     this.changeScale(this.scale * value, zooming_center);
   };
 
-  DragAndScale.prototype.reset = function () {
+  reset() {
     this.scale = 1;
     this.offset[0] = 0;
     this.offset[1] = 0;
   };
-  LiteGraph.DragAndScale = DragAndScale;
-};
-export default install;
+
+  onmouse(e: MouseEvent): boolean {
+    return false
+  }
+  onredraw(item: DragAndScale) { 
+    return item
+  }
+}
+
+export default DragAndScale;
