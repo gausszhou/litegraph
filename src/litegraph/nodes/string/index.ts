@@ -1,3 +1,5 @@
+import LiteGraph from "../../core/LiteGraph";
+
 export function toString(a: any): string {
   if (a && a.constructor === Object) {
     try {
@@ -38,6 +40,13 @@ export function toUpperCase(a: string): string {
   return a;
 }
 
+export function toLowerCase(a: string): string {
+  if (a != null && a.constructor === String) {
+    return a.toLowerCase();
+  }
+  return a;
+}
+
 export function split(str: string | string[], separator: string) {
   // @ts-ignore
   if (separator == null) separator = this.properties.separator;
@@ -61,12 +70,13 @@ export function toFixed(a: number): string | number {
   return a;
 }
 
-const install = (LiteGraph: any) => {
+const install = (LiteGraph: LiteGraph) => {
   LiteGraph.wrapFunctionAsNode("string/toString", toString, [""], "string");
   LiteGraph.wrapFunctionAsNode("string/compare", compare, ["string", "string"], "boolean");
   LiteGraph.wrapFunctionAsNode("string/concatenate", concatenate, ["string", "string"], "string");
   LiteGraph.wrapFunctionAsNode("string/contains", contains, ["string", "string"], "boolean");
   LiteGraph.wrapFunctionAsNode("string/toUpperCase", toUpperCase, ["string"], "string");
+  LiteGraph.wrapFunctionAsNode("string/toLowerCase", toLowerCase, ["string"], "string");
   LiteGraph.wrapFunctionAsNode("string/split", split, ["string,array", "string"], "array", { separator: "," });
   LiteGraph.wrapFunctionAsNode("string/toFixed", toFixed, ["number"], "string", { precision: 0 });
 };
