@@ -1,17 +1,20 @@
-//used by some widgets to render a curve editor
+// used by some widgets to render a curve editor
+import LGraphCanvas from "../core/LGraphCanvas";
+import { clamp, distance } from "../core/utils";
 
-const install = LiteGraph => {
-  
-  function CurveEditor(points) {
+class CurveEditor {
+  points: number[][] = [[]]
+  selected = -1;
+  nearest = -1;
+  size: number[] = []; //stores last size used
+  must_update = true;
+  margin = 5;
+
+  constructor(points: number[][]) {
     this.points = points;
-    this.selected = -1;
-    this.nearest = -1;
-    this.size = null; //stores last size used
-    this.must_update = true;
-    this.margin = 5;
   }
 
-  CurveEditor.sampleCurve = function (f, points) {
+  static sampleCurve(f: number, points: number[][]) {
     if (!points) return;
     for (let i = 0; i < points.length - 1; ++i) {
       let p = points[i];
@@ -24,8 +27,8 @@ const install = LiteGraph => {
     }
     return 0;
   };
-
-  CurveEditor.prototype.draw = function (ctx, size, graphcanvas, background_color, line_color, inactive) {
+  draw(ctx: CanvasRenderingContext2D, size: number[], graphcanvas: LGraphCanvas, background_color: string, line_color: string, inactive = false) {
+    console.log(graphcanvas)
     let points = this.points;
     if (!points) return;
     this.size = size;
@@ -66,10 +69,10 @@ const install = LiteGraph => {
   };
 
   //localpos is mouse in curve editor space
-  CurveEditor.prototype.onMouseDown = function (localpos, graphcanvas) {
+  onMouseDown(localpos:number[], graphcanvas: LGraphCanvas) {
     let points = this.points;
-    if (!points) return;
-    if (localpos[1] < 0) return;
+    if (!points) return false;
+    if (localpos[1] < 0) return false;
 
     //this.captureInput(true);
     let w = this.size[0] - this.margin * 2;
@@ -93,16 +96,15 @@ const install = LiteGraph => {
     if (this.selected != -1) return true;
   };
 
-  CurveEditor.prototype.onMouseMove = function (localpos, graphcanvas) {
+  onMouseMove(localpos:number[]) {
     let points = this.points;
     if (!points) return;
     let s = this.selected;
     if (s < 0) return;
     let x = (localpos[0] - this.margin) / (this.size[0] - this.margin * 2);
     let y = (localpos[1] - this.margin) / (this.size[1] - this.margin * 2);
-    let curvepos = [localpos[0] - this.margin, localpos[1] - this.margin];
-    let max_dist = 30 / graphcanvas.ds.scale;
-    this._nearest = this.getCloserPoint(curvepos, max_dist);
+    // let curvepos = [localpos[0] - this.margin, localpos[1] - this.margin];
+    // let max_dist = 30 / graphcanvas.ds.scale;
     let point = points[s];
     if (point) {
       let is_edge_point = s == 0 || s == points.length - 1;
@@ -116,9 +118,9 @@ const install = LiteGraph => {
       }
       if (!is_edge_point)
         //not edges
-        point[0] = Math.clamp(x, 0, 1);
+        point[0] = clamp(x, 0, 1);
       else point[0] = s == 0 ? 0 : 1;
-      point[1] = 1.0 - Math.clamp(y, 0, 1);
+      point[1] = 1.0 - clamp(y, 0, 1);
       points.sort(function (a, b) {
         return a[0] - b[0];
       });
@@ -127,35 +129,33 @@ const install = LiteGraph => {
     }
   };
 
-  CurveEditor.prototype.onMouseUp = function (localpos, graphcanvas) {
+  onMouseUp() {
     this.selected = -1;
     return false;
   };
 
-  CurveEditor.prototype.getCloserPoint = function (pos, max_dist) {
+  getCloserPoint(pos: number[], max_dist: number = 30) {
     let points = this.points;
     if (!points) return -1;
-    max_dist = max_dist || 30;
     let w = this.size[0] - this.margin * 2;
     let h = this.size[1] - this.margin * 2;
     let num = points.length;
     let p2 = [0, 0];
-    let min_dist = 1000000;
+    let min_dist = 10;
     let closest = -1;
-    let last_valid = -1;
     for (let i = 0; i < num; ++i) {
       let p = points[i];
       p2[0] = p[0] * w;
-      p2[1] = (1.0 - p[1]) * h;
-      if (p2[0] < pos[0]) last_valid = i;
-      let dist = vec2.distance(pos, p2);
-      if (dist > min_dist || dist > max_dist) continue;
+      p2[1] = (1.0 - p[1]) * h;    
+      let dist = distance(pos, p2);
+      if (dist < min_dist || dist > max_dist) {
+        continue;
+      }
       closest = i;
       min_dist = dist;
     }
     return closest;
   };
+}
 
-  LiteGraph.CurveEditor = CurveEditor
-};
-export default install;
+export default CurveEditor;
