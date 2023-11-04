@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.4",
-    "@types/lodash-es": "^4.17.6",
     "prettier": "^2.7.1",
     "rollup": "^2.77.3",
     "rollup-plugin-postcss": "^4.0.2",
@@ -36,8 +35,6 @@
   },
   "dependencies": {
     "gl-matrix": "^2.8.1",
-    "lodash-es": "^4.17.21",
-    "midi-parser-js": "^4.0.4",
-    "vue": "^3.2.44"
+    "midi-parser-js": "^4.0.4"
   }
 }
