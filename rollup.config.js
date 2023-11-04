@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
-import { uglify } from "rollup-plugin-uglify";
 import postcss from 'rollup-plugin-postcss';
+import { uglify } from "rollup-plugin-uglify";
 
 export default [
   {
@@ -23,12 +23,12 @@ export default [
     output: [
       {
         format: "umd",
-        file: "lib/litegraph.umd.js",
+        file: "lib/litegraph.full.umd.js",
         name: "litegraph"
       },
       {
         format: "esm",
-        file: "lib/litegraph.esm.js"
+        file: "lib/litegraph.full.esm.js"
       }
     ],
     plugins: [uglify(), typescript(), postcss()]
