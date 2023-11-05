@@ -1,9 +1,4 @@
-// this is the class in charge of storing link information
-// 这是负责存储连接线信息的类
-
-import LiteGraph from ".";
-
-interface LLinkConfig {
+export interface LLinkInfo {
   id: number;
   type: string;
   origin_id: number;
@@ -12,6 +7,9 @@ interface LLinkConfig {
   target_slot: number;
 }
 
+// this is the class in charge of storing link information
+// 这是负责存储连接线信息的类
+
 class LLink {
   id: number = 0;
   type: string = "";
@@ -19,24 +17,12 @@ class LLink {
   origin_slot: number = 0;
   target_id: number = 0;
   target_slot: number = 0;
+  data: any = {};
   private _data: any = null;
-  private _pos: Float32Array = new Float32Array(2)
-  constructor(
-    id: number,
-    type: string,
-    origin_id: number,
-    origin_slot: number,
-    target_id: number,
-    target_slot: number
-  ) {
-    this.id = id;
-    this.type = type;
-    this.origin_id = origin_id;
-    this.origin_slot = origin_slot;
-    this.target_id = target_id;
-    this.target_slot = target_slot;
+  _last_time = 0;
+  constructor() {
   }
-  configure(o: LLinkConfig) {
+  configure(o: LLinkInfo) {
     if (o.constructor === Array) {
       this.id = o[0];
       this.origin_id = o[1];
@@ -55,9 +41,6 @@ class LLink {
   };
   serialize() {
     return [this.id, this.origin_id, this.origin_slot, this.target_id, this.target_slot, this.type];
-  };
-  static install(LiteGraph: LiteGraph) {
-    LiteGraph.LLink = LLink
   };
 }
 

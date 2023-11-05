@@ -1,4 +1,4 @@
-import LiteGraph from ".";
+import LiteGraph from './LiteGraph';
 import LGraphNode from "./LGraphNode";
 
 /**
@@ -8,9 +8,8 @@ import LGraphNode from "./LGraphNode";
 class GraphOutput extends LGraphNode {
   static title = "Output";
   static desc = "Output of the graph";
-  static install(LiteGraph: LiteGraph){
-    LiteGraph.GraphOutput = GraphOutput;
-    LiteGraph.registerNodeType("graph/output", GraphOutput);
+  static install(){
+    
   }
   name_in_graph = "";
   properties = { name: "", type: "" };

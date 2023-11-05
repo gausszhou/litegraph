@@ -1,27 +1,18 @@
-import {
-  distance,
-  colorToString,
-  hex2num,
-  num2hex,
-  compareObjects,
-  growBounding,
-  isInsideBounding,
-  overlapBounding,
-  isInsideRectangle
-} from "./utils";
-
-
-import LGraphCanvas from "./LGraphCanvas"
-import LGraphNode from "./LGraphNode";
 import LGraph from "./LGraph";
-import LiteGraph from ".";
+import LGraphCanvas from "./LGraphCanvas";
+import LGraphNode from "./LGraphNode";
+import { overlapBounding } from "./utils";
 
-interface LGraphGroupOption {
+export interface LGraphGroupOption {
   title: string;
   bounding: number[];
   color: string;
   font: string;
 }
+
+// *************************************************************
+//   Group CLASS                                          *******
+// *************************************************************
 
 class LGraphGroup {
   title: string = "Group";
@@ -31,13 +22,14 @@ class LGraphGroup {
   font = '';
   font_size = 24;
   graph: LGraph | null = null;
+  ignore_remove = false;
   private _bounding: Float32Array = new Float32Array([10, 10, 140, 80]);
   private _pos!: Float32Array;
   private _size!: Float32Array;
   private _nodes: LGraphNode[] = [];
 
-  constructor(title: string) {
-    this.title = title || "Group";
+  constructor(title: string =  "Group") {
+    this.title = title ;
     this.color = LGraphCanvas.node_colors.pale_blue ? LGraphCanvas.node_colors.pale_blue.groupcolor : "#AAA";
     this._bounding = new Float32Array([10, 10, 140, 80]);
     this._pos = this._bounding.subarray(0, 2);
@@ -106,23 +98,15 @@ class LGraphGroup {
   recomputeInsideNodes () {
     this._nodes.length = 0;
     const nodes = this.graph?._nodes || [];
-    const node_bounding = new Float32Array(4);
-
     for (let i = 0; i < nodes.length; ++i) {
       let node = nodes[i];
-      node.getBounding(node_bounding);
+      const node_bounding = node.getBounding();
       if (!overlapBounding(this._bounding, node_bounding)) {
         continue;
       } //out of the visible area
       this._nodes.push(node);
     }
   };
-
-  static install  (LiteGraph: LiteGraph) {
-    LiteGraph.LGraphGroup = LGraphGroup
-  };
 }
-
-
 
 export default LGraphGroup;

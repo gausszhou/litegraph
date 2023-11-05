@@ -1,4 +1,4 @@
-import LiteGraph from '.';
+import LiteGraph from './LiteGraph';
 import LGraphNode from './LGraphNode';
 
 /**
@@ -8,9 +8,8 @@ import LGraphNode from './LGraphNode';
 class GraphInput extends LGraphNode {
   static title = "Input";
   static desc = "Input of the graph";
-  static install(LiteGraph: LiteGraph){
-    LiteGraph.GraphInput = GraphInput;
-    LiteGraph.registerNodeType("graph/input", GraphInput);
+  static install(){
+    
   }
   name_in_graph = "";
   properties = {

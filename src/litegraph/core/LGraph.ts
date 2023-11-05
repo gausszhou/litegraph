@@ -5,7 +5,6 @@ import LGraphGroup from "./LGraphGroup"
 import LLink, { LLinkInfo } from "./LLink";
 import Subgraph from './Subgraph';
 
-
 //*********************************************************************************
 // LGraph CLASS
 //*********************************************************************************
@@ -65,27 +64,20 @@ class LGraph {
 
   _version = -1; //used to detect changes
   _input_nodes: LGraphNode[] = [];
+  _subgraph_node: LGraphNode | null = null;
+  _is_subgraph = false;
+  
   status: typeof LGraph.STATUS_RUNNING | typeof LGraph.STATUS_STOPPED = LGraph.STATUS_STOPPED;
 
   // callback
-  onPlayEvent: Function = () => { };
-
-  onInputAdded: Function = () => { };
-  onInputRemoved: Function = () => { };
-  onOutputAdded: Function = () => { };
-  onOutputRemoved: Function = () => { };
-  onInputsOutputsChange: Function = () => { };
-  onConnectionChange: Function = () => { };
-  onNodeAdded: Function = () => { };
-  onNodeRemoved: Function = () => { };
-  onNodeConnectionChange: Function = () => { };
+  
 
   private _groups: LGraphGroup[] = [];
-  private _nodes: LGraphNode[] = [];
+  _nodes: LGraphNode[] = [];
   private _nodes_in_order: LGraphNode[] = [];
   private _nodes_by_id: Record<number, LGraphNode> = {};
   /** nodes that are executable sorted in execution order */
-  private _nodes_executable: LGraphNode[] = [];
+  private _nodes_executable: LGraphNode[] | null = [];
   private _last_trigger_time = 0;
 
   constructor(o?: any) {
@@ -193,7 +185,7 @@ class LGraph {
     return error;
   };
 
-  onConfigure(data:any){}
+  
   
   /**
   * Removes all nodes from this graph
@@ -223,7 +215,7 @@ class LGraph {
     this._nodes = [];
     this._nodes_by_id = {};
     this._nodes_in_order = []; //nodes sorted in execution order
-    this._nodes_executable = null; //nodes that contain onExecute sorted in execution order
+    this._nodes_executable = []; //nodes that contain onExecute sorted in execution order
 
     //other scene stuff
     this._groups = [];
@@ -312,7 +304,7 @@ class LGraph {
    * @param {String} name
    * @return {*} the data
    */
-  getInputData(name) {
+  getInputData(name:string) {
     let input = this.inputs[name];
     if (!input) {
       return null;
@@ -326,11 +318,10 @@ class LGraph {
    * @param {String} old_name
    * @param {String} new_name
    */
-  renameInput(old_name, name) {
+  renameInput(old_name: string, name: string) {
     if (name == old_name) {
       return;
     }
-
     if (!this.inputs[old_name]) {
       return false;
     }
@@ -351,8 +342,9 @@ class LGraph {
     if (this.onInputsOutputsChange) {
       this.onInputsOutputsChange();
     }
+    return true;
   };
-  onInputRenamed(old_name: string , new_name: string){}
+  
 
   /**
    * Changes the type of a global graph input
@@ -375,7 +367,7 @@ class LGraph {
       this.onInputTypeChanged(name, type);
     }
   };
-  onInputTypeChanged(name: string ,type: string){}
+
 
   /**
    * Removes a global graph input
@@ -475,7 +467,7 @@ class LGraph {
       this.onInputsOutputsChange();
     }
   };
-  onOutputRenamed(old_name: string, new_name: string){}
+  
 
   /**
    * Changes the type of a global graph output
@@ -636,9 +628,7 @@ class LGraph {
       }, interval);
     }
   };
-  
-  onBeforeStep(){}
-  onAfterStep(){}
+
 
   /**
    * Stops the execution loop of the graph
@@ -666,9 +656,7 @@ class LGraph {
     this.sendEventToAllNodes("onStop");
   };
 
-  onStopEvent(){}
-  onExecuteStep(){}
-  onAfterExecute(){}
+
   /**
    * Run N steps (cycles) of the graph
    * @method runStep
@@ -1360,25 +1348,14 @@ class LGraph {
 
   // ********** GLOBALS *****************
 
-  onAction(action: string, param = {}, options = {}) {
-    this._input_nodes = this.findNodesByClass(LiteGraph.GraphInput, this._input_nodes);
-    for (let i = 0; i < this._input_nodes.length; ++i) {
-      let node = this._input_nodes[i];
-      if (node.properties.name != action) {
-        continue;
-      }
-      //wrap node.onAction(action, param);
-      node.actionDo(action, param, options);
-      break;
-    }
-  };
+  
 
   trigger(action, param) {
     if (this.onTrigger) {
       this.onTrigger(action, param);
     }
   };
-  onTrigger(action: string, param: any){}
+
 
 
   triggerInput(name, value) {
@@ -1402,7 +1379,7 @@ class LGraph {
     }
     this.sendActionToCanvas("onBeforeChange", this);
   };
-  onBeforeChange(graph: LGraph, info = {}){}
+  
   //used to resend actions, called after any change is made to the graph
   afterChange(info = {}) {
     if (this.onAfterChange) {
@@ -1410,7 +1387,6 @@ class LGraph {
     }
     this.sendActionToCanvas("onAfterChange", this);
   };
-  onAfterChange(graph: LGraph, info = {}){}
 
   /**
    * returns if the graph is in live mode
@@ -1557,12 +1533,49 @@ class LGraph {
     return true;
   };
 
+  onAction(action: string, param = {}, options = {}) {
+    this._input_nodes = this.findNodesByClass(LiteGraph.GraphInput, this._input_nodes);
+    for (let i = 0; i < this._input_nodes.length; ++i) {
+      let node = this._input_nodes[i];
+      if (node.properties.name != action) {
+        continue;
+      }
+      //wrap node.onAction(action, param);
+      node.actionDo(action, param, options);
+      break;
+    }
+  };
+
+  onPlayEvent()  { };
+
+  onInputAdded (name: string, type: string)  { };
+  onInputRemoved (name: string)  { };
+  onOutputAdded (name: string, type:string)  { };
+  onOutputRemoved (name: string)  { };
+
+  onInputsOutputsChange ()  { };
+
+  onConnectionChange (node: LGraphNode)  { };
+  onNodeAdded (node: LGraphNode)  { };
+  onNodeRemoved (node: LGraphNode)  { };
+  onNodeConnectionChange ()  { };
+
+  onConfigure(data:any){}
+  onBeforeStep(){}
+  onAfterStep(){}
+  onInputRenamed(old_name: string , new_name: string){}
+  onInputTypeChanged(name: string ,type: string){}
+  onOutputRenamed(old_name: string, new_name: string){}
+  onStopEvent(){}
+  onExecuteStep(){}
+  onAfterExecute(){}
   onChange(graph: LGraph) { }
+  onTrigger(action: string, param: any){}
   onSerialize(data: any) { }
-  // =========
-  onNodeTrace(node: LGraphNode, msg: string, color: string = "#409eff") {
-    // TODO
-  }
+  onOutputTypeChanged(){}
+  onBeforeChange(graph: LGraph, info = {}){}
+  onAfterChange(graph: LGraph, info = {}){}
+  onNodeTrace(node: LGraphNode, msg: string, color: string = "#409eff") {}
 }
 
 export default LGraph;

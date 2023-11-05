@@ -124,10 +124,11 @@ class LiteGraph {
   static NODE_MODES = ["Always", "On Event", "Never", "On Trigger"]; // helper, will add "On Request" and more in the future
   static NODE_MODES_COLORS = ["#666", "#422", "#333", "#224", "#626"]; // use with node_box_coloured_by_mode
 
+  static NEVER = -1;
   static ALWAYS = 0;
   static ON_EVENT = 1;
-  static NEVER = 2;
-  static ON_TRIGGER = 3;
+  static ON_TRIGGER = 2;
+  static ON_REQUEST = 3;
 
   static UP = 1;
   static DOWN = 2;
@@ -353,7 +354,7 @@ class LiteGraph {
    * @param {String|Object} type name of the node or the node constructor itself
    * @param {String} slot_type name of the slot type (variable type), eg. string, number, array, boolean, ..
    */
-  registerNodeAndSlotType(type: string, slot_type: string, out: string | boolean = false) {
+  registerNodeAndSlotType(type: string | LGraphNode, slot_type: string, out: string | boolean = false) {
     let baseClass = {};
     if (typeof type === "string" && LiteGraph.registered_node_types[type] !== "anonymous") {
       baseClass = LiteGraph.registered_node_types[type]
@@ -407,7 +408,7 @@ class LiteGraph {
    * @param {String} return_type [optional] string with the return type, otherwise it will be generic
    * @param {Object} properties [optional] properties to be configurable
    */
-  wrapFunctionAsNode(name: string, func: Function, param_types: string, return_type: string, properties: any) {
+  wrapFunctionAsNode(name: string, func: Function, param_types: string[] = [], return_type: string ="", properties: any = {}) {
     let params = Array(func.length);
     let code = "";
     let names = LiteGraph.getParameterNames(func);

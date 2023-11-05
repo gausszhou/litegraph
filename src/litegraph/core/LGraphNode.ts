@@ -1,18 +1,7 @@
-import {
-  distance,
-  colorToString,
-  hex2num,
-  num2hex,
-  compareObjects,
-  growBounding,
-  isInsideBounding,
-  overlapBounding,
-  isInsideRectangle
-} from "./utils";
-
-import LLink from './LLink';
-import LiteGraph from ".";
+import { isInsideRectangle } from "./utils";
 import LGraph from "./LGraph";
+import LLink from './LLink';
+import LiteGraph from './LiteGraph';
 
 
 // *************************************************************
@@ -72,7 +61,7 @@ supported callbacks:
 
 // Widget
 
-interface Widget {
+export interface Widget {
   name: string;
   type: string;
   value: any;
@@ -81,7 +70,7 @@ interface Widget {
 }
 
 // Port
-interface LGraphNodePortInfo {
+export interface LGraphNodePortInfo {
   name: string;
   type: string;
   extra_info: any;
@@ -89,13 +78,14 @@ interface LGraphNodePortInfo {
 
 interface LGraphNodePort {
   name: string;
-  type: string ;
+  type: string;
   _data: any;
+  extra_info: any;
   [key: string]: any;
 }
 
 export interface LGraphNodePortInput extends LGraphNodePort {
-  link: number | null;
+  link: number | null; // linkid
 }
 
 export interface LGraphNodePortOutput extends LGraphNodePort {
@@ -114,19 +104,20 @@ interface LGraphConnection {
 
 }
 
-interface LGraphNodeOption {
+// 反序列化的入参 和 序列化的结果
+export interface LGraphNodeInfo {
   id?: number;
   title: string;
   type: string | null;
   pos: Float32Array;
   size: number[];
   order: string;
-  mode: string;
+  mode: string | number;
   color: string;
   bgcolor: string;
   boxcolor: string;
-  shape: string;
-  subgraph: LGraph | null;
+  shape: number;
+  subgraph?: LGraph | null;
   flags: any[];
   inputs: LGraphNodePortInput[];
   outputs: LGraphNodePortOutput[];
@@ -167,7 +158,7 @@ function createPortOutput(info: LGraphNodePortInfo): LGraphNodePortOutput {
  * @class LGraphNode
  * @param {String} name a name for the node
  */
-class LGraphNode {
+class LGraphNode{
   static title: string = "Unnamed";
   static type = null;
   static collapsable = true;
@@ -177,17 +168,20 @@ class LGraphNode {
   static min_height = 50;
   static widgets_info: Record<string, any> = {}
   static MAX_CONSOLE = 100;
+
   horizontal = false;
   title: string = "Unnamed";
   size: number[] = [LiteGraph.NODE_WIDTH, 60];
-  graph!: LGraph | null = null;
+  graph: LGraph | null = null;
   id = -1; //not know till not added
   type: string | null = null;
   color = ""
   bgcolor = ""
   boxcolor = "";
   shape = LiteGraph.BOX_SHAPE;
-  
+  _level = 0
+  ignore_remove = false;
+
   ready = false;
   //inputs available: array of inputs
   widgets: Widget[] = [];
@@ -202,18 +196,18 @@ class LGraphNode {
     collapsed: false
   };
   order = "";
-  mode = "";
+  mode = 0;
   serialize_widgets = true;
-  last_serialization = {};
+  last_serialization: LGraphNodeInfo | null = null;
 
   pos: Float32Array = new Float32Array([10, 10]);
 
-  private _pos: Float32Array = new Float32Array([10, 10]);
+  _pos: Float32Array = new Float32Array([10, 10]);
   private _last_trigger_time = 0;
   private _collapsed_width = 120;
 
-  constructor(title: string) {
-    this.title = title || "Unnamed";
+  constructor(title: string = "Unnamed") {
+    this.title = title;
     Object.defineProperty(this, "pos", {
       set: function (v) {
         if (!v || v.length < 2) {
@@ -234,20 +228,21 @@ class LGraphNode {
    * @method serialize
    */
 
-  serialize(): LGraphNodeOption {
+  serialize(): LGraphNodeInfo {
     // create serialization object
-    const o: LGraphNodeOption = {
+    const o: LGraphNodeInfo = {
       id: this.id,
       title: "",
       type: this.type,
       color: "",
       bgcolor: "",
       boxcolor: "",
-      shape: "",
+      shape: 0,
       order: this.order,
       mode: this.mode,
       pos: this.pos,
       size: this.size,
+
       flags: (LiteGraph as any).cloneObject(this.flags),
       inputs: [],
       outputs: [],
@@ -321,7 +316,7 @@ class LGraphNode {
   /**
    * configure a node from an object containing the serialized info
    */
-  configure(info: LGraphNodeOption) {
+  configure(info: LGraphNodeInfo) {
     if (this.graph) {
       this.graph._version++;
     }
@@ -407,13 +402,13 @@ class LGraphNode {
   };
 
   /**
- * add a new input slot to use in this node
- * @method addInput
- * @param {string} name
- * @param {string} type string defining the input type ("vec3","number",...), it its a generic one use 0
- * @param {Object} extra_info this can be used to have special properties of an input (label, color, position, etc)
- */
-  addInput(name: string, type: string , extra_info?: any) {
+   * add a new input slot to use in this node
+   * @method addInput
+   * @param {string} name
+   * @param {string} type string defining the input type ("vec3","number",...), it its a generic one use 0
+   * @param {Object} extra_info this can be used to have special properties of an input (label, color, position, etc)
+   */
+  addInput(name: string, type: string = "*", extra_info?: any) {
     const input = createPortInput({ name, type, extra_info })
 
     if (!this.inputs) {
@@ -458,7 +453,7 @@ class LGraphNode {
    * @method removeInput
    * @param {number} slot
    */
-  removeInput  (slot: number) {
+  removeInput(slot: number) {
     this.disconnectInput(slot);
     let slot_info = this.inputs.splice(slot, 1);
     for (let i = slot; i < this.inputs.length; ++i) {
@@ -535,7 +530,7 @@ class LGraphNode {
    * @method removeOutput
    * @param {number} slot
    */
-  removeOutput  (slot: number) {
+  removeOutput(slot: number) {
     this.disconnectOutput(slot);
     this.outputs.splice(slot, 1);
     for (let i = slot; i < this.outputs.length; ++i) {
@@ -558,6 +553,7 @@ class LGraphNode {
     }
     this.setDirtyCanvas(true, true);
   };
+  onOutputRemoved(slot: number) { }
 
 
   /**
@@ -713,7 +709,7 @@ class LGraphNode {
    * @param {boolean} force_update if set to true it will force the connected node of this slot to output data into this link
    * @return {*} data or if it is not connected returns null
    */
-  getInputDataByName = function (slot_name: string, force_update: boolean = false;) {
+  getInputDataByName(slot_name: string, force_update: boolean = false) {
     let slot = this.findInputSlot(slot_name);
     if (slot == -1) {
       return null;
@@ -726,12 +722,12 @@ class LGraphNode {
     if (this.type === null) {
       return null;
     }
-    const node = LiteGraph.prototype.createNode(this.type);
+    const node = LiteGraph.createNode(this.type);
     if (!node) {
       return null;
     }
     //we clone it because serialize returns shared containers
-    const data: LGraphNodeOption = LiteGraph.cloneObject(this.serialize());
+    const data: LGraphNodeInfo = LiteGraph.cloneObject(this.serialize());
     // remove links
     data.inputs?.forEach((input: LGraphNodePortInput) => {
       input.link = null;
@@ -1001,17 +997,20 @@ class LGraphNode {
   };
 
   onAfterExecuteNode(param, options) {
-    let trigS = this.findOutputSlot("onExecuted");
-    if (trigS != -1) {
-      //console.debug(this.id+":"+this.order+" triggering slot onAfterExecute");
-      //console.debug(param);
-      //console.debug(options);
-      this.triggerSlot(trigS, param, null, options);
+    const slot = this.findOutputSlot("onExecuted");
+    if (typeof slot === "number") {
+      this.triggerSlot(slot, param, null, options);
     }
   };
 
   changeMode(modeTo) {
     switch (modeTo) {
+      case LiteGraph.NEVER:
+        break;
+
+      case LiteGraph.ALWAYS:
+        break;
+
       case LiteGraph.ON_EVENT:
         // this.addOnExecutedOutput();
         break;
@@ -1021,23 +1020,15 @@ class LGraphNode {
         this.addOnExecutedOutput();
         break;
 
-      case LiteGraph.NEVER:
-        break;
-
-      case LiteGraph.ALWAYS:
-        break;
-
       case LiteGraph.ON_REQUEST:
         break;
 
       default:
         return false;
-        break;
     }
     this.mode = modeTo;
     return true;
   };
-
 
   /**
    * Defines a widget inside the node, it will be rendered on top of the node, you can control lots of properties
@@ -1050,7 +1041,7 @@ class LGraphNode {
    * @param {Object} options the object that contains special properties of this widget
    * @return {Object} the created widget object
    */
-  addWidget(type: string, name: string, value: number | string, callback: Function | null, options: any = {}) {
+  addWidget(type: string, name: string, value: number | string | boolean, callback: Function | string, options: any = {}) {
     if (!this.widgets) {
       this.widgets = [];
     }
@@ -1172,7 +1163,7 @@ class LGraphNode {
   /**
    * 触发节点代码执行，放置一个布尔值/计数器来标记节点正在执行
    */
-  doExecute(param: any, options: any = {}) {
+  doExecute(param: any = {}, options: any = {}) {
     options = options || {};
     if (this.onExecute) {
       // enable this to give the event an ID
@@ -1255,7 +1246,7 @@ class LGraphNode {
    * @param {*} param
    * @param {Number} link_id [optional] in case you want to trigger and specific output link in a slot
    */
-  triggerSlot(slot: number, param: any, link_id?: number, options: any = {}) {
+  triggerSlot(slot: number, param?: any, link_id?: number, options: any = {}) {
 
     if (!this.outputs) {
       return false;
@@ -1371,7 +1362,10 @@ class LGraphNode {
  * @param {string} type 属性的输出端口类型 比如 ("string","number",...)
  * @param {Object} extra_info 属性的额外信息
  */
-  addProperty(name: string, default_value: any, type: string, extra_info: object) {
+  addProperty(name: string, default_value: any, type: string = "", extra_info: object = {}) {
+    if (type === "") {
+      type = typeof default_value;
+    }
     const o = { name: name, type: type, default_value: default_value };
     if (extra_info) {
       for (let i in extra_info) {
@@ -1790,7 +1784,7 @@ class LGraphNode {
  */
   findSlotByType(
     input: boolean = false,
-    type: string| number,
+    type: string | number,
     returnObject: boolean = false,
     preferFreeSlot: boolean = false,
     doNotUseOccupied: boolean = false
@@ -2236,9 +2230,9 @@ class LGraphNode {
           }
         }
 
-        
+
         // remove link from the pool
-        if(this.graph) {
+        if (this.graph) {
           this.graph.links[link_id] = null;
         }
 
@@ -2280,7 +2274,7 @@ class LGraphNode {
    * @param {string} target_type the output slot type of the target node
    * @return {Object} the link_info is created, otherwise null
    */
-  connectByTypeOutput(slot: number , source_node: LGraphNode, source_slotType: string , optsIn = {}) {
+  connectByTypeOutput(slot: number, source_node: LGraphNode, source_slotType: string, optsIn = {}) {
     optsIn = optsIn || {};
     let optsDef = {
       createEventInCase: true,
@@ -2372,8 +2366,8 @@ class LGraphNode {
     const img = new Image();
     img.src = LiteGraph.node_images_path + url;
     this.ready = false;
-    
-    img.onload =  () => {
+
+    img.onload = () => {
       this.ready = true;
       this.setDirtyCanvas(true, false);
     };
@@ -2385,7 +2379,7 @@ class LGraphNode {
   /* Allows to get onMouseMove and onMouseUp events even if the mouse is out of focus
   * 即使鼠标失去焦点也允许获取 onMouseMove 和 onMouseUp 事件
   */
-  captureInput(v:boolean) {
+  captureInput(v: boolean) {
     if (!this.graph || !this.graph.list_of_graphcanvas) {
       return;
     }
@@ -2440,22 +2434,39 @@ class LGraphNode {
 
   //   return true;
   // }
-  static install(LiteGraph: LiteGraph) {
-    LiteGraph.LGraphNode = LGraphNode;
-  };
+
 
   // can be rewrite
-  onSerialize() { };
+  updateOutputData(outputInex: number) {
+
+  }
+  // can be rewrite event
+  onConnectOutput() { }
+  onInputRemoved(slot: number, slot_info: LGraphNodePortInfo) { }
+  onRemoved() { }
+  onExecute() { };
+  onSerialize(o: LGraphNodeInfo): any { }
   onInputAdded(input: LGraphNodePortInput) { };
   onOutputAdded(output: LGraphNodePortOutput) { };
-  onPropertyChanged(name: string ,value: any) { };
-  onConnectionsChange() { };
-  onConfigure(o:any) { };
+  onPropertyChanged(name: string, value: any, pre_value?: any): any { };
+  onNodeConnectionChange(
+    type: typeof LiteGraph.OUTPUT | typeof LiteGraph.INPUT,
+  ) {
+
+  }
+  onConnectionsChange(
+    type: typeof LiteGraph.OUTPUT | typeof LiteGraph.INPUT,
+    slot: number,
+    connect: boolean,
+
+  ) {
+
+  };
+  onConfigure(o: any) { };
   onResize(size: number[]) { };
   onGetPropertyInfo() { };
   onBounding() { };
   onBeforeConnectInput() { };
 }
-
 
 export default LGraphNode;

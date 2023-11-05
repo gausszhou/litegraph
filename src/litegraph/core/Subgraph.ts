@@ -1,4 +1,4 @@
-import LiteGraph from ".";
+import LiteGraph from "./LiteGraph";
 import LGraph from './LGraph';
 import LGraphNode from "./LGraphNode";
 import LGraphCanvas from "./LGraphCanvas";
@@ -22,15 +22,13 @@ class Subgraph extends LGraphNode {
   static title = "Subgraph";
   static desc = "Graph inside a node";
   static title_color = "#334";
-  static install(LiteGraph: LiteGraph) {
-    LiteGraph.registerNodeType("graph/subgraph", Subgraph);
-    LiteGraph.Subgraph = Subgraph;
-  };
+
 
   subgraph: LGraph = new LGraph();
   size = [140, 80];
   properties = { enabled: true };
   enabled = true;
+  mode = LiteGraph.ALWAYS
 
   constructor() {
     super(Subgraph.title);
@@ -265,10 +263,12 @@ class Subgraph extends LGraphNode {
 
   onDrawBackground(
     ctx: CanvasRenderingContext2D,
+    pos: number[],
     graphcanvas: LGraphCanvas,
     canvas: HTMLCanvasElement,
-    pos: number[]
   ) {
+    console.log(graphcanvas);
+    console.log(canvas);
     if (this.flags.collapsed) return false;
     const bodyHeight = this.size[1] - LiteGraph.NODE_TITLE_HEIGHT + 0.5;
     // button
