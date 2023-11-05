@@ -1,14 +1,12 @@
 # LiteGraph
 
-> Make something professional
+> A Node Graph Engine
 
 ## Preview
 
 [Demo](https://gausszhou.github.io/litegraph/demo)
 
 [Docs](https://gausszhou.github.io/litegraph/docs)
-
-![](https://static.gausszhou.top/data/image/project/litegraph.png)
 
 ## TODO
 
