@@ -1,6 +1,6 @@
 {
-  "name": "@gausszhou/litegraph",
   "private": false,
+  "workspaces": ["packages/*", "apps/*"],
   "version": "0.0.0",
   "type": "module",
   "main": "./lib/litegraph.umd.js",
@@ -19,22 +19,19 @@
     "demo:preview": "vite preview",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:serve": "vitepress serve docs",
+    "zip": "node scripts/compress.js",
+    "remove": "npm run remove:dist && npm run remove:module",
+    "remove:dist": "rm -rf packages/**/dist",
+    "remove:module": "rm -rf packages/**/node_modules"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.4",
-    "prettier": "^2.7.1",
-    "rollup": "^2.77.3",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rollup": "^4.24.3",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-uglify": "^6.0.4",
     "sass": "^1.54.4",
-    "tslib": "^2.4.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.6",
-    "vitepress": "^1.0.0-alpha.13"
-  },
-  "dependencies": {
-    "gl-matrix": "^2.8.1",
-    "midi-parser-js": "^4.0.4"
+    "typescript": "^4.4.4",
+    "vite": "^5.4.10",
+    "vitepress": "^1.4.3"
   }
 }
