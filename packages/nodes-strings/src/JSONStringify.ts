@@ -1,5 +1,5 @@
-import { INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@litegraph/core";
-
+import { INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@litegraph/core";
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 export interface JSONStringifyProperties extends Record<string, any> {
     space: number
 }

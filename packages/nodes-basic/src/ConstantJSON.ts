@@ -1,5 +1,8 @@
-import { BuiltInSlotShape, ITextWidget, IWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
 import Watch from "./Watch"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import LiteCommon from "@litegraph/core/src/LiteCommon";
+import { BuiltInSlotShape } from "@litegraph/core/src/types";
 
 export interface ConstantJSONProperties extends Record<string, any> {
     value: string,
@@ -67,7 +70,7 @@ export default class ConstantJSON extends LGraphNode {
 
         //update output
         if (this.outputs[0].type != type) {
-            if (!LiteGraph.isValidConnection(this.outputs[0].type, type))
+            if (!LiteCommon.isValidConnection(this.outputs[0].type, type))
                 this.disconnectOutput(0);
             this.outputs[0].type = type;
         }
@@ -135,10 +138,3 @@ export default class ConstantJSON extends LGraphNode {
         reader.readAsText(file);
     }
 }
-
-LiteGraph.registerNodeType({
-    class: ConstantJSON,
-    title: "Const JSON",
-    desc: "Parses a string to JSON object",
-    type: "basic/json"
-})

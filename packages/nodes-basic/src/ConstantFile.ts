@@ -1,4 +1,6 @@
-import { ITextWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import LiteCommon from "@litegraph/core/src/LiteCommon";
 
 export interface ConstantFileProperties extends Record<string, any> {
     url: string,
@@ -73,8 +75,8 @@ export default class ConstantFile extends LGraphNode {
 
         this._url = url;
         this._type = this.properties.type;
-        if (url.substr(0, 4) == "http" && LiteGraph.proxy) {
-            url = LiteGraph.proxy + url.substr(url.indexOf(":") + 3);
+        if (url.substr(0, 4) == "http" && LiteCommon.proxy) {
+            url = LiteCommon.proxy + url.substr(url.indexOf(":") + 3);
         }
         await fetch(url)
             .then(function(response) {
@@ -122,9 +124,3 @@ export default class ConstantFile extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: ConstantFile,
-    title: "Const File",
-    desc: "Fetches a file from an url",
-    type: "basic/file"
-})

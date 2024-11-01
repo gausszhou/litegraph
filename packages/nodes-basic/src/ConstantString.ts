@@ -1,5 +1,5 @@
-import { ITextWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-
+import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 export interface ConstantStringProperties extends Record<string, any> {
     value: string,
 }
@@ -58,9 +58,3 @@ export default class ConstantString extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: ConstantString,
-    title: "Const String",
-    desc: "Constant string",
-    type: "basic/string"
-})

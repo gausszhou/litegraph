@@ -1,8 +1,10 @@
-import { BuiltInSlotType, IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-import { LiteGraph, LGraphNode } from "@litegraph/core"
+import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import { BuiltInSlotType } from "@litegraph/core/src/types";
 
 export interface ConstantBooleanProperties extends Record<string, any> {
-    value: number,
+    value: boolean,
 }
 
 export default class ConstantBoolean extends LGraphNode {
@@ -56,10 +58,3 @@ export default class ConstantBoolean extends LGraphNode {
         this.setProperty("value", Boolean(v));
     }
 }
-
-LiteGraph.registerNodeType({
-    class: ConstantBoolean,
-    title: "Const Boolean",
-    desc: "Constant boolean",
-    type: "basic/boolean"
-})

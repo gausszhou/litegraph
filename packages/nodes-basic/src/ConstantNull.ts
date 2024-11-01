@@ -1,6 +1,6 @@
-import { BuiltInSlotType, IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-import { LiteGraph, LGraphNode } from "@litegraph/core"
-
+import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import { BuiltInSlotType } from "@litegraph/core/src/types";
 export interface ConstantNullProperties extends Record<string, any> {
     value: null | undefined,
 }
@@ -60,9 +60,3 @@ export default class ConstantNull extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: ConstantNull,
-    title: "Const Null",
-    desc: "Constant null or undefined",
-    type: "basic/null"
-})

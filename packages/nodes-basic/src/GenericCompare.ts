@@ -1,6 +1,8 @@
-import { BuiltInSlotType, IComboWidget, PropertyLayout, SlotLayout } from "@litegraph/core"
-import { LGraphNode, LiteGraph } from "@litegraph/core"
+import { IComboWidget, PropertyLayout, SlotLayout } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import { BuiltInSlotType } from "@litegraph/core/src/types";
 
+// BuiltInSlotType
 export interface GenericCompareProperties extends Record<string, any> {
     A: any
     B: any
@@ -111,9 +113,3 @@ export default class GenericCompare extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: GenericCompare,
-    title: "GenericCompare",
-    desc: "Compare *",
-    type: "basic/CompareValues"
-})

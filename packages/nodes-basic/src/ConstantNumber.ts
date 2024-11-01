@@ -1,5 +1,5 @@
 import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-import { LiteGraph, LGraphNode } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 
 export interface ConstantNumberProperties extends Record<string, any> {
     value: number,
@@ -56,9 +56,4 @@ export default class ConstantNumber extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: ConstantNumber,
-    title: "Const Number",
-    desc: "Constant number",
-    type: "basic/number"
-})
+

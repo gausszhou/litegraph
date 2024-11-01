@@ -1,6 +1,6 @@
-import { LGraphNode, LiteGraph, SlotLayout } from "@litegraph/core";
+import LGraphNode, { SlotLayout }  from "@litegraph/core/src/LGraphNode";
 
-export default class LogicAnd extends LGraphNode {
+export default class LogicAnd extends LGraphNode{
     static slotLayout: SlotLayout = {
         inputs: [
             { name: "a", type: "boolean" },
@@ -23,9 +23,3 @@ export default class LogicAnd extends LGraphNode {
     };
 }
 
-LiteGraph.registerNodeType({
-    class: LogicAnd,
-    title: "AND",
-    desc: "Return true if all inputs are true",
-    type: "logic/AND"
-})

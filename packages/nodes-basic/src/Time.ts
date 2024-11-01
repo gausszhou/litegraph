@@ -1,5 +1,5 @@
 import type { PropertyLayout, SlotLayout } from "@litegraph/core"
-import { LGraphNode, LiteGraph } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 
 export interface TimeProperties extends Record<string, any> {
     enabled: boolean
@@ -28,9 +28,3 @@ export default class Time extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: Time,
-    title: "Time",
-    desc: "Current time",
-    type: "basic/time"
-})

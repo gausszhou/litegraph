@@ -1,4 +1,8 @@
-import { BuiltInSlotType, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import type { SlotLayout, Vector2 } from "@litegraph/core";
+
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import LiteCommon from "@litegraph/core/src/LiteCommon";
+
 
 export interface MathOperationProperties extends Record<string, any> {
     A: any,
@@ -93,7 +97,7 @@ export default class MathOperation extends LGraphNode {
         }
         else {
             result = {};
-            for (var i in A)
+            for (let i in A)
                 result[i] = this._func(A[i], B);
         }
         this.setOutputData(0, result);
@@ -110,27 +114,8 @@ export default class MathOperation extends LGraphNode {
         ctx.fillText(
             this.properties.OP,
             this.size[0] * 0.5,
-            (this.size[1] + LiteGraph.NODE_TITLE_HEIGHT) * 0.5
+            (this.size[1] + LiteCommon.NODE_TITLE_HEIGHT) * 0.5
         );
         ctx.textAlign = "left";
     };
 }
-
-LiteGraph.registerNodeType({
-    class: MathOperation,
-    title: "Operation",
-    desc: "Easy math operators",
-    type: "math/operation"
-})
-
-/*
-LiteGraph.registerSearchboxExtra("math/operation", "MAX", {
-    properties: {OP:"max"},
-    title: "MAX()"
-});
-
-LiteGraph.registerSearchboxExtra("math/operation", "MIN", {
-    properties: {OP:"min"},
-    title: "MIN()"
-});
-*/

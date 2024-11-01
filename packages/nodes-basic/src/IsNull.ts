@@ -1,12 +1,12 @@
 import type { PropertyLayout, SlotLayout } from "@litegraph/core"
-import { LGraphNode, LiteGraph } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 
 export interface IsNullProperties extends Record<string, any> {
     strictEquality: boolean
 }
 
 export default class IsNull extends LGraphNode {
-    override properties: IsNonNullProperties = {
+    override properties: IsNullProperties = {
         strictEquality: true
     }
 
@@ -28,10 +28,3 @@ export default class IsNull extends LGraphNode {
         this.setOutputData(0, isNull)
     }
 }
-
-LiteGraph.registerNodeType({
-    class: IsNull,
-    title: "== Null",
-    desc: "Returns true if input is null",
-    type: "basic/is_null"
-})

@@ -1,5 +1,4 @@
-import { LGraphNode, LiteGraph, SlotLayout } from "@litegraph/core";
-
+import LGraphNode, { SlotLayout }  from "@litegraph/core/src/LGraphNode";
 export default class LogicNot extends LGraphNode {
     static slotLayout: SlotLayout = {
         inputs: [
@@ -15,10 +14,3 @@ export default class LogicNot extends LGraphNode {
         this.setOutputData(0, ret);
     };
 }
-
-LiteGraph.registerNodeType({
-    class: LogicNot,
-    title: "NOT",
-    desc: "Return the logical negation",
-    type: "logic/NOT"
-})

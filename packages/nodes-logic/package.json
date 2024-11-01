@@ -9,11 +9,11 @@
     "build": "vite build"
   },
   "dependencies": {
-      "@litegraph/core": "workspace:*"
+    "@litegraph/core": "workspace:*"
   },
   "devDependencies": {
+    "@litegraph/tsconfig": "workspace:*",
     "typescript": "^5.0.3",
-    "vite": "^4.2.1",
-    "@litegraph/tsconfig": "workspace:*"
+    "vite": "^4.2.1"
   }
 }

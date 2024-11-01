@@ -19,6 +19,7 @@ import Subgraph from "./nodes/Subgraph";
 import { BuiltInSlotType, Dir, LinkRenderMode, NodeID, SlotType, type Vector2, type Vector4 } from "./types";
 import { clamp } from "./utils";
 import { UUID } from "./types";
+import LiteCommon from "./LiteCommon";
 
 export interface IGraphPanel extends HTMLDivElement {
     header: HTMLDivElement;
@@ -224,7 +225,7 @@ export default class LGraphCanvas
             "normal " + LiteGraph.NODE_SUBTEXT_SIZE + "px Arial";
         this.node_title_color = LiteGraph.NODE_TITLE_COLOR;
         this.default_link_color = LiteGraph.LINK_COLOR;
-        this.link_type_colors = LiteGraph.cloneObject(LGraphCanvas.DEFAULT_LINK_TYPE_COLORS)
+        this.link_type_colors = LiteCommon.cloneObject(LGraphCanvas.DEFAULT_LINK_TYPE_COLORS)
 
         this.canvas_mouse = this.graph_mouse; //LEGACY: REMOVE THIS, USE GRAPH_MOUSE INSTEAD
 
@@ -519,7 +520,7 @@ export default class LGraphCanvas
             this._graph_stack.push({ graph: this.graph, offset, scale: this.ds.scale });
         }
 
-        if (LiteGraph.debug) {
+        if (LiteCommon.debug) {
             console.warn("SubGraph opened", graph)
             console.warn("Graph inputs", graph.inputs)
             console.warn("Graph outputs", graph.outputs)
@@ -664,13 +665,13 @@ export default class LGraphCanvas
 
     //used in some events to capture them
     private _doNothing(e: Event) {
-        // if (LiteGraph.debug)
+        // if (LiteCommon.debug)
         // console.log("pointerevents: _doNothing " + e.type);
         e.preventDefault();
         return false;
     };
     private _doReturnTrue(e: Event) {
-        // if (LiteGraph.debug)
+        // if (LiteCommon.debug)
         //     console.log("pointerevents: _doReturnTrue " + e.type);
         e.preventDefault();
         return true;
@@ -745,7 +746,7 @@ export default class LGraphCanvas
             return;
         }
 
-        if (LiteGraph.debug)
+        if (LiteCommon.debug)
             console.log("pointerevents: unbindEvents");
 
         var ref_window = this.getCanvasWindow();
@@ -943,7 +944,7 @@ export default class LGraphCanvas
                 for (var index in fromSlotSpec) {
                     if (nodeType == slotTypesDefault[fromSlotType][index] || nodeType == "AUTO") {
                         nodeNewType = slotTypesDefault[fromSlotType][index];
-                        if (LiteGraph.debug)
+                        if (LiteCommon.debug)
                             console.log("opts.nodeType == slotTypesDefault[fromSlotType][typeX] :: " + nodeType);
                         break; // --------
                     }
@@ -1165,7 +1166,7 @@ export default class LGraphCanvas
         }
 
         var block_default = false;
-        if (LiteGraph.debug)
+        if (LiteCommon.debug)
             console.log("processKey", e); //debug
 
         if ((e.target instanceof Element) && e.target.localName == "input") {
@@ -1698,7 +1699,7 @@ export default class LGraphCanvas
                 continue;
 
             //autoconnect when possible (very basic, only takes into account first input-output)
-            if (node.inputs && node.inputs.length && node.outputs && node.outputs.length && LiteGraph.isValidConnection(node.inputs[0].type, node.outputs[0].type) && node.inputs[0].link && node.outputs[0].links && node.outputs[0].links.length) {
+            if (node.inputs && node.inputs.length && node.outputs && node.outputs.length && LiteCommon.isValidConnection(node.inputs[0].type, node.outputs[0].type) && node.inputs[0].link && node.outputs[0].links && node.outputs[0].links.length) {
                 var input_link = node.graph.links[node.inputs[0].link];
                 var output_link = node.graph.links[node.outputs[0].links[0]];
                 var input_node = node.getInputNode(0);
@@ -1759,7 +1760,7 @@ export default class LGraphCanvas
         e.canvasX = clientX_rel / this.ds.scale - this.ds.offset[0];
         e.canvasY = clientY_rel / this.ds.scale - this.ds.offset[1];
 
-        // if (LiteGraph.debug)
+        // if (LiteCommon.debug)
         //     console.log("pointerevents: adjustMouseEvent " + e.clientX + ":" + e.clientY + " " + clientX_rel + ":" + clientY_rel + " " + e.canvasX + ":" + e.canvasY);
         return e;
     }

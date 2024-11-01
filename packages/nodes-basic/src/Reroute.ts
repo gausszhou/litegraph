@@ -1,4 +1,6 @@
-import { ContextMenuItem, LGraphNode, LiteGraph, SlotLayout, TitleMode } from "@litegraph/core";
+import type { ContextMenuItem, SlotLayout } from "@litegraph/core";
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import { TitleMode } from "@litegraph/core/src/types";
 
 export default class Reroute extends LGraphNode {
     static slotLayout: SlotLayout = {
@@ -18,7 +20,7 @@ export default class Reroute extends LGraphNode {
         this.setOutputData(0, this.getInputData(0));
     }
 
-    override getExtraMenuOptions(_, options: ContextMenuItem[]): ContextMenuItem[] | null {
+    override getExtraMenuOptions(_: any, options: ContextMenuItem[]): ContextMenuItem[] | null {
         const canSplice = this.getInputLink(0) != null && this.getOutputLinks(0).length > 0;
 
         options.push({
@@ -47,10 +49,3 @@ export default class Reroute extends LGraphNode {
         return null;
     }
 }
-
-LiteGraph.registerNodeType({
-    class: Reroute,
-    title: "Reroute",
-    desc: "Simple pass-through for organization",
-    type: "basic/reroute"
-})

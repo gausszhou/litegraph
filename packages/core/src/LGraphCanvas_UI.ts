@@ -17,6 +17,7 @@ import { clamp, getLitegraphTypeName, makeDraggable, toHashMap } from "./utils";
 import GraphInput, { getSlotTypesIn } from "./nodes/GraphInput";
 import GraphOutput, { getSlotTypesOut } from "./nodes/GraphOutput";
 import Subgraph, { SubgraphInputPair, SubgraphOutputPair } from "./nodes/Subgraph";
+import LiteCommon from "./LiteCommon";
 
 export default class LGraphCanvas_UI {
 
@@ -1247,7 +1248,7 @@ export default class LGraphCanvas_UI {
                 , outTypeOverride: null
             };
             const opts = Object.assign(optsDef, optsIn);
-            const ctor = LiteGraph.registered_node_types[type];
+            const ctor = LiteCommon.registered_node_types[type];
             if (ctor.hide_in_node_lists)
                 return false;
             if (filter && ctor.filter != filter)
@@ -1339,7 +1340,7 @@ export default class LGraphCanvas_UI {
                     if ((!options.show_all_if_empty || str) && extra.desc.toLowerCase().indexOf(str) === -1) {
                         continue;
                     }
-                    var ctor = LiteGraph.registered_node_types[extra.type];
+                    var ctor = LiteCommon.registered_node_types[extra.type];
                     if (ctor && ctor.filter != filter)
                         continue;
                     if (!inner_test_filter(extra.type, filter, str, sIn, sOut))
@@ -1352,11 +1353,11 @@ export default class LGraphCanvas_UI {
 
                 var filtered: string[] | null = null;
                 if (Array.prototype.filter) { //filter supported
-                    var keys = Object.keys(LiteGraph.registered_node_types); //types
+                    var keys = Object.keys(LiteCommon.registered_node_types); //types
                     var filtered = keys.filter((k) => inner_test_filter(k, filter, str, sIn, sOut));
                 } else {
                     filtered = [];
-                    for (const i in LiteGraph.registered_node_types) {
+                    for (const i in LiteCommon.registered_node_types) {
                         if (inner_test_filter(i, filter, str, sIn, sOut))
                             filtered.push(i);
                     }
@@ -1374,7 +1375,7 @@ export default class LGraphCanvas_UI {
                     && (sIn?.value || sOut?.value)
                 ) {
                     let filtered_extra = [];
-                    for (const i in LiteGraph.registered_node_types) {
+                    for (const i in LiteCommon.registered_node_types) {
                         if (inner_test_filter(i, filter, str, sIn, sOut, { inTypeOverride: sIn && sIn.value ? "*" : null, outTypeOverride: sOut && sOut.value ? "*" : null }))
                             filtered_extra.push(i);
                     }
@@ -1391,7 +1392,7 @@ export default class LGraphCanvas_UI {
                     ((helper?.childNodes.length == 0 && options.show_general_if_none_on_typefilter))
                 ) {
                     let filtered_extra = [];
-                    for (const i in LiteGraph.registered_node_types) {
+                    for (const i in LiteCommon.registered_node_types) {
                         if (inner_test_filter(i, filter, str, sIn, sOut, { skipFilter: true }))
                             filtered_extra.push(i);
                     }

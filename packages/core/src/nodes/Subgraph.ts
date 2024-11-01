@@ -6,6 +6,7 @@ import type LGraphCanvas from "../LGraphCanvas";
 import type { LActionOptions, LGraphNodeCloneData, OptionalSlots, PropertyLayout, SerializedLGraphNode, SlotLayout } from "../LGraphNode";
 import LGraphNode from "../LGraphNode";
 import LLink from "../LLink";
+import LiteCommon from "../LiteCommon";
 import LiteGraph from "../LiteGraph";
 import { BuiltInSlotShape, SlotType, type NodeMode, type Vector2, LinkID, NodeID, BuiltInSlotType } from "../types";
 import { UUID } from "../types";
@@ -467,7 +468,7 @@ export default class Subgraph extends LGraphNode {
         if (LiteGraph.use_uuids) {
             // LGraph.serialize() seems to reuse objects in the original graph. But we
             // need to change node IDs here, so clone it first.
-            const subgraph = LiteGraph.cloneObject((data as any).subgraph)
+            const subgraph = LiteCommon.cloneObject((data as any).subgraph)
             mapping = reassignGraphIDs(subgraph);
             (data as any).subgraph = subgraph;
         }
@@ -572,7 +573,7 @@ export default class Subgraph extends LGraphNode {
         sortedLinksIn.sort((a, b) => a[1][1] - b[1][1])
         sortedLinksOut.sort((a, b) => a[1][1] - b[1][1])
 
-        if (LiteGraph.debug) {
+        if (LiteCommon.debug) {
             console.debug("NODES", Object.keys(nodes))
             console.debug("IN", Object.keys(linksIn))
             console.debug("OUT", Object.keys(linksOut))

@@ -1,4 +1,5 @@
-import { INumberWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { INumberWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core";
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 
 export interface SetArrayProperties extends Record<string, any> {
     index: number
@@ -55,9 +56,3 @@ export default class SetArray extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: SetArray,
-    title: "Set Array",
-    desc: "Sets index of array",
-    type: "basic/set_array"
-})

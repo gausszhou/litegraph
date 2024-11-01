@@ -1,4 +1,4 @@
-import { LGraphNode, LiteGraph, SlotLayout } from "@litegraph/core";
+import LGraphNode, { SlotLayout } from "@litegraph/core/src/LGraphNode";
 
 export default class LogicOr extends LGraphNode {
     static slotLayout: SlotLayout = {
@@ -23,9 +23,3 @@ export default class LogicOr extends LGraphNode {
     };
 }
 
-LiteGraph.registerNodeType({
-    class: LogicOr,
-    title: "OR",
-    desc: "Return true if at least one input is true",
-    type: "logic/OR"
-})

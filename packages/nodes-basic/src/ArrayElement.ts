@@ -1,4 +1,6 @@
-import { BuiltInSlotShape, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
+import type { OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
+import LGraphNode from "@litegraph/core/src/LGraphNode";
+import { BuiltInSlotShape } from "@litegraph/core/src/types";
 
 export interface ArrayElementProperties extends Record<string, any> {
     index: number
@@ -46,9 +48,3 @@ export default class ArrayElement extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: ArrayElement,
-    title: "Array[i]",
-    desc: "Returns an element from an array",
-    type: "basic/array[]"
-})

@@ -1,5 +1,5 @@
-import type { PropertyLayout, SlotLayout } from "@litegraph/core"
-import { LGraphNode, LiteGraph } from "@litegraph/core"
+import LGraphNode, { PropertyLayout, SlotLayout } from "@litegraph/core/src/LGraphNode";
+
 
 export default class LogicTruthy extends LGraphNode {
     static slotLayout: SlotLayout = {
@@ -20,9 +20,3 @@ export default class LogicTruthy extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: LogicTruthy,
-    title: "~= TRUE",
-    desc: "Returns true if input is truthy",
-    type: "logic/truthy"
-})

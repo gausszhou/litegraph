@@ -13,3 +13,5 @@ export { default as Time } from "./Time";
 export { default as Watch } from "./Watch";
 export { default as GenericCompare } from "./GenericCompare";
 export { default as IsNull } from "./IsNull";
+import { install } from "./install";
+export default install;

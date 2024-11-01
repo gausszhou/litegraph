@@ -1,7 +1,8 @@
-import { LGraphNode, LiteGraph, SlotLayout, Vector2 } from "@litegraph/core";
+import { SlotLayout, Vector2 } from "@litegraph/core";
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 
 export interface MathOperationProperties extends Record<string, any> {
-    epsilon: 0.001
+    epsilon: 0.001;
 }
 
 export default class MathApproxEq extends LGraphNode {
@@ -15,7 +16,7 @@ export default class MathApproxEq extends LGraphNode {
             { name: "true", type: "boolean" },
             { name: "false", type: "boolean" },
         ],
-    }
+    };
 
     override size: Vector2 = [80, 30];
 
@@ -24,7 +25,7 @@ export default class MathApproxEq extends LGraphNode {
             epsilon = 0.001;
         }
         return Math.abs(a - b) < epsilon;
-    };
+    }
 
     override onExecute() {
         const A = this.getInputData(0);
@@ -33,15 +34,8 @@ export default class MathApproxEq extends LGraphNode {
             return;
         }
         const epsilon = this.getInputData(2) || this.properties.epsilon;
-        const v = MathApproxEq.approxEq(A, B, epsilon)
+        const v = MathApproxEq.approxEq(A, B, epsilon);
         this.setOutputData(0, v);
         this.setOutputData(1, !v);
-    };
+    }
 }
-
-LiteGraph.registerNodeType({
-    class: MathApproxEq,
-    title: "Approx. Eq",
-    desc: "Check if two floating-point numbers are approximately equal",
-    type: "math/approx_eq"
-})

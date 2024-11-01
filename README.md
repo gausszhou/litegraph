@@ -18,3 +18,10 @@
 - [ ] 优化代码，全面使用 TypeScript
 - [ ] 新功能：多语言显示
 - [ ] 新功能：节点自动重排
+
+## Thanks
+
+```bash
+https://github.com/jagenjo/litegraph.js
+https://github.com/space-nuko/litegraph.ts
+```

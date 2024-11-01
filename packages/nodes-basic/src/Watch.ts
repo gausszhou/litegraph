@@ -1,6 +1,6 @@
 import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-import { LiteGraph, LGraphNode, BuiltInSlotType } from "@litegraph/core"
-
+import { BuiltInSlotType } from "@litegraph/core/src/types";
+import LGraphNode from "@litegraph/core/src/LGraphNode";
 export interface WatchProperties extends Record<string, any> {
     value: any,
 }
@@ -70,9 +70,3 @@ export default class Watch extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: Watch,
-    title: "Watch",
-    desc: "Show value of input",
-    type: "basic/watch"
-})

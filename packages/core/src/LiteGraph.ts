@@ -1,6 +1,6 @@
-import type LGraph from "./LGraph";
 import type { LGraphNodeConstructor, LGraphNodeConstructorFactory, NodeTypeSpec, PropertyLayout, SearchboxExtra, SerializedLGraphNode, SlotLayout } from "./LGraphNode";
 import { default as LGraphNode } from "./LGraphNode";
+import LiteCommon from "./LiteCommon";
 import type { PointerEventsMethod, SlotType, Vector2, Vector4 } from "./types";
 import { NodeMode } from "./types";
 import { BuiltInSlotType } from "./types";
@@ -15,6 +15,7 @@ export type LiteGraphCreateNodeOptions = {
 
 export default class LiteGraph {
     static VERSION: number = 10.0;
+    static _installedPlugins: any = [];
 
     static CANVAS_GRID_SIZE: number = 10;
 
@@ -148,7 +149,7 @@ export default class LiteGraph {
 
     /** Register a node class so it can be listed when the user wants to create a new one */
     static registerNodeType<T extends LGraphNode>(config: LGraphNodeConstructor): void {
-        if (LiteGraph.debug) {
+        if (LiteCommon.debug) {
             console.log("Node registered: " + config.type);
         }
 
@@ -158,7 +159,7 @@ export default class LiteGraph {
         if (!type) {
             throw ("Config has no type: " + config);
         }
-        if (LiteGraph.debug) {
+        if (LiteCommon.debug) {
             console.debug(classname, type)
         }
 
@@ -171,7 +172,7 @@ export default class LiteGraph {
             config.title = classname;
         }
 
-        const prev = LiteGraph.registered_node_types[type];
+        const prev = LiteCommon.registered_node_types[type];
         if (prev) {
             console.warn("replacing node type: " + type);
         }
@@ -188,7 +189,7 @@ export default class LiteGraph {
 
         (config.class as any).__LITEGRAPH_TYPE__ = type;
 
-        LiteGraph.registered_node_types[type] = config;
+        LiteCommon.registered_node_types[type] = config;
         if (config.class.name) {
             LiteGraph.Nodes[classname] = config;
         }
@@ -212,14 +213,14 @@ export default class LiteGraph {
     static unregisterNodeType(type: string | LGraphNodeConstructor): void {
         let regConfig: LGraphNodeConstructor;
         if (typeof type === "string") {
-            regConfig = LiteGraph.registered_node_types[type];
+            regConfig = LiteCommon.registered_node_types[type];
         }
         else {
             regConfig = type;
         }
         if (!regConfig)
             throw ("node type not found: " + type);
-        delete LiteGraph.registered_node_types[regConfig.type];
+        delete LiteCommon.registered_node_types[regConfig.type];
         if ((regConfig.constructor as any).name)
             delete LiteGraph.Nodes[(regConfig.constructor as any).name];
     }
@@ -234,15 +235,15 @@ export default class LiteGraph {
         let regConfig: LGraphNodeConstructor;
 
         if (typeof type === "string") {
-            // if (LiteGraph.registered_node_types[type] !== "anonymous") {
-            regConfig = LiteGraph.registered_node_types[type];
+            // if (LiteCommon.registered_node_types[type] !== "anonymous") {
+            regConfig = LiteCommon.registered_node_types[type];
             // }
             // else {
             //     regConfig = type;
             // }
         }
         else if ("type" in type)
-            regConfig = LiteGraph.registered_node_types[type.type]
+            regConfig = LiteCommon.registered_node_types[type.type]
         else {
             regConfig = type;
         }
@@ -289,7 +290,7 @@ export default class LiteGraph {
 
     /** Removes all previously registered node's types. */
     static clearRegisteredTypes(): void {
-        LiteGraph.registered_node_types = {};
+        LiteCommon.registered_node_types = {};
         LiteGraph.node_types_by_file_extension = {};
         LiteGraph.Nodes = {};
         LiteGraph.searchbox_extras = {};
@@ -351,8 +352,8 @@ export default class LiteGraph {
      */
     // static addNodeMethod(name: string, func: (...args: any[]) => any): void {
     //     LGraphNode.prototype[name] = func;
-    //     for (var i in LiteGraph.registered_node_types) {
-    //         var type = LiteGraph.registered_node_types[i];
+    //     for (var i in LiteCommon.registered_node_types) {
+    //         var type = LiteCommon.registered_node_types[i];
     //         if (type.prototype[name]) {
     //             type.prototype["_" + name] = type.prototype[name];
     //         } //keep old in case of replacing
@@ -381,7 +382,7 @@ export default class LiteGraph {
             }
         }
 
-        regConfig = LiteGraph.registered_node_types[typeID];
+        regConfig = LiteCommon.registered_node_types[typeID];
 
         if (!regConfig) {
             console.warn(
@@ -441,7 +442,7 @@ export default class LiteGraph {
 
         const propertyLayout = getStaticProperty<PropertyLayout>(regConfig.class, "propertyLayout")
         if (propertyLayout) {
-            if (LiteGraph.debug)
+            if (LiteCommon.debug)
                 console.debug("Found property layout!", propertyLayout);
             for (const item of propertyLayout) {
                 const { name, defaultValue, type, options } = item;
@@ -451,7 +452,7 @@ export default class LiteGraph {
 
         const slotLayout = getStaticProperty<SlotLayout>(regConfig.class, "slotLayout")
         if (slotLayout) {
-            if (LiteGraph.debug)
+            if (LiteCommon.debug)
                 console.debug("Found slot layout!", slotLayout);
             if (slotLayout.inputs) {
                 for (const item of slotLayout.inputs) {
@@ -480,7 +481,7 @@ export default class LiteGraph {
      * @param type full name of the node class. p.e. "math/sin"
      */
     static getNodeType<T extends LGraphNode>(type: string): LGraphNodeConstructor<T> {
-        return LiteGraph.registered_node_types[type] as LGraphNodeConstructor<T>;
+        return LiteCommon.registered_node_types[type] as LGraphNodeConstructor<T>;
     }
 
     /**
@@ -495,8 +496,8 @@ export default class LiteGraph {
         filter: string
     ): LGraphNodeConstructor[] {
         var r = [];
-        for (var i in LiteGraph.registered_node_types) {
-            var type = LiteGraph.registered_node_types[i];
+        for (var i in LiteCommon.registered_node_types) {
+            var type = LiteCommon.registered_node_types[i];
             if (type.filter != filter) {
                 continue;
             }
@@ -525,8 +526,8 @@ export default class LiteGraph {
      */
     static getNodeTypesCategories(filter: string): string[] {
         var categories = { "": 1 };
-        for (var i in LiteGraph.registered_node_types) {
-            var type = LiteGraph.registered_node_types[i];
+        for (var i in LiteCommon.registered_node_types) {
+            var type = LiteCommon.registered_node_types[i];
             if (type.category && !type.hide_in_node_lists) {
                 if (type.filter != filter)
                     continue;
@@ -562,7 +563,7 @@ export default class LiteGraph {
             }
 
             try {
-                if (LiteGraph.debug) {
+                if (LiteCommon.debug) {
                     console.log("Reloading: " + src);
                 }
                 var dynamicScript = document.createElement("script");
@@ -574,13 +575,13 @@ export default class LiteGraph {
                 if (LiteGraph.throw_errors) {
                     throw err;
                 }
-                if (LiteGraph.debug) {
+                if (LiteCommon.debug) {
                     console.log("Error while reloading " + src);
                 }
             }
         }
 
-        if (LiteGraph.debug) {
+        if (LiteCommon.debug) {
             console.log("Nodes reloaded");
         }
     }
@@ -880,4 +881,22 @@ export default class LiteGraph {
                 return oDOM.removeEventListener(sEvent, fCall, capture);
         }
     }
+
+    static use(plugin: any) {
+        // 获取已经安装的插件
+        const installedPlugins = LiteGraph._installedPlugins || (LiteGraph._installedPlugins = []);
+        // 看看插件是否已经安装，如果安装了直接返回
+        if (installedPlugins.indexOf(plugin) > -1) {
+          return this;
+        }
+        console.log(plugin)
+
+        if (typeof plugin.install === "function") {
+          plugin.install.apply(this);
+        } else if (typeof plugin === "function") {
+          plugin(LiteGraph);
+        }
+        installedPlugins.push(plugin);
+        return this;
+      };
 };
