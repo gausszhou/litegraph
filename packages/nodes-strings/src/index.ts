@@ -9,5 +9,7 @@ export { default as StringTemplate } from "./StringTemplate";
 export { default as StringToFixed } from "./StringToFixed";
 export { default as StringToTable } from "./StringToTable";
 export { default as StringToUpperCase } from "./StringToUpperCase";
+export { default as StringToLowerCase } from "./StringToLowerCase";
+
 import { install } from "./install";
 export default install;

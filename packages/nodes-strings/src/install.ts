@@ -9,6 +9,7 @@ import StringToFixed from "./StringToFixed";
 import StringToTable from "./StringToTable";
 import StringToUpperCase from "./StringToUpperCase";
 import OtherToString from "./OtherToString";
+import StringToLowerCase from "./StringToLowerCase";
 
 export const install = (LiteGraph: any) => {
   LiteGraph.registerNodeType({
@@ -77,6 +78,13 @@ export const install = (LiteGraph: any) => {
     title: "ToUpperCase",
     desc: "Converts to upper case",
     type: "string/toUpperCase",
+  });
+
+  LiteGraph.registerNodeType({
+    class: StringToLowerCase,
+    title: "ToLowerCase",
+    desc: "Converts to lower case",
+    type: "string/toLowerCase",
   });
 
   LiteGraph.registerNodeType({
