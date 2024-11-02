@@ -1,5 +1,5 @@
 {
-  "name": "@litegraph/nodes-math",
+  "name": "@gausszhou/litegraph-nodes-math",
   "version": "0.1.0",
   "description": "",
   "main": "./src/index.ts",
@@ -9,7 +9,7 @@
     "build": "vite build"
   },
   "dependencies": {
-      "@litegraph/core": "workspace:*"
+      "@gausszhou/litegraph-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.3",

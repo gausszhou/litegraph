@@ -1,5 +1,5 @@
-import type { SlotLayout, Vector2 } from "@litegraph/core";
-import LiteConst from "@litegraph/core/src/LiteConst";
+import type { SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
+import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
 
 declare class LGraphNode {
     flags

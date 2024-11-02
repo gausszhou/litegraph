@@ -1,4 +1,4 @@
-import { INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@litegraph/core";
+import { INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
 
 export interface JSONParseProperties extends Record<string, any> {
 }

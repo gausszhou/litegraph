@@ -1,4 +1,4 @@
-import { type SlotLayout, type Vector2 } from "@litegraph/core";
+import { type SlotLayout, type Vector2 } from "@gausszhou/litegraph-core";
 declare class LGraphNode {
     size
     properties

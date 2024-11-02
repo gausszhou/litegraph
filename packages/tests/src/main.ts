@@ -1,10 +1,10 @@
-import "@litegraph/core"
-import "@litegraph/nodes-basic"
+import "@gausszhou/litegraph-core"
+import "@gausszhou/litegraph-nodes-basic"
 
 import { describe, it } from "vitest"
 import UnitTest from "./UnitTest"
 import * as testSuite from "./testSuite"
-import { LiteGraph } from "@litegraph/core"
+import { LiteGraph } from "@gausszhou/litegraph-core"
 
 // I don't like BDD syntax...
 // Emulate minitest instead...

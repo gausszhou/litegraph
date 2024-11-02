@@ -1,4 +1,4 @@
-import { BuiltInSlotType, ITextWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { BuiltInSlotType, ITextWidget, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 
 export interface LogEventProperties extends Record<string, any> {
 }

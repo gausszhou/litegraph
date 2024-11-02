@@ -1,5 +1,5 @@
-import { BuiltInSlotType, GraphIDMapping, GraphInput, GraphOutput, LGraph, LGraphAddNodeOptions, LGraphNode, LGraphNodeCloneData, LGraphRemoveNodeOptions, LiteGraph, NodeID, SlotLayout, Subgraph } from "@litegraph/core"
-import { ConstantInteger, Watch } from "@litegraph/nodes-basic"
+import { BuiltInSlotType, GraphIDMapping, GraphInput, GraphOutput, LGraph, LGraphAddNodeOptions, LGraphNode, LGraphNodeCloneData, LGraphRemoveNodeOptions, LiteGraph, NodeID, SlotLayout, Subgraph } from "@gausszhou/litegraph-core"
+import { ConstantInteger, Watch } from "@gausszhou/litegraph-nodes-basic"
 import { expect, vi } from 'vitest'
 import UnitTest from "../UnitTest"
 

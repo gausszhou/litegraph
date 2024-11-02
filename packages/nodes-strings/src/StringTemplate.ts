@@ -1,4 +1,4 @@
-import { BuiltInSlotType, INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@litegraph/core";
+import { BuiltInSlotType, INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
 
 export interface StringTemplateProperties extends Record<string, any> {
     template: string,

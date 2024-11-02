@@ -1,4 +1,4 @@
-import { BuiltInSlotType, IComboWidget, ITextWidget, LGraphNode, LiteGraph, SlotLayout, Vector2 } from "@litegraph/core";
+import { BuiltInSlotType, IComboWidget, ITextWidget, LGraphNode, LiteGraph, SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
 
 export interface FilterEventProperties extends Record<string, any> {
     propertyName: string,

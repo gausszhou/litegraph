@@ -1,6 +1,6 @@
-import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
-import LiteCommon from "@litegraph/core/src/LiteCommon";
+import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
 
 declare class LGraphNode {
     constructor(title: string)

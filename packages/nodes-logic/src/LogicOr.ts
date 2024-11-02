@@ -1,4 +1,4 @@
-import type { SlotLayout } from "@litegraph/core/src/LGraphNode";
+import type { SlotLayout } from "@gausszhou/litegraph-core/src/LGraphNode";
 
 declare class LGraphNode {
     flags

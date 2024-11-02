@@ -10,8 +10,8 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@litegraph/core": "workspace:*",
-    "@litegraph/nodes-basic": "workspace:*"
+    "@gausszhou/litegraph-core": "workspace:*",
+    "@gausszhou/litegraph-nodes-basic": "workspace:*"
   },
   "devDependencies": {
     "@litegraph/tsconfig": "workspace:*",

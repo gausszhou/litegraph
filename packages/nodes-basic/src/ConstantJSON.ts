@@ -1,8 +1,8 @@
-import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 import Watch from "./Watch"
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
-import LiteCommon from "@litegraph/core/src/LiteCommon";
-import { BuiltInSlotShape } from "@litegraph/core/src/types";
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
 
 declare class LGraphNode {
     constructor(title: string)

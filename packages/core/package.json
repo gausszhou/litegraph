@@ -1,5 +1,5 @@
 {
-  "name": "@litegraph/core",
+  "name": "@gausszhou/litegraph-core",
   "version": "0.1.0",
   "description": "A graph node editor similar to PD or UDK Blueprints. It works in an HTML5 Canvas and allows to export graphs to be included in applications.",
   "main": "./src/index.ts",

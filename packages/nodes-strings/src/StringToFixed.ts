@@ -1,4 +1,4 @@
-import { LGraphNode, LiteGraph, SlotLayout } from "@litegraph/core";
+import { LGraphNode, LiteGraph, SlotLayout } from "@gausszhou/litegraph-core";
 
 export interface StringToFixedProperties extends Record<string, any> {
     precision: number

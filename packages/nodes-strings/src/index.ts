@@ -9,3 +9,5 @@ export { default as StringToTable } from "./StringToTable";
 export { default as StringTemplate } from "./StringTemplate";
 export { default as JSONParse } from "./JSONParse";
 export { default as JSONStringify } from "./JSONStringify";
+import { install } from "./install";
+export default install;

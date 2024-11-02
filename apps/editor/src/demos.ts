@@ -1,6 +1,6 @@
 import { LGraph, LiteGraph } from "@litegraph/core";
-import { ConstantNumber, Watch } from "@litegraph/nodes-basic"
-import { MathOperation } from "@litegraph/nodes-math"
+import { ConstantNumber, Watch } from "@gausszhou/litegraph-nodes-basic"
+import { MathOperation } from "@gausszhou/litegraph-nodes-math"
 
 export function demo(graph: LGraph) {
     multiConnection(graph);

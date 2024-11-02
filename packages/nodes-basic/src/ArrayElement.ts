@@ -1,6 +1,6 @@
-import type { OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
-import { BuiltInSlotShape } from "@litegraph/core/src/types";
+import type { OptionalSlots, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
 
 declare class LGraphNode {
     flags

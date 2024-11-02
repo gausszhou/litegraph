@@ -1,4 +1,4 @@
-import { BuiltInSlotType, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, IButtonWidget, Vector2, LConnectionKind, LLink, INodeInputSlot, INodeOutputSlot } from "@litegraph/core"
+import { BuiltInSlotType, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, IButtonWidget, Vector2, LConnectionKind, LLink, INodeInputSlot, INodeOutputSlot } from "@gausszhou/litegraph-core"
 
 export default class Sequence extends LGraphNode {
     static slotLayout: SlotLayout = {

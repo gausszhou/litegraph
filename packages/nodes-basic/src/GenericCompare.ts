@@ -1,6 +1,6 @@
-import { IComboWidget, PropertyLayout, SlotLayout } from "@litegraph/core"
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
-import { BuiltInSlotType } from "@litegraph/core/src/types";
+import { IComboWidget, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
 declare class LGraphNode {
     constructor(title: string)

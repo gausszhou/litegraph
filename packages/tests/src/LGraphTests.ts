@@ -1,5 +1,5 @@
-import { LGraph, LiteGraph, Subgraph } from "@litegraph/core"
-import { Watch } from "@litegraph/nodes-basic"
+import { LGraph, LiteGraph, Subgraph } from "@gausszhou/litegraph-core"
+import { Watch } from "@gausszhou/litegraph-nodes-basic"
 import { expect } from 'vitest'
 import UnitTest from "./UnitTest"
 

@@ -1,5 +1,5 @@
 import { LiteGraph, LGraph, LGraphCanvas } from "@litegraph/core"
-import { ConstantNumber, Watch } from "@litegraph/nodes-basic"
+import { ConstantNumber, Watch } from "@gausszhou/litegraph-nodes-basic"
 
 // Include litegraph's css, required for the UI to function properly
 import "@litegraph/core/css/litegraph.css"

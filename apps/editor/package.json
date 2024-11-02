@@ -6,9 +6,9 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "@litegraph/core": "workspace:*",
-    "@litegraph/nodes-basic": "workspace:*",
-    "@litegraph/nodes-math": "workspace:*",
+    "@gausszhou/litegraph-core": "workspace:*",
+    "@gausszhou/litegraph-nodes-basic": "workspace:*",
+    "@gausszhou/litegraph-nodes-math": "workspace:*",
     "typescript": "^5.0.3",
     "vite": "^4.2.1"
   },

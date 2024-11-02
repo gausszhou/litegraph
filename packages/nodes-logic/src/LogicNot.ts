@@ -1,4 +1,4 @@
-import  { SlotLayout }  from "@litegraph/core/src/LGraphNode";
+import  { SlotLayout }  from "@gausszhou/litegraph-core/src/LGraphNode";
 declare class LGraphNode {
     flags
     size

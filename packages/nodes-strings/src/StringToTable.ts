@@ -1,4 +1,4 @@
-import { LGraphNode, LiteGraph, SlotLayout } from "@litegraph/core";
+import { LGraphNode, LiteGraph, SlotLayout } from "@gausszhou/litegraph-core";
 
 export interface StringToTableProperties extends Record<string, any> {
     value: string,

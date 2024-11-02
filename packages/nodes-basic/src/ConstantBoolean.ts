@@ -1,7 +1,7 @@
-import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
+import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
-import { BuiltInSlotType } from "@litegraph/core/src/types";
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
 declare class LGraphNode {
     constructor(title: string)

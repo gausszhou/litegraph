@@ -2,7 +2,7 @@ import { LiteGraph } from "@litegraph/core";
 import Editor from "./Editor"
 import configure from "./configure"
 
-import * as basic from "@litegraph/nodes-basic"
+import * as basic from "@gausszhou/litegraph-nodes-basic"
 
 import { demo } from "./demos"
 

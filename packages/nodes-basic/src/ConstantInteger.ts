@@ -1,5 +1,5 @@
-import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-// import LGraphNode from "@litegraph/core/src/LGraphNode";
+import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
+// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 declare class LGraphNode {
     constructor(title: string)
