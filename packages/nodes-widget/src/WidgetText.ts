@@ -1,7 +1,4 @@
-
-
-
-export  default  function WidgetText() {
+export default function WidgetText() {
   this.addInputs("", 0);
   this.properties = {
     value: "...",

@@ -1,5 +1,3 @@
-
-
 export  default  function WidgetProgress() {
   this.size = [160, 26];
   this.addInput("", "number");

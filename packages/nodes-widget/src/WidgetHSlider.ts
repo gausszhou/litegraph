@@ -1,4 +1,4 @@
-import { LiteGraph } from "@gausszhou/litegraph-core";
+import LiteUtils from "@gausszhou/litegraph-core/src/LiteUtils";
 
   //Widget H SLIDER
   export  default  function WidgetHSlider() {
@@ -31,7 +31,7 @@ import { LiteGraph } from "@gausszhou/litegraph-core";
   WidgetHSlider.prototype.onExecute = function () {
     this.properties.value = this.properties.min + (this.properties.max - this.properties.min) * this.value;
     this.setOutputData(0, this.properties.value);
-    this.boxcolor = LiteGraph.colorToString([this.value, this.value, this.value]);
+    this.boxcolor = LiteUtils.colorToString([this.value, this.value, this.value]);
   };
 
   WidgetHSlider.prototype.onMouseDown = function (e) {

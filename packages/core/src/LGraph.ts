@@ -1721,3 +1721,5 @@ export default class LGraph {
         };
     }
 }
+
+(window as any).LGraph = LGraph;

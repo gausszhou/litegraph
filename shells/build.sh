@@ -10,6 +10,7 @@ pnpm --filter @gausszhou/litegraph-nodes-input build
 pnpm --filter @gausszhou/litegraph-nodes-logic build
 pnpm --filter @gausszhou/litegraph-nodes-math build
 pnpm --filter @gausszhou/litegraph-nodes-strings build
+pnpm --filter @gausszhou/litegraph-nodes-widget build
 # build full version
 pnpm --filter @gausszhou/litegraph build
 

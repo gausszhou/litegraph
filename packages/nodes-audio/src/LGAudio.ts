@@ -206,7 +206,7 @@ class LGAudio {
     class_object.prototype.onConnectionsChange = LGAudio.onConnectionsChange;
   }
 
-  static loadSound(url, on_complete, on_error) {
+  static loadSound(url, on_complete, on_error?) {
     if (LGAudio.cached_audios[url] && url.indexOf("blob:") == -1) {
       if (on_complete) {
         on_complete(LGAudio.cached_audios[url]);

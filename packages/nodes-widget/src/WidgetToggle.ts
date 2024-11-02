@@ -1,4 +1,4 @@
-import { BuiltInSlotType, LiteGraph } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
 export  default  function WidgetToggle() {
   this.addInput("", "boolean");

@@ -1,5 +1,5 @@
-import { BuiltInSlotType, LiteGraph } from "@gausszhou/litegraph-core";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
 
 /**
  * 通道选择器
@@ -26,11 +26,11 @@ class Selector extends LGraphNode {
       return;
     }
     ctx.fillStyle = "#AFB";
-    const y = (this.selected + 1) * LiteGraph.NODE_SLOT_HEIGHT + 6;
+    const y = (this.selected + 1) * LiteConst.NODE_SLOT_HEIGHT + 6;
     ctx.beginPath();
     ctx.moveTo(50, y);
-    ctx.lineTo(50, y + LiteGraph.NODE_SLOT_HEIGHT);
-    ctx.lineTo(34, y + LiteGraph.NODE_SLOT_HEIGHT * 0.5);
+    ctx.lineTo(50, y + LiteConst.NODE_SLOT_HEIGHT);
+    ctx.lineTo(34, y + LiteConst.NODE_SLOT_HEIGHT * 0.5);
     ctx.fill();
   };
   onExecute() {

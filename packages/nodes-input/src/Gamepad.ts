@@ -1,7 +1,5 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-
 export default function GamepadInput() {
   this.addOutput("left_x_axis", "number");
   this.addOutput("left_y_axis", "number");

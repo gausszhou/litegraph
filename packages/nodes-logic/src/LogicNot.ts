@@ -1,5 +1,6 @@
 import  { SlotLayout }  from "@gausszhou/litegraph-core/src/LGraphNode";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+
 export default class LogicNot extends LGraphNode {
     static slotLayout: SlotLayout = {
         inputs: [

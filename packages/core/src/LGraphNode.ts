@@ -13,6 +13,7 @@ import { getStaticPropertyOnInstance } from "./utils";
 import { v4 as uuidv4 } from "uuid";
 import Subgraph, { GraphIDMapping } from "./nodes/Subgraph";
 import LiteCommon from "./LiteCommon";
+import LiteConst from "./LiteConst";
 
 export type NodeTypeOpts = {
     node: string,
@@ -1580,7 +1581,7 @@ export default class LGraphNode {
             }
         }
 
-        size[1] = ((this.constructor as any).slot_start_y || 0) + rows * LiteCommon.NODE_SLOT_HEIGHT;
+        size[1] = ((this.constructor as any).slot_start_y || 0) + rows * LiteConst.NODE_SLOT_HEIGHT;
 
         var widgets_height = 0;
         if (this.widgets && this.widgets.length) {
@@ -2646,14 +2647,14 @@ export default class LGraphNode {
             num_slots = this.outputs.length;
         }
 
-        var offset = LiteCommon.NODE_SLOT_HEIGHT * 0.5;
+        var offset = LiteConst.NODE_SLOT_HEIGHT * 0.5;
 
         if (this.flags.collapsed && !ignore_collapsed) {
-            var w = this._collapsed_width || LiteCommon.NODE_COLLAPSED_WIDTH;
+            var w = this._collapsed_width || LiteConst.NODE_COLLAPSED_WIDTH;
             if (this.horizontal) {
                 out[0] = this.pos[0] + w * 0.5;
                 if (is_input) {
-                    out[1] = this.pos[1] - LiteCommon.NODE_TITLE_HEIGHT;
+                    out[1] = this.pos[1] - LiteConst.NODE_TITLE_HEIGHT;
                 } else {
                     out[1] = this.pos[1];
                 }

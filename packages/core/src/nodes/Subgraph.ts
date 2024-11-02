@@ -7,6 +7,7 @@ import type { LActionOptions, LGraphNodeCloneData, OptionalSlots, PropertyLayout
 import LGraphNode from "../LGraphNode";
 import LLink from "../LLink";
 import LiteCommon from "../LiteCommon";
+import LiteConst from "../LiteConst";
 import LiteGraph from "../LiteGraph";
 import { BuiltInSlotShape, SlotType, type NodeMode, type Vector2, LinkID, NodeID, BuiltInSlotType } from "../types";
 import { UUID } from "../types";
@@ -315,7 +316,7 @@ export default class Subgraph extends LGraphNode {
     override computeSize(): Vector2 {
         var num_inputs = this.inputs ? this.inputs.length : 0;
         var num_outputs = this.outputs ? this.outputs.length : 0;
-        return [200, Math.max(num_inputs, num_outputs) * LiteGraph.NODE_SLOT_HEIGHT + LiteGraph.NODE_SLOT_HEIGHT * 0.5];
+        return [200, Math.max(num_inputs, num_outputs) * LiteConst.NODE_SLOT_HEIGHT + LiteGraph.NODE_SLOT_HEIGHT * 0.5];
     }
 
     //**** INPUTS ***********************************

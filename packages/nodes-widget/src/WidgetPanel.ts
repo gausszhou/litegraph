@@ -1,5 +1,3 @@
-
-
 export  default  function WidgetPanel() {
   this.size = [200, 100];
   this.properties = {

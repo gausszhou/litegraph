@@ -310,3 +310,5 @@ export default class LiteCommon extends LiteConst {
         return Date.now();
     }
 }
+
+(window as any).LiteCommon = LiteCommon;

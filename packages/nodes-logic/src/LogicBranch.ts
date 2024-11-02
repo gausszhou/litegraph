@@ -1,4 +1,4 @@
-import { BuiltInSlotType, NodeMode } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType, NodeMode } from "@gausszhou/litegraph-core/src/types";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 /**

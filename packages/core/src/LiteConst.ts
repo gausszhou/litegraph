@@ -136,3 +136,5 @@ export default class LiteConst {
   // if true, save a _data entry in serialized node outputs for debugging
   static serialize_slot_data: boolean = false;
 }
+
+(window as any).LiteConst = LiteConst;

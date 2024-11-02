@@ -1,4 +1,4 @@
-import { BuiltInSlotType } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
 export default function WidgetCombo() {
   this.addOutput("", "string");

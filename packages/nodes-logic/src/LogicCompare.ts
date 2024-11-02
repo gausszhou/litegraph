@@ -1,6 +1,4 @@
-import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-
 
 class LogicCompare extends LGraphNode {
   static title = "Compare";

@@ -1,5 +1,6 @@
-import { BuiltInSlotShape, BuiltInSlotType, LGraph, LGraphStatus } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core/src/types";
 import LGAudio from "./LGAudio";
+import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
 
 //****************************************************
 export default function LGAudioSource() {
@@ -205,11 +206,11 @@ LGAudioSource.prototype.loadSound = function (url) {
   this.boxcolor = "#AA4";
 
   function inner(buffer) {
-    this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
+    this.boxcolor = LiteConst.NODE_DEFAULT_BOXCOLOR;
     that._audiobuffer = buffer;
     that._loading_audio = false;
     //if is playing, then play it
-    if (that.graph && that.graph.status === LGraph.STATUS_RUNNING) {
+    if (that.graph && that.graph.status === LGraphStatus.STATUS_RUNNING) {
       that.onStart();
     } //this controls the autoplay already
   }
@@ -222,16 +223,16 @@ LGAudioSource.prototype.onGetInputs = function () {
   return [
     ["playbackRate", "number"],
     ["src", "string"],
-    ["Play", LiteGraph.ACTION],
-    ["Stop", LiteGraph.ACTION],
+    ["Play", BuiltInSlotType.ACTION],
+    ["Stop", BuiltInSlotType.ACTION],
   ];
 };
 
 LGAudioSource.prototype.onGetOutputs = function () {
   return [
     ["buffer", "audiobuffer"],
-    ["start", LiteGraph.EVENT],
-    ["ended", LiteGraph.EVENT],
+    ["start", BuiltInSlotType.EVENT],
+    ["ended", BuiltInSlotType.EVENT],
   ];
 };
 

@@ -593,9 +593,6 @@ export default class LiteGraph {
         return Date.now();
     }
 
-    // static LLink: typeof LLink;
-    // static LGraph: typeof LGraph;
-    // static DragAndScale: typeof DragAndScale;
 
     static compareObjects(a: object, b: object): boolean {
         for (var i in a) {
@@ -838,3 +835,6 @@ export default class LiteGraph {
         return this;
       };
 };
+
+
+(window as any).LiteGraph = LiteGraph;
