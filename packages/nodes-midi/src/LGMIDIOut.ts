@@ -1,5 +1,8 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIInterface from "./MIDIInterface";
+
 export default function LGMIDIOut() {
-  this.addInput("send", LiteGraph.EVENT);
+  this.addInput("send", BuiltInSlotType.EVENT);
   this.properties = { port: 0 };
 
   var that = this;

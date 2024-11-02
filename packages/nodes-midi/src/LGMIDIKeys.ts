@@ -1,4 +1,5 @@
-import { BuiltInSlotType } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+
 const MIDI_COLOR = "#234"
 export default  function LGMIDIKeys() {
   this.properties = {

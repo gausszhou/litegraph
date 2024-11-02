@@ -23,6 +23,7 @@
     "@gausszhou/litegraph-nodes-input": "workspace:*",
     "@gausszhou/litegraph-nodes-logic": "workspace:*",
     "@gausszhou/litegraph-nodes-math": "workspace:*",
+    "@gausszhou/litegraph-nodes-midi": "workspace:*",
     "@gausszhou/litegraph-nodes-strings": "workspace:*",
     "@gausszhou/litegraph-nodes-widget": "workspace:*",
     "uuid": "^9.0.0"

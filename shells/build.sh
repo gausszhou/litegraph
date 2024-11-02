@@ -11,6 +11,7 @@ pnpm --filter @gausszhou/litegraph-nodes-events build
 pnpm --filter @gausszhou/litegraph-nodes-input build
 pnpm --filter @gausszhou/litegraph-nodes-logic build
 pnpm --filter @gausszhou/litegraph-nodes-math build
+pnpm --filter @gausszhou/litegraph-nodes-midi build
 pnpm --filter @gausszhou/litegraph-nodes-strings build
 pnpm --filter @gausszhou/litegraph-nodes-widget build
 

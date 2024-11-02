@@ -1,6 +1,6 @@
 import MIDIEvent from "./MIDIEvent";
 
-export default function MIDIInterface(on_ready, on_error) {
+export default function MIDIInterface(on_ready, on_error?) {
   if (!navigator.requestMIDIAccess) {
     this.error = "not suppoorted";
     if (on_error) {
