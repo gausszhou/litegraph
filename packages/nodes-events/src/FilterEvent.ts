@@ -1,4 +1,33 @@
-import { BuiltInSlotType, IComboWidget, ITextWidget, LGraphNode, LiteGraph, SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
+import { IComboWidget, ITextWidget, SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
+
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    graph
+    size
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    isInputConnected(...args: any)
+    trigger(...args: any)
+    triggerSlot(...args: any)
+    addWidget(...args: any)
+    getTitle()
+    disconnectOutput(slot: number);
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onPropertyChanged(name: string, value: any);
+    onExecute(...args: any)
+    onAction(...args: any)
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 
 export interface FilterEventProperties extends Record<string, any> {
     propertyName: string,
@@ -142,9 +171,3 @@ export default class FilterEvent extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: FilterEvent,
-    title: "Filter Event",
-    desc: "Blocks events that do not match the filter",
-    type: "events/filter"
-})

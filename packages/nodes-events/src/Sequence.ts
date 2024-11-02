@@ -1,4 +1,41 @@
-import { BuiltInSlotType, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, IButtonWidget, Vector2, LConnectionKind, LLink, INodeInputSlot, INodeOutputSlot } from "@gausszhou/litegraph-core"
+import type { INodeInputSlot, INodeOutputSlot, LLink, SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType, LConnectionKind } from "@gausszhou/litegraph-core/src/types";
+
+declare class LGraphNode {
+    constructor(title: string)
+    id
+    title
+    flags
+    graph
+    size
+    horizontal
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    isInputConnected(...args: any)
+    trigger(...args: any)
+    triggerSlot(...args: any)
+    addWidget(...args: any)
+    getTitle()
+    disconnectOutput(slot: number);
+    onConnectionsChange(...args: any)
+    setProperty(...args: any)
+    getInputData(slot: number);
+    getInputLink(slot: number);
+    getOutputLinks(slot: number);
+    setOutputData(slot: number, value: any);
+    addInput(...args: any)
+    addOutput(...args: any)
+    removeInput(...args: any)
+    removeOutput(...args: any)
+    onPropertyChanged(name: string, value: any);
+    onExecute(...args: any)
+    onAction(...args: any)
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 
 export default class Sequence extends LGraphNode {
     static slotLayout: SlotLayout = {
@@ -95,9 +132,3 @@ export default class Sequence extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: Sequence,
-    title: "Sequence",
-    desc: "Triggers a sequence of events when an event arrives",
-    type: "events/sequence"
-})

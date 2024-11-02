@@ -1,4 +1,32 @@
-import { BuiltInSlotType, LGraphNode, LiteGraph, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
+import { OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
+
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    graph
+    size
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    isInputConnected(...args: any)
+    trigger(...args: any)
+    addWidget(...args: any)
+    getTitle()
+    disconnectOutput(slot: number);
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onPropertyChanged(name: string, value: any);
+    onExecute(...args: any)
+    onAction(...args: any)
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 
 export interface DelayEventProperties extends Record<string, any> {
     timeInMs: number
@@ -60,10 +88,3 @@ export default class DelayEvent extends LGraphNode {
         }
     }
 }
-
-LiteGraph.registerNodeType({
-    class: DelayEvent,
-    title: "Delay",
-    desc: "Delays one event",
-    type: "events/delay"
-})
