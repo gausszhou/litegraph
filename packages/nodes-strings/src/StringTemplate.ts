@@ -1,5 +1,43 @@
-import { BuiltInSlotType, INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LGraphNode, LiteGraph, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
+import type { INodeInputSlot, INodeOutputSlot, ITextWidget, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
 
+import { BuiltInSlotType, LConnectionKind } from "@gausszhou/litegraph-core/src/types";
+import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+
+declare class LGraphNode {
+    constructor(title: string)
+    id
+    title
+    flags
+    graph
+    size
+    horizontal
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    isInputConnected(...args: any)
+    trigger(...args: any)
+    triggerSlot(...args: any)
+    addWidget(...args: any)
+    getTitle()
+    disconnectOutput(slot: number);
+    onConnectionsChange(...args: any)
+    setProperty(...args: any)
+    getInputData(slot: number);
+    getInputLink(slot: number);
+    getOutputLinks(slot: number);
+    setOutputData(slot: number, value: any);
+    addInput(...args: any)
+    addOutput(...args: any)
+    removeInput(...args: any)
+    removeOutput(...args: any)
+    onPropertyChanged(name: string, value: any);
+    onExecute(...args: any)
+    onAction(...args: any)
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 export interface StringTemplateProperties extends Record<string, any> {
     template: string,
     stringQuote: string,
@@ -58,7 +96,7 @@ export default class StringTemplate extends LGraphNode {
         if (property === "outputJSON") {
             const isJSON = value == true;
             this.outputs[0].type = isJSON ? "*" : "string";
-            this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
+            this.boxcolor = LiteCommon.NODE_DEFAULT_BOXCOLOR;
         }
         this._value = null;
     }
@@ -87,13 +125,13 @@ export default class StringTemplate extends LGraphNode {
                 }
             }
             try {
-                this.boxcolor = this.properties.outputJSON ? "#AEA" : LiteGraph.NODE_DEFAULT_BOXCOLOR;
+                this.boxcolor = this.properties.outputJSON ? "#AEA" : LiteCommon.NODE_DEFAULT_BOXCOLOR;
                 this._value = this.substituteTemplate(template, args)
             }
             catch (error) {
                 this.boxcolor = "red";
                 this._value = ""
-                if (LiteGraph.debug) {
+                if (LiteCommon.debug) {
                     console.error(error);
                 }
             }
@@ -169,9 +207,3 @@ export default class StringTemplate extends LGraphNode {
     }
 }
 
-LiteGraph.registerNodeType({
-    class: StringTemplate,
-    title: "Template",
-    desc: "Substitutes an array of strings in a template like '$1, $2, $3'",
-    type: "string/template"
-})

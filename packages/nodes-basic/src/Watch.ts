@@ -1,6 +1,5 @@
 import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
-// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 declare class LGraphNode {
     constructor(title: string)
@@ -24,6 +23,7 @@ declare class LGraphNode {
     onDrawBackground(ctx: CanvasRenderingContext2D);
     onDropFile(file: File)
 }
+
 export interface WatchProperties extends Record<string, any> {
     value: any,
 }

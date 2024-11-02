@@ -1,6 +1,5 @@
 import { SlotLayout } from "@gausszhou/litegraph-core";
 
-
 declare class LGraphNode {
     constructor(title: string)
     title
@@ -29,20 +28,33 @@ declare class LGraphNode {
     onConnectionsChange(...args: any)
 }
 
-export default class StringCompare extends LGraphNode {
+export default class OtherToString extends LGraphNode {
     static slotLayout: SlotLayout = {
         inputs: [
-            { name: "A", type: "string" },
-            { name: "B", type: "string" },
+            { name: "in", type: "" },
         ],
         outputs: [
-            { name: "==", type: "boolean" },
+            { name: "out", type: "string" },
         ],
     }
 
     override onExecute() {
-        const value = this.getInputData(0) == this.getInputData(1)
-        this.setOutputData(0, value);
+        const a = this.getInputData(0);
+        let b: string = ""
+
+        if (a && a.constructor === Object) {
+            try {
+                b = JSON.stringify(a);
+            }
+            catch (err) {
+                b = String(a);
+            }
+        }
+        else {
+            b = String(a);
+        }
+
+        this.setOutputData(0, b)
     };
 }
 
