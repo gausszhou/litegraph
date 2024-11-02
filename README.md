@@ -28,7 +28,7 @@
 | @gausszhou/litegraph-node-events  | 9.78 KB |
 | @gausszhou/litegraph-node-logic   | 1.91 KB   |
 | @gausszhou/litegraph-node-math    | 6.51 KB   |
-| @gausszhou/litegraph-node-strings | 17.73.4KB   |
+| @gausszhou/litegraph-node-strings | 17.73 KB   |
 | ---                               | ---       |
 | @gausszhou/litegraph              | 358.06KB  |
 
