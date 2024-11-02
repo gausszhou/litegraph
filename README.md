@@ -21,16 +21,16 @@
 
 ## Library
 
-| name                              | size      |
-| --------------------------------- | --------- |
-| @gausszhou/litegraph-core         | 315.62 KB |
-| @gausszhou/litegraph-node-basic   | 25.07 KB  |
-| @gausszhou/litegraph-node-events  | 9.78 KB |
-| @gausszhou/litegraph-node-logic   | 1.91 KB   |
-| @gausszhou/litegraph-node-math    | 6.51 KB   |
-| @gausszhou/litegraph-node-strings | 17.73 KB   |
-| ---                               | ---       |
-| @gausszhou/litegraph              | 358.06KB  |
+| name                              | size      | gzip     |
+| --------------------------------- | --------- | -------- |
+| @gausszhou/litegraph-core         | 214.73 kB | 57.35 kB |
+| @gausszhou/litegraph-node-basic   | 18.70 kB  | 5.62 kB  |
+| @gausszhou/litegraph-node-events  | 7.59 kB   | 2.36 kB  |
+| @gausszhou/litegraph-node-logic   | 1.71 KB   | 0.65 kB  |
+| @gausszhou/litegraph-node-math    | 5.23 kB   | 2.14 kB  |
+| @gausszhou/litegraph-node-strings | 13.11 kB  | 4.18 kB  |
+| ---                               | ---       |          |
+| @gausszhou/litegraph              | 246.54 kB | 64.19 kB |
 
 ## Thanks
 
