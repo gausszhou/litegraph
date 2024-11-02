@@ -1,6 +1,26 @@
 import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+// import LGraphNode from "@litegraph/core/src/LGraphNode";
 import LiteCommon from "@litegraph/core/src/LiteCommon";
+
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    size
+    properties
+    boxcolor
+    widgets_up
+    addWidget(...args: any)
+    getTitle()
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    onAction()
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 
 export interface ConstantFileProperties extends Record<string, any> {
     url: string,

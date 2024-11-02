@@ -1,6 +1,34 @@
 import type { PropertyLayout, SlotLayout } from "@litegraph/core"
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+// import LGraphNode from "@litegraph/core/src/LGraphNode";
 
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    titleMode
+    resizable
+    size
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    graph
+    getTitle()
+    addWidget(...args: any)
+    getExtraMenuOptions(...args: any)
+    disconnectOutput(slot: number);
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    getInputLink(slot);
+    getOutputLinks(slot);
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    onAction()
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 export interface TimeProperties extends Record<string, any> {
     enabled: boolean
 }

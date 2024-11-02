@@ -1,5 +1,12 @@
 import { SlotLayout, Vector2 } from "@litegraph/core";
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+
+declare class LGraphNode {
+    size
+    properties
+    onExecute() 
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+}
 
 export interface MathOperationProperties extends Record<string, any> {
     epsilon: 0.001;

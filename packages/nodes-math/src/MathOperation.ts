@@ -1,8 +1,17 @@
 import type { SlotLayout, Vector2 } from "@litegraph/core";
+import LiteConst from "@litegraph/core/src/LiteConst";
 
-import LGraphNode from "@litegraph/core/src/LGraphNode";
-import LiteCommon from "@litegraph/core/src/LiteCommon";
-
+declare class LGraphNode {
+    flags
+    size
+    properties
+    getTitle()
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+}
 
 export interface MathOperationProperties extends Record<string, any> {
     A: any,
@@ -114,7 +123,7 @@ export default class MathOperation extends LGraphNode {
         ctx.fillText(
             this.properties.OP,
             this.size[0] * 0.5,
-            (this.size[1] + LiteCommon.NODE_TITLE_HEIGHT) * 0.5
+            (this.size[1] + LiteConst.NODE_TITLE_HEIGHT) * 0.5
         );
         ctx.textAlign = "left";
     };

@@ -1,5 +1,27 @@
 import { OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+// import LGraphNode from "@litegraph/core/src/LGraphNode";
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    size
+    properties
+    boxcolor
+    widgets_up
+    inputs
+    outputs
+    addWidget(...args: any)
+    getTitle()
+    disconnectOutput(slot: number);
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    onAction()
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+    onDropFile(file: File)
+}
 
 export interface ConstantObjectProperties extends Record<string, any> {
     value: string,

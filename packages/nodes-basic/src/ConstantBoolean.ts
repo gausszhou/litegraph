@@ -1,7 +1,26 @@
 import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@litegraph/core"
 
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+// import LGraphNode from "@litegraph/core/src/LGraphNode";
 import { BuiltInSlotType } from "@litegraph/core/src/types";
+
+declare class LGraphNode {
+    constructor(title: string)
+    title
+    flags
+    size
+    properties
+    boxcolor
+    widgets_up
+    addWidget(...args: any)
+    getTitle()
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    onAction()
+    setProperty(...args: any)
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+}
 
 export interface ConstantBooleanProperties extends Record<string, any> {
     value: boolean,

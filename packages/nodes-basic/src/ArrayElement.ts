@@ -1,6 +1,19 @@
 import type { OptionalSlots, PropertyLayout, SlotLayout } from "@litegraph/core"
-import LGraphNode from "@litegraph/core/src/LGraphNode";
+// import LGraphNode from "@litegraph/core/src/LGraphNode";
 import { BuiltInSlotShape } from "@litegraph/core/src/types";
+
+declare class LGraphNode {
+    flags
+    size
+    properties
+    boxcolor
+    getTitle()
+    onPropertyChanged(name: string, value: any);
+    onExecute()
+    getInputData(slot: number);
+    setOutputData(slot: number, value: any);
+    onDrawBackground(ctx: CanvasRenderingContext2D);
+}
 
 export interface ArrayElementProperties extends Record<string, any> {
     index: number
