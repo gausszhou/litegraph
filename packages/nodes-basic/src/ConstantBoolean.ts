@@ -1,6 +1,5 @@
 import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 
-// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 
 declare class LGraphNode {

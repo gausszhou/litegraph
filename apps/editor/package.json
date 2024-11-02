@@ -8,12 +8,10 @@
   "dependencies": {
     "@gausszhou/litegraph-core": "workspace:*",
     "@gausszhou/litegraph-nodes-basic": "workspace:*",
-    "@gausszhou/litegraph-nodes-math": "workspace:*",
-    "typescript": "^5.0.3",
-    "vite": "^4.2.1"
+    "@gausszhou/litegraph-nodes-math": "workspace:*"
   },
   "devDependencies": {
-    "vite-plugin-checker": "^0.5.6",
-    "@litegraph/tsconfig": "workspace:*"
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1"
   }
 }
