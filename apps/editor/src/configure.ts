@@ -1,4 +1,4 @@
-import { LiteGraph } from "@litegraph/core";
+import { LiteGraph } from "@gausszhou/litegraph";
 
 export default function(isMobile: boolean) {
     LiteGraph.debug = false;

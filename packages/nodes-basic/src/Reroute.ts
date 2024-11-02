@@ -1,35 +1,6 @@
 import type { ContextMenuItem, SlotLayout } from "@gausszhou/litegraph-core";
-// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 import { TitleMode } from "@gausszhou/litegraph-core/src/types";
-
-declare class LGraphNode {
-    constructor(title: string)
-    title
-    flags
-    titleMode
-    resizable
-    size
-    properties
-    boxcolor
-    widgets_up
-    inputs
-    outputs
-    graph
-    getTitle()
-    addWidget(...args: any)
-    getExtraMenuOptions(...args: any)
-    disconnectOutput(slot: number);
-    setProperty(...args: any)
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    getInputLink(slot);
-    getOutputLinks(slot);
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    onAction()
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-    onDropFile(file: File)
-}
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export default class Reroute extends LGraphNode {
     static slotLayout: SlotLayout = {

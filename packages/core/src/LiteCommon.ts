@@ -246,22 +246,25 @@ export default class LiteCommon extends LiteConst {
         let regConfig: LGraphNodeConstructor;
 
         if (typeof type === "string") {
-            // if (LiteCommon.registered_node_types[type] !== "anonymous") {
             regConfig = LiteCommon.registered_node_types[type];
-            // }
-            // else {
-            //     regConfig = type;
-            // }
         } else if ("type" in type)
             regConfig = LiteCommon.registered_node_types[type.type];
-        else {
-            regConfig = type;
+        else if( typeof type === 'function') {
+            regConfig = {
+             class: type
+            };
+        } else {
+            regConfig = {
+                class: type
+               };
         }
 
         if (!regConfig) {
             throw "Node not registered!" + type;
         }
-
+        console.log(typeof type)
+        console.log(type)
+        console.log(regConfig)
         var sCN = (regConfig.class as any).__litegraph_type__;
 
         if (typeof slot_type == "string") {

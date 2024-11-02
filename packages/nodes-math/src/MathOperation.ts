@@ -1,17 +1,6 @@
 import type { SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
 import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
-
-declare class LGraphNode {
-    flags
-    size
-    properties
-    getTitle()
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-}
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export interface MathOperationProperties extends Record<string, any> {
     A: any,

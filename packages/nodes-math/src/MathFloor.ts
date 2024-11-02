@@ -1,11 +1,5 @@
 import { type SlotLayout, type Vector2 } from "@gausszhou/litegraph-core";
-declare class LGraphNode {
-    size
-    properties
-    onExecute() 
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-}
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export default class MathFloor extends LGraphNode {
     static slotLayout: SlotLayout = {

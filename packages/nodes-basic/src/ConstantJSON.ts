@@ -1,30 +1,9 @@
 import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 import Watch from "./Watch"
-// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
 import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
 
-declare class LGraphNode {
-    constructor(title: string)
-    title
-    flags
-    size
-    properties
-    boxcolor
-    widgets_up
-    outputs
-    addWidget(...args: any)
-    getTitle()
-    disconnectOutput(slot: number);
-    setProperty(...args: any)
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    onAction()
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-    onDropFile(file: File)
-}
 
 export interface ConstantJSONProperties extends Record<string, any> {
     value: string,

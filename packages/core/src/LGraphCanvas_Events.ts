@@ -3,6 +3,7 @@ import type { MouseEventExt } from "./DragAndScale";
 import LGraphCanvas, { IContextMenuTarget } from "./LGraphCanvas";
 import LGraphNode from "./LGraphNode";
 import LLink from "./LLink";
+import LiteCommon from "./LiteCommon";
 import LiteGraph from "./LiteGraph";
 import { type Vector2 } from "./types";
 
@@ -622,8 +623,10 @@ export default class LGraphCanvas_Events {
                         const prev_node_over = this.node_over
                         this.node_over = null;
                         this.dirty_canvas = true;
-                        if (prev_node_over != this.node_over)
-                            this.onHoverChange(this.node_over, prev_node_over)
+                        if (prev_node_over != this.node_over) {
+                            this.onHoverChange && this.onHoverChange(this.node_over, prev_node_over)
+                        }
+                            
                     }
                 }
             }
@@ -642,8 +645,9 @@ export default class LGraphCanvas_Events {
                         const prev_node_over = this.node_over;
                         this.node_over = node;
                         this.dirty_canvas = true;
-                        if (prev_node_over != this.node_over)
-                            this.onHoverChange(this.node_over, prev_node_over)
+                        if (prev_node_over != this.node_over) {
+                            this.onHoverChange &&  this.onHoverChange(this.node_over, prev_node_over)
+                        }
 
                         if (node.onMouseEnter) {
                             node.onMouseEnter(e, [e.canvasX - node.pos[0], e.canvasY - node.pos[1]], this);

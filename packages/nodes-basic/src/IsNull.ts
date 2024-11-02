@@ -1,27 +1,5 @@
 import type { PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
-
-declare class LGraphNode {
-    constructor(title: string)
-    title
-    flags
-    size
-    properties
-    boxcolor
-    widgets_up
-    inputs
-    outputs
-    addWidget(...args: any)
-    getTitle()
-    disconnectOutput(slot: number);
-    setProperty(...args: any)
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    onAction()
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-    onDropFile(file: File)
-}
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export interface IsNullProperties extends Record<string, any> {
     strictEquality: boolean

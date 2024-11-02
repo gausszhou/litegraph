@@ -8,7 +8,7 @@ import LLink from "./LLink";
 import LiteGraph from "./LiteGraph";
 import GraphInput from "./nodes/GraphInput";
 import Subgraph from "./nodes/Subgraph";
-import { LConnectionKind, LinkID, NodeID, SlotType, TitleMode, Vector2, Version } from "./types";
+import { LConnectionKind, LGraphStatus, LinkID, NodeID, SlotType, TitleMode, Vector2, Version } from "./types";
 import { LayoutDirection, NodeMode } from "./types";
 import { v4 as uuidv4 } from "uuid";
 import LiteCommon from "./LiteCommon";
@@ -65,10 +65,6 @@ export type SerializedLGraph<
     version: Version;
 };
 
-export enum LGraphStatus {
-    STATUS_STOPPED = 1,
-    STATUS_RUNNING
-}
 
 export type LGraphNodeExecutable = (LGraphNode & { onExecute: NonNullable<LGraphNode["onExecute"]> });
 

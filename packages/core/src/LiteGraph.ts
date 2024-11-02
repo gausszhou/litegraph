@@ -148,28 +148,39 @@ export default class LiteGraph {
     static serialize_slot_data: boolean = false;
 
     /** Register a node class so it can be listed when the user wants to create a new one */
-    static registerNodeType<T extends LGraphNode>(config: LGraphNodeConstructor): void {
+    static registerNodeType<T extends LGraphNode>(config: LGraphNodeConstructor | string, nodeClass?: LGraphNodeConstructorFactory<T>): void {
+        let reConfig: LGraphNodeConstructor;
+        if (typeof config === 'string') {
+            reConfig = {
+                type: config as string,
+                class: nodeClass,
+                title: nodeClass.name,
+                desc: ""
+            }
+        } else {
+            reConfig = config as LGraphNodeConstructor
+        }
         if (LiteCommon.debug) {
-            console.log("Node registered: " + config.type);
+            console.log("Node registered: " + reConfig.type);
         }
 
-        const classname = config.name;
-        const type = config.type;
+        const classname = reConfig.name;
+        const type = reConfig.type;
 
         if (!type) {
-            throw ("Config has no type: " + config);
+            throw ("Config has no type: " + reConfig);
         }
         if (LiteCommon.debug) {
             console.debug(classname, type)
         }
 
-        if (config.category == null || config.category === "") {
+        if (reConfig.category == null || reConfig.category === "") {
             const pos = type.lastIndexOf("/");
-            config.category = type.substring(0, pos);
+            reConfig.category = type.substring(0, pos);
         }
 
-        if (!config.title) {
-            config.title = classname;
+        if (!reConfig.title) {
+            reConfig.title = classname;
         }
 
         const prev = LiteCommon.registered_node_types[type];
@@ -178,32 +189,28 @@ export default class LiteGraph {
         }
 
         //used to know which nodes to create when dragging files to the canvas
-        if (config.supported_extensions) {
-            for (let i in config.supported_extensions) {
-                const ext = config.supported_extensions[i];
+        if (reConfig.supported_extensions) {
+            for (let i in reConfig.supported_extensions) {
+                const ext = reConfig.supported_extensions[i];
                 if (ext && ext.constructor === String) {
-                    LiteGraph.node_types_by_file_extension[ext.toLowerCase()] = config;
+                    LiteGraph.node_types_by_file_extension[ext.toLowerCase()] = reConfig;
                 }
             }
         }
 
-        (config.class as any).__LITEGRAPH_TYPE__ = type;
+        (reConfig.class as any).__LITEGRAPH_TYPE__ = type;
+        Object.setPrototypeOf(reConfig.class.prototype, LGraphNode.prototype);
 
-        LiteCommon.registered_node_types[type] = config;
-        if (config.class.name) {
-            LiteGraph.Nodes[classname] = config;
+        LiteCommon.registered_node_types[type] = reConfig;
+        if (reConfig.class.name) {
+            LiteGraph.Nodes[classname] = reConfig;
         }
         if (LiteGraph.onNodeTypeRegistered) {
-            LiteGraph.onNodeTypeRegistered(type, config);
+            LiteGraph.onNodeTypeRegistered(type, reConfig);
         }
         if (prev && LiteGraph.onNodeTypeReplaced) {
-            LiteGraph.onNodeTypeReplaced(type, config, prev);
+            LiteGraph.onNodeTypeReplaced(type, reConfig, prev);
         }
-
-        // TODO one would want to know input and ouput :: this would allow through registerNodeAndSlotType to get all the slots types
-        // if (LiteGraph.auto_load_slot_types) {
-        //     new (regConfig as any)(regConfig.title || "tmpnode");
-        // }
     }
 
     static onNodeTypeRegistered?(type: string, regConfig: LGraphNodeConstructor): void;
@@ -235,16 +242,12 @@ export default class LiteGraph {
         let regConfig: LGraphNodeConstructor;
 
         if (typeof type === "string") {
-            // if (LiteCommon.registered_node_types[type] !== "anonymous") {
             regConfig = LiteCommon.registered_node_types[type];
-            // }
-            // else {
-            //     regConfig = type;
-            // }
-        }
-        else if ("type" in type)
+        } else if ("type" in type){
             regConfig = LiteCommon.registered_node_types[type.type]
-        else {
+        } else if (typeof type === 'function') {
+            regConfig = { class: type};
+        } else {
             regConfig = type;
         }
 
@@ -296,70 +299,6 @@ export default class LiteGraph {
         LiteGraph.searchbox_extras = {};
     }
 
-    /**
-     * Create a new node type by passing a function, it wraps it with a proper class and generates inputs according to the parameters of the function.
-     * Useful to wrap simple methods that do not require properties, and that only process some input to generate an output.
-     * @param name node name with namespace (p.e.: 'math/sum')
-     * @param func
-     * @param param_types an array containing the type of every parameter, otherwise parameters will accept any type
-     * @param return_type string with the return type, otherwise it will be generic
-     * @param properties properties to be configurable
-     */
-    // static wrapFunctionAsNode(
-    //     name: string,
-    //     func: (...args: any[]) => any,
-    //     param_types?: string[],
-    //     return_type?: string,
-    //     properties?: object
-    // ): void {
-    //     var params = Array(func.length);
-    //     var code = "";
-    //     var names = LiteGraph.getParameterNames(func);
-    //     for (var i = 0; i < names.length; ++i) {
-    //         code +=
-    //         "this.addInput('" +
-    //             names[i] +
-    //             "'," +
-    //             (param_types && param_types[i]
-    //                 ? "'" + param_types[i] + "'"
-    //                 : "0") +
-    //             ");\n";
-    //     }
-    //     code +=
-    //     "this.addOutput('out'," +
-    //         (return_type ? "'" + return_type + "'" : 0) +
-    //         ");\n";
-    //     if (properties) {
-    //         code +=
-    //         "this.properties = " + JSON.stringify(properties) + ";\n";
-    //     }
-    //     var classobj = Function(code) as any;
-    //     classobj.title = name.split("/").pop();
-    //     classobj.desc = "Generated from " + func.name;
-    //     classobj.prototype.onExecute = function onExecute() {
-    //         for (var i = 0; i < params.length; ++i) {
-    //             params[i] = this.getInputData(i);
-    //         }
-    //         var r = func.apply(this, params);
-    //         this.setOutputData(0, r);
-    //     };
-    //     LiteGraph.registerNodeType(name, classobj);
-    // }
-
-    /**
-     * Adds this method to all node types, existing and to be created
-     * (You can add it to LGraphNode.prototype but then existing node types wont have it)
-     */
-    // static addNodeMethod(name: string, func: (...args: any[]) => any): void {
-    //     LGraphNode.prototype[name] = func;
-    //     for (var i in LiteCommon.registered_node_types) {
-    //         var type = LiteCommon.registered_node_types[i];
-    //         if (type.prototype[name]) {
-    //             type.prototype["_" + name] = type.prototype[name];
-    //         } //keep old in case of replacing
-    //         type.prototype[name] = func;
-    //     }
-    // }
 
     /**
      * Create a node of a given type with a name. The node is not attached to any graph yet.
@@ -889,10 +828,9 @@ export default class LiteGraph {
         if (installedPlugins.indexOf(plugin) > -1) {
           return this;
         }
-        console.log(plugin)
 
         if (typeof plugin.install === "function") {
-          plugin.install.apply(this);
+          plugin.install(LiteGraph);
         } else if (typeof plugin === "function") {
           plugin(LiteGraph);
         }

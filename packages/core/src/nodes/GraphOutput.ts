@@ -1,6 +1,7 @@
 import type { default as IWidget, ITextWidget, IComboWidget } from "../IWidget";
 import type { LActionOptions, SlotLayout } from "../LGraphNode";
 import LGraphNode from "../LGraphNode";
+import LiteCommon from "../LiteCommon";
 import LiteGraph from "../LiteGraph";
 import { BASE_SLOT_TYPES, BuiltInSlotShape, NodeID, SlotType, Vector2 } from "../types";
 import { BuiltInSlotType } from "../types";

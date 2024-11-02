@@ -1,6 +1,7 @@
 import type LGraph from "./LGraph";
 import LGraphCanvas from "./LGraphCanvas";
 import LGraphNode from "./LGraphNode";
+import LiteCommon from "./LiteCommon";
 import LiteGraph from "./LiteGraph";
 import LLink from "./LLink";
 import GraphInput from "./nodes/GraphInput";

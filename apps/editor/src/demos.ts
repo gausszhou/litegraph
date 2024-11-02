@@ -1,4 +1,4 @@
-import { LGraph, LiteGraph } from "@litegraph/core";
+import { LGraph, LiteGraph } from "@gausszhou/litegraph";
 import { ConstantNumber, Watch } from "@gausszhou/litegraph-nodes-basic"
 import { MathOperation } from "@gausszhou/litegraph-nodes-math"
 

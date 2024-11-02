@@ -1,4 +1,4 @@
-import { LGraph, LGraphStatus, LGraphCanvas } from "@litegraph/core"
+import { LGraph, LGraphStatus, LGraphCanvas } from "@gausszhou/litegraph-core"
 
 export type EditorOptions = {
     skipLiveMode?: boolean;

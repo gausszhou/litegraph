@@ -1,17 +1,6 @@
 import type { SlotLayout }  from "@gausszhou/litegraph-core";
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
-declare class LGraphNode {
-    flags
-    inputs
-    size
-    properties
-    getTitle()
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-}
 
 export default class LogicAnd extends LGraphNode{
     static slotLayout: SlotLayout = {

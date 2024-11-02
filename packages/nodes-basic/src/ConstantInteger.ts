@@ -1,26 +1,5 @@
 import type { INumberWidget, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
-// import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-
-declare class LGraphNode {
-    constructor(title: string)
-    title
-    flags
-    size
-    properties
-    boxcolor
-    widgets_up
-    outputs
-    addWidget(...args: any)
-    getTitle()
-    onPropertyChanged(name: string, value: any);
-    onExecute()
-    onAction()
-    setProperty(...args: any)
-    getInputData(slot: number);
-    setOutputData(slot: number, value: any);
-    onDrawBackground(ctx: CanvasRenderingContext2D);
-    onDropFile(file: File)
-}
+import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export interface ConstantIntegerProperties extends Record<string, any> {
     value: number,

@@ -1,3 +1,12 @@
+import DelayEvent from "./DelayEvent";
+import EventBranch from "./EventBranch";
+import FilterEvent from "./FilterEvent";
+import FrameDelayEvent from "./FrameDelayEvent";
+import LogEvent from "./LogEvent";
+import Sequence from "./Sequence";
+import TriggerEvent from "./TriggerEvent";
+import WrapAsEvent from "./WrapAsEvent";
+
 export const install = (LiteGraph: any) => {
   LiteGraph.registerNodeType({
     class: DelayEvent,
@@ -46,12 +55,10 @@ export const install = (LiteGraph: any) => {
     type: "events/trigger",
   });
 
-  
-LiteGraph.registerNodeType({
-  class: WrapAsEvent,
-  title: "Wrap As Event",
-  desc: "Triggers an event setting its parameter to the input value",
-  type: "events/wrap_as_event"
-})
-
+  LiteGraph.registerNodeType({
+    class: WrapAsEvent,
+    title: "Wrap As Event",
+    desc: "Triggers an event setting its parameter to the input value",
+    type: "events/wrap_as_event",
+  });
 };
