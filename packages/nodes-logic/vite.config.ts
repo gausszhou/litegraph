@@ -5,7 +5,7 @@ export default defineConfig({
     build: {
         outDir: "dist",
         lib: {
-            name: "node-logic",
+            name: "nodes-logic",
             entry: resolve(__dirname, "src/index.ts"),
             formats: ["es", "umd"],
         },

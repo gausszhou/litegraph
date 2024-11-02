@@ -5,7 +5,7 @@ export default defineConfig({
     build: {
         outDir: "dist",
         lib: {
-            name: "node-events",
+            name: "nodes-events",
             entry: resolve(__dirname, "src/index.ts"),
             formats: ["es", "umd"],
         },

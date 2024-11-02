@@ -5,7 +5,7 @@ export default defineConfig({
     build: {
         outDir: "dist",
         lib: {
-            name: "node-basic",
+            name: "nodes-basic",
             entry: resolve(__dirname, "src/index.ts"),
             formats: ["es", "umd"],
         },
