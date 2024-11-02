@@ -24,6 +24,7 @@
 | name                              | size      | gzip     |
 | --------------------------------- | --------- | -------- |
 | @gausszhou/litegraph-core         | 214.73 kB | 57.35 kB |
+| @gausszhou/litegraph-node-audio   | 18..5 kB  | 4.4 kB  |
 | @gausszhou/litegraph-node-basic   | 18.70 kB  | 5.62 kB  |
 | @gausszhou/litegraph-node-events  | 7.59 kB   | 2.36 kB  |
 | @gausszhou/litegraph-node-input   | 5.61 kB   | 1.8 kB   |
@@ -31,7 +32,7 @@
 | @gausszhou/litegraph-node-math    | 5.23 kB   | 2.14 kB  |
 | @gausszhou/litegraph-node-strings | 13.11 kB  | 4.18 kB  |
 | ---                               | ---       |          |
-| @gausszhou/litegraph              | 251.74 kB | 65.52 kB |
+| @gausszhou/litegraph              | 269.83 kB | 69.81 kB |
 
 ## Thanks
 

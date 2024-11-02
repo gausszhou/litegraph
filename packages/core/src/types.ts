@@ -1,3 +1,8 @@
+export enum LGraphStatus {
+    STATUS_STOPPED = 1,
+    STATUS_RUNNING
+}
+
 export enum Dir {
     UP = 1,
     DOWN,

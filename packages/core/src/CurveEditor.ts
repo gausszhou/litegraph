@@ -1,6 +1,6 @@
 // used by some widgets to render a curve editor
-import LGraphCanvas from "../core/LGraphCanvas";
-import { clamp, distance } from "../core/utils";
+import LGraphCanvas from "./LGraphCanvas";
+import { clamp, distance } from "./utils";
 
 class CurveEditor {
   points: number[][] = [[]]

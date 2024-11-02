@@ -16,6 +16,12 @@ export function clamp(v: number, a: number, b: number): number {
     return a > v ? a : b < v ? b : v;
 };
 
+export function distance(a: Vector2, b: Vector2): number {
+    return Math.sqrt(
+        (b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1])
+    );
+}
+
 export function toHashMap<T>(arr: T[], toKey: (arg: T) => string): Record<string, T> {
     return arr.reduce((acc, obj) => {
         const key = toKey(obj);
