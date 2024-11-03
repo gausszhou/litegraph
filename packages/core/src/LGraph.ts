@@ -11,7 +11,6 @@ import Subgraph from "./nodes/Subgraph";
 import { LConnectionKind, LGraphStatus, LinkID, NodeID, SlotType, TitleMode, Vector2, Version } from "./types";
 import { LayoutDirection, NodeMode } from "./types";
 import { v4 as uuidv4 } from "uuid";
-import LiteCommon from "./LiteCommon";
 
 export type LGraphAddNodeMode = "configure" | "cloneSelection" | "paste" | "moveIntoSubgraph" | "moveOutOfSubgraph" | null
 export type LGraphAddNodeOptions = {
@@ -73,7 +72,7 @@ export default class LGraph {
     supported_types: string[] | null = null;
 
     constructor(o?: SerializedLGraph) {
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.log("Graph created");
         }
         this.list_of_graphcanvas = null;
@@ -385,7 +384,7 @@ export default class LGraph {
                 if (LiteGraph.throw_errors) {
                     throw err;
                 }
-                if (LiteCommon.debug) {
+                if (LiteGraph.debug) {
                     console.log("Error during execution: " + err);
                 }
                 this.stop();
@@ -541,7 +540,7 @@ export default class LGraph {
             L.push(M[i]);
         }
 
-        if (L.length != this._nodes.length && LiteCommon.debug) {
+        if (L.length != this._nodes.length && LiteGraph.debug) {
             console.warn("something went wrong, nodes missing");
         }
 
@@ -1157,7 +1156,7 @@ export default class LGraph {
         var changes = false;
         for (var i = 0; i < this._nodes.length; i++) {
             var node = this._nodes[i];
-            var config = LiteCommon.registered_node_types[node.type];
+            var config = LiteGraph.registered_node_types[node.type];
             if (node.constructor == config.class) {
                 continue;
             }
@@ -1511,7 +1510,7 @@ export default class LGraph {
 
     /* Called when something visually changed (not the graph!) */
     change(): void {
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.log("Graph changed");
         }
         this.sendActionToCanvas("setDirty", [true, true]);

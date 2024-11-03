@@ -170,7 +170,6 @@
 .litegraph.litesearchbox {
     font-family: Tahoma, sans-serif;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
     padding-top: 4px;
 }
 
@@ -587,7 +586,7 @@
 }
 
 .graphdialog.rounded {
-    border-radius: 12px;
+    border-radius: 4px;
     padding-right: 2px;
 }
 

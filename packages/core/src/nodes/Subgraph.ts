@@ -6,8 +6,8 @@ import type LGraphCanvas from "../LGraphCanvas";
 import type { LActionOptions, LGraphNodeCloneData, OptionalSlots, PropertyLayout, SerializedLGraphNode, SlotLayout } from "../LGraphNode";
 import LGraphNode from "../LGraphNode";
 import LLink from "../LLink";
-import LiteCommon from "../LiteCommon";
-import LiteConst from "../LiteConst";
+import LiteGraph from "../LiteGraph";
+import LiteGraph from "../LiteGraph";
 import LiteGraph from "../LiteGraph";
 import { BuiltInSlotShape, SlotType, type NodeMode, type Vector2, LinkID, NodeID, BuiltInSlotType } from "../types";
 import { UUID } from "../types";
@@ -316,7 +316,7 @@ export default class Subgraph extends LGraphNode {
     override computeSize(): Vector2 {
         var num_inputs = this.inputs ? this.inputs.length : 0;
         var num_outputs = this.outputs ? this.outputs.length : 0;
-        return [200, Math.max(num_inputs, num_outputs) * LiteConst.NODE_SLOT_HEIGHT + LiteGraph.NODE_SLOT_HEIGHT * 0.5];
+        return [200, Math.max(num_inputs, num_outputs) * LiteGraph.NODE_SLOT_HEIGHT + LiteGraph.NODE_SLOT_HEIGHT * 0.5];
     }
 
     //**** INPUTS ***********************************
@@ -469,7 +469,7 @@ export default class Subgraph extends LGraphNode {
         if (LiteGraph.use_uuids) {
             // LGraph.serialize() seems to reuse objects in the original graph. But we
             // need to change node IDs here, so clone it first.
-            const subgraph = LiteCommon.cloneObject((data as any).subgraph)
+            const subgraph = LiteGraph.cloneObject((data as any).subgraph)
             mapping = reassignGraphIDs(subgraph);
             (data as any).subgraph = subgraph;
         }
@@ -574,7 +574,7 @@ export default class Subgraph extends LGraphNode {
         sortedLinksIn.sort((a, b) => a[1][1] - b[1][1])
         sortedLinksOut.sort((a, b) => a[1][1] - b[1][1])
 
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.debug("NODES", Object.keys(nodes))
             console.debug("IN", Object.keys(linksIn))
             console.debug("OUT", Object.keys(linksOut))

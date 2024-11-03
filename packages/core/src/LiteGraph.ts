@@ -1,6 +1,5 @@
 import type { LGraphNodeConstructor, LGraphNodeConstructorFactory, NodeTypeSpec, PropertyLayout, SearchboxExtra, SerializedLGraphNode, SlotLayout } from "./LGraphNode";
 import { default as LGraphNode } from "./LGraphNode";
-import LiteCommon from "./LiteCommon";
 import type { PointerEventsMethod, SlotType, Vector2, Vector4 } from "./types";
 import { NodeMode } from "./types";
 import { BuiltInSlotType } from "./types";
@@ -160,7 +159,7 @@ export default class LiteGraph {
         } else {
             reConfig = config as LGraphNodeConstructor
         }
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.log("Node registered: " + reConfig.type);
         }
 
@@ -170,7 +169,7 @@ export default class LiteGraph {
         if (!type) {
             throw ("Config has no type: " + reConfig);
         }
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.debug(classname, type)
         }
 
@@ -183,7 +182,7 @@ export default class LiteGraph {
             reConfig.title = classname;
         }
 
-        const prev = LiteCommon.registered_node_types[type];
+        const prev = LiteGraph.registered_node_types[type];
         if (prev) {
             console.warn("replacing node type: " + type);
         }
@@ -201,7 +200,7 @@ export default class LiteGraph {
         (reConfig.class as any).__LITEGRAPH_TYPE__ = type;
         Object.setPrototypeOf(reConfig.class.prototype, LGraphNode.prototype);
 
-        LiteCommon.registered_node_types[type] = reConfig;
+        LiteGraph.registered_node_types[type] = reConfig;
         if (reConfig.class.name) {
             LiteGraph.Nodes[classname] = reConfig;
         }
@@ -220,14 +219,14 @@ export default class LiteGraph {
     static unregisterNodeType(type: string | LGraphNodeConstructor): void {
         let regConfig: LGraphNodeConstructor;
         if (typeof type === "string") {
-            regConfig = LiteCommon.registered_node_types[type];
+            regConfig = LiteGraph.registered_node_types[type];
         }
         else {
             regConfig = type;
         }
         if (!regConfig)
             throw ("node type not found: " + type);
-        delete LiteCommon.registered_node_types[regConfig.type];
+        delete LiteGraph.registered_node_types[regConfig.type];
         if ((regConfig.constructor as any).name)
             delete LiteGraph.Nodes[(regConfig.constructor as any).name];
     }
@@ -242,13 +241,15 @@ export default class LiteGraph {
         let regConfig: LGraphNodeConstructor;
 
         if (typeof type === "string") {
-            regConfig = LiteCommon.registered_node_types[type];
+            regConfig = LiteGraph.registered_node_types[type];
         } else if ("type" in type){
-            regConfig = LiteCommon.registered_node_types[type.type]
+            regConfig = LiteGraph.registered_node_types[type.type]
         } else if (typeof type === 'function') {
             regConfig = { class: type};
         } else {
-            regConfig = type;
+            regConfig = {
+                class: type
+               };
         }
 
         if (!regConfig) {
@@ -293,7 +294,7 @@ export default class LiteGraph {
 
     /** Removes all previously registered node's types. */
     static clearRegisteredTypes(): void {
-        LiteCommon.registered_node_types = {};
+        LiteGraph.registered_node_types = {};
         LiteGraph.node_types_by_file_extension = {};
         LiteGraph.Nodes = {};
         LiteGraph.searchbox_extras = {};
@@ -321,7 +322,7 @@ export default class LiteGraph {
             }
         }
 
-        regConfig = LiteCommon.registered_node_types[typeID];
+        regConfig = LiteGraph.registered_node_types[typeID];
 
         if (!regConfig) {
             console.warn(
@@ -381,7 +382,7 @@ export default class LiteGraph {
 
         const propertyLayout = getStaticProperty<PropertyLayout>(regConfig.class, "propertyLayout")
         if (propertyLayout) {
-            if (LiteCommon.debug)
+            if (LiteGraph.debug)
                 console.debug("Found property layout!", propertyLayout);
             for (const item of propertyLayout) {
                 const { name, defaultValue, type, options } = item;
@@ -391,7 +392,7 @@ export default class LiteGraph {
 
         const slotLayout = getStaticProperty<SlotLayout>(regConfig.class, "slotLayout")
         if (slotLayout) {
-            if (LiteCommon.debug)
+            if (LiteGraph.debug)
                 console.debug("Found slot layout!", slotLayout);
             if (slotLayout.inputs) {
                 for (const item of slotLayout.inputs) {
@@ -420,7 +421,7 @@ export default class LiteGraph {
      * @param type full name of the node class. p.e. "math/sin"
      */
     static getNodeType<T extends LGraphNode>(type: string): LGraphNodeConstructor<T> {
-        return LiteCommon.registered_node_types[type] as LGraphNodeConstructor<T>;
+        return LiteGraph.registered_node_types[type] as LGraphNodeConstructor<T>;
     }
 
     /**
@@ -435,8 +436,8 @@ export default class LiteGraph {
         filter: string
     ): LGraphNodeConstructor[] {
         var r = [];
-        for (var i in LiteCommon.registered_node_types) {
-            var type = LiteCommon.registered_node_types[i];
+        for (var i in LiteGraph.registered_node_types) {
+            var type = LiteGraph.registered_node_types[i];
             if (type.filter != filter) {
                 continue;
             }
@@ -465,8 +466,8 @@ export default class LiteGraph {
      */
     static getNodeTypesCategories(filter: string): string[] {
         var categories = { "": 1 };
-        for (var i in LiteCommon.registered_node_types) {
-            var type = LiteCommon.registered_node_types[i];
+        for (var i in LiteGraph.registered_node_types) {
+            var type = LiteGraph.registered_node_types[i];
             if (type.category && !type.hide_in_node_lists) {
                 if (type.filter != filter)
                     continue;
@@ -502,7 +503,7 @@ export default class LiteGraph {
             }
 
             try {
-                if (LiteCommon.debug) {
+                if (LiteGraph.debug) {
                     console.log("Reloading: " + src);
                 }
                 var dynamicScript = document.createElement("script");
@@ -514,13 +515,13 @@ export default class LiteGraph {
                 if (LiteGraph.throw_errors) {
                     throw err;
                 }
-                if (LiteCommon.debug) {
+                if (LiteGraph.debug) {
                     console.log("Error while reloading " + src);
                 }
             }
         }
 
-        if (LiteCommon.debug) {
+        if (LiteGraph.debug) {
             console.log("Nodes reloaded");
         }
     }

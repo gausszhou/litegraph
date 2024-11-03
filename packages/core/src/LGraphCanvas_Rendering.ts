@@ -1,8 +1,8 @@
 import type LGraph from "./LGraph";
 import LGraphCanvas from "./LGraphCanvas";
 import LGraphNode from "./LGraphNode";
-import LiteCommon from "./LiteCommon";
-import LiteConst from "./LiteConst";
+import LiteGraph from "./LiteGraph";
+import LiteGraph from "./LiteGraph";
 import LiteGraph from "./LiteGraph";
 import LLink from "./LLink";
 import GraphInput from "./nodes/GraphInput";
@@ -381,7 +381,7 @@ export default class LGraphCanvas_Rendering {
     drawSubgraphPanelLeft(this: LGraphCanvas, subgraph: LGraph, subnode: LGraphNode, ctx: CanvasRenderingContext2D) {
         var num = subnode.inputs ? subnode.inputs.length : 0;
         var w = 200;
-        var h = Math.floor(LiteConst.NODE_SLOT_HEIGHT * 1.6);
+        var h = Math.floor(LiteGraph.NODE_SLOT_HEIGHT * 1.6);
 
         ctx.fillStyle = "#111";
         ctx.globalAlpha = 0.8;
@@ -706,7 +706,7 @@ export default class LGraphCanvas_Rendering {
             }
 
             //DEBUG: show clipping area
-            if (LiteCommon.debug) {
+            if (LiteGraph.debug) {
                 ctx.fillStyle = "red";
                 ctx.fillRect(this.visible_area[0] + 10, this.visible_area[1] + 10, this.visible_area[2] - 20, this.visible_area[3] - 20);
             }
@@ -879,7 +879,7 @@ export default class LGraphCanvas_Rendering {
 
                     ctx.globalAlpha = editor_alpha;
                     //change opacity of incompatible slots when dragging a connection
-                    if (this.connecting_output && !LiteCommon.isValidConnection(slot.type, out_slot.type)) {
+                    if (this.connecting_output && !LiteGraph.isValidConnection(slot.type, out_slot.type)) {
                         ctx.globalAlpha = 0.4 * editor_alpha;
                     }
                     else {
@@ -974,7 +974,7 @@ export default class LGraphCanvas_Rendering {
                     var slot_shape = slot.shape;
 
                     //change opacity of incompatible slots when dragging a connection
-                    if (this.connecting_input && !LiteCommon.isValidConnection(in_slot.type, slot_type)) {
+                    if (this.connecting_input && !LiteGraph.isValidConnection(in_slot.type, slot_type)) {
                         ctx.globalAlpha = 0.4 * editor_alpha;
                     }
                     else {

@@ -2,7 +2,7 @@ import type { default as IWidget, ITextWidget } from "../IWidget";
 import { IComboWidget } from "../IWidget";
 import type { SlotLayout } from "../LGraphNode";
 import LGraphNode from "../LGraphNode";
-import LiteCommon from "../LiteCommon";
+import LiteGraph from "../LiteGraph";
 import LiteGraph from "../LiteGraph";
 import { BASE_SLOT_TYPES, BuiltInSlotShape, NodeID, SlotType, Vector2 } from "../types";
 import { BuiltInSlotType } from "../types";
@@ -138,7 +138,7 @@ export default class GraphInput extends LGraphNode {
 
         //update output
         if (output.type != type) {
-            if (!LiteCommon.isValidConnection(output.type, type))
+            if (!LiteGraph.isValidConnection(output.type, type))
                 this.disconnectOutput(0);
             output.type = type;
         }
