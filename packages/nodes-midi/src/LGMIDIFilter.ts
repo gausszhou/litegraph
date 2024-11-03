@@ -1,3 +1,6 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default  function LGMIDIFilter() {
   this.properties = {
       channel: -1,
@@ -13,8 +16,8 @@ export default  function LGMIDIFilter() {
       that.boxcolor = "#FA3";
   });
 
-  this.addInput("in", LiteGraph.EVENT);
-  this.addOutput("on_midi", LiteGraph.EVENT);
+  this.addInput("in", BuiltInSlotType.EVENT);
+  this.addOutput("on_midi", BuiltInSlotType.EVENT);
   this.boxcolor = "#AAA";
 }
 

@@ -1,5 +1,9 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import { MIDI_COLOR } from "./MIDIEvent";
+import MIDIInterface from "./MIDIInterface";
+
 export default  function LGMIDIIn() {
-  this.addOutput("on_midi", LiteGraph.EVENT);
+  this.addOutput("on_midi", BuiltInSlotType.EVENT);
   this.addOutput("out", "midi");
   this.properties = { port: 0 };
   this._last_midi_event = null;

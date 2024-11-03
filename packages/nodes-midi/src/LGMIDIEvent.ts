@@ -1,3 +1,7 @@
+import { clamp } from "@gausszhou/litegraph-core";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default function LGMIDIEvent() {
   this.properties = {
       channel: 0,
@@ -6,9 +10,9 @@ export default function LGMIDIEvent() {
       value2: 1
   };
 
-  this.addInput("send", LiteGraph.EVENT);
-  this.addInput("assign", LiteGraph.EVENT);
-  this.addOutput("on_midi", LiteGraph.EVENT);
+  this.addInput("send", BuiltInSlotType.EVENT);
+  this.addInput("assign", BuiltInSlotType.EVENT);
+  this.addOutput("on_midi", BuiltInSlotType.EVENT);
 
   this.midi_event = new MIDIEvent();
   this.gate = false;
@@ -158,7 +162,7 @@ LGMIDIEvent.prototype.onGetInputs = function() {
 LGMIDIEvent.prototype.onGetOutputs = function() {
   return [
       ["midi", "midi"],
-      ["on_midi", LiteGraph.EVENT],
+      ["on_midi", BuiltInSlotType.EVENT],
       ["command", "number"],
       ["note", "number"],
       ["velocity", "number"],

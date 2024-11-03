@@ -1,4 +1,6 @@
-export default function MIDIEvent(data) {
+export const MIDI_COLOR = "#234"
+
+export default function MIDIEvent(data?) {
     this.channel = 0;
     this.cmd = 0;
     this.data = new Uint32Array(3);
@@ -196,7 +198,7 @@ MIDIEvent.computeCommandFromString = function(str) {
 };
 
 //transform from a pitch number to string like "C4"
-MIDIEvent.toNoteString = function(d, skip_octave) {
+MIDIEvent.toNoteString = function(d, skip_octave?) {
     d = Math.round(d); //in case it has decimals
     var note = d - 21;
     var octave = Math.floor((d - 24) / 12 + 1);
@@ -319,6 +321,7 @@ MIDIEvent.commands_short = {
 };
 
 MIDIEvent.commands_reversed = {};
+
 for (var i in MIDIEvent.commands) {
     MIDIEvent.commands_reversed[MIDIEvent.commands[i]] = i;
 }

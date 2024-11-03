@@ -1,4 +1,5 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
 
 export default function LGMIDIFromFile() {
   this.properties = {

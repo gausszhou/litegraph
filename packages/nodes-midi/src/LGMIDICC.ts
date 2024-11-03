@@ -1,7 +1,9 @@
+import { MIDI_COLOR } from "./MIDIEvent";
+import MIDIInterface from "./MIDIInterface";
 
 export default function LGMIDICC() {
   this.properties = {
-      //		channel: 0,
+      channel: 0,
       cc: 1,
       value: 0
   };

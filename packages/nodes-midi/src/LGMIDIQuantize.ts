@@ -1,10 +1,14 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+import LGMIDIGenerator from "./LGMIDIGenerator";
+
 export default  function LGMIDIQuantize() {
   this.properties = {
       scale: "A,A#,B,C,C#,D,D#,E,F,F#,G,G#"
   };
-  this.addInput("note", LiteGraph.ACTION);
+  this.addInput("note", BuiltInSlotType.ACTION);
   this.addInput("scale", "string");
-  this.addOutput("out", LiteGraph.EVENT);
+  this.addOutput("out", BuiltInSlotType.EVENT);
 
   this.valid_notes = new Array(12);
   this.offset_notes = new Array(12);

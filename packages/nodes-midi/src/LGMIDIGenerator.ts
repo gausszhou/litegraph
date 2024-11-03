@@ -1,8 +1,11 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default function LGMIDIGenerator() {
-  this.addInput("generate", LiteGraph.ACTION);
+  this.addInput("generate", BuiltInSlotType.ACTION);
   this.addInput("scale", "string");
   this.addInput("octave", "number");
-  this.addOutput("note", LiteGraph.EVENT);
+  this.addOutput("note", BuiltInSlotType.EVENT);
   this.properties = {
       notes: "A,A#,B,C,C#,D,D#,E,F,F#,G,G#",
       octave: 2,
@@ -25,7 +28,7 @@ LGMIDIGenerator.processScale = function(scale) {
   for (var i = 0; i < notes.length; ++i) {
       var n = notes[i];
       if ((n.length == 2 && n[1] != "#") || n.length > 2) {
-          notes[i] = -LiteGraph.MIDIEvent.NoteStringToPitch(n);
+          notes[i] = - MIDIEvent.NoteStringToPitch(n);
       } else {
           notes[i] = MIDIEvent.note_to_index[n] || 0;
       }

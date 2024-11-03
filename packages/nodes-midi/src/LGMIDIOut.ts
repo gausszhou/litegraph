@@ -1,5 +1,6 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 import MIDIInterface from "./MIDIInterface";
+import { MIDI_COLOR } from "./MIDIEvent";
 
 export default function LGMIDIOut() {
   this.addInput("send", BuiltInSlotType.EVENT);

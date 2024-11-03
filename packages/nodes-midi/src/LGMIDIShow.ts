@@ -1,5 +1,8 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default function LGMIDIShow() {
-  this.addInput("on_midi", LiteGraph.EVENT);
+  this.addInput("on_midi", BuiltInSlotType.EVENT);
   this._str = "";
   this.size = [200, 40];
 }
@@ -36,9 +39,9 @@ LGMIDIShow.prototype.onDrawForeground = function (ctx) {
 };
 
 LGMIDIShow.prototype.onGetInputs = function () {
-  return [["in", LiteGraph.ACTION]];
+  return [["in", BuiltInSlotType.ACTION]];
 };
 
 LGMIDIShow.prototype.onGetOutputs = function () {
-  return [["on_midi", LiteGraph.EVENT]];
+  return [["on_midi", BuiltInSlotType.EVENT]];
 };

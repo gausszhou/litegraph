@@ -1,20 +1,23 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default function LGMIDIPlay() {
   this.properties = {
       volume: 0.5,
       duration: 1
   };
-  this.addInput("note", LiteGraph.ACTION);
+  this.addInput("note", BuiltInSlotType.ACTION);
   this.addInput("volume", "number");
   this.addInput("duration", "number");
-  this.addOutput("note", LiteGraph.EVENT);
+  this.addOutput("note", BuiltInSlotType.EVENT);
 
-  if (typeof AudioSynth == "undefined") {
+  if (typeof (window as any).AudioSynth == "undefined") {
       console.error(
           "Audiosynth.js not included, LGMidiPlay requires that library"
       );
       this.boxcolor = "red";
   } else {
-      var Synth = (this.synth = new AudioSynth());
+      var Synth = (this.synth = new (window as any).AudioSynth());
       this.instrument = Synth.createInstrument("piano");
   }
 }

@@ -1,10 +1,13 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
+
 export default  function LGMIDITranspose() {
   this.properties = {
       amount: 0
   };
-  this.addInput("in", LiteGraph.ACTION);
+  this.addInput("in", BuiltInSlotType.ACTION);
   this.addInput("amount", "number");
-  this.addOutput("out", LiteGraph.EVENT);
+  this.addOutput("out", BuiltInSlotType.EVENT);
 
   this.midi_event = new MIDIEvent();
 }
