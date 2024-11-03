@@ -351,7 +351,7 @@ this.setOutputData(0, {
 但是有时您希望仅在激活某个触发器时执行操作，对于这种情况，您可以使用事件。
 仅当从一个节点分派事件时，事件才允许在节点中触发执行。
 
-要为节点定义插槽，您必须对输入使用 `LiteGraph.ACTION` 类型，对输出使用 `LIteGraph.EVENT` 类型：
+要为节点定义插槽，您必须对输入使用 `LiteGraph.ACTION` 类型，对输出使用 `LiteGraph.EVENT` 类型：
 
 ---
 
