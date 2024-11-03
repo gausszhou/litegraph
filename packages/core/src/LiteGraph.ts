@@ -154,6 +154,7 @@ export default class LiteGraph {
                 type: config as string,
                 class: nodeClass,
                 title: nodeClass.name,
+                name: nodeClass.name,
                 desc: ""
             }
         } else {

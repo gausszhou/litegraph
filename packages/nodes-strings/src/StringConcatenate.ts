@@ -1,7 +1,4 @@
-import { LiteGraph, SlotLayout } from "@gausszhou/litegraph-core";
-
-import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
-
+import { SlotLayout } from "@gausszhou/litegraph-core";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export default class StringConcatenate extends LGraphNode {

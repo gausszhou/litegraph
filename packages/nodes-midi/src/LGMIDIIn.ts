@@ -1,6 +1,7 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 import { MIDI_COLOR } from "./MIDIEvent";
 import MIDIInterface from "./MIDIInterface";
+import { LiteUtils } from "@gausszhou/litegraph-core";
 
 export default  function LGMIDIIn() {
   this.addOutput("on_midi", BuiltInSlotType.EVENT);
@@ -57,7 +58,7 @@ LGMIDIIn.prototype.onStart = function() {
 LGMIDIIn.prototype.onMIDIEvent = function(data, midi_event) {
   this._last_midi_event = midi_event;
   this.boxcolor = "#AFA";
-  this._last_time = LiteGraph.getTime();
+  this._last_time = LiteUtils.getTime();
   this.trigger("on_midi", midi_event);
   if (midi_event.cmd == MIDIEvent.NOTEON) {
       this.trigger("on_noteon", midi_event);
@@ -76,7 +77,7 @@ LGMIDIIn.prototype.onDrawBackground = function(ctx) {
   this.boxcolor = "#AAA";
   if (!this.flags.collapsed && this._last_midi_event) {
       ctx.fillStyle = "white";
-      var now = LiteGraph.getTime();
+      var now = LiteUtils.getTime();
       var f = 1.0 - Math.max(0, (now - this._last_time) * 0.001);
       if (f > 0) {
           var t = ctx.globalAlpha;
@@ -117,11 +118,11 @@ LGMIDIIn.prototype.onExecute = function() {
 LGMIDIIn.prototype.onGetOutputs = function() {
   return [
       ["last_midi", "midi"],
-      ["on_midi", LiteGraph.EVENT],
-      ["on_noteon", LiteGraph.EVENT],
-      ["on_noteoff", LiteGraph.EVENT],
-      ["on_cc", LiteGraph.EVENT],
-      ["on_pc", LiteGraph.EVENT],
-      ["on_pitchbend", LiteGraph.EVENT]
+      ["on_midi", BuiltInSlotType.EVENT],
+      ["on_noteon", BuiltInSlotType.EVENT],
+      ["on_noteoff", BuiltInSlotType.EVENT],
+      ["on_cc", BuiltInSlotType.EVENT],
+      ["on_pc", BuiltInSlotType.EVENT],
+      ["on_pitchbend", BuiltInSlotType.EVENT]
   ];
 };
