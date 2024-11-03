@@ -1,17 +1,13 @@
 import { LiteGraph } from "@gausszhou/litegraph";
-import { demo1, demo2, demo3 } from "./demos";
+import { audio1, audio2, demo1, demo2, demo3 } from "./demos";
 import Editor from "./Editor";
-import configure from "./configure";
 import features from "./features/index";
-
 LiteGraph.use(features);
 
 interface OptionElemExt extends HTMLOptionElement {
   callback?: () => void;
 }
 
-const isMobile = false;
-configure(isMobile);
 
 LiteGraph.debug = false;
 LiteGraph.node_images_path = "/imgs";
@@ -109,9 +105,14 @@ function addDemo(name: string, url: string | (() => void)) {
 addDemo("Demo1", () => demo1(editor.graph));
 addDemo("Demo2", () => demo2(editor.graph));
 addDemo("Demo3", () => demo3(editor.graph));
+
+addDemo("Audio1", () => audio1(editor.graph));
+addDemo("Audio2", () => audio2(editor.graph));
+
 addDemo("Features", "examples/features.json");
 addDemo("Benchmark", "examples/benchmark.json");
 addDemo("Subgraph", "examples/subgraph.json");
+
 addDemo("Audio", "examples/audio.json");
 addDemo("Audio Delay", "examples/audio_delay.json");
 addDemo("Audio Reverb", "examples/audio_reverb.json");

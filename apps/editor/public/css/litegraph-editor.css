@@ -16,7 +16,6 @@
     color: #ddd;
     font-size: 28px;
     padding-left: 10px;
-    /*text-shadow: 0 1px 1px #333, 0 -1px 1px #777;*/
     margin: 0;
     font-weight: normal;
 }
@@ -42,7 +41,7 @@
 .litegraph-editor .content {
     position: relative;
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 40px);
     background-color: #1a1a1a;
 }
 
@@ -51,7 +50,6 @@
     position: relative;
     height: 40px;
     background-color: #333;
-    /*border-radius: 10px 10px 0 0;*/
 }
 
 .litegraph-editor .tools,

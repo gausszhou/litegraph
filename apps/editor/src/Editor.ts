@@ -41,10 +41,6 @@ export default class Editor {
 		<canvas class='graphCanvas'  tabindex=10></canvas>
 	</div>
 </div>
-<div class='footer'>
-	<div class='tools tools-left'></div>
-	<div class='tools tools-right'></div>
-</div>
 `;
 
     this.options = options;
@@ -145,7 +141,7 @@ export default class Editor {
 
     this.meter.innerHTML = html;
     this.root
-      .querySelector<HTMLDivElement>(".footer .tools-left")!
+      .querySelector<HTMLDivElement>(".header .tools-left")!
       .appendChild(this.meter);
     var self = this;
 
