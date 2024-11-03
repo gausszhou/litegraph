@@ -238,20 +238,19 @@ export default class LiteGraph {
      * @param {String} slot_type name of the slot type (variable type), eg. string, number, array, boolean, ..
      */
     static registerNodeAndSlotType(type: string | LGraphNodeConstructor | LGraphNode, slot_type: SlotType, out: boolean = false) {
+        console.log(arguments)
         let regConfig: LGraphNodeConstructor;
 
         if (typeof type === "string") {
             regConfig = LiteGraph.registered_node_types[type];
-        } else if ("type" in type){
+        } else if (typeof type.type === 'string'){
             regConfig = LiteGraph.registered_node_types[type.type]
-        } else if (typeof type === 'function') {
-            regConfig = { class: type};
         } else {
             regConfig = {
-                class: type
-               };
+              class: type
+            };
         }
-
+        
         if (!regConfig) {
             throw "Node not registered!" + type
         }
@@ -323,6 +322,7 @@ export default class LiteGraph {
         }
 
         regConfig = LiteGraph.registered_node_types[typeID];
+        
 
         if (!regConfig) {
             console.warn(
@@ -335,7 +335,7 @@ export default class LiteGraph {
 
         var node: T = null;
         const args = options.constructorArgs || []
-
+        Object.setPrototypeOf(regConfig.class.prototype, LGraphNode.prototype);
         if (LiteGraph.catch_exceptions) {
             try {
                 node = new regConfig.class(title, ...args) as T;
