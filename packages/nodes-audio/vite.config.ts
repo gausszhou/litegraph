@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     viteExternalsPlugin({
       "@gausszhou/litegraph-core/src/LGraphNode": "LGraphNode",
-      "@gausszhou/litegraph-core/src/LiteConst": "LiteConst",
+      "@gausszhou/litegraph-core/src/LiteGraph": "LiteGraph",
       "@gausszhou/litegraph-core/src/LGraph": "LGraph"
     }),
   ],

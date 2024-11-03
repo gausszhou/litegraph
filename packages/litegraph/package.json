@@ -20,6 +20,7 @@
     "@gausszhou/litegraph-nodes-audio": "workspace:*",
     "@gausszhou/litegraph-nodes-basic": "workspace:*",
     "@gausszhou/litegraph-nodes-events": "workspace:*",
+    "@gausszhou/litegraph-nodes-graphics": "workspace:*",
     "@gausszhou/litegraph-nodes-input": "workspace:*",
     "@gausszhou/litegraph-nodes-logic": "workspace:*",
     "@gausszhou/litegraph-nodes-math": "workspace:*",

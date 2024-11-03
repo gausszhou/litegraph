@@ -1,6 +1,6 @@
 import { LiteGraph, SlotLayout } from "@gausszhou/litegraph-core";
 
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 

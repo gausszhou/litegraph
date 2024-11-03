@@ -38,16 +38,17 @@ export const install = (LiteGraph: any) => {
         type: "logic/or",
     });
     LiteGraph.registerNodeType({
+        type: "logic/truthy",
         class: LogicTruthy,
         title: "~= TRUE",
         desc: "Returns true if input is truthy",
-        type: "logic/truthy",
     });
 
     LiteGraph.registerNodeType({
         type: "logic/selector",
         class: Selector,
-        
+        title: "Selector",
+        desc: "selects an output",
     });
 
     LiteGraph.registerNodeType({

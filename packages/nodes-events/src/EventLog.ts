@@ -2,8 +2,7 @@ import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from 
 import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
-export interface LogEventProperties extends Record<string, any> {
-}
+export interface LogEventProperties extends Record<string, any> {}
 
 export default class LogEvent extends LGraphNode {
     override properties: LogEventProperties = {

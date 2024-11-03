@@ -1,6 +1,6 @@
 import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core/src/types";
 import LGAudio from "./LGAudio";
-import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 
 //****************************************************
 export default function LGAudioSource() {
@@ -107,6 +107,7 @@ LGAudioSource.prototype.onExecute = function () {
       }
       if (input.name == "gain") this.audionode.gain.value = v;
       else if (input.name == "src") {
+        console.log(input)
         this.setProperty("src", v);
       } else if (input.name == "playbackRate") {
         this.properties.playbackRate = v;
@@ -168,9 +169,7 @@ LGAudioSource.prototype.playBuffer = function (buffer) {
   this.trigger("start");
 
   audionode.onended = function () {
-    //console.log("ended!");
     that.trigger("ended");
-    //remove
     var index = that._audionodes.indexOf(audionode);
     if (index != -1) {
       that._audionodes.splice(index, 1);
@@ -206,7 +205,7 @@ LGAudioSource.prototype.loadSound = function (url) {
   this.boxcolor = "#AA4";
 
   function inner(buffer) {
-    this.boxcolor = LiteConst.NODE_DEFAULT_BOXCOLOR;
+    that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
     that._audiobuffer = buffer;
     that._loading_audio = false;
     //if is playing, then play it

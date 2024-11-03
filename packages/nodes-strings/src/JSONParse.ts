@@ -1,6 +1,6 @@
 import { INodeInputSlot, INodeOutputSlot, LConnectionKind, LLink, SlotLayout } from "@gausszhou/litegraph-core";
 
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
@@ -44,7 +44,7 @@ export default class JSONParse extends LGraphNode {
             this._str = null;
             this._value = null;
             this._error = null;
-            this.boxcolor = LiteCommon.NODE_DEFAULT_BOXCOLOR;
+            this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
         }
         this.setOutputData(0, this._value)
         this.setOutputData(1, this._error)

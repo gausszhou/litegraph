@@ -1,8 +1,9 @@
-export { default as DelayEvent } from "./DelayEvent";
+export { default as DelayEvent } from "./EventDelay";
+export { default as EventCounter } from "./EventCounter";
 export { default as EventBranch } from "./EventBranch";
-export { default as FilterEvent } from "./FilterEvent";
-export { default as FrameDelayEvent } from "./FrameDelayEvent";
-export { default as LogEvent } from "./LogEvent";
+export { default as FilterEvent } from "./EventFilter";
+export { default as FrameDelayEvent } from "./EventFrameDelay";
+export { default as LogEvent } from "./EventLog";
 export { default as TriggerEvent } from "./TriggerEvent";
 export { default as Sequence } from "./Sequence";
 export { default as WrapAsEvent } from "./WrapAsEvent";

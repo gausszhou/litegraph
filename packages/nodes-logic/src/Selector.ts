@@ -1,5 +1,48 @@
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
+
+export default   function Selector() {
+  this.addInput("sel", "number");
+  this.addInput("A");
+  this.addInput("B");
+  this.addInput("C");
+  this.addInput("D");
+  this.addOutput("out");
+
+  this.selected = 0;
+}
+
+Selector.title = "Selector";
+Selector.desc = "selects an output";
+
+Selector.prototype.onDrawBackground = function(ctx) {
+  if (this.flags.collapsed) {
+      return;
+  }
+  ctx.fillStyle = "#AFB";
+  var y = (this.selected + 1) * LiteGraph.NODE_SLOT_HEIGHT + 6;
+  ctx.beginPath();
+  ctx.moveTo(50, y);
+  ctx.lineTo(50, y + LiteGraph.NODE_SLOT_HEIGHT);
+  ctx.lineTo(34, y + LiteGraph.NODE_SLOT_HEIGHT * 0.5);
+  ctx.fill();
+};
+
+Selector.prototype.onExecute = function() {
+  var sel = this.getInputData(0);
+  if (sel == null || sel.constructor !== Number)
+      sel = 0;
+  this.selected = sel = Math.round(sel) % (this.inputs.length - 1);
+  var v = this.getInputData(sel + 1);
+  if (v !== undefined) {
+      this.setOutputData(0, v);
+  }
+};
+
+Selector.prototype.onGetInputs = function() {
+  return [["E", 0], ["F", 0], ["G", 0], ["H", 0]];
+};
 
 /**
  * 通道选择器
@@ -7,7 +50,7 @@ import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
  * - 输入端口的值为 0-3
  * @example sel: 0  inputs: [3, 1, 4, 1] => out: 3
  */
-class Selector extends LGraphNode {
+class Selector1 extends LGraphNode {
   static title = "Selector";
   static desc = "selects an output";
   selected: number = 0;
@@ -26,11 +69,11 @@ class Selector extends LGraphNode {
       return;
     }
     ctx.fillStyle = "#AFB";
-    const y = (this.selected + 1) * LiteConst.NODE_SLOT_HEIGHT + 6;
+    const y = (this.selected + 1) * LiteGraph.NODE_SLOT_HEIGHT + 6;
     ctx.beginPath();
     ctx.moveTo(50, y);
-    ctx.lineTo(50, y + LiteConst.NODE_SLOT_HEIGHT);
-    ctx.lineTo(34, y + LiteConst.NODE_SLOT_HEIGHT * 0.5);
+    ctx.lineTo(50, y + LiteGraph.NODE_SLOT_HEIGHT);
+    ctx.lineTo(34, y + LiteGraph.NODE_SLOT_HEIGHT * 0.5);
     ctx.fill();
   };
   onExecute() {
@@ -54,5 +97,3 @@ class Selector extends LGraphNode {
     ];
   };
 }
-
-export default Selector;

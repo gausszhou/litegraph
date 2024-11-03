@@ -1,5 +1,5 @@
 import type { SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
-import LiteConst from "@gausszhou/litegraph-core/src/LiteConst";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export interface MathOperationProperties extends Record<string, any> {
@@ -51,8 +51,6 @@ export default class MathOperation extends LGraphNode {
         switch (this.properties.OP) {
             case "+": this._func = function(A, B) { return A + B; }; break;
             case "-": this._func = function(A, B) { return A - B; }; break;
-            // case "x":
-            // case "X":
             case "*": this._func = function(A, B) { return A * B; }; break;
             case "/": this._func = function(A, B) { return A / B; }; break;
             case "%": this._func = function(A, B) { return A % B; }; break;
@@ -81,6 +79,8 @@ export default class MathOperation extends LGraphNode {
         } else {
             B = this.properties["B"];
         }
+        
+        
 
         var result;
         if (A.constructor === Number) {
@@ -112,7 +112,7 @@ export default class MathOperation extends LGraphNode {
         ctx.fillText(
             this.properties.OP,
             this.size[0] * 0.5,
-            (this.size[1] + LiteConst.NODE_TITLE_HEIGHT) * 0.5
+            (this.size[1] + LiteGraph.NODE_TITLE_HEIGHT) * 0.5
         );
         ctx.textAlign = "left";
     };

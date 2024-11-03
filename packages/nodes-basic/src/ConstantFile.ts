@@ -1,5 +1,5 @@
 import { ITextWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
@@ -76,8 +76,8 @@ export default class ConstantFile extends LGraphNode {
 
         this._url = url;
         this._type = this.properties.type;
-        if (url.substr(0, 4) == "http" && LiteCommon.proxy) {
-            url = LiteCommon.proxy + url.substr(url.indexOf(":") + 3);
+        if (url.substr(0, 4) == "http" && LiteGraph.proxy) {
+            url = LiteGraph.proxy + url.substr(url.indexOf(":") + 3);
         }
         await fetch(url)
             .then(function(response) {

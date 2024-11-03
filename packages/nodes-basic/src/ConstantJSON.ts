@@ -1,7 +1,7 @@
 import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 import Watch from "./Watch"
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
 
 
@@ -71,7 +71,7 @@ export default class ConstantJSON extends LGraphNode {
 
         //update output
         if (this.outputs[0].type != type) {
-            if (!LiteCommon.isValidConnection(this.outputs[0].type, type))
+            if (!LiteGraph.isValidConnection(this.outputs[0].type, type))
                 this.disconnectOutput(0);
             this.outputs[0].type = type;
         }

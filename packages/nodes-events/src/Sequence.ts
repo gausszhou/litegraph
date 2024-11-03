@@ -6,8 +6,12 @@ export default class Sequence extends LGraphNode {
     static slotLayout: SlotLayout = {
         inputs: [
             { name: "", type: BuiltInSlotType.ACTION },
+            { name: "", type: BuiltInSlotType.ACTION },
+            { name: "", type: BuiltInSlotType.ACTION },
         ],
         outputs: [
+            { name: "", type: BuiltInSlotType.EVENT },
+            { name: "", type: BuiltInSlotType.EVENT },
             { name: "", type: BuiltInSlotType.EVENT },
         ],
     }

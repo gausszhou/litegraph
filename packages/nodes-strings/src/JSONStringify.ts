@@ -1,6 +1,6 @@
 import { INodeInputSlot, INodeOutputSlot, ITextWidget, LConnectionKind, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
 
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
@@ -49,7 +49,7 @@ export default class JSONStringify extends LGraphNode {
             this._obj = null;
             this._value = null;
             this._error = null;
-            this.boxcolor = LiteCommon.NODE_DEFAULT_BOXCOLOR;
+            this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
         }
         this.setOutputData(0, this._value)
         this.setOutputData(1, this._error)

@@ -1,6 +1,8 @@
 import MathApproxEq from "./MathApproxEq";
 import MathFloor from "./MathFloor";
+import MathNoise from "./MathNoise";
 import MathOperation from "./MathOperation";
+import MathRand from "./MathRand";
 
 export const install = (LiteGraph: any) => {
   LiteGraph.registerNodeType({
@@ -16,10 +18,14 @@ export const install = (LiteGraph: any) => {
     desc: "Floor number to remove fractional part",
     type: "math/floor",
   });
+
+  LiteGraph.registerNodeType("math/noise", MathNoise);
+
   LiteGraph.registerNodeType({
     class: MathOperation,
     title: "Operation",
     desc: "Easy math operators",
     type: "math/operation",
   });
+  LiteGraph.registerNodeType("math/rand", MathRand);
 };

@@ -1,9 +1,11 @@
-import DelayEvent from "./DelayEvent";
+import DelayEvent from "./EventDelay";
 import EventBranch from "./EventBranch";
-import FilterEvent from "./FilterEvent";
-import FrameDelayEvent from "./FrameDelayEvent";
-import LogEvent from "./LogEvent";
+import EventCounter from "./EventCounter";
+import FilterEvent from "./EventFilter";
+import FrameDelayEvent from "./EventFrameDelay";
+import LogEvent from "./EventLog";
 import Sequence from "./Sequence";
+import TimerEvent from "./TimerEvent";
 import TriggerEvent from "./TriggerEvent";
 import WrapAsEvent from "./WrapAsEvent";
 
@@ -21,6 +23,9 @@ export const install = (LiteGraph: any) => {
     desc: "If condition is true, outputs triggers true, otherwise false",
     type: "events/branch",
   });
+  
+  LiteGraph.registerNodeType("events/counter", EventCounter);
+
   LiteGraph.registerNodeType({
     class: FilterEvent,
     title: "Filter Event",
@@ -33,6 +38,8 @@ export const install = (LiteGraph: any) => {
     desc: "Delays one event by frame count",
     type: "events/frame_delay",
   });
+
+  LiteGraph.registerNodeType("events/timer", TimerEvent);
 
   LiteGraph.registerNodeType({
     class: LogEvent,

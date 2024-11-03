@@ -1,7 +1,7 @@
 import type { INodeInputSlot, INodeOutputSlot, ITextWidget, LLink, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
 
 import { BuiltInSlotType, LConnectionKind } from "@gausszhou/litegraph-core/src/types";
-import LiteCommon from "@gausszhou/litegraph-core/src/LiteCommon";
+import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
 import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
 
 export interface StringTemplateProperties extends Record<string, any> {
@@ -62,7 +62,7 @@ export default class StringTemplate extends LGraphNode {
         if (property === "outputJSON") {
             const isJSON = value == true;
             this.outputs[0].type = isJSON ? "*" : "string";
-            this.boxcolor = LiteCommon.NODE_DEFAULT_BOXCOLOR;
+            this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
         }
         this._value = null;
     }
@@ -91,13 +91,13 @@ export default class StringTemplate extends LGraphNode {
                 }
             }
             try {
-                this.boxcolor = this.properties.outputJSON ? "#AEA" : LiteCommon.NODE_DEFAULT_BOXCOLOR;
+                this.boxcolor = this.properties.outputJSON ? "#AEA" : LiteGraph.NODE_DEFAULT_BOXCOLOR;
                 this._value = this.substituteTemplate(template, args)
             }
             catch (error) {
                 this.boxcolor = "red";
                 this._value = ""
-                if (LiteCommon.debug) {
+                if (LiteGraph.debug) {
                     console.error(error);
                 }
             }
