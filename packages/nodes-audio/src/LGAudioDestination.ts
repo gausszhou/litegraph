@@ -1,6 +1,11 @@
+import { LGraphNode } from "@gausszhou/litegraph-core";
 import LGAudio from "./LGAudio";
 
-export default function LGAudioDestination() {
-  this.audionode = LGAudio.getAudioContext().destination;
-  this.addInput("in", "audio");
+export default class LGAudioDestination extends LGraphNode {
+  audionode: AudioDestinationNode
+  constructor() {
+    super();
+    this.audionode = LGAudio.getAudioContext().destination;
+    this.addInput("in", "audio");
+  }
 }

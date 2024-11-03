@@ -1,61 +1,64 @@
 import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core/src/types";
 import LGAudio from "./LGAudio";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
-export default function LGAudioMediaSource() {
-  this.properties = {
-    gain: 0.5,
-  };
+export default class LGAudioMediaSource extends LGraphNode {
+  audionode: GainNode
+  constructor() {
+    super();
+    this.properties = {
+      gain: 0.5,
+    };
+    
+    this._media_stream = null;
+    this.addOutput("out", "audio");
+    this.addInput("gain", "number");
 
-  this._audionodes = [];
-  this._media_stream = null;
-
-  this.addOutput("out", "audio");
-  this.addInput("gain", "number");
-
-  //create gain node to control volume
-  var context = LGAudio.getAudioContext();
-  this.audionode = context.createGain();
-  this.audionode.graphnode = this;
-  this.audionode.gain.value = this.properties.gain;
-}
-
-LGAudioMediaSource.prototype.onAdded = function (graph) {
-  if (graph.status === LGraphStatus.STATUS_RUNNING) {
-    this.onStart();
+    //create gain node to control volume
+    var context = LGAudio.getAudioContext();
+    this.audionode = context.createGain();
+    this.audionode.gain.value = this.properties.gain;
   }
-};
 
-LGAudioMediaSource.prototype.onStart = function () {
-  if (this._media_stream == null && !this._waiting_confirmation) {
-    this.openStream();
-  }
-};
 
-LGAudioMediaSource.prototype.onStop = function () {
-  this.audionode.gain.value = 0;
-};
-
-LGAudioMediaSource.prototype.onPause = function () {
-  this.audionode.gain.value = 0;
-};
-
-LGAudioMediaSource.prototype.onUnpause = function () {
-  this.audionode.gain.value = this.properties.gain;
-};
-
-LGAudioMediaSource.prototype.onRemoved = function () {
-  this.audionode.gain.value = 0;
-  if (this.audiosource_node) {
-    this.audiosource_node.disconnect(this.audionode);
-    this.audiosource_node = null;
-  }
-  if (this._media_stream) {
-    var tracks = this._media_stream.getTracks();
-    if (tracks.length) {
-      tracks[0].stop();
+  onAdded(graph) {
+    if (graph.status === LGraphStatus.STATUS_RUNNING) {
+      this.onStart();
     }
   }
-};
+
+  onStart() {
+    if (this._media_stream == null && !this._waiting_confirmation) {
+      this.openStream();
+    }
+  }
+
+  onStop() {
+    this.audionode.gain.value = 0;
+  }
+
+  onPause() {
+    this.audionode.gain.value = 0;
+  }
+
+  onUnpause() {
+    this.audionode.gain.value = this.properties.gain;
+  }
+
+  onRemoved() {
+    this.audionode.gain.value = 0;
+    if (this.audiosource_node) {
+      this.audiosource_node.disconnect(this.audionode);
+      this.audiosource_node = null;
+    }
+    if (this._media_stream) {
+      var tracks = this._media_stream.getTracks();
+      if (tracks.length) {
+        tracks[0].stop();
+      }
+    }
+  }
+}
 
 LGAudioMediaSource.prototype.openStream = function () {
   if (!navigator.mediaDevices) {
@@ -91,7 +94,7 @@ LGAudioMediaSource.prototype.streamReady = function (localMediaStream) {
   }
   var context = LGAudio.getAudioContext();
   this.audiosource_node = context.createMediaStreamSource(localMediaStream);
-  this.audiosource_node.graphnode = this;
+  // this.audiosource_node.graphnode = this;
   this.audiosource_node.connect(this.audionode);
   this.boxcolor = "white";
 };

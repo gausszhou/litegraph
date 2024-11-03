@@ -1,4 +1,3 @@
-import { LiteGraph } from "@gausszhou/litegraph-core";
 import LGAudioADSR from "./LGAudioADSR";
 import LGAudioAnalyser from "./LGAudioAnalyser";
 import LGAudioBandSignal from "./LGAudioBandSignal";
@@ -89,15 +88,15 @@ export const install = (LiteGraphClass: any) => {
 
   LiteGraphClass.registerNodeType({
     type: "audio/mixer",
-    title: "Mixer",
     class: LGAudioMixer,
+    title: "Mixer",
     desc: "Audio mixer",
   });
 
   LiteGraphClass.registerNodeType({
     type: "audio/oscillator",
-    title: "Oscillator",
     class: LGAudioOscillatorNode,
+    title: "Oscillator",
     desc: "Oscillator",
   });
 
@@ -110,22 +109,22 @@ export const install = (LiteGraphClass: any) => {
 
   LiteGraphClass.registerNodeType({
     type: "audio/source",
-    title: "Source",
     class: LGAudioSource,
+    title: "Source",
     desc: "Plays audio",
   });
 
   LiteGraphClass.registerNodeType({
     type: "audio/visualization",
-    title: "Visualization",
     class: LGAudioVisualization,
+    title: "Visualization",
     desc: "Audio Visualization",
   });
 
   LiteGraphClass.registerNodeType({
     type: "audio/waveShaper",
-    title: "WaveShaper",
     class: LGAudioWaveShaper,
+    title: "WaveShaper",
     desc: "Distortion using wave shape",
   });
 };

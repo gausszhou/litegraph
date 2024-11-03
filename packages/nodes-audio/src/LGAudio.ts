@@ -15,7 +15,7 @@ class LGAudio {
 
   static graph
 
-  static getAudioContext() {
+  static getAudioContext(): AudioContext {
     if (!this._audio_context) {
       window.AudioContext =
         window.AudioContext || (window as any).webkitAudioContext;

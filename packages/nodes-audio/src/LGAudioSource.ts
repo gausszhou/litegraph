@@ -1,42 +1,48 @@
 import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core/src/types";
 import LGAudio from "./LGAudio";
 import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 //****************************************************
-export default function LGAudioSource() {
-  this.properties = {
-    src: "",
-    gain: 0.5,
-    loop: true,
-    autoplay: true,
-    playbackRate: 1,
-  };
+export default class LGAudioSource  extends LGraphNode {
+  static title = "Audio Source"
+  static desc = "Plays an audio file";
+  static supported_extensions = ["wav", "ogg", "mp3"];
 
-  this._loading_audio = false;
-  this._audiobuffer = null; //points to AudioBuffer with the audio samples decoded
-  this._audionodes = [];
-  this._last_sourcenode = null; //the last AudioBufferSourceNode (there could be more if there are several sounds playing)
+  constructor() {
+    super();
+    this.properties = {
+      src: "",
+      gain: 0.5,
+      loop: true,
+      autoplay: true,
+      playbackRate: 1,
+    };
 
-  this.addOutput("out", "audio");
-  this.addInput("gain", "number");
+    this._loading_audio = false;
+    this._audiobuffer = null; //points to AudioBuffer with the audio samples decoded
+    this._audionodes = [];
+    this._last_sourcenode = null; //the last AudioBufferSourceNode (there could be more if there are several sounds playing)
 
-  //init context
-  var context = LGAudio.getAudioContext();
+    this.addOutput("out", "audio");
+    this.addInput("gain", "number");
 
-  //create gain node to control volume
-  this.audionode = context.createGain();
-  this.audionode.graphnode = this;
-  this.audionode.gain.value = this.properties.gain;
+    //init context
+    var context = LGAudio.getAudioContext();
 
-  //debug
-  if (this.properties.src) {
-    this.loadSound(this.properties.src);
+    //create gain node to control volume
+    this.audionode = context.createGain();
+    // this.audionode.graphnode = this;
+    this.audionode.gain.value = this.properties.gain;
+
+    //debug
+    if (this.properties.src) {
+      this.loadSound(this.properties.src);
+    }
   }
 }
 
-LGAudioSource.desc = "Plays an audio file";
-LGAudioSource["@src"] = { widget: "resource" };
-LGAudioSource.supported_extensions = ["wav", "ogg", "mp3"];
+
 
 LGAudioSource.prototype.onAdded = function (graph) {
   if (graph.status === LGraphStatus.STATUS_RUNNING) {
@@ -157,7 +163,7 @@ LGAudioSource.prototype.playBuffer = function (buffer) {
   //create a new audionode (this is mandatory, AudioAPI doesnt like to reuse old ones)
   var audionode = context.createBufferSource(); //create a AudioBufferSourceNode
   this._last_sourcenode = audionode;
-  audionode.graphnode = this;
+  // audionode.graphnode = this;
   audionode.buffer = buffer;
   audionode.loop = this.properties.loop;
   audionode.playbackRate.value = this.properties.playbackRate;
