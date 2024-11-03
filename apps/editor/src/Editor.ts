@@ -1,10 +1,24 @@
-import { LGraph, LGraphStatus, LGraphCanvas } from "@gausszhou/litegraph-core";
+import {
+  LGraph,
+  LGraphStatus,
+  LGraphCanvas,
+  LiteGraph,
+} from "@gausszhou/litegraph";
+
+import features from "./features/index";
+LiteGraph.use(features);
+LiteGraph.debug = false;
+LiteGraph.node_images_path = "/imgs";
 
 export type EditorOptions = {
   skipLiveMode?: boolean;
   skipMaximize?: boolean;
   miniwindow?: boolean;
 };
+
+interface OptionElemExt extends HTMLOptionElement {
+  callback?: () => void;
+}
 
 export interface EditorPanel extends HTMLDivElement {}
 
@@ -18,106 +32,72 @@ export interface EditorLoadCounter extends HTMLDivElement {}
 export default class Editor {
   containerId: string;
   options: EditorOptions;
-  graph: LGraph;
+  //
   root: EditorPanel;
+  toolsLeft: HTMLElement;
+  toolsRight: HTMLElement;
+  selector: HTMLSelectElement;
   tools: HTMLDivElement;
   content: HTMLDivElement;
   footer: HTMLDivElement;
   canvas: HTMLCanvasElement;
+  meter: EditorLoadCounter | null = null;
+  //
+  graph: LGraph;
   graphCanvas: LGraphCanvas;
   graphCanvas2: LGraphCanvas | null = null;
   miniwindow: EditorMiniWindowPanel | null = null;
-  meter: EditorLoadCounter | null = null;
 
   constructor(containerId: string, options: EditorOptions = {}) {
-    //fill container
-    var html = `
-<div class='header'>
-	<div class='tools tools-left'></div>
-	<div class='tools tools-right'></div>
-</div>
-<div class='content'>
-	<div class='editor-area'>
-		<canvas class='graphCanvas'  tabindex=10></canvas>
-	</div>
-</div>
-`;
-
     this.options = options;
+    this.root = this.createRoot();
+    this.tools = this.root.querySelector(".tools") as HTMLDivElement;
+    this.toolsLeft = this.root.querySelector(".tools-left");
+    this.toolsRight = this.root.querySelector(".tools-right");
+    this.content = this.root.querySelector(".content") as HTMLDivElement;
+    this.footer = this.root.querySelector(".footer") as HTMLDivElement;
+    this.canvas = this.root.querySelector(".graphCanvas") as HTMLCanvasElement;
 
-    var root = document.createElement("div") as EditorPanel;
-    this.root = root;
-    root.className = "litegraph litegraph-editor";
-    root.innerHTML = html;
+    this.addLoadCounter();
+    this.selector = this.createSelector();
+    this.addButtonsToLeft();
+    this.addButtonsToRight(options);
 
-    this.tools = root.querySelector(".tools") as HTMLDivElement;
-    this.content = root.querySelector(".content") as HTMLDivElement;
-    this.footer = root.querySelector(".footer") as HTMLDivElement;
-    this.canvas = root.querySelector(".graphCanvas") as HTMLCanvasElement;
+    if (options.miniwindow) {
+      this.addMiniWindow(300, 200);
+    }
 
-    //create graph
+    // append to DOM
+    const parent = document.getElementById(containerId);
+    if (parent) {
+      parent.appendChild(this.root);
+    }
+    // create graph
     this.graph = new LGraph();
     this.graphCanvas = new LGraphCanvas(this.canvas, this.graph);
     this.graphCanvas.background_image = "../imgs/grid.png";
     this.graph.onAfterExecute = () => {
       this.graphCanvas.draw(true);
     };
-
     this.graphCanvas.onDropItem = this.onDropItem.bind(this);
-
-    //add stuff
-    // this.addToolsButton("loadsession_button","Load","imgs/icon-load.png", this.onLoadButton.bind(this), ".tools-left" );
-    // this.addToolsButton("savesession_button","Save","imgs/icon-save.png", this.onSaveButton.bind(this), ".tools-left" );
-    this.addLoadCounter();
-    this.addToolsButton(
-      "playnode_button",
-      "Play",
-      "imgs/icon-play.png",
-      this.onPlayButton.bind(this),
-      ".tools-right"
-    );
-    this.addToolsButton(
-      "playstepnode_button",
-      "Step",
-      "imgs/icon-playstep.png",
-      this.onPlayStepButton.bind(this),
-      ".tools-right"
-    );
-
-    if (!options.skipLiveMode) {
-      this.addToolsButton(
-        "livemode_button",
-        "Live",
-        "imgs/icon-record.png",
-        this.onLiveButton.bind(this),
-        ".tools-right"
-      );
-    }
-    if (!options.skipMaximize) {
-      this.addToolsButton(
-        "maximize_button",
-        "",
-        "imgs/icon-maximize.png",
-        this.onFullscreenButton.bind(this),
-        ".tools-right"
-      );
-    }
-    if (options.miniwindow) {
-      this.addMiniWindow(300, 200);
-    }
-
-    this.containerId = containerId;
-
-    //append to DOM
-    var parent = document.getElementById(this.containerId);
-    if (parent) {
-      parent.appendChild(root);
-    }
-
     this.graphCanvas.resize();
-    //graphCanvas.draw(true,true);
-
-    // this.onPlayButton();
+    this.load()
+  }
+  createRoot() {
+    const root = document.createElement("div") as EditorPanel;
+    root.className = "litegraph litegraph-editor";
+    root.innerHTML = `
+        <div class='header'>
+          <div class='tools tools-left'></div>
+          <div class='tools tools-right'></div>
+        </div>
+        <div class='content'>
+          <div class='editor-area'>
+            <canvas class='graphCanvas'></canvas>
+          </div>
+        </div>
+        `;
+    return root;
   }
 
   addLoadCounter() {
@@ -171,10 +151,36 @@ export default class Editor {
     if (!container) {
       container = ".tools";
     }
-
     var button = this.createButton(name, icon_url, callback);
     button.id = id;
     this.root.querySelector(container)!.appendChild(button);
+  }
+  createSelector() {
+    const elem = document.createElement("span") as HTMLSpanElement;
+    elem.id = "LGEditorTopBarSelector";
+    elem.className = "selector";
+    elem.innerHTML = `
+    <select>
+      <option>Empty</option>
+    </select>
+    `;
+    const selector = elem.querySelector<HTMLSelectElement>("select")!;
+    selector.addEventListener("change", (_e) => {
+      var option = this.selector.options[
+        this.selector.selectedIndex
+      ] as OptionElemExt;
+      var url = option.dataset["url"];
+
+      if (url) {
+        this.graph.load(url);
+      } else if (option.callback) {
+        option.callback();
+      } else {
+        this.graph.clear();
+      }
+    });
+    this.toolsLeft.appendChild(elem);
+    return selector;
   }
 
   createButton(name: string, icon_url: string, callback?: EventListener) {
@@ -188,19 +194,94 @@ export default class Editor {
     return button;
   }
 
-  onLoadButton() {
-    var panel = this.graphCanvas.createPanel("Load session", {
-      closable: true,
-    });
-    //TO DO
+  addButtonsToLeft() {
+    this.addToolsButton("save", "Save", "", this.save, ".tools-left");
+    this.addToolsButton("load", "Load", "", this.load, ".tools-left");
+    this.addToolsButton(
+      "download",
+      "Download",
+      "",
+      this.download,
+      ".tools-left"
+    );
+  }
+  addButtonsToRight(options) {
+    this.addToolsButton(
+      "playnode_button",
+      "Play",
+      "imgs/icon-play.png",
+      this.onPlayButton.bind(this),
+      ".tools-right"
+    );
+    this.addToolsButton(
+      "playstepnode_button",
+      "Step",
+      "imgs/icon-playstep.png",
+      this.onPlayStepButton.bind(this),
+      ".tools-right"
+    );
 
-    this.root.appendChild(panel);
+    if (!options.skipLiveMode) {
+      this.addToolsButton(
+        "livemode_button",
+        "Live",
+        "imgs/icon-record.png",
+        this.onLiveButton.bind(this),
+        ".tools-right"
+      );
+    }
+    if (!options.skipMaximize) {
+      this.addToolsButton(
+        "maximize_button",
+        "",
+        "imgs/icon-maximize.png",
+        this.onFullscreenButton.bind(this),
+        ".tools-right"
+      );
+    }
   }
 
-  onSaveButton() {}
+  save() {
+    try {
+      localStorage.setItem(
+        "graphdemo_save",
+        JSON.stringify(this.graph.serialize())
+      );
+      console.log("saved");
+    } catch (error) {
+      console.log("save error", error);
+    }
+  }
+
+  load() {
+    const data = localStorage.getItem("graphdemo_save");
+    if (data) {
+      try {
+        this.graph.configure(JSON.parse(data));
+        console.log("loaded");
+      } catch (error) {
+        console.log("load error", error);
+      }
+    }
+  }
+
+  download() {
+    var data = JSON.stringify(this.graph.serialize());
+    var file = new Blob([data]);
+    var url = URL.createObjectURL(file);
+    var element = document.createElement("a");
+    element.setAttribute("href", url);
+    element.setAttribute("download", "graph.json");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000 * 60);
+  }
 
   onPlayButton() {
-    console.log('onPlayButton')
     var graph = this.graph;
     var button =
       this.root.querySelector<HTMLButtonElement>("#playnode_button")!;

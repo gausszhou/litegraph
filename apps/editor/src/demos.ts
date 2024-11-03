@@ -1,9 +1,7 @@
 import { LGraph, LiteGraph } from "@gausszhou/litegraph";
-import { ConstantNumber, Watch } from "@gausszhou/litegraph-nodes-basic"
-import { MathOperation } from "@gausszhou/litegraph-nodes-math"
+import { ConstantNumber, Watch } from "../../../packages/nodes-basic/src";
 
 export function demo1(graph: LGraph) {
-
   graph.clear();
   const node_const_A = LiteGraph.createNode<ConstantNumber>("basic/number");
   node_const_A.pos = [200, 200];
@@ -23,14 +21,14 @@ export function demo2(graph: LGraph) {
   node_const_A.pos = [200, 200];
   node_const_A.setValue(5);
   
-  var node_const_B = LiteGraph.createNode(ConstantNumber);
+  var node_const_B = LiteGraph.createNode<any>("basic/number");
   node_const_B.pos = [200, 300];
   node_const_B.setValue(10);
   
   var node_watch1 = LiteGraph.createNode("basic/watch");
   node_watch1.pos = [500, 200];
 
-  var node_watch2 = LiteGraph.createNode(Watch);
+  var node_watch2 = LiteGraph.createNode("basic/watch");
   node_watch2.pos = [500, 300];
   
   graph.add(node_const_A);
@@ -43,24 +41,24 @@ export function demo2(graph: LGraph) {
 
 export function demo3(graph: LGraph) {
   graph.clear()
-  var node_const_A = LiteGraph.createNode<ConstantNumber>("basic/number");
+  var node_const_A = LiteGraph.createNode<any>("basic/number");
   node_const_A.pos = [200, 200];
   node_const_A.setValue(5);
   
-  var node_const_B = LiteGraph.createNode(ConstantNumber);
+  var node_const_B = LiteGraph.createNode<any>("basic/number");
   node_const_B.pos = [200, 300];
   node_const_B.setValue(10);
   
   var node_watch1 = LiteGraph.createNode("basic/watch");
   node_watch1.pos = [500, 200];
   
-  var node_watch2 = LiteGraph.createNode(Watch);
+  var node_watch2 = LiteGraph.createNode("basic/watch");
   node_watch2.pos = [500, 300];
   
-  var node_math = LiteGraph.createNode(MathOperation);
+  var node_math = LiteGraph.createNode("math/operation");
   node_math.pos = [500, 400];
   
-  var node_watch3 = LiteGraph.createNode(Watch);
+  var node_watch3 = LiteGraph.createNode("basic/watch");
   node_watch3.pos = [700, 400];
   
   graph.add(node_const_A);
