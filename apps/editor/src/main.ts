@@ -3,9 +3,7 @@ import { demo } from "./demos"
 import Editor from "./Editor"
 import configure from "./configure"
 import features from "./features/index";
-import "@gausszhou/litegraph-core/css/litegraph.css"
-import "../css/litegraph-editor.css"
-console.log(LiteGraph)
+
 LiteGraph.use(features);
 
 interface OptionElemExt extends HTMLOptionElement {
@@ -46,9 +44,11 @@ Demo
 <button class='btn' id='load'>Load</button>
 <button class='btn' id='download'>Download</button>
 |
-<button class='btn' id='webgl'>WebGL</button>
-<button class='btn' id='multiview'>Multiview</button>
+
 `;
+// <button class='btn' id='webgl'>WebGL</button>
+// <button class='btn' id='multiview'>Multiview</button>
+
 editor.tools.appendChild(elem);
 
 const select = elem.querySelector<HTMLSelectElement>("select")!;
@@ -91,8 +91,8 @@ elem.querySelector<HTMLButtonElement>("#download")!.addEventListener("click", ()
     setTimeout(() => { URL.revokeObjectURL(url); }, 1000 * 60); //wait one minute to revoke url
 });
 
-elem.querySelector<HTMLButtonElement>("#webgl")!.addEventListener("click", enableWebGL);
-elem.querySelector<HTMLButtonElement>("#multiview")!.addEventListener("click", () => { editor.addMultiview() });
+// elem.querySelector<HTMLButtonElement>("#webgl")!.addEventListener("click", enableWebGL);
+// elem.querySelector<HTMLButtonElement>("#multiview")!.addEventListener("click", () => { editor.addMultiview() });
 
 function addDemo(name: string, url: string | (() => void)) {
     var option = document.createElement("option") as OptionElemExt;
@@ -112,16 +112,7 @@ addDemo("Audio", "examples/audio.json");
 addDemo("Audio Delay", "examples/audio_delay.json");
 addDemo("Audio Reverb", "examples/audio_reverb.json");
 addDemo("MIDI Generation", "examples/midi_generation.json");
-addDemo("autobackup", function() {
-    var data = localStorage.getItem("litegraphg demo backup");
-    if (!data)
-        return;
-    var graph_data = JSON.parse(data);
-    editor.graph.configure(graph_data);
-});
 
-function enableWebGL() {
-
-}
+function enableWebGL() {}
 
 demo(editor.graph);
