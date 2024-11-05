@@ -1,13 +1,14 @@
-import { LGraph, LiteGraph } from "@gausszhou/litegraph";
-import { ConstantNumber, Watch } from "../../../packages/nodes-basic/src";
+import { LGraph, LiteGraph } from "./lib/litegraph.mjs";
+// import { LGraph, LiteGraph } from "@gausszhou/litegraph";
+// import { ConstantNumber, Watch } from "../../../packages/nodes-basic/src";
 
 export function demo1(graph: LGraph) {
   graph.clear();
-  const node_const_A = LiteGraph.createNode<ConstantNumber>("basic/number");
+  const node_const_A = LiteGraph.createNode<any>("basic/number");
   node_const_A.pos = [200, 200];
   node_const_A.setValue(5);
   
-  const node_watch1 = LiteGraph.createNode<Watch>("basic/watch");
+  const node_watch1 = LiteGraph.createNode<any>("basic/watch");
   node_watch1.pos = [500, 200];
 
   graph.add(node_const_A);
@@ -17,7 +18,7 @@ export function demo1(graph: LGraph) {
 
 export function demo2(graph: LGraph) {
   graph.clear()
-  var node_const_A = LiteGraph.createNode<ConstantNumber>("basic/number");
+  var node_const_A = LiteGraph.createNode<any>("basic/number");
   node_const_A.pos = [200, 200];
   node_const_A.setValue(5);
   
@@ -79,7 +80,7 @@ export function audio1(graph: LGraph) {
   graph.clear()
   const node_audio_source = LiteGraph.createNode("audio/source");
   node_audio_source.pos = [200, 200];
-  node_audio_source.setProperty("src", "demodata/audio.wav")
+  node_audio_source.setProperty("src", "./demodata/audio.wav")
 
   const node_audio_dest = LiteGraph.createNode("audio/destination");
   node_audio_dest.pos = [400, 200];
@@ -98,7 +99,7 @@ export function audio2(graph: LGraph) {
 
   const node_audio_source = LiteGraph.createNode("audio/source");
   node_audio_source.pos = [200, 100];
-  node_audio_source.setProperty("src", "demodata/audio.wav")
+  node_audio_source.setProperty("src", "./demodata/audio.wav")
   
   const node_audio_dest = LiteGraph.createNode("audio/destination");
   node_audio_dest.pos = [400, 100];

@@ -3,12 +3,18 @@ import {
   LGraphStatus,
   LGraphCanvas,
   LiteGraph,
-} from "@gausszhou/litegraph";
+} from "./lib/litegraph.mjs";
+// import {
+//   LGraph,
+//   LGraphStatus,
+//   LGraphCanvas,
+//   LiteGraph,
+// } from "@gausszhou/litegraph";
 
 import features from "./features/index";
 LiteGraph.use(features);
 LiteGraph.debug = false;
-LiteGraph.node_images_path = "/imgs";
+LiteGraph.node_images_path = "./imgs";
 
 export type EditorOptions = {
   skipLiveMode?: boolean;
@@ -75,7 +81,7 @@ export default class Editor {
     // create graph
     this.graph = new LGraph();
     this.graphCanvas = new LGraphCanvas(this.canvas, this.graph);
-    this.graphCanvas.background_image = "../imgs/grid.png";
+    this.graphCanvas.background_image = "./imgs/grid.png";
     this.graph.onAfterExecute = () => {
       this.graphCanvas.draw(true);
     };

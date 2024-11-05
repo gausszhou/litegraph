@@ -1,4 +1,31 @@
 import { defineConfig } from "vitepress";
+function nav() {
+  return [
+    {
+      text: "Guide",
+      link: "/guide/introduction"
+    },
+    {
+      text: "Demo",
+      link: "https://gausszhou.github.io/litegraph/demo/"
+    }
+  ];
+}
+function sidebarGuide() {
+  return [
+    {
+      text: "Introduction",
+      collapsible: true,
+      items: [
+        { text: "What is LiteGraph?", link: "/guide/introduction" },
+        { text: "Getting Started", link: "/guide/getting-started" },
+        { text: "Class", link: "/guide/class" },
+        { text: "Node", link: "/guide/node" }
+      ]
+    }
+  ];
+}
+
 export default defineConfig({
   base: "/litegraph/docs",
   outDir: "../dist/docs",
@@ -27,29 +54,3 @@ export default defineConfig({
   }
 });
 
-function nav() {
-  return [
-    {
-      text: "Guide",
-      link: "/guide/introduction"
-    },
-    {
-      text: "Demo",
-      link: "https://gausszhou.github.io/litegraph/demo/"
-    }
-  ];
-}
-function sidebarGuide() {
-  return [
-    {
-      text: "Introduction",
-      collapsible: true,
-      items: [
-        { text: "What is LiteGraph?", link: "/guide/introduction" },
-        { text: "Getting Started", link: "/guide/getting-started" },
-        { text: "Class", link: "/guide/class" },
-        { text: "Node", link: "/guide/node" }
-      ]
-    }
-  ];
-}

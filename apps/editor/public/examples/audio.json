@@ -72,7 +72,7 @@
       ],
       "outputs": [{ "name": "out", "type": "audio", "links": [0] }],
       "properties": {
-        "src": "/demodata/audio.wav",
+        "src": "./demodata/audio.wav",
         "gain": 0.5,
         "loop": true,
         "autoplay": true,
