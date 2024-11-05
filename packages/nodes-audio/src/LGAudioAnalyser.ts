@@ -69,9 +69,6 @@ export default class LGAudioAnalyser extends LGraphNode {
         this.audionode[input.name].value = v;
       }
     }
-
-    //time domain
-    //this.audionode.getFloatTimeDomainData( dataArray );
   }
 
   onGetInputs() {

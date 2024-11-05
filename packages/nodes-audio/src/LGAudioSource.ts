@@ -8,6 +8,15 @@ export default class LGAudioSource  extends LGraphNode {
   static title = "Audio Source"
   static desc = "Plays an audio file";
   static supported_extensions = ["wav", "ogg", "mp3"];
+  _url
+  _dropped_url
+  _request
+  _loading_audio
+  _audiobuffer
+  _audionodes
+  _last_sourcenode
+  audionode
+  onConnectionsChange = LGAudio.onConnectionsChange;
 
   constructor() {
     super();
@@ -40,213 +49,208 @@ export default class LGAudioSource  extends LGraphNode {
       this.loadSound(this.properties.src);
     }
   }
-}
 
-
-
-LGAudioSource.prototype.onAdded = function (graph) {
-  if (graph.status === LGraphStatus.STATUS_RUNNING) {
-    this.onStart();
-  }
-};
-
-LGAudioSource.prototype.onStart = function () {
-  if (!this._audiobuffer) {
-    return;
-  }
-
-  if (this.properties.autoplay) {
-    this.playBuffer(this._audiobuffer);
-  }
-};
-
-LGAudioSource.prototype.onStop = function () {
-  this.stopAllSounds();
-};
-
-LGAudioSource.prototype.onPause = function () {
-  this.pauseAllSounds();
-};
-
-LGAudioSource.prototype.onUnpause = function () {
-  this.unpauseAllSounds();
-  //this.onStart();
-};
-
-LGAudioSource.prototype.onRemoved = function () {
-  this.stopAllSounds();
-  if (this._dropped_url) {
-    URL.revokeObjectURL(this._url);
-  }
-};
-
-LGAudioSource.prototype.stopAllSounds = function () {
-  //iterate and stop
-  for (var i = 0; i < this._audionodes.length; ++i) {
-    if (this._audionodes[i].started) {
-      this._audionodes[i].started = false;
-      this._audionodes[i].stop();
+  onAdded(graph) {
+    if (graph.status === LGraphStatus.STATUS_RUNNING) {
+      this.onStart();
     }
-    //this._audionodes[i].disconnect( this.audionode );
   }
-  this._audionodes.length = 0;
-};
 
-LGAudioSource.prototype.pauseAllSounds = function () {
-  LGAudio.getAudioContext().suspend();
-};
+  onStart() {
+    if (!this._audiobuffer) {
+      return;
+    }
 
-LGAudioSource.prototype.unpauseAllSounds = function () {
-  LGAudio.getAudioContext().resume();
-};
+    if (this.properties.autoplay) {
+      this.playBuffer(this._audiobuffer);
+    }
+  }
 
-LGAudioSource.prototype.onExecute = function () {
-  if (this.inputs) {
-    for (var i = 0; i < this.inputs.length; ++i) {
-      var input = this.inputs[i];
-      if (input.link == null) {
-        continue;
+  onStop() {
+    this.stopAllSounds();
+  }
+
+  onPause() {
+    this.pauseAllSounds();
+  }
+
+  onUnpause() {
+    this.unpauseAllSounds();
+    //this.onStart();
+  }
+
+  onRemoved() {
+    this.stopAllSounds();
+    if (this._dropped_url) {
+      URL.revokeObjectURL(this._url);
+    }
+  }
+
+  stopAllSounds() {
+    //iterate and stop
+    for (var i = 0; i < this._audionodes.length; ++i) {
+      if (this._audionodes[i].started) {
+        this._audionodes[i].started = false;
+        this._audionodes[i].stop();
       }
-      var v = this.getInputData(i);
-      if (v === undefined) {
-        continue;
+      //this._audionodes[i].disconnect( this.audionode );
+    }
+    this._audionodes.length = 0;
+  }
+
+  pauseAllSounds() {
+    LGAudio.getAudioContext().suspend();
+  }
+
+  unpauseAllSounds() {
+    LGAudio.getAudioContext().resume();
+  }
+
+  onExecute() {
+    if (this.inputs) {
+      for (var i = 0; i < this.inputs.length; ++i) {
+        var input = this.inputs[i];
+        if (input.link == null) {
+          continue;
+        }
+        var v = this.getInputData(i);
+        if (v === undefined) {
+          continue;
+        }
+        if (input.name == "gain") this.audionode.gain.value = v;
+        else if (input.name == "src") {
+          console.log(input)
+          this.setProperty("src", v);
+        } else if (input.name == "playbackRate") {
+          this.properties.playbackRate = v;
+          for (var j = 0; j < this._audionodes.length; ++j) {
+            this._audionodes[j].playbackRate.value = v;
+          }
+        }
       }
-      if (input.name == "gain") this.audionode.gain.value = v;
-      else if (input.name == "src") {
-        console.log(input)
-        this.setProperty("src", v);
-      } else if (input.name == "playbackRate") {
-        this.properties.playbackRate = v;
-        for (var j = 0; j < this._audionodes.length; ++j) {
-          this._audionodes[j].playbackRate.value = v;
+    }
+
+    if (this.outputs) {
+      for (var i = 0; i < this.outputs.length; ++i) {
+        var output = this.outputs[i];
+        if (output.name == "buffer" && this._audiobuffer) {
+          this.setOutputData(i, this._audiobuffer);
         }
       }
     }
   }
 
-  if (this.outputs) {
-    for (var i = 0; i < this.outputs.length; ++i) {
-      var output = this.outputs[i];
-      if (output.name == "buffer" && this._audiobuffer) {
-        this.setOutputData(i, this._audiobuffer);
+  onAction(event) {
+    if (this._audiobuffer) {
+      if (event == "Play") {
+        this.playBuffer(this._audiobuffer);
+      } else if (event == "Stop") {
+        this.stopAllSounds();
       }
     }
   }
-};
 
-LGAudioSource.prototype.onAction = function (event) {
-  if (this._audiobuffer) {
-    if (event == "Play") {
-      this.playBuffer(this._audiobuffer);
-    } else if (event == "Stop") {
-      this.stopAllSounds();
+  onPropertyChanged(name, value) {
+    if (name == "src") {
+      this.loadSound(value);
+    } else if (name == "gain") {
+      this.audionode.gain.value = value;
+    } else if (name == "playbackRate") {
+      for (var j = 0; j < this._audionodes.length; ++j) {
+        this._audionodes[j].playbackRate.value = value;
+      }
     }
   }
-};
 
-LGAudioSource.prototype.onPropertyChanged = function (name, value) {
-  if (name == "src") {
-    this.loadSound(value);
-  } else if (name == "gain") {
-    this.audionode.gain.value = value;
-  } else if (name == "playbackRate") {
-    for (var j = 0; j < this._audionodes.length; ++j) {
-      this._audionodes[j].playbackRate.value = value;
+  playBuffer(buffer) {
+    var context = LGAudio.getAudioContext();
+
+    //create a new audionode (this is mandatory, AudioAPI doesnt like to reuse old ones)
+    var audionode = context.createBufferSource(); //create a AudioBufferSourceNode
+    this._last_sourcenode = audionode;
+    // audionode.graphnode = this;
+    audionode.buffer = buffer;
+    audionode.loop = this.properties.loop;
+    audionode.playbackRate.value = this.properties.playbackRate;
+    this._audionodes.push(audionode);
+    audionode.connect(this.audionode); //connect to gain
+
+    this._audionodes.push(audionode);
+
+    this.trigger("start");
+    audionode.onended = () => {
+      this.trigger("ended");
+      var index = this._audionodes.indexOf(audionode);
+      if (index != -1) {
+        this._audionodes.splice(index, 1);
+      }
+    };
+
+    if (!audionode.started) {
+      audionode.started = true;
+      audionode.start();
+    }
+    return audionode;
+  }
+
+  loadSound(url) {
+    var that = this;
+
+    //kill previous load
+    if (this._request) {
+      this._request.abort();
+      this._request = null;
+    }
+
+    this._audiobuffer = null; //points to the audiobuffer once the audio is loaded
+    this._loading_audio = false;
+
+    if (!url) {
+      return;
+    }
+
+    this._request = LGAudio.loadSound(url, inner);
+
+    this._loading_audio = true;
+    this.boxcolor = "#AA4";
+
+    function inner(buffer) {
+      that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
+      that._audiobuffer = buffer;
+      that._loading_audio = false;
+      //if is playing, then play it
+      if (that.graph && that.graph.status === LGraphStatus.STATUS_RUNNING) {
+        that.onStart();
+      } //this controls the autoplay already
     }
   }
-};
 
-LGAudioSource.prototype.playBuffer = function (buffer) {
-  var that = this;
-  var context = LGAudio.getAudioContext();
+  onGetInputs() {
+    return [
+      ["playbackRate", "number"],
+      ["src", "string"],
+      ["Play", BuiltInSlotType.ACTION],
+      ["Stop", BuiltInSlotType.ACTION],
+    ];
+  }
 
-  //create a new audionode (this is mandatory, AudioAPI doesnt like to reuse old ones)
-  var audionode = context.createBufferSource(); //create a AudioBufferSourceNode
-  this._last_sourcenode = audionode;
-  // audionode.graphnode = this;
-  audionode.buffer = buffer;
-  audionode.loop = this.properties.loop;
-  audionode.playbackRate.value = this.properties.playbackRate;
-  this._audionodes.push(audionode);
-  audionode.connect(this.audionode); //connect to gain
+  onGetOutputs() {
+    return [
+      ["buffer", "audiobuffer"],
+      ["start", BuiltInSlotType.EVENT],
+      ["ended", BuiltInSlotType.EVENT],
+    ];
+  }
 
-  this._audionodes.push(audionode);
-
-  this.trigger("start");
-
-  audionode.onended = function () {
-    that.trigger("ended");
-    var index = that._audionodes.indexOf(audionode);
-    if (index != -1) {
-      that._audionodes.splice(index, 1);
+  onDropFile(file) {
+    if (this._dropped_url) {
+      URL.revokeObjectURL(this._dropped_url);
     }
-  };
-
-  if (!audionode.started) {
-    audionode.started = true;
-    audionode.start();
+    var url = URL.createObjectURL(file);
+    this.properties.src = url;
+    this.loadSound(url);
+    this._dropped_url = url;
   }
-  return audionode;
-};
+}
 
-LGAudioSource.prototype.loadSound = function (url) {
-  var that = this;
 
-  //kill previous load
-  if (this._request) {
-    this._request.abort();
-    this._request = null;
-  }
-
-  this._audiobuffer = null; //points to the audiobuffer once the audio is loaded
-  this._loading_audio = false;
-
-  if (!url) {
-    return;
-  }
-
-  this._request = LGAudio.loadSound(url, inner);
-
-  this._loading_audio = true;
-  this.boxcolor = "#AA4";
-
-  function inner(buffer) {
-    that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
-    that._audiobuffer = buffer;
-    that._loading_audio = false;
-    //if is playing, then play it
-    if (that.graph && that.graph.status === LGraphStatus.STATUS_RUNNING) {
-      that.onStart();
-    } //this controls the autoplay already
-  }
-};
-
-//Helps connect/disconnect AudioNodes when new connections are made in the node
-LGAudioSource.prototype.onConnectionsChange = LGAudio.onConnectionsChange;
-
-LGAudioSource.prototype.onGetInputs = function () {
-  return [
-    ["playbackRate", "number"],
-    ["src", "string"],
-    ["Play", BuiltInSlotType.ACTION],
-    ["Stop", BuiltInSlotType.ACTION],
-  ];
-};
-
-LGAudioSource.prototype.onGetOutputs = function () {
-  return [
-    ["buffer", "audiobuffer"],
-    ["start", BuiltInSlotType.EVENT],
-    ["ended", BuiltInSlotType.EVENT],
-  ];
-};
-
-LGAudioSource.prototype.onDropFile = function (file) {
-  if (this._dropped_url) {
-    URL.revokeObjectURL(this._dropped_url);
-  }
-  var url = URL.createObjectURL(file);
-  this.properties.src = url;
-  this.loadSound(url);
-  this._dropped_url = url;
-};

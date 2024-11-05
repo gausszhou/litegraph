@@ -1144,7 +1144,7 @@ export default class LGraphNode {
     };
 
     /**  Triggers an event in this node, this will trigger any output with the same name */
-    trigger(action: string, param: any, options?: LActionOptions): void {
+    trigger(action: string, param?: any, options?: LActionOptions): void {
         if (!this.outputs || !this.outputs.length) {
             return;
         }
