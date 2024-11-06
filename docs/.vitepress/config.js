@@ -18,9 +18,7 @@ function sidebarGuide() {
       collapsible: true,
       items: [
         { text: "What is LiteGraph?", link: "/guide/introduction" },
-        { text: "Getting Started", link: "/guide/getting-started" },
-        { text: "Class", link: "/guide/class" },
-        { text: "Node", link: "/guide/node" }
+        { text: "Getting Started", link: "/guide/getting-started" }
       ]
     }
   ];
