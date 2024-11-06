@@ -28,7 +28,7 @@ export default class ConstantObject extends LGraphNode {
     private _object: object;
 
     constructor(title?: string) {
-        super(title)
+        super()
         this._object = {}
     }
 

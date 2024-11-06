@@ -38,7 +38,7 @@ export default class ConstantFile extends LGraphNode {
     private _type: string | null = null;
 
     constructor(title?: string) {
-        super(title)
+        super()
         this.widget = this.addWidget("text", "url", "", "url");
         this._data = null;
         this.widgets_up = true;

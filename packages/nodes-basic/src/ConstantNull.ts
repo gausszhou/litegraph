@@ -33,7 +33,7 @@ export default class ConstantNull extends LGraphNode {
     override size: Vector2 = [140, 30];
 
     constructor(title?: string) {
-        super(title)
+        super()
         this.widget = this.addWidget("toggle", "value", this.properties.value, "value");
         this.widgets_up = true;
     }

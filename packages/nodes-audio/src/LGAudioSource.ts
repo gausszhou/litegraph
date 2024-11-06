@@ -186,10 +186,10 @@ export default class LGAudioSource  extends LGraphNode {
       }
     };
 
-    if (!audionode.started) {
-      audionode.started = true;
-      audionode.start();
-    }
+    // if (!audionode.started) {
+    //   audionode.started = true;
+    //   audionode.start();
+    // }
     return audionode;
   }
 

@@ -97,8 +97,8 @@ export default class LGAudioScript extends LGraphNode {
 
   processCode() {
     try {
-      const unc = new Function("properties", this.properties.code);
-      this._script = new func(this.properties);
+      const func = new Function("properties", this.properties.code);
+      this._script = func(this.properties);
       this._old_code = this.properties.code;
       this._callback = this._script.onaudioprocess;
     } catch (err) {

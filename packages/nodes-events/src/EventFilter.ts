@@ -38,7 +38,7 @@ export default class FilterEvent extends LGraphNode {
     compareValueWidget: ITextWidget;
 
     constructor(name?: string) {
-        super(name)
+        super()
         this.modeWidget = this.addWidget("combo", "Mode", this.properties.mode, null, { property: "mode", values: ["param", "property"] })
         this.propertyNameWidget = this.addWidget("text", "Prop.", this.properties.propertyName, "propertyName")
         this.propertyNameWidget.disabled = true;

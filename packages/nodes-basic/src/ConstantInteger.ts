@@ -28,7 +28,7 @@ export default class ConstantInteger extends LGraphNode {
     override size: Vector2 = [180, 30];
 
     constructor(title?: string) {
-        super(title)
+        super()
         this.widget = this.addWidget("number", "value", 1, "value", { step: 1, precision: 0 });
         this.widgets_up = true;
     }

@@ -29,7 +29,7 @@ export default class SetArray extends LGraphNode {
     widget: INumberWidget;
 
     constructor(title?: string) {
-        super(title)
+        super()
         this.widget = this.addWidget("number", "i", this.properties.index, "index", { precision: 0, step: 10, min: 0 });
         this.widgets_up = true;
     }

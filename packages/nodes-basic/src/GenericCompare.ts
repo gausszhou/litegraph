@@ -37,7 +37,7 @@ export default class GenericCompare extends LGraphNode {
     static values = ["==", "!=", ">", "<", ">=", "<=", "||", "&&"]
 
     constructor(name?: string) {
-        super(name)
+        super()
         this.opWidget = this.addWidget("combo", "Op.", this.properties.OP, null, { property: "OP", values: GenericCompare.values })
     }
 

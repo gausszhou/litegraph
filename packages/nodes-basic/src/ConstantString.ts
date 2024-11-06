@@ -29,7 +29,7 @@ export default class ConstantString extends LGraphNode {
     override size: Vector2 = [180, 30];
 
     constructor(title?: string) {
-        super(title)
+        super()
         this.widget = this.addWidget("text", "value", "", "value");
         this.widgets_up = true;
     }

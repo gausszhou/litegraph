@@ -20,7 +20,7 @@ export default class Sequence extends LGraphNode {
     // override render_box = false
 
     constructor(title?: string) {
-        super(title)
+        super()
     }
 
     override getTitle(): string {

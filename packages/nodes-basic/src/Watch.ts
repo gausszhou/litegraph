@@ -36,7 +36,7 @@ export default class Watch extends LGraphNode {
   value: any = 0;
 
   constructor(title?: string) {
-    super(title);
+    super();
   }
 
   override onExecute() {

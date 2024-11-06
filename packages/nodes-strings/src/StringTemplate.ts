@@ -39,7 +39,7 @@ export default class StringTemplate extends LGraphNode {
     templateWidget: ITextWidget;
 
     constructor(title?: string) {
-        super(title)
+        super();
         this.templateWidget = this.addWidget("text", "Template", this.properties.template, "template", { multiline: true })
     }
 

@@ -110,7 +110,7 @@ export const install = (LiteGraphClass: any) => {
   LiteGraphClass.registerNodeType({
     type: "audio/source",
     class: LGAudioSource,
-    title: "Source",
+    title: "Audio Source",
     desc: "Plays audio",
   });
 
