@@ -3,15 +3,11 @@ import {
   LGraphStatus,
   LGraphCanvas,
   LiteGraph,
-} from "./lib/litegraph.mjs";
-// import {
-//   LGraph,
-//   LGraphStatus,
-//   LGraphCanvas,
-//   LiteGraph,
-// } from "@gausszhou/litegraph";
+} from "@gausszhou/litegraph";
 
+import circuits from "./circuits/index";
 import features from "./features/index";
+LiteGraph.use(circuits);
 LiteGraph.use(features);
 LiteGraph.debug = false;
 LiteGraph.node_images_path = "./imgs";
@@ -87,7 +83,7 @@ export default class Editor {
     };
     this.graphCanvas.onDropItem = this.onDropItem.bind(this);
     this.graphCanvas.resize();
-    this.load()
+    this.load();
   }
   createRoot() {
     const root = document.createElement("div") as EditorPanel;
@@ -172,11 +168,10 @@ export default class Editor {
     `;
     const selector = elem.querySelector<HTMLSelectElement>("select")!;
     selector.addEventListener("change", (_e) => {
-      var option = this.selector.options[
-        this.selector.selectedIndex
-      ] as OptionElemExt;
-      var url = option.dataset["url"];
-
+      const index = this.selector.selectedIndex
+      const option = this.selector.options[index] as OptionElemExt;
+      const url = option.dataset["url"];
+      this.stop();
       if (url) {
         this.graph.load(url);
       } else if (option.callback) {
@@ -196,18 +191,32 @@ export default class Editor {
     }
     button.classList.add("btn");
     button.innerHTML += name;
-    if (callback) button.addEventListener("click", callback);
+    if (callback) {
+      button.addEventListener("click", callback);
+    }
     return button;
   }
 
   addButtonsToLeft() {
-    this.addToolsButton("save", "Save", "", this.save, ".tools-left");
-    this.addToolsButton("load", "Load", "", this.load, ".tools-left");
+    this.addToolsButton(
+      "save",
+      "Save",
+      "",
+      this.save.bind(this),
+      ".tools-left"
+    );
+    this.addToolsButton(
+      "load",
+      "Load",
+      "",
+      this.load.bind(this),
+      ".tools-left"
+    );
     this.addToolsButton(
       "download",
       "Download",
       "",
-      this.download,
+      this.download.bind(this),
       ".tools-left"
     );
   }
@@ -248,11 +257,10 @@ export default class Editor {
   }
 
   save() {
+    console.log(this)
     try {
-      localStorage.setItem(
-        "graphdemo_save",
-        JSON.stringify(this.graph.serialize())
-      );
+      const json = JSON.stringify(this.graph.serialize());
+      localStorage.setItem("graphdemo_save",json);
       console.log("saved");
     } catch (error) {
       console.log("save error", error);
@@ -288,17 +296,22 @@ export default class Editor {
   }
 
   onPlayButton() {
-    var graph = this.graph;
-    var button =
-      this.root.querySelector<HTMLButtonElement>("#playnode_button")!;
-
-    if (graph.status == LGraphStatus.STATUS_STOPPED) {
-      button.innerHTML = "<img src='imgs/icon-stop.png'/> Stop";
-      graph.start();
+    if (this.graph.status == LGraphStatus.STATUS_STOPPED) {
+      this.start();
     } else {
-      button.innerHTML = "<img src='imgs/icon-play.png'/> Play";
-      graph.stop();
+      this.stop();
     }
+  }
+  start() {
+    var button = this.root.querySelector<HTMLButtonElement>("#playnode_button")!;
+    button.innerHTML = "<img src='imgs/icon-stop.png'/> Stop";
+    this.graph.start();
+  }
+
+  stop() {
+    var button = this.root.querySelector<HTMLButtonElement>("#playnode_button")!;
+    button.innerHTML = "<img src='imgs/icon-play.png'/> Play";
+    this.graph.stop();
   }
 
   onPlayStepButton() {

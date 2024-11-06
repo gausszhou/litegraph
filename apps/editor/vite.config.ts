@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 export default defineConfig({
-  base: "/litegraph/demo/",
+  plugins: [basicSsl()],
+  base: "./",
   build: {
-    outDir: '../../dist/demo/',
-  }
-})
+    outDir: "../../dist/demo/",
+  },
+});

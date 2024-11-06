@@ -1,4 +1,4 @@
-import { audio1, audio2, demo1, demo2, demo3 } from "./demos";
+import { audio1, audio2, basic1, basic2, basic3, circuit1 } from "./demos";
 import Editor from "./Editor";
 
 interface OptionElemExt extends HTMLOptionElement {
@@ -28,12 +28,14 @@ function addDemo(name: string, url: string | (() => void)) {
   editor.selector.appendChild(option);
 }
 
-addDemo("Demo1", () => demo1(editor.graph));
-addDemo("Demo2", () => demo2(editor.graph));
-addDemo("Demo3", () => demo3(editor.graph));
-
 addDemo("Audio1", () => audio1(editor.graph));
 addDemo("Audio2", () => audio2(editor.graph));
+
+addDemo("Basic1", () => basic1(editor.graph));
+addDemo("Basic2", () => basic2(editor.graph));
+addDemo("Basic3", () => basic3(editor.graph));
+
+addDemo("Circuit1", () => circuit1(editor.graph));
 
 addDemo("Features", "examples/features.json");
 addDemo("Benchmark", "examples/benchmark.json");
@@ -42,4 +44,5 @@ addDemo("Subgraph", "examples/subgraph.json");
 addDemo("Audio", "examples/audio.json");
 addDemo("Audio Delay", "examples/audio_delay.json");
 addDemo("Audio Reverb", "examples/audio_reverb.json");
+
 addDemo("MIDI Generation", "examples/midi_generation.json");
