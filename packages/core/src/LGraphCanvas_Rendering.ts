@@ -2,8 +2,6 @@ import type LGraph from "./LGraph";
 import LGraphCanvas from "./LGraphCanvas";
 import LGraphNode from "./LGraphNode";
 import LiteGraph from "./LiteGraph";
-import LiteGraph from "./LiteGraph";
-import LiteGraph from "./LiteGraph";
 import LLink from "./LLink";
 import GraphInput from "./nodes/GraphInput";
 import { BuiltInSlotShape, BuiltInSlotType, Dir, TitleMode, NODE_MODE_NAMES, NODE_MODE_COLORS, LinkRenderMode } from "./types";

@@ -121,8 +121,8 @@ export default class LGraphNode {
     static type: null | string;
     static widgets_up: boolean;
 
-    constructor(title?: string) {
-        this.title = title || "Unnamed"
+    constructor() {
+        
         this.size = [LiteGraph.NODE_WIDTH, 60];
         this.graph = null;
 
@@ -200,7 +200,7 @@ export default class LGraphNode {
 
     last_serialization?: SerializedLGraphNode = null;
 
-    _relative_id: NodeID | null = null;
+    _relative_id: string | number | null = null;
     _level: number;
 
     /** Used in `LGraphCanvas.onMenuNodeMode` */

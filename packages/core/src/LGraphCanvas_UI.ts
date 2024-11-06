@@ -1221,12 +1221,12 @@ export default class LGraphCanvas_UI {
             }
             if (!selected) {
                 selected = forward
-                    ? helper.childNodes[0]
-                    : helper.childNodes[helper.childNodes.length];
+                    ? helper.children[0]
+                    : helper.children[helper.children.length];
             } else {
                 selected = forward
-                    ? selected.nextSibling
-                    : selected.previousSibling;
+                    ? selected.nextElementSibling
+                    : selected.previousElementSibling;
                 if (!selected) {
                     selected = prev;
                 }
@@ -1606,14 +1606,14 @@ export default class LGraphCanvas_UI {
 
             panel.addWidget("string", "Title", node.title, {}, fUpdate);
 
-            panel.addWidget("combo", "Mode", NODE_MODE_NAMES[node.mode], { values: NODE_MODE_NAMES }, fUpdate);
+            panel.addWidget("combo", "Mode", NODE_MODE_NAMES[node.mode], { values: NODE_MODE_NAMES } as any, fUpdate);
 
             var nodeCol = "";
             if (node.color !== undefined) {
                 nodeCol = Object.keys(LGraphCanvas.node_colors).filter(function(nK) { return LGraphCanvas.node_colors[nK].color == node.color; })[0];
             }
 
-            panel.addWidget("combo", "Color", nodeCol, { values: Object.keys(LGraphCanvas.node_colors) }, fUpdate);
+            panel.addWidget("combo", "Color", nodeCol, { values: Object.keys(LGraphCanvas.node_colors) } as any, fUpdate);
 
             for (var pName in node.properties) {
                 var value = node.properties[pName];

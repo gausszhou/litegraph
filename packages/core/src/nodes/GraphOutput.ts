@@ -2,7 +2,6 @@ import type { default as IWidget, ITextWidget, IComboWidget } from "../IWidget";
 import type { LActionOptions, SlotLayout } from "../LGraphNode";
 import LGraphNode from "../LGraphNode";
 import LiteGraph from "../LiteGraph";
-import LiteGraph from "../LiteGraph";
 import { BASE_SLOT_TYPES, BuiltInSlotShape, NodeID, SlotType, Vector2 } from "../types";
 import { BuiltInSlotType } from "../types";
 import { UUID } from "../types";
@@ -50,7 +49,7 @@ export default class GraphOutput extends LGraphNode {
     override size: Vector2 = [180, 60];
 
     constructor(title?: string) {
-        super(title)
+        super()
 
         let that = this;
 

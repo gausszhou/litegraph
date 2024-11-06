@@ -93,7 +93,6 @@ export default class LGAudioSource  extends LGraphNode {
         this._audionodes[i].started = false;
         this._audionodes[i].stop();
       }
-      //this._audionodes[i].disconnect( this.audionode );
     }
     this._audionodes.length = 0;
   }
@@ -166,7 +165,7 @@ export default class LGAudioSource  extends LGraphNode {
     var context = LGAudio.getAudioContext();
 
     //create a new audionode (this is mandatory, AudioAPI doesnt like to reuse old ones)
-    var audionode = context.createBufferSource(); //create a AudioBufferSourceNode
+    var audionode: any = context.createBufferSource(); //create a AudioBufferSourceNode
     this._last_sourcenode = audionode;
     // audionode.graphnode = this;
     audionode.buffer = buffer;
@@ -174,8 +173,6 @@ export default class LGAudioSource  extends LGraphNode {
     audionode.playbackRate.value = this.properties.playbackRate;
     this._audionodes.push(audionode);
     audionode.connect(this.audionode); //connect to gain
-
-    this._audionodes.push(audionode);
 
     this.trigger("start");
     audionode.onended = () => {
@@ -186,10 +183,10 @@ export default class LGAudioSource  extends LGraphNode {
       }
     };
 
-    // if (!audionode.started) {
-    //   audionode.started = true;
-    //   audionode.start();
-    // }
+    if (!audionode.started) {
+      audionode.started = true;
+      audionode.start();
+    }
     return audionode;
   }
 

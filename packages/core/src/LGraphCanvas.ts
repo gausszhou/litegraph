@@ -1325,7 +1325,7 @@ export default class LGraphCanvas
                         continue;
                     } //not selected
                     clipboard_info.links.push([
-                        target_node._relative_id,
+                        (target_node as any)._relative_id,
                         link_info.origin_slot, //j,
                         node._relative_id,
                         link_info.target_slot

@@ -1,4 +1,4 @@
-import { BuiltInSlotType, SlotType } from "./types";
+import { BuiltInSlotType, SlotType, Vector2 } from "./types";
 
 interface CanvasRenderingContext2D {
     /** like rect but rounded corners */
@@ -22,7 +22,7 @@ export function distance(a: Vector2, b: Vector2): number {
     );
 }
 
-export function toHashMap<T>(arr: T[], toKey: (arg: T) => string): Record<string, T> {
+export function toHashMap<T>(arr: T[], toKey: (arg: T) => string | number): Record<string, T> {
     return arr.reduce((acc, obj) => {
         const key = toKey(obj);
         acc[key] = obj;

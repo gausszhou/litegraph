@@ -1,5 +1,6 @@
 export interface IPropertyInfo {
     type?: string;
+    name?: string;
     values?: any | any[];
     label?: string;
     widget?: string;

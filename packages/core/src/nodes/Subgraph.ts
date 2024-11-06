@@ -7,8 +7,6 @@ import type { LActionOptions, LGraphNodeCloneData, OptionalSlots, PropertyLayout
 import LGraphNode from "../LGraphNode";
 import LLink from "../LLink";
 import LiteGraph from "../LiteGraph";
-import LiteGraph from "../LiteGraph";
-import LiteGraph from "../LiteGraph";
 import { BuiltInSlotShape, SlotType, type NodeMode, type Vector2, LinkID, NodeID, BuiltInSlotType } from "../types";
 import { UUID } from "../types";
 import { toHashMap } from "../utils";
@@ -147,7 +145,7 @@ export default class Subgraph extends LGraphNode {
     subgraph: LGraph;
 
     constructor(title?: string, graphFactory?: () => LGraph) {
-        super(title)
+        super()
         this.subgraph = (graphFactory || Subgraph.default_lgraph_factory)();
         this.subgraph._subgraph_node = this;
         this.subgraph._is_subgraph = true;
@@ -995,7 +993,7 @@ export default class Subgraph extends LGraphNode {
             innerNodeSlotToGraphOutput[link.target_id] ||= {}
             let pair = innerNodeSlotToGraphOutput[link.target_id][link.target_slot]
             if (pair == null) {
-                pair = this.addGraphOutput(name, innerOutput.type)
+                pair = this.addGraphOutput(innerOutput.name, innerOutput.type)
                 innerNodeSlotToGraphOutput[link.target_id][link.target_slot] = pair
 
                 // Align graph output's slot over previous slot position

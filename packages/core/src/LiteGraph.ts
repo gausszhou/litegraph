@@ -240,7 +240,7 @@ export default class LiteGraph {
      */
     static registerNodeAndSlotType(type: string | LGraphNodeConstructor | LGraphNode, slot_type: SlotType, out: boolean = false) {
         console.log(arguments)
-        let regConfig: LGraphNodeConstructor;
+        let regConfig: LGraphNodeConstructor | any;
 
         if (typeof type === "string") {
             regConfig = LiteGraph.registered_node_types[type];

@@ -1,3 +1,5 @@
+import { Vector2, Vector4 } from "./types";
+
 export default class LiteUtils {
   static getTime(): number {
     return Date.now();
