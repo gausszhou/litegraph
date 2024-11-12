@@ -14,6 +14,7 @@ class LGAudio {
   static audionode;
 
   static graph
+  static currentBuffer
 
   static getAudioContext(): AudioContext {
     if (!this._audio_context) {
@@ -233,6 +234,7 @@ class LGAudio {
         function (buffer) {
           console.log("AudioSource decoded");
           LGAudio.cached_audios[url] = buffer;
+          LGAudio.currentBuffer = buffer;
           if (on_complete) {
             on_complete(buffer);
           }

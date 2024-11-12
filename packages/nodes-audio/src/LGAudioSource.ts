@@ -34,6 +34,7 @@ export default class LGAudioSource  extends LGraphNode {
     this._last_sourcenode = null; //the last AudioBufferSourceNode (there could be more if there are several sounds playing)
 
     this.addOutput("out", "audio");
+    this.addOutput("buffer", "buffer");
     this.addInput("gain", "number");
 
     //init context

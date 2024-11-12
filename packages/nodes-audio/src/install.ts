@@ -10,6 +10,7 @@ import LGAudioGain from "./LGAudioGain";
 import LGAudioMediaSource from "./LGAudioMediaSource";
 import LGAudioMixer from "./LGAudioMixer";
 import LGAudioOscillatorNode from "./LGAudioOscillatorNode";
+import LGAudioOscilloscope from "./LGAudioOscilloscope";
 import LGAudioScript from "./LGAudioScript";
 import LGAudioSource from "./LGAudioSource";
 import LGAudioVisualization from "./LGAudioVisualization";
@@ -99,6 +100,15 @@ export const install = (LiteGraphClass: any) => {
     title: "Oscillator",
     desc: "Oscillator",
   });
+
+  
+  LiteGraphClass.registerNodeType({
+    type: "audio/oscilloscope",
+    class: LGAudioOscilloscope,
+    title: "Oscilloscope",
+    desc: "Audio oscilloscope",
+  });
+
 
   LiteGraphClass.registerNodeType({
     type: "audio/script",
