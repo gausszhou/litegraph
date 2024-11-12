@@ -1,4 +1,4 @@
-import { audio1, audio2, basic1, basic2, basic3, circuit1 } from "./demos";
+import { audio1, audio2, audio3, basic1, basic2, basic3, circuit1 } from "./demos";
 import Editor from "./Editor";
 
 interface OptionElemExt extends HTMLOptionElement {
@@ -30,6 +30,7 @@ function addDemo(name: string, url: string | (() => void)) {
 
 addDemo("Audio1", () => audio1(editor.graph));
 addDemo("Audio2", () => audio2(editor.graph));
+addDemo("Audio3", () => audio3(editor.graph));
 
 addDemo("Basic1", () => basic1(editor.graph));
 addDemo("Basic2", () => basic2(editor.graph));

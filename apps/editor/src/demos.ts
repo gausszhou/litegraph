@@ -126,6 +126,52 @@ export function audio2(graph: LGraph) {
 
 }
 
+export function audio3(graph: LGraph) {
+
+  graph.clear()
+
+  const node_audio_gain = LiteGraph.createNode("widget/knob");
+  node_audio_gain.pos = [50, 50];
+
+  const node_audio_source = LiteGraph.createNode("audio/source");
+  node_audio_source.pos = [200, 50];
+  node_audio_source.setProperty("src", "./demodata/oscillofun.mp3")
+  
+  const node_audio_dest = LiteGraph.createNode("audio/destination");
+  node_audio_dest.pos = [400, 50];
+
+  const node_audio_analyser = LiteGraph.createNode("audio/analyser");
+  node_audio_analyser.pos = [400, 100];
+
+  const node_audio_vis = LiteGraph.createNode("audio/visualization");
+  node_audio_vis.pos = [600, 50];
+
+  const node_audio_vis2 = LiteGraph.createNode("audio/visualization");
+  node_audio_vis2.pos = [600, 300];
+
+  const node_audio_oscillo = LiteGraph.createNode("audio/oscilloscope");
+  node_audio_oscillo.pos = [200, 200];
+  node_audio_oscillo.size = [300, 300]
+  
+  graph.add(node_audio_gain);
+  graph.add(node_audio_source);
+  graph.add(node_audio_dest);
+  graph.add(node_audio_analyser);
+  graph.add(node_audio_vis);
+  graph.add(node_audio_vis2);
+  graph.add(node_audio_oscillo);
+
+  node_audio_gain.connect(0, node_audio_source, 0)
+  node_audio_source.connect(0, node_audio_dest, 0)
+  node_audio_source.connect(0, node_audio_analyser, 0)
+  node_audio_analyser.connect(0, node_audio_vis, 0)
+  node_audio_analyser.connect(1, node_audio_vis2, 0)
+  node_audio_source.connect(1, node_audio_oscillo, 0)
+  
+
+
+}
+
 
 export function circuit1(graph: LGraph) {
   graph.clear();
