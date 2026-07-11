@@ -22,7 +22,7 @@ export default class LGAudioOscilloscope extends LGraphNode {
       return;
     }
 
-    const audioBuffer =  this._last_buffer
+    const audioBuffer =  this._last_buffer as AudioBuffer
     const audioContext = LGAudio.getAudioContext()
     const currentTime = audioContext.currentTime;
     const leftChannel = audioBuffer.getChannelData(0); // 获取左声道数据  
@@ -39,16 +39,12 @@ export default class LGAudioOscilloscope extends LGraphNode {
      const step = Math.floor(audioContext.sampleRate * 1 / fps);
      const startSample = Math.floor(currentTime * audioContext.sampleRate);  
      const endSample = Math.min(startSample + step, leftChannel.length);  
- 
+    
      for (let i = startSample; i < endSample; i++) {  
          const x = (leftChannel[i] * (width / 2)) + (width / 2);  
          const y = (rightChannel[i] * (height / 2)) + (height / 2);  
          ctx.lineTo(x, y);  
      }  
      ctx.stroke();
-    //  currentTime += 1/ fps;
-    //  if (currentTime * audioContext.sampleRate >= leftChannel.length) {
-    //   currentTime = 0;
-    //  }
   }
 }
