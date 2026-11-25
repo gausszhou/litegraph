@@ -33,12 +33,14 @@
 - [x] 清理 `packages/core/src/index.ts` 中的自引用导出（`export * from "./index"`）。
 - [x] 解除入口对 CSS 与 `window` 的强绑定：CSS 改为显式 `style.css` 入口；浏览器全局仅在 `typeof window !== "undefined"` 时挂载，Node / vitest 可直接 `import`。
 - [x] 节点包改为从 core 包根导入（不再依赖 `@gausszhou/litegraph-core/src/*` 深路径），core 的 `exports` 只暴露根入口与样式。
-- [ ] 去掉编辑器里与 core 重复且已分叉的样式副本（`apps/editor/public/css/litegraph.css`）。
-- [ ] 逐包开启 `strict` / `strictNullChecks`（core → nodes-*），清理隐式 `any`。
+- [x] 去掉编辑器里与 core 重复且已分叉的样式副本，editor 改为引用 `@gausszhou/litegraph-core/style.css`。
+- [x] core 开启 `noImplicitAny` / `noImplicitThis` / `strictBindCallApply` / `alwaysStrict` / `strictFunctionTypes` / `useUnknownInCatchVariables`，清理了 245 处隐式 `any`、`Function`/`Boolean` 包装类型与事件处理函数签名。
+- [ ] 其余包按同一组 flag 逐个开启。当前各包在该组 flag 下的错误数：basic 0、strings 2、graphics 8、logic 8、input 12、events 19、math 21、widget 97、audio 104、midi 112；聚合包与两个 app 依赖全部节点包，需最后开启。
+- [ ] 开启 `strictNullChecks`（core 当前约 524 处）以及随之可用的 `strictPropertyInitialization`，完成后即可把各包统一为 `"strict": true`。
 - [x] 接入 ESLint 10 flat config（`eslint.config.mjs`）+ `typescript-eslint`，CI 执行 `pnpm lint`；`var` / `prefer-const` / `any` 等历史写法暂时关闭，保留 `no-undef` / `no-fallthrough` / `valid-typeof` 为 error。
 - [ ] 重构 `LGraphCanvas` 的 mixin 写法：当前是「一个类 `implements` 三个类 + `this: LGraphCanvas` 伪类型」，改为正式 mixin 或组合，保证类型安全。
 
-**验收**：`tsc --noEmit --strict` 通过；Node 脚本中仅 import core 即可序列化/反序列化图，不出现 `window is not defined`。
+**验收**：各包 `tsc --noEmit --strict` 通过（含 `strictNullChecks`）；Node 脚本中仅 import core 即可序列化/反序列化图，不出现 `window is not defined`。
 
 ## v0.3 测试与稳定
 
