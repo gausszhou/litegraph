@@ -1,3 +1,5 @@
+import "@gausszhou/litegraph-core/style.css";
+
 import { audio1, audio2, audio3, basic1, basic2, basic3, circuit1 } from "./demos";
 import Editor from "./Editor";
 
