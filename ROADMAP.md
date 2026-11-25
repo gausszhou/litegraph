@@ -37,8 +37,8 @@
 - [x] core 开启 `noImplicitAny` / `noImplicitThis` / `strictBindCallApply` / `alwaysStrict` / `strictFunctionTypes` / `useUnknownInCatchVariables`，清理了 245 处隐式 `any`、`Function`/`Boolean` 包装类型与事件处理函数签名。
 - [x] 全部库包与两个 app 均已开启同一组 flag，`tsc --noEmit` 在 10 个节点包、聚合包与 app 上全部通过。
 - [ ] 开启 `strictNullChecks`。采用「基线 + 棘轮」：`pnpm nullcheck` 以 `nullcheck-baseline.json` 为闸门，先禁止新增问题，再按文件清理存量。
-  - core 已从 529 降到 388；`utils` / `LGraphGroup` / `ContextMenu` / `DragAndScale` / `LiteGraph` / `GraphInput` / `GraphOutput` / `LGraph` / `LGraphNode` 已清零。
-  - core 剩余集中在 `LGraphCanvas_UI.ts` 226、`LGraphCanvas.ts` 62、`Subgraph.ts` 41、`LGraphCanvas_Rendering.ts` 38、`LGraphCanvas_Events.ts` 21。
+  - core 已从 529 降到 305；`LGraphCanvas` 与 `LGraphCanvas_Events` 也已清零，目前只剩 `LGraphCanvas_UI`、`Subgraph`、`LGraphCanvas_Rendering` 三个文件。
+  - core 剩余：`LGraphCanvas_UI.ts` 226、`Subgraph.ts` 41、`LGraphCanvas_Rendering.ts` 38。
   - 节点包自身合计 73 处（basic 15、events 18、input 15、strings 12、midi 6、math 5、audio 1、widget 1），待 core 清零后按同样方式推进。
 - [ ] 开启 `strictPropertyInitialization`，并把各包统一为 `"strict": true`。
 - [x] 接入 ESLint 10 flat config（`eslint.config.mjs`）+ `typescript-eslint`，CI 执行 `pnpm lint`；`var` / `prefer-const` / `any` 等历史写法暂时关闭，保留 `no-undef` / `no-fallthrough` / `valid-typeof` 为 error。
