@@ -16,7 +16,8 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 - **子图**：`Subgraph` 本身就是一个节点，配合 `GraphInput` / `GraphOutput` 组合复用。
 - **可插拔节点**：节点包导出 `install(LiteGraph)`，通过 `LiteGraph.use(plugin)` 幂等注册，可按需引入。
 - **内置节点**：约 95 个节点类型，分布在 10 个节点包（basic / math / logic / strings / events / input / widget / audio / midi / graphics）与 core（GraphInput / GraphOutput / Subgraph）中。
-- **TypeScript + Vite**：库模式构建 `es` / `umd` 两种格式；类型收紧仍在进行中（见[路线图](ROADMAP.md) v0.2）。
+- **TypeScript + Vite**：core 与聚合包产出 ESM + UMD，节点包产出 ESM（core 作为外部依赖，不会重复打包）；类型声明随构建生成。
+- **样式独立**：`import "@gausszhou/litegraph-core/style.css"` 显式引入，core 入口不再隐式依赖 CSS；类型收紧仍在进行中（见[路线图](ROADMAP.md) v0.2）。
 
 ## 仓库结构
 
@@ -30,6 +31,8 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `apps/example-minimal` | 最小集成示例：`LGraph` + `LGraphCanvas` + 两个节点 |
 | `docs` | VitePress 文档站（`docs:dev` / `docs:build`） |
 | `shells` | 构建脚本 `build.sh`、Pages 发布脚本 `gh-pages.sh` |
+| `scripts` | 体积报告 `size-report.mjs`、发布产物校验 `verify-pack.mjs` |
+| `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
 
 ## 快速开始
 
@@ -42,9 +45,14 @@ pnpm --filter @litegraph/editor dev
 # 运行最小示例
 pnpm --filter @litegraph/example-minimal dev
 
-# 构建
-pnpm --filter @gausszhou/litegraph-core build
-pnpm --filter @gausszhou/litegraph build       # 聚合包（含全部节点）
+# 全量构建（按拓扑序：packages/* → apps/*）
+pnpm build
+
+# 质量检查
+pnpm typecheck      # 各包 tsc --noEmit
+pnpm test           # vitest（42 个用例）
+pnpm size           # 各产物体积（raw / gzip）
+pnpm verify-pack    # 逐个 pnpm pack 并校验 tarball 内容
 
 # 文档
 pnpm docs:dev
@@ -74,7 +82,7 @@ source.connect(0, sink, 0);
 graph.start();
 ```
 
-> 说明：各包的 `main` / `types` 目前仍指向 `src/*.ts`，也没有生成 `.d.ts`，因此仓库外直接安装使用还不成立，需要先完成[路线图](ROADMAP.md) v0.1 的发布链路改造。
+> 说明：仓库内 `main` / `types` 指向 `src`，方便 workspace 直接调试源码；`pnpm pack` / `pnpm publish` 时由 `publishConfig` 切换到 `dist/index.js` 与 `dist/index.d.ts`。CSS 需单独引入：`import "@gausszhou/litegraph-core/style.css"`（聚合包为 `@gausszhou/litegraph/style.css`）。
 
 ## 路线图
 
@@ -89,4 +97,4 @@ https://github.com/space-nuko/litegraph.ts
 
 ## License
 
-MIT（仓库暂未包含 `LICENSE` 文件，见[路线图](ROADMAP.md) v0.1）。
+MIT，见 [LICENSE](LICENSE)。

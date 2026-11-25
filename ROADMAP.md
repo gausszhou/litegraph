@@ -15,24 +15,26 @@
 
 ## v0.1 工程基线
 
-- [ ] 补充 `LICENSE`（文档声明 MIT，但仓库内没有该文件）。
-- [ ] 提交 `pnpm-lock.yaml`（当前 `.gitignore` 忽略锁文件，依赖版本不可复现）。
-- [ ] 修正包元数据：`author` / `homepage` / `bugs` / `repository` 仍指向 `jagenjo/litegraph.js`。
-- [ ] 打通发布链路：`main` / `types` 指向 `dist`，补 `exports`、`files`、`sideEffects`，用 `vite-plugin-dts`（devDependencies 已声明但未配置）产出 `.d.ts`。
-- [ ] 修正 `files` 中的 CSS 路径（实际位于 `src/css/litegraph.css`）。
-- [ ] 接入 GitHub Actions（当前无 `.github`）：lint + `tsc --noEmit` + vitest + build，发布前 `pnpm pack` 冒烟。
+- [x] 补充 `LICENSE`（MIT）。
+- [x] 提交 `pnpm-lock.yaml`；用 `onlyBuiltDependencies` 放行 esbuild 安装脚本，保证本地与 CI 一致。
+- [x] 修正包元数据：`author` / `homepage` / `bugs` / `repository` 指向本仓库，并补 `description` / `keywords` / `sideEffects`。
+- [x] 打通发布链路：源码内 `main` / `types` 指向 `src`（便于 workspace 开发），发布时由 `publishConfig` 切到 `dist`；补 `exports` / `files`。
+- [x] 产出类型声明：每个包构建时用 `tsc --emitDeclarationOnly` 生成 `.d.ts`。
+- [x] 样式产物：core 入口不再隐式引入 CSS，构建时复制为 `dist/litegraph.css`，通过 `style.css` 子路径导入。
+- [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：typecheck + test + build + 体积报告 + `pnpm pack` 产物校验。
+- [x] `pnpm size` 输出各产物 gzip 体积，CI 中执行。
 - [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）提交在 git 中，迁到 LFS 或外部托管。
-- [ ] CI 输出各包 gzip 体积，作为发布说明与 README 的数据来源。
 
-**验收**：干净 clone 下 `pnpm install && pnpm -r build && pnpm -r test` 全绿；任一包 `pnpm pack` 后的 tarball 能被一个 Vite 工程 `import`，类型正常。
+**验收**：干净 clone 下 `pnpm install && pnpm build && pnpm test` 全绿；`pnpm verify-pack` 校验全部 tarball；已在独立 Vite 工程中验证 core / nodes-basic / 聚合包的 import、类型与 CSS。
 
 ## v0.2 类型与 API 稳定
 
-- [ ] 清理 `packages/core/src/index.ts` 中的自引用导出（`export * from "./index"`）。
-- [ ] 解除入口对 CSS 与 `window` 的强绑定：`index.ts` 不再 `import "./css/litegraph.css"`，改为显式样式入口；去掉 `(window as any).LiteGraph = LiteGraph` 或加环境守卫，使 Node / jsdom 可直接 `import`。
+- [x] 清理 `packages/core/src/index.ts` 中的自引用导出（`export * from "./index"`）。
+- [x] 解除入口对 CSS 与 `window` 的强绑定：CSS 改为显式 `style.css` 入口；浏览器全局仅在 `typeof window !== "undefined"` 时挂载，Node / vitest 可直接 `import`。
+- [x] 节点包改为从 core 包根导入（不再依赖 `@gausszhou/litegraph-core/src/*` 深路径），core 的 `exports` 只暴露根入口与样式。
 - [ ] 去掉编辑器里与 core 重复且已分叉的样式副本（`apps/editor/public/css/litegraph.css`）。
 - [ ] 逐包开启 `strict` / `strictNullChecks`（core → nodes-*），清理隐式 `any`。
-- [ ] 收敛公共 API：明确的 `exports` 子路径（core / nodes-* / css），区分内部与公开类型。
+- [ ] 配置 ESLint 的 TypeScript 解析器（当前 `.eslintrc` 只能解析 JS，CI 暂未跑 lint）。
 - [ ] 重构 `LGraphCanvas` 的 mixin 写法：当前是「一个类 `implements` 三个类 + `this: LGraphCanvas` 伪类型」，改为正式 mixin 或组合，保证类型安全。
 
 **验收**：`tsc --noEmit --strict` 通过；Node 脚本中仅 import core 即可序列化/反序列化图，不出现 `window is not defined`。
@@ -44,7 +46,7 @@
 - [ ] 修复 `SubgraphTests` 中带 `XXX data not changed` 的待定断言。
 - [ ] 节点包契约测试：每个 `install` 后可创建、可序列化、可反序列化。
 - [ ] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
-- [ ] 统一测试入口：core 的 `test` 脚本仍是 `jest`（未安装也无配置），改用 vitest 并纳入 workspace 统一命令。
+- [x] 统一测试入口：移除 core 中无依赖的 `jest` 脚本，测试统一走 `packages/tests` 的 vitest（`pnpm test`，非 watch 模式）。
 - [ ] CI 覆盖率门槛。
 
 **验收**：核心路径覆盖率 ≥ 70%，无 `XXX` 待定断言、无用例跳过。
@@ -54,7 +56,7 @@
 - [ ] 按本仓库重写 `docs/`：包名、pnpm 用法、Vite 集成；清除上游 `litegraph.js` / `tamats.com` 等外链。
 - [ ] 由源码生成 API 文档（Typedoc 或 VitePress 插件），覆盖 core 公共 API。
 - [ ] 节点目录页：95 个节点的分类清单与参数说明（从各 `install.ts` 提取，避免手工维护）。
-- [ ] 示例页与回归：`apps/editor` 的内置 demo 与 `public/examples/*.json` 纳入加载快照测试；恢复 `apps/example-minimal` 对 CSS 的正常引入（当前被注释）。
+- [ ] 示例页与回归：`apps/editor` 的内置 demo 与 `public/examples/*.json` 纳入加载快照测试；`apps/example-minimal` 已恢复样式引入，可一并作为快照基线。
 - [ ] 贡献指南 + 新节点模板（脚手架或 plop 生成器）。
 
 **验收**：新人按文档 10 分钟内跑通最小示例，并写出一个自定义节点。
