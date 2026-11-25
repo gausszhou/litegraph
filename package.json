@@ -21,7 +21,8 @@
     "docs:serve": "vitepress serve docs",
     "remove": "npm run remove:dist && npm run remove:module",
     "remove:dist": "rm -rf packages/**/dist",
-    "remove:module": "rm -rf packages/**/node_modules"
+    "remove:module": "rm -rf packages/**/node_modules",
+    "nullcheck": "node scripts/nullcheck.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
