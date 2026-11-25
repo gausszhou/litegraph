@@ -1,7 +1,7 @@
 // strictNullChecks 迁移看板：以基线为闸门，防止新增 null 安全问题，同时允许逐步清理存量。
 // 用法：node scripts/nullcheck.mjs [--update] [packages/core ...]
 import { createRequire } from "node:module";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +12,19 @@ const ts = require("typescript");
 const args = process.argv.slice(2);
 const update = args.includes("--update");
 const targets = args.filter((a) => !a.startsWith("--"));
-const packageDirs = targets.length ? targets : ["packages/core"];
+const discover = () => {
+  const dirs = [];
+  for (const group of ["packages", "apps"]) {
+    const base = join(root, group);
+    if (!existsSync(base)) continue;
+    for (const name of readdirSync(base).sort()) {
+      const dir = `${group}/${name}`;
+      if (existsSync(join(root, dir, "tsconfig.json"))) dirs.push(dir);
+    }
+  }
+  return dirs;
+};
+const packageDirs = targets.length ? targets : discover();
 const baselinePath = join(root, "nullcheck-baseline.json");
 const baseline = existsSync(baselinePath)
   ? JSON.parse(readFileSync(baselinePath, "utf8"))
