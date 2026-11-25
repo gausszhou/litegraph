@@ -21,7 +21,7 @@ export default class LED  extends LGraphNode {
     this.value = flag;
   }
 
-  onDrawBackground(ctx, area) {
+  onDrawBackground(ctx: CanvasRenderingContext2D, area: any) {
     if (this.flags.collapsed) return;
     ctx.save();
     ctx.fillStyle = this.value ? "#fff" : "#000";

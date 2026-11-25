@@ -220,7 +220,7 @@ export default class Editor {
       ".tools-left"
     );
   }
-  addButtonsToRight(options) {
+  addButtonsToRight(options: EditorOptions) {
     this.addToolsButton(
       "playnode_button",
       "Play",

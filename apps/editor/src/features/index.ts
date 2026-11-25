@@ -1,29 +1,29 @@
-import { LiteGraph } from "@gausszhou/litegraph";
+import { LiteGraph, TitleMode } from "@gausszhou/litegraph";
 
-function TestWidgetsNode() {
+function TestWidgetsNode(this: any) {
   this.addOutput("", "number");
   this.properties = {};
-  this.slider = this.addWidget("slider", "Slider", 0.5, function (v) {}, {
+  this.slider = this.addWidget("slider", "Slider", 0.5, function (v: any) {}, {
     min: 0,
     max: 1,
   });
-  this.number = this.addWidget("number", "Number", 0.5, function (v) {}, {
+  this.number = this.addWidget("number", "Number", 0.5, function (v: any) {}, {
     min: 0,
     max: 100,
   });
-  this.combo = this.addWidget("combo", "Combo", "red", function (v) {}, {
+  this.combo = this.addWidget("combo", "Combo", "red", function (v: any) {}, {
     values: ["red", "green", "blue"],
   });
-  this.text = this.addWidget("text", "Text", "edit me", function (v) {}, {});
-  this.text2 = this.addWidget("text", "Text", "multiline", function (v) {}, {
+  this.text = this.addWidget("text", "Text", "edit me", function (v: any) {}, {});
+  this.text2 = this.addWidget("text", "Text", "multiline", function (v: any) {}, {
     multiline: true,
   });
-  this.toggle = this.addWidget("toggle", "Toggle", true, function (v) {}, {
+  this.toggle = this.addWidget("toggle", "Toggle", true, function (v: any) {}, {
     on: "enabled",
     off: "disabled",
   });
-  this.button = this.addWidget("button", "Button", null, function (v) {}, {});
-  this.toggle2 = this.addWidget("toggle", "Disabled", true, function (v) {}, {
+  this.button = this.addWidget("button", "Button", null, function (v: any) {}, {});
+  this.toggle2 = this.addWidget("toggle", "Disabled", true, function (v: any) {}, {
     on: "enabled",
     off: "disabled",
   });
@@ -32,10 +32,10 @@ function TestWidgetsNode() {
   this.size = this.computeSize();
 }
 
-TestWidgetsNode.title = "Widgets";
+(TestWidgetsNode as any).title = "Widgets";
 
 //Show value inside the debug console
-function TestSpecialNode() {
+function TestSpecialNode(this: any) {
   this.addInput("", "number");
   this.addOutput("", "number");
   this.properties = {};
@@ -44,11 +44,11 @@ function TestSpecialNode() {
   this.enabled = false;
 }
 
-TestSpecialNode.title = "Custom Shapes";
-TestSpecialNode.title_mode = LiteGraph.TRANSPARENT_TITLE;
-TestSpecialNode.slot_start_y = 20;
+(TestSpecialNode as any).title = "Custom Shapes";
+(TestSpecialNode as any).title_mode = TitleMode.TRANSPARENT_TITLE;
+(TestSpecialNode as any).slot_start_y = 20;
 
-TestSpecialNode.prototype.onDrawBackground = function (ctx) {
+TestSpecialNode.prototype.onDrawBackground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) return;
 
   ctx.fillStyle = "#555";
@@ -90,18 +90,18 @@ TestSpecialNode.prototype.onDrawBackground = function (ctx) {
   }
 };
 
-TestSpecialNode.prototype.onMouseDown = function (e, pos) {
+TestSpecialNode.prototype.onMouseDown = function (this: any, e: MouseEvent, pos: [number, number]) {
   if (pos[1] > 20) return;
 
   if (pos[0] > this.size[0] - 20) this.enabled = !this.enabled;
   else if (pos[0] > this.size[0] - 40) this.visible = !this.visible;
 };
 
-TestSpecialNode.prototype.onBounding = function (rect) {
+TestSpecialNode.prototype.onBounding = function (this: any, rect: [number, number, number, number]) {
   if (!this.flags.collapsed && this.mouseOver) rect[3] = this.size[1] + 20;
 };
 
-function TestSlotsNode() {
+function TestSlotsNode(this: any) {
   this.addInput("C", "number");
   this.addOutput("A", "number");
   this.addOutput("B", "number");
@@ -109,9 +109,9 @@ function TestSlotsNode() {
   this.size = [100, 40];
 }
 
-TestSlotsNode.title = "Flat Slots";
+(TestSlotsNode as any).title = "Flat Slots";
 
-function TestPropertyEditorsNode() {
+function TestPropertyEditorsNode(this: any) {
   this.properties = {
     name: "foo",
     age: 10,
@@ -129,8 +129,8 @@ function TestPropertyEditorsNode() {
   });
 }
 
-TestPropertyEditorsNode.title = "Properties";
-const install = (LiteGraph) => {
+(TestPropertyEditorsNode as any).title = "Properties";
+const install = (LiteGraph: any) => {
   //Show value inside the debug console
 
   // register

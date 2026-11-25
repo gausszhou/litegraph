@@ -1,7 +1,7 @@
 import LED from "./LED";
 import Oscillator from "./Oscillator";
 
-const install = (LiteGraph) => {
+const install = (LiteGraph: any) => {
   const registerList = [Oscillator,  LED];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({
