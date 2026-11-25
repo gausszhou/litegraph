@@ -21,7 +21,8 @@
 - [x] 打通发布链路：源码内 `main` / `types` 指向 `src`（便于 workspace 开发），发布时由 `publishConfig` 切到 `dist`；补 `exports` / `files`。
 - [x] 产出类型声明：每个包构建时用 `tsc --emitDeclarationOnly` 生成 `.d.ts`。
 - [x] 样式产物：core 入口不再隐式引入 CSS，构建时复制为 `dist/litegraph.css`，通过 `style.css` 子路径导入。
-- [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：lint + typecheck + test + build + 体积报告 + `pnpm pack` 产物校验。
+- [x] 节点包补充 UMD 产物：core 以 `window.litegraph` 全局外置，`pnpm verify-umd` 在 VM 中校验 10 个包共享同一个 LiteGraph 实例。
+- [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：lint + typecheck + test + build + 体积报告 + UMD 冒烟 + `pnpm pack` 产物校验。
 - [x] `pnpm size` 输出各产物 gzip 体积，CI 中执行。
 - [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）提交在 git 中，迁到 LFS 或外部托管。
 

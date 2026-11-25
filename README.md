@@ -16,7 +16,7 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 - **子图**：`Subgraph` 本身就是一个节点，配合 `GraphInput` / `GraphOutput` 组合复用。
 - **可插拔节点**：节点包导出 `install(LiteGraph)`，通过 `LiteGraph.use(plugin)` 幂等注册，可按需引入。
 - **内置节点**：约 95 个节点类型，分布在 10 个节点包（basic / math / logic / strings / events / input / widget / audio / midi / graphics）与 core（GraphInput / GraphOutput / Subgraph）中。
-- **TypeScript + Vite**：core 与聚合包产出 ESM + UMD，节点包产出 ESM（core 作为外部依赖，不会重复打包）；类型声明随构建生成。
+- **TypeScript + Vite**：所有包产出 ESM + UMD；UMD 构建把 core 外置到 `window.litegraph` 命名空间，多个节点包共享同一份引擎实例；类型声明随构建生成。
 - **样式独立**：`import "@gausszhou/litegraph-core/style.css"` 显式引入，core 入口不再隐式依赖 CSS；类型收紧仍在进行中（见[路线图](ROADMAP.md) v0.2）。
 
 ## 仓库结构
@@ -31,7 +31,7 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `apps/example-minimal` | 最小集成示例：`LGraph` + `LGraphCanvas` + 两个节点 |
 | `docs` | VitePress 文档站（`docs:dev` / `docs:build`） |
 | `shells` | 构建脚本 `build.sh`、Pages 发布脚本 `gh-pages.sh` |
-| `scripts` | 体积报告 `size-report.mjs`、发布产物校验 `verify-pack.mjs` |
+| `scripts` | 体积报告 `size-report.mjs`、UMD 冒烟 `verify-umd.mjs`、发布产物校验 `verify-pack.mjs` |
 | `eslint.config.mjs` | ESLint 10 flat config（typescript-eslint） |
 | `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
 
@@ -54,6 +54,7 @@ pnpm lint           # ESLint（flat config + typescript-eslint）
 pnpm typecheck      # 各包 tsc --noEmit
 pnpm test           # vitest（42 个用例）
 pnpm size           # 各产物体积（raw / gzip）
+pnpm verify-umd     # 在 VM 中加载 core 与各节点包 UMD，校验共享实例与注册
 pnpm verify-pack    # 逐个 pnpm pack 并校验 tarball 内容
 
 # 文档
