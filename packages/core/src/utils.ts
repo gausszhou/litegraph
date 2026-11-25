@@ -30,14 +30,14 @@ export function toHashMap<T>(arr: T[], toKey: (arg: T) => string | number): Reco
     }, {} as any);
 }
 
-export function getStaticProperty<T>(type: any, name: string): T {
+export function getStaticProperty<T>(type: any, name: string): T | null {
     if (name in type) {
         return type[name] as T;
     }
     return null;
 }
 
-export function getStaticPropertyOnInstance<T>(type: any, name: string): T {
+export function getStaticPropertyOnInstance<T>(type: any, name: string): T | null {
     if (name in type.constructor) {
         return type.constructor[name] as T;
     }

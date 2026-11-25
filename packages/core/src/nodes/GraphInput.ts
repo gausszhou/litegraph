@@ -126,7 +126,7 @@ export default class GraphInput extends LGraphNode {
     }
 
     getParentSubgraph(): Subgraph | null {
-        return this.graph._subgraph_node?.graph?.getNodeById(this.properties.subgraphID);
+        return this.graph?._subgraph_node?.graph?.getNodeById(this.properties.subgraphID ?? -1) ?? null;
     }
 
     /** ensures the type in the node output and the type in the associated graph input are the same */
@@ -166,8 +166,8 @@ export default class GraphInput extends LGraphNode {
             this.valueWidget.value = "";
         }
         else {
-            this.valueWidget.type = null;
-            this.valueWidget.value = null;
+            (this.valueWidget as any).type = null;
+            (this.valueWidget as any).value = null;
         }
         this.properties.value = this.valueWidget.value;
 
@@ -221,6 +221,7 @@ export default class GraphInput extends LGraphNode {
     }
 
     override onExecute() {
+        if (!this.graph) return;
         var name = this.properties.name;
         //read from global input
         var data = this.graph.inputs[name];
@@ -233,7 +234,7 @@ export default class GraphInput extends LGraphNode {
     }
 
     override onRemoved() {
-        if (this.nameInGraph) {
+        if (this.nameInGraph && this.graph) {
             this.graph.removeInput(this.nameInGraph);
         }
     }

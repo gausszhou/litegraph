@@ -150,6 +150,9 @@ export default class LiteGraph {
     static registerNodeType<T extends LGraphNode>(config: LGraphNodeConstructor | string, nodeClass?: LGraphNodeConstructorFactory<T>): void {
         let reConfig: LGraphNodeConstructor;
         if (typeof config === 'string') {
+            if (!nodeClass) {
+                throw new Error("registerNodeType: nodeClass is required when registering by type string");
+            }
             reConfig = {
                 type: config as string,
                 class: nodeClass,
@@ -164,7 +167,7 @@ export default class LiteGraph {
             console.log("Node registered: " + reConfig.type);
         }
 
-        const classname = reConfig.name;
+        const classname = reConfig.name ?? "";
         const type = reConfig.type;
 
         if (!type) {
@@ -193,7 +196,7 @@ export default class LiteGraph {
             for (let i in reConfig.supported_extensions) {
                 const ext = reConfig.supported_extensions[i];
                 if (ext && ext.constructor === String) {
-                    LiteGraph.node_types_by_file_extension[ext.toLowerCase()] = reConfig;
+                    LiteGraph.node_types_by_file_extension[String(ext).toLowerCase()] = reConfig;
                 }
             }
         }
@@ -330,12 +333,12 @@ export default class LiteGraph {
             console.warn(
                 'GraphNode type "' + type + '" not registered.'
             );
-            return null;
+            return null as unknown as T;
         }
 
         title = title || regConfig.title || typeID;
 
-        var node: T = null;
+        var node: T = null as any;
         const args = options.constructorArgs || []
         Object.setPrototypeOf(regConfig.class.prototype, LGraphNode.prototype);
         if (LiteGraph.catch_exceptions) {
@@ -343,7 +346,7 @@ export default class LiteGraph {
                 node = new regConfig.class(title, ...args) as T;
             } catch (err) {
                 console.error("Error creating node!", err);
-                return null;
+                return null as unknown as T;
             }
         } else {
             node = new regConfig.class(title, ...args) as T;
@@ -533,7 +536,7 @@ export default class LiteGraph {
     //separated just to improve if it doesn't work
     static cloneObject<T>(obj?: T, target?: T): T {
         if (obj == null) {
-            return null;
+            return null as unknown as T;
         }
         var r = JSON.parse(JSON.stringify(obj));
         if (!target) {

@@ -27,8 +27,8 @@ export interface IContextMenuItem {
 export interface IContextMenuOptions {
     callback?: ContextMenuEventListener;
     ignore_item_callbacks?: boolean;
-    event?: MouseEventExt | CustomEventExt;
-    parentMenu?: ContextMenu;
+    event?: MouseEventExt | CustomEventExt | null;
+    parentMenu?: ContextMenu | null;
     autoopen?: boolean;
     title?: string;
     extra?: any;
@@ -174,7 +174,7 @@ export default class ContextMenu {
         );
 
         root.close = () => {
-            root.parentNode.removeChild(root);
+            root.parentNode?.removeChild(root);
         }
 
         LiteGraph.pointerListenerAdd(root, "down",
@@ -192,7 +192,7 @@ export default class ContextMenu {
         function on_mouse_wheel(e: WheelEvent) {
             var pos = parseInt(root.style.top);
             root.style.top =
-                (pos + e.deltaY * options.scroll_speed).toFixed() + "px";
+                (pos + e.deltaY * (options.scroll_speed as number)).toFixed() + "px";
             e.preventDefault();
             return true;
         }
@@ -252,7 +252,7 @@ export default class ContextMenu {
         //insert before checking position
         var root_document = document;
         if (options.event && options.event.target instanceof Node) {
-            root_document = options.event.target.ownerDocument;
+            root_document = options.event.target.ownerDocument ?? document;
         }
 
         if (!root_document) {
@@ -301,9 +301,9 @@ export default class ContextMenu {
     }
 
     options: IContextMenuOptions;
-    parentMenu?: ContextMenu;
+    parentMenu?: ContextMenu | null;
     lock: boolean;
-    current_submenu?: ContextMenu;
+    current_submenu?: ContextMenu | null;
     addItem(
         name: string,
         value: ContextMenuItem,
@@ -370,7 +370,7 @@ export default class ContextMenu {
 
         //menu option clicked
         function inner_onclick(this: HTMLElement, _e: MouseEvent) {
-            let index = parseInt(this.dataset["value"])
+            let index = parseInt(this.dataset["value"] ?? "0")
             var value = ctxMenu.values[index];
             if (LiteGraph.debug)
                 console.debug("ContextMenu inner_onclick", index, value);
@@ -486,6 +486,6 @@ export default class ContextMenu {
         if (this.options.parentMenu) {
             return this.options.parentMenu.getFirstEvent();
         }
-        return this.options.event;
+        return this.options.event as EventExt;
     }
 }

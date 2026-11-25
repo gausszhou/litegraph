@@ -75,7 +75,7 @@ export default class LGraph {
         if (LiteGraph.debug) {
             console.log("Graph created");
         }
-        this.list_of_graphcanvas = null;
+        this.list_of_graphcanvas = null as any;
         this.clear();
 
         if (o) {
@@ -148,7 +148,7 @@ export default class LGraph {
         let graph: LGraph | null = this;
         while (graph) {
             yield graph;
-            graph = graph._subgraph_node?.graph;
+            graph = graph._subgraph_node?.graph ?? null;
         }
     }
 
@@ -244,7 +244,7 @@ export default class LGraph {
         if (pos == -1) {
             return;
         }
-        graphCanvas.graph = null;
+        graphCanvas.graph = null as any;
         this.list_of_graphcanvas.splice(pos, 1);
     }
 
@@ -313,7 +313,7 @@ export default class LGraph {
             if (this.execution_timer_id != -1) {
                 clearInterval(this.execution_timer_id);
             }
-            this.execution_timer_id = null;
+            this.execution_timer_id = null as any;
         }
 
         this.sendEventToAllNodes("onStop");
@@ -480,6 +480,9 @@ export default class LGraph {
 
             //get an starting node
             let node = S.shift();
+            if (!node) {
+                continue;
+            }
             L.push(node); //add to ordered list
             delete M[node.id]; //remove from the pending nodes
 
@@ -582,6 +585,9 @@ export default class LGraph {
 
         while (pending.length) {
             var current = pending.shift();
+            if (!current) {
+                continue;
+            }
             if (!current.inputs) {
                 continue;
             }
@@ -1045,7 +1051,7 @@ export default class LGraph {
         var type = type.toLowerCase();
         result.length = 0;
         for (var i = 0, l = this._nodes.length; i < l; ++i) {
-            if (this._nodes[i].type.toLowerCase() == type) {
+            if ((this._nodes[i].type ?? "").toLowerCase() == type) {
                 result.push(this._nodes[i] as LGraphNode);
             }
         }
@@ -1158,12 +1164,12 @@ export default class LGraph {
         var changes = false;
         for (var i = 0; i < this._nodes.length; i++) {
             var node = this._nodes[i];
-            var config = LiteGraph.registered_node_types[node.type];
+            var config = (LiteGraph.registered_node_types as any)[node.type as string];
             if (node.constructor == config.class) {
                 continue;
             }
             console.log("node being replaced by newer version: " + node.type);
-            var newnode = LiteGraph.createNode(node.type);
+            var newnode = LiteGraph.createNode(node.type as string);
             changes = true;
             this._nodes[i] = newnode;
             newnode.configure(node.serialize());
@@ -1636,7 +1642,7 @@ export default class LGraph {
         if (nodes) {
             for (var i = 0, l = nodes.length; i < l; ++i) {
                 var n_info = nodes[i]; //stored info
-                var node = LiteGraph.createNode(n_info.type, n_info.title);
+                var node = LiteGraph.createNode(n_info.type as string, n_info.title);
                 if (!node) {
                     console.error(
                         "Node not found or has errors: " + n_info.type
@@ -1657,9 +1663,9 @@ export default class LGraph {
             //configure nodes afterwards so they can reach each other
             for (var i = 0, l = nodes.length; i < l; ++i) {
                 var n_info = nodes[i];
-                var node = this.getNodeById(n_info.id);
-                if (node) {
-                    node.configure(n_info);
+                var configuredNode = this.getNodeById(n_info.id);
+                if (configuredNode) {
+                    configuredNode.configure(n_info);
                 }
             }
         }

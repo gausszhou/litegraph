@@ -113,7 +113,7 @@ export default class GraphOutput extends LGraphNode {
     }
 
     getParentSubgraph(): Subgraph | null {
-        return this.graph._subgraph_node?.graph?.getNodeById(this.properties.subgraphID);
+        return this.graph?._subgraph_node?.graph?.getNodeById(this.properties.subgraphID ?? -1) ?? null;
     }
 
     updateType() {
@@ -210,12 +210,13 @@ export default class GraphOutput extends LGraphNode {
     }
 
     override onExecute() {
+        if (!this.graph) return;
         const value = this.getInputData(0);
         this.graph.setOutputData(this.properties.name, value);
     }
 
     override onRemoved() {
-        if (this.nameInGraph) {
+        if (this.nameInGraph && this.graph) {
             this.graph.removeOutput(this.nameInGraph);
         }
     }
