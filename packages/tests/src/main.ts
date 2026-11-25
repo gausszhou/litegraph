@@ -1,10 +1,13 @@
 import "@gausszhou/litegraph-core"
-import "@gausszhou/litegraph-nodes-basic"
+import installBasicNodes from "@gausszhou/litegraph-nodes-basic"
 
 import { describe, it } from "vitest"
 import UnitTest from "./UnitTest"
 import * as testSuite from "./testSuite"
 import { LiteGraph } from "@gausszhou/litegraph-core"
+
+// Node packages are plugins: they must be installed into LiteGraph explicitly.
+installBasicNodes(LiteGraph)
 
 // I don't like BDD syntax...
 // Emulate minitest instead...
