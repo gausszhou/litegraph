@@ -14,6 +14,7 @@
     "lint:fix": "eslint . --fix",
     "test": "pnpm -r test",
     "size": "node scripts/size-report.mjs",
+    "verify-umd": "node scripts/verify-umd.mjs",
     "verify-pack": "node scripts/verify-pack.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

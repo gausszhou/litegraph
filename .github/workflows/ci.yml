@@ -39,5 +39,8 @@ jobs:
       - name: Bundle size
         run: pnpm size
 
+      - name: UMD smoke test
+        run: pnpm verify-umd
+
       - name: Verify publish tarballs
         run: pnpm verify-pack
