@@ -39,7 +39,7 @@
 - [x] 开启 `strictNullChecks`。采用「基线 + 棘轮」：`pnpm nullcheck` 以 `nullcheck-baseline.json` 为闸门，先禁止新增问题，再按文件清理存量；core 529 处、节点包 73 处已全部清零，基线归零并覆盖全部包。
 - [x] 开启 `strictPropertyInitialization`，并把各包统一为 `"strict": true`；未在构造器内赋值的字段使用明确赋值断言或补上初始化。
 - [x] 接入 ESLint 10 flat config（`eslint.config.mjs`）+ `typescript-eslint`，CI 执行 `pnpm lint`；`var` / `prefer-const` / `any` 等历史写法暂时关闭，保留 `no-undef` / `no-fallthrough` / `valid-typeof` 为 error。
-- [ ] 重构 `LGraphCanvas` 的 mixin 写法：当前是「一个类 `implements` 三个类 + `this: LGraphCanvas` 伪类型」，改为正式 mixin 或组合，保证类型安全。
+- [x] 重构 `LGraphCanvas` 的 mixin 写法：移除 42 个手写包装方法与 `implements` 子句，改为「类 + interface 声明合并 + `applyMixins` 复制原型方法」，并补了原型表面回归测试。
 
 **验收**：各包 `tsc --noEmit --strict` 通过（含 `strictNullChecks`，`pnpm nullcheck` 基线归零）；Node 脚本中仅 import core 即可序列化/反序列化图，不出现 `window is not defined`。
 
