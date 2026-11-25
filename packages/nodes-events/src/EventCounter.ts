@@ -1,4 +1,4 @@
-import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
  //Show value inside the debug console
 export default function EventCounter() {

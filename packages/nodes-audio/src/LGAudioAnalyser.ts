@@ -1,4 +1,4 @@
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 import LGAudio from "./LGAudio";
 
 export default class LGAudioAnalyser extends LGraphNode {

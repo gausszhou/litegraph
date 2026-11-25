@@ -1,4 +1,4 @@
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 class LogicCompare extends LGraphNode {
   static title = "Compare";

@@ -1,4 +1,4 @@
-import { LConnectionKind } from "@gausszhou/litegraph-core/src/types";
+import { LConnectionKind } from "@gausszhou/litegraph-core";
 
 
 class LGAudio {

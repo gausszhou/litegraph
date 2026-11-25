@@ -1,6 +1,6 @@
 import type { OptionalSlots, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
-import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotShape } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface ArrayElementProperties extends Record<string, any> {
     index: number

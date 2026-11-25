@@ -1,6 +1,6 @@
 import type { INodeInputSlot, INodeOutputSlot, LLink, SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
-import { BuiltInSlotType, LConnectionKind } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType, LConnectionKind } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class Sequence extends LGraphNode {
     static slotLayout: SlotLayout = {

@@ -1,5 +1,5 @@
-import { BuiltInSlotType, NodeMode } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType, NodeMode } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 /**
  * 逻辑分支

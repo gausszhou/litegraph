@@ -1,5 +1,5 @@
 import { OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface ConstantObjectProperties extends Record<string, any> {
     value: string,

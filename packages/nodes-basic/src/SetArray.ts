@@ -1,5 +1,5 @@
 import { INumberWidget, OptionalSlots, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 export interface SetArrayProperties extends Record<string, any> {
     index: number
 }

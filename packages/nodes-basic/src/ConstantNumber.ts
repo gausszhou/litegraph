@@ -4,7 +4,7 @@ import type {
   SlotLayout,
   Vector2,
 } from "@gausszhou/litegraph-core";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface ConstantNumberProperties extends Record<string, any> {
   value: number;

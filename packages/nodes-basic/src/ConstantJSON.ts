@@ -1,8 +1,8 @@
 import { ITextWidget, IWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
 import Watch from "./Watch"
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
-import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
-import { BuiltInSlotShape } from "@gausszhou/litegraph-core/src/types";
+import { LGraphNode } from "@gausszhou/litegraph-core";
+import { LiteGraph } from "@gausszhou/litegraph-core";
+import { BuiltInSlotShape } from "@gausszhou/litegraph-core";
 
 
 export interface ConstantJSONProperties extends Record<string, any> {

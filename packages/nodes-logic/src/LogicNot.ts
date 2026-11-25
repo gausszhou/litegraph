@@ -1,5 +1,5 @@
-import  { SlotLayout }  from "@gausszhou/litegraph-core/src/LGraphNode";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import  { SlotLayout }  from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class LogicNot extends LGraphNode {
     static slotLayout: SlotLayout = {

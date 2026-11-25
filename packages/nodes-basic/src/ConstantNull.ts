@@ -1,6 +1,6 @@
 import { IToggleWidget, OptionalSlots, PropertyLayout, SlotLayout, Vector2 } from "@gausszhou/litegraph-core"
-import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface ConstantNullProperties extends Record<string, any> {
     value: null | undefined,

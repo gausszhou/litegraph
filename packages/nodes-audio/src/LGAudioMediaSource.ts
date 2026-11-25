@@ -1,4 +1,4 @@
-import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core/src/types";
+import { BuiltInSlotType, LGraphStatus } from "@gausszhou/litegraph-core";
 import LGAudio from "./LGAudio";
 import { LGraphNode } from "@gausszhou/litegraph-core";
 

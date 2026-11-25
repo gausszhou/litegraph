@@ -1,4 +1,4 @@
-import LiteUtils from "@gausszhou/litegraph-core/src/LiteUtils";
+import { LiteUtils } from "@gausszhou/litegraph-core";
 
   //Widget H SLIDER
   export  default  function WidgetHSlider() {

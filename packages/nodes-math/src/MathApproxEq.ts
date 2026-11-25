@@ -1,5 +1,5 @@
 import { SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface MathOperationProperties extends Record<string, any> {
     epsilon: 0.001;

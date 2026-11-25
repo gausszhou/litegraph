@@ -1,4 +1,4 @@
-import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
 import MIDIInterface from "./MIDIInterface";
 import { LGraphNode, LiteUtils } from "@gausszhou/litegraph-core";

@@ -1,6 +1,6 @@
 import type { ContextMenuItem, SlotLayout } from "@gausszhou/litegraph-core";
-import { TitleMode } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { TitleMode } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class Reroute extends LGraphNode {
     static slotLayout: SlotLayout = {

@@ -1,5 +1,5 @@
 import { clamp, LGraphNode } from "@gausszhou/litegraph-core";
-import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 import MIDIEvent, { MIDI_COLOR } from "./MIDIEvent";
 
 export default class LGMIDIEvent extends LGraphNode {

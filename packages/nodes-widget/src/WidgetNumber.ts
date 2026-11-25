@@ -1,4 +1,4 @@
-import { clamp } from "@gausszhou/litegraph-core/src/utils";
+import { clamp } from "@gausszhou/litegraph-core";
 
 export default function WidgetNumber() {
   this.addOutput("", "number");

@@ -1,4 +1,4 @@
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 /**
  * 时序，从序列中选择一个值输出

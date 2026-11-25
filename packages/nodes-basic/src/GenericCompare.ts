@@ -1,6 +1,6 @@
 import { IComboWidget, PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
-import { BuiltInSlotType } from "@gausszhou/litegraph-core/src/types";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { BuiltInSlotType } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 // BuiltInSlotType
 export interface GenericCompareProperties extends Record<string, any> {

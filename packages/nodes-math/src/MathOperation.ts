@@ -1,6 +1,6 @@
 import type { SlotLayout, Vector2 } from "@gausszhou/litegraph-core";
-import LiteGraph from "@gausszhou/litegraph-core/src/LiteGraph";
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LiteGraph } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface MathOperationProperties extends Record<string, any> {
     A: any,

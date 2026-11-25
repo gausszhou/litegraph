@@ -1,5 +1,5 @@
 import type { PropertyLayout, SlotLayout } from "@gausszhou/litegraph-core"
-import LGraphNode from "@gausszhou/litegraph-core/src/LGraphNode";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export interface TimeProperties extends Record<string, any> {
     enabled: boolean
