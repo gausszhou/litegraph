@@ -32,6 +32,7 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `docs` | VitePress 文档站（`docs:dev` / `docs:build`） |
 | `shells` | 构建脚本 `build.sh`、Pages 发布脚本 `gh-pages.sh` |
 | `scripts` | 体积报告 `size-report.mjs`、发布产物校验 `verify-pack.mjs` |
+| `eslint.config.mjs` | ESLint 10 flat config（typescript-eslint） |
 | `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
 
 ## 快速开始
@@ -49,6 +50,7 @@ pnpm --filter @litegraph/example-minimal dev
 pnpm build
 
 # 质量检查
+pnpm lint           # ESLint（flat config + typescript-eslint）
 pnpm typecheck      # 各包 tsc --noEmit
 pnpm test           # vitest（42 个用例）
 pnpm size           # 各产物体积（raw / gzip）

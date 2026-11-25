@@ -21,7 +21,7 @@
 - [x] 打通发布链路：源码内 `main` / `types` 指向 `src`（便于 workspace 开发），发布时由 `publishConfig` 切到 `dist`；补 `exports` / `files`。
 - [x] 产出类型声明：每个包构建时用 `tsc --emitDeclarationOnly` 生成 `.d.ts`。
 - [x] 样式产物：core 入口不再隐式引入 CSS，构建时复制为 `dist/litegraph.css`，通过 `style.css` 子路径导入。
-- [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：typecheck + test + build + 体积报告 + `pnpm pack` 产物校验。
+- [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：lint + typecheck + test + build + 体积报告 + `pnpm pack` 产物校验。
 - [x] `pnpm size` 输出各产物 gzip 体积，CI 中执行。
 - [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）提交在 git 中，迁到 LFS 或外部托管。
 
@@ -34,7 +34,7 @@
 - [x] 节点包改为从 core 包根导入（不再依赖 `@gausszhou/litegraph-core/src/*` 深路径），core 的 `exports` 只暴露根入口与样式。
 - [ ] 去掉编辑器里与 core 重复且已分叉的样式副本（`apps/editor/public/css/litegraph.css`）。
 - [ ] 逐包开启 `strict` / `strictNullChecks`（core → nodes-*），清理隐式 `any`。
-- [ ] 配置 ESLint 的 TypeScript 解析器（当前 `.eslintrc` 只能解析 JS，CI 暂未跑 lint）。
+- [x] 接入 ESLint 10 flat config（`eslint.config.mjs`）+ `typescript-eslint`，CI 执行 `pnpm lint`；`var` / `prefer-const` / `any` 等历史写法暂时关闭，保留 `no-undef` / `no-fallthrough` / `valid-typeof` 为 error。
 - [ ] 重构 `LGraphCanvas` 的 mixin 写法：当前是「一个类 `implements` 三个类 + `this: LGraphCanvas` 伪类型」，改为正式 mixin 或组合，保证类型安全。
 
 **验收**：`tsc --noEmit --strict` 通过；Node 脚本中仅 import core 即可序列化/反序列化图，不出现 `window is not defined`。
