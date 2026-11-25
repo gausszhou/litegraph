@@ -34,7 +34,7 @@ export default class LGraphCanvas_UI {
         var propInfo = item.value as IPropertyInfo;
 
         var property = propInfo.name;
-        var value = node[property];
+        var value = (node as any)[property];
 
         // TODO refactor :: use createDialog ?
 
@@ -71,7 +71,7 @@ export default class LGraphCanvas_UI {
             });
             if (propInfo.inputStyle)
                 for (const [k, v] of Object.entries(propInfo.inputStyle))
-                    input.style[k] = v
+                    (input.style as any)[k] = v
         }
 
         var graphcanvas = LGraphCanvas.active_canvas;
@@ -104,11 +104,11 @@ export default class LGraphCanvas_UI {
             } else if (propInfo.type == "boolean") {
                 value = Boolean(value);
             }
-            const oldValue = node[property];
-            node[property] = value;
+            const oldValue = (node as any)[property];
+            (node as any)[property] = value;
             if (node.onJSPropertyChanged)
                 if (node.onJSPropertyChanged(property, value, oldValue) === false) // abort change
-                    node[property] = oldValue;
+                    (node as any)[property] = oldValue;
             if (dialog.parentNode) {
                 dialog.parentNode.removeChild(dialog);
             }
@@ -121,7 +121,7 @@ export default class LGraphCanvas_UI {
 
         if (input) input.focus();
 
-        var dialogCloseTimer = null;
+        let dialogCloseTimer: ReturnType<typeof setTimeout> | null = null;
         dialog.addEventListener("mouseleave", function(e) {
             if (LiteGraph.dialog_close_on_mouse_leave)
                 if (!dialog.is_modified && LiteGraph.dialog_close_on_mouse_leave && e.buttons === 0)
@@ -136,7 +136,7 @@ export default class LGraphCanvas_UI {
     }
 
     /** Create menu for `Add Group` */
-    static onGroupAdd: ContextMenuEventListener = function(_value: IContextMenuItem, _options, mouseEvent, _menu) {
+    static onGroupAdd: ContextMenuEventListener = function(_value: IContextMenuItem, _options: IContextMenuOptions, mouseEvent: MouseEventExt, _menu?: ContextMenu) {
         var canvas = LGraphCanvas.active_canvas;
         var ref_window = canvas.getCanvasWindow();
 
@@ -146,7 +146,7 @@ export default class LGraphCanvas_UI {
     }
 
     /** Create menu for `Add Node` */
-    static onMenuAdd = function(_value: IContextMenuItem, _options, mouseEvent, prevMenu, callback?: (node: LGraphNode) => void) {
+    static onMenuAdd = function(_value: IContextMenuItem, _options: IContextMenuOptions, mouseEvent: MouseEventExt, prevMenu: ContextMenu, callback?: (node: LGraphNode) => void) {
         var canvas = LGraphCanvas.active_canvas;
         var ref_window = canvas.getCanvasWindow();
         var graph = canvas.graph;
@@ -222,7 +222,7 @@ export default class LGraphCanvas_UI {
 
     }
 
-    static showMenuNodeOptionalInputs: ContextMenuEventListener = function(_value: IContextMenuItem, _options, mouseEvent, prevMenu, node?: LGraphNode) {
+    static showMenuNodeOptionalInputs: ContextMenuEventListener = function(this: ContextMenu, _value: IContextMenuItem, _options, mouseEvent, prevMenu, node?: LGraphNode) {
         if (!node) {
             return;
         }
@@ -282,13 +282,14 @@ export default class LGraphCanvas_UI {
             ref_window
         );
 
-        function inner_clicked(v: IContextMenuItem, options, e: MouseEventExt, prev: ContextMenu) {
+        function inner_clicked(v: IContextMenuItem, options: IContextMenuOptions, e: MouseEventExt, prev: ContextMenu) {
             if (!node) {
                 return;
             }
 
             if (v.callback) {
-                v.callback.call(that, node, v, e, prev);
+                // 这些菜单项回调查阅实际以 node 作为首参，与 ContextMenuEventListener 的声明不一致
+                (v.callback as any).call(that, node, v, e, prev);
             }
 
             if (v.value) {
@@ -307,7 +308,7 @@ export default class LGraphCanvas_UI {
         return false;
     };
 
-    static showMenuNodeOptionalOutputs: ContextMenuEventListener = function(_value: IContextMenuItem, _options, mouseEvent, prevMenu, node?: LGraphNode) {
+    static showMenuNodeOptionalOutputs: ContextMenuEventListener = function(this: ContextMenu, _value: IContextMenuItem, _options, mouseEvent, prevMenu, node?: LGraphNode) {
         if (!node) {
             return;
         }
@@ -333,7 +334,7 @@ export default class LGraphCanvas_UI {
                 if (
                     node.flags &&
                     node.flags.skip_repeated_outputs &&
-                    node.findOutputSlotIndexByName(entry[0]) != -1
+                    node.findOutputSlotIndexByName(label) != -1
                 ) {
                     continue;
                 } //skip the ones already on
@@ -351,9 +352,6 @@ export default class LGraphCanvas_UI {
             }
         }
 
-        if (this.onMenuNodeOutputs) {
-            entries = this.onMenuNodeOutputs(entries);
-        }
         if (LiteGraph.do_add_triggers_slots) { //canvas.allow_addOutSlot_onExecuted
             if (node.findOutputSlotIndexByName("onExecuted") == -1) {
                 entries.push({ content: "On Executed", value: ["onExecuted", BuiltInSlotType.EVENT, { nameLocked: true }], className: "event" }); //, opts: {}
@@ -375,7 +373,8 @@ export default class LGraphCanvas_UI {
             }
 
             if (v.callback) {
-                v.callback.call(that, node, v, e, prev);
+                // 这些菜单项回调查阅实际以 node 作为首参，与 ContextMenuEventListener 的声明不一致
+                (v.callback as any).call(that, node, v, e, prev);
             }
 
             if (!v.value) {
@@ -456,7 +455,7 @@ export default class LGraphCanvas_UI {
     /*
      * Shows a dropdown of LGraphNode.properties for editing. Clicking on one opens the editor popup.
      */
-    static onShowMenuNodeProperties: ContextMenuEventListener = function(_value: IContextMenuItem, _options, e, prevMenu, node: LGraphNode) {
+    static onShowMenuNodeProperties: ContextMenuEventListener = function(this: ContextMenu, _value: IContextMenuItem, _options, e, prevMenu, node: LGraphNode) {
         if (!node || !node.properties) {
             return;
         }
@@ -503,7 +502,7 @@ export default class LGraphCanvas_UI {
             ref_window
         );
 
-        function inner_clicked(v: IContextMenuItem, options: IContextMenuOptions, e: MouseEventExt, prev: ContextMenu) {
+        function inner_clicked(this: HTMLElement, v: IContextMenuItem, options: IContextMenuOptions, e: MouseEventExt, prev: ContextMenu) {
             if (!node) {
                 return;
             }
@@ -526,7 +525,7 @@ export default class LGraphCanvas_UI {
     static onMenuNodeCollapse: ContextMenuEventListener = function(_value: IContextMenuItem, _options, _e, _menu, node: LGraphNode) {
         node.graph.beforeChange(/*?*/);
 
-        var fApplyMultiNode = function(node) {
+        var fApplyMultiNode = function(node: LGraphNode) {
             node.collapse();
         }
 
@@ -614,7 +613,7 @@ export default class LGraphCanvas_UI {
             allow_html: true
         });
 
-        function inner_clicked(v) {
+        function inner_clicked(v: IContextMenuItem) {
             if (!node) {
                 return;
             }
@@ -865,7 +864,7 @@ export default class LGraphCanvas_UI {
             dialog.style.transform = "scale(" + this.ds.scale + ")";
         }
 
-        var dialogCloseTimer = null;
+        let dialogCloseTimer: ReturnType<typeof setTimeout> | null = null;
         var prevent_timeout = 0;
         LiteGraph.pointerListenerAdd(dialog, "leave", function(e: PointerEvent) {
             if (prevent_timeout)
@@ -900,7 +899,7 @@ export default class LGraphCanvas_UI {
         that.prompt_box = dialog;
 
         var first = null;
-        var timeout = null;
+        let timeout: ReturnType<typeof setTimeout> | null = null;
         var selected = null;
 
         var name_element = dialog.querySelector(".name") as HTMLDivElement;
@@ -928,7 +927,7 @@ export default class LGraphCanvas_UI {
 
         if (inputStyle)
             for (const [k, v] of Object.entries(inputStyle))
-                input.style[k] = v
+                (input.style as any)[k] = v
 
         var button = dialog.querySelector("button");
         button.addEventListener("click", function(e) {
@@ -976,7 +975,7 @@ export default class LGraphCanvas_UI {
     } = {}
     ): IGraphDialog {
         // proposed defaults
-        var def_options = {
+        const def_options: Record<string, any> = {
             slotFrom: null
             , node_from: null
             , node_to: null
@@ -1046,7 +1045,7 @@ export default class LGraphCanvas_UI {
         // hide on mouse leave
         if (options.hide_on_mouse_leave) {
             var prevent_timeout = 0;
-            var timeout_close = null;
+            let timeout_close: ReturnType<typeof setTimeout> | null = null;
             LiteGraph.pointerListenerAdd(dialog, "enter", function(e) {
                 if (timeout_close) {
                     clearTimeout(timeout_close);
@@ -1092,7 +1091,7 @@ export default class LGraphCanvas_UI {
         var helper = dialog.querySelector(".helper") as HTMLElement;
 
         var first: string | null = null;
-        var timeout = null;
+        let timeout: ReturnType<typeof setTimeout> | null = null;
         var selected: Element | null = null;
 
         const select = (name: string) => {
@@ -1241,7 +1240,7 @@ export default class LGraphCanvas_UI {
         const inner_test_filter = (type: string, filter: string, str: string,
             sIn: HTMLSelectElement | null, sOut: HTMLSelectElement | null,
             optsIn: { skipFilter?: boolean, inTypeOverride?: SlotType | null, outTypeOverride?: SlotType | null } = {}) => {
-            const optsDef = {
+            const optsDef: { skipFilter: boolean; inTypeOverride: SlotType | null; outTypeOverride: SlotType | null } = {
                 skipFilter: false
                 , inTypeOverride: null
                 , outTypeOverride: null
@@ -1259,7 +1258,7 @@ export default class LGraphCanvas_UI {
             if (options.do_type_filter && !opts.skipFilter) {
                 const sType = type;
 
-                let sV = sIn?.value;
+                let sV: any = sIn?.value;
                 if (opts.inTypeOverride != null) sV = opts.inTypeOverride;
                 //if (sV.toLowerCase() == "_event_") sV = LiteGraph.EVENT; // -1
 
@@ -1972,7 +1971,7 @@ export default class LGraphCanvas_UI {
         switch (typeof _slotX) {
             case "string":
                 iSlotConn = isFrom ? nodeX.findOutputSlotIndexByName(_slotX as string) : nodeX.findInputSlotIndexByName(_slotX as string);
-                slotX = isFrom ? nodeX.outputs[_slotX as string] : nodeX.inputs[_slotX as string];
+                slotX = isFrom ? (nodeX.outputs as any)[_slotX as string] : (nodeX.inputs as any)[_slotX as string];
                 break;
             case "object":
                 // ok slotX
@@ -2054,7 +2053,7 @@ export default class LGraphCanvas_UI {
         }
 
         // callback
-        const inner_clicked = (v: IContextMenuItem, options, e) => {
+        const inner_clicked = (v: IContextMenuItem, options: IContextMenuOptions, e: MouseEventExt) => {
             //console.log("Process showConnectionMenu selection");
             switch (v.content) {
                 case "Add Node":
@@ -2204,7 +2203,7 @@ export default class LGraphCanvas_UI {
             for (var i in info.values) {
                 var v = i;
                 if (info.values instanceof Array)
-                    v = info.values[i];
+                    v = (info.values as any)[i];
 
                 input_html +=
                     "<option value='" +
@@ -2235,12 +2234,12 @@ export default class LGraphCanvas_UI {
             options
         );
 
-        var input = null;
+        var input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null = null;
         if ((type == "enum" || type == "combo") && info.values) {
             input = dialog.querySelector("select");
             input.addEventListener("change", function(e) {
                 dialog.modified();
-                setValue(e.target.value);
+                setValue((e.target as HTMLInputElement).value);
                 //var index = e.target.value;
                 //setValue( e.options[e.selectedIndex].value );
             });
@@ -2249,7 +2248,7 @@ export default class LGraphCanvas_UI {
             if (input) {
                 input.addEventListener("click", function(e) {
                     dialog.modified();
-                    setValue(!!input.checked);
+                    setValue(!!(input as HTMLInputElement).checked);
                 });
             }
         } else {
@@ -2260,7 +2259,7 @@ export default class LGraphCanvas_UI {
                 input = dialog.querySelector("input");
             }
             if (input) {
-                input.addEventListener("blur", function(e) {
+                input.addEventListener("blur", function(this: HTMLInputElement) {
                     this.focus();
                 });
 
@@ -2273,7 +2272,7 @@ export default class LGraphCanvas_UI {
                 }
 
                 input.value = v;
-                input.addEventListener("keydown", function(e) {
+                input.addEventListener("keydown", function(e: KeyboardEvent) {
                     let prevent_default = false;
                     if (e.keyCode == 27) {
                         //ESC
@@ -2290,11 +2289,11 @@ export default class LGraphCanvas_UI {
                         e.preventDefault();
                         e.stopPropagation();
                     }
-                });
+                } as EventListener);
 
                 if (info.inputStyle)
                     for (const [k, v] of Object.entries(info.inputStyle))
-                        input.style[k] = v
+                        (input.style as any)[k] = v
             }
         }
         if (input) input.focus();
@@ -2405,7 +2404,7 @@ export default class LGraphCanvas_UI {
             }
         };
 
-        var dialogCloseTimer = null;
+        let dialogCloseTimer: ReturnType<typeof setTimeout> | null = null;
         var prevent_timeout = 0;
         dialog.addEventListener("mouseleave", function(e: MouseEvent) {
             if (prevent_timeout)
@@ -2438,7 +2437,7 @@ export default class LGraphCanvas_UI {
     }
 
     getCanvasMenuOptions(this: LGraphCanvas): ContextMenuItem[] {
-        var options = null;
+        var options: ContextMenuItem[] = [];
         var that = this;
         if (this.getMenuOptions) {
             options = this.getMenuOptions(this);

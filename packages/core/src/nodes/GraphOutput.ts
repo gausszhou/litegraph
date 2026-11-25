@@ -15,7 +15,7 @@ export interface GraphOutputProperties extends Record<string, any> {
 }
 
 export function getSlotTypesOut(): string[] {
-    let result = []
+    let result: any[] = []
     result = result.concat(BASE_SLOT_TYPES)
     result = result.concat([BuiltInSlotType.EVENT])
     result = result.concat(LiteGraph.slot_types_out)
@@ -67,7 +67,7 @@ export default class GraphOutput extends LGraphNode {
                 getLitegraphTypeName(this.properties.type),
                 this.setType.bind(this),
                 { values: getSlotTypesOutFormatted }
-            );
+            ) as IWidget;
         }
         else {
             this.typeWidget = this.addWidget<ITextWidget>(
@@ -75,7 +75,7 @@ export default class GraphOutput extends LGraphNode {
                 "Type",
                 getLitegraphTypeName(this.properties.type),
                 this.setType.bind(this),
-            );
+            ) as IWidget;
         }
 
         this.widgets_up = true;

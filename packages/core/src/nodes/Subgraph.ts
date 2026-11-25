@@ -153,7 +153,7 @@ export default class Subgraph extends LGraphNode {
         // Support hooking into subclasses of LGraph with the subgraph lifecycle methods
         const wrap = <T extends (...args: any[]) => any>(origFn: T, ours: (...args: any[]) => any): T => {
             const oursBound = ours.bind(this);
-            return function(this: LGraph, ...args) {
+            return function(this: LGraph, ...args: any[]) {
                 origFn?.apply(this, args)
                 oursBound(...args)
             } as any
@@ -434,9 +434,9 @@ export default class Subgraph extends LGraphNode {
     };
 
     override serialize<T extends SerializedLGraphNode>(): T {
-        var data = LGraphNode.prototype.serialize.call(this);
+        var data = LGraphNode.prototype.serialize.call(this) as SerializedLGraphNode & { subgraph?: unknown };
         data.subgraph = this.subgraph.serialize();
-        return data;
+        return data as unknown as T;
     };
     //no need to define node.configure, the default method detects node.subgraph and passes the object to node.subgraph.configure()
 
@@ -503,7 +503,7 @@ export default class Subgraph extends LGraphNode {
         // { linkID => [link, connectionPos] }
         const innerLinks: Record<LinkID, [LLink, Vector2]> = {}
 
-        const containedNodes = nodes.reduce((result, node) => { result[node.id] = node; return result }, {})
+        const containedNodes = nodes.reduce<Record<NodeID, LGraphNode>>((result, node) => { result[node.id] = node; return result }, {})
 
         let min_x = Number.MAX_SAFE_INTEGER;
         let max_x = 0;
@@ -580,8 +580,8 @@ export default class Subgraph extends LGraphNode {
         }
 
         // { nodeId => { slotId => outputSlotOnSubgraphNode } }
-        const inputSlotsCreated: Record<number, Record<number, SubgraphInputPair>> = {}
-        const outputSlotsCreated: Record<number, Record<number, SubgraphOutputPair>> = {}
+        const inputSlotsCreated: Record<NodeID, Record<number, SubgraphInputPair>> = {}
+        const outputSlotsCreated: Record<NodeID, Record<number, SubgraphOutputPair>> = {}
 
         // Add nodes into the subgraph
         for (const node of nodes) {
@@ -878,7 +878,7 @@ export default class Subgraph extends LGraphNode {
             }
         }
 
-        const prevNodeIDtoNewNode = {}
+        const prevNodeIDtoNewNode: Record<NodeID, LGraphNode> = {}
 
         for (const [index, node] of nodes.entries()) {
             const newPos: Vector2 = [node.pos[0] - min_x + place_x, node.pos[1] - min_y + place_y]

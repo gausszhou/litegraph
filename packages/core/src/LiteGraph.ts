@@ -272,8 +272,9 @@ export default class LiteGraph {
                 sT = "*";
             }
             var registerTo = out ? "registered_slot_out_types" : "registered_slot_in_types";
-            if (typeof this[registerTo][sT] == "undefined") this[registerTo][sT] = { nodes: [] };
-            this[registerTo][sT].nodes.push(sCN);
+            const registry = (this as any)[registerTo];
+            if (typeof registry[sT] == "undefined") registry[sT] = { nodes: [] };
+            registry[sT].nodes.push(sCN);
 
             // check if is a new type
             if (sT !== "_event_" && sT !== "*") {
@@ -377,7 +378,7 @@ export default class LiteGraph {
         //extra options
         if (options.instanceProps) {
             for (var i in options.instanceProps) {
-                node[i] = options.instanceProps[i];
+                (node as any)[i] = (options.instanceProps as any)[i];
             }
         }
 
@@ -466,7 +467,7 @@ export default class LiteGraph {
      * @return {Array} array with all the names of the categories
      */
     static getNodeTypesCategories(filter: string): string[] {
-        var categories = { "": 1 };
+        var categories: Record<string, number> = { "": 1 };
         for (var i in LiteGraph.registered_node_types) {
             var type = LiteGraph.registered_node_types[i];
             if (type.category && !type.hide_in_node_lists) {
@@ -540,7 +541,7 @@ export default class LiteGraph {
         }
 
         for (var i in r) {
-            target[i] = r[i];
+            (target as any)[i] = (r as any)[i];
         }
         return target;
     }
@@ -598,7 +599,7 @@ export default class LiteGraph {
 
     static compareObjects(a: object, b: object): boolean {
         for (var i in a) {
-            if (a[i] != b[i]) {
+            if ((a as any)[i] != (b as any)[i]) {
                 return false;
             }
         }
@@ -656,7 +657,7 @@ export default class LiteGraph {
         return bounding;
     }
 
-    static isInsideBounding(p: Vector2, bb: Vector4): boolean {
+    static isInsideBounding(p: Vector2, bb: [Vector2, Vector2]): boolean {
         if (
             p[0] < bb[0][0] ||
             p[1] < bb[0][1] ||
@@ -729,7 +730,7 @@ export default class LiteGraph {
 
     /* helper for interaction: pointer, touch, mouse Listeners
        used by LGraphCanvas DragAndScale ContextMenu*/
-    static pointerListenerAdd(oDOM: Node, sEvIn: string, fCall: EventListener, capture = false) {
+    static pointerListenerAdd(oDOM: Node, sEvIn: string, fCall: (e: any) => any, capture = false) {
         if (!oDOM || !oDOM.addEventListener || !sEvIn || typeof fCall !== "function") {
             //console.log("cant pointerListenerAdd "+oDOM+", "+sEvent+", "+fCall);
             return; // -- break --
@@ -792,7 +793,7 @@ export default class LiteGraph {
         }
     }
 
-    static pointerListenerRemove(oDOM, sEvent, fCall, capture = false) {
+    static pointerListenerRemove(oDOM: any, sEvent: string, fCall: any, capture = false) {
         if (!oDOM || !oDOM.removeEventListener || !sEvent || typeof fCall !== "function") {
             //console.log("cant pointerListenerRemove "+oDOM+", "+sEvent+", "+fCall);
             return; // -- break --

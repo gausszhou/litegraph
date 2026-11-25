@@ -7,7 +7,7 @@ export default class LiteUtils {
 
   static compareObjects(a: object, b: object): boolean {
     for (var i in a) {
-      if (a[i] != b[i]) {
+      if ((a as any)[i] != (b as any)[i]) {
         return false;
       }
     }
@@ -65,7 +65,7 @@ export default class LiteUtils {
     return bounding;
   }
 
-  static isInsideBounding(p: Vector2, bb: Vector4): boolean {
+  static isInsideBounding(p: Vector2, bb: [Vector2, Vector2]): boolean {
     if (
       p[0] < bb[0][0] ||
       p[1] < bb[0][1] ||

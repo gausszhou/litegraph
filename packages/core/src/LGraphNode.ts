@@ -250,19 +250,21 @@ export default class LGraphNode {
                 continue;
             }
 
-            if (info[j] == null) {
+            const src = (info as any)[j];
+            if (src == null) {
                 continue;
-            } else if (typeof info[j] == "object") {
+            } else if (typeof src == "object") {
                 //object
                 //also detects node.subgraph
-                if (this[j] && this[j].configure) {
-                    this[j].configure(info[j]);
+                const current = (this as any)[j];
+                if (current && current.configure) {
+                    current.configure(src);
                 } else {
-                    this[j] = LiteGraph.cloneObject(info[j], this[j]);
+                    (this as any)[j] = LiteGraph.cloneObject(src, current);
                 }
             } //value
             else {
-                this[j] = info[j];
+                (this as any)[j] = src;
             }
         }
 
@@ -1302,7 +1304,7 @@ export default class LGraphNode {
         var o: IProperty = { name: name, type: type, default_value: default_value };
         if (extra_info) {
             for (var i in extra_info) {
-                o[i] = extra_info[i];
+                (o as any)[i] = (extra_info as any)[i];
             }
         }
         if (!this.properties_info) {
@@ -1330,7 +1332,7 @@ export default class LGraphNode {
         var output: INodeOutputSlot = { name: name, type: type, links: [], properties: {} };
         if (extra_info) {
             for (var i in extra_info) {
-                output[i] = extra_info[i];
+                (output as any)[i] = (extra_info as any)[i];
             }
         }
 
@@ -1432,7 +1434,7 @@ export default class LGraphNode {
         var input: INodeInputSlot = { name: name, type: type, link: null, properties: {} };
         if (extra_info) {
             for (var i in extra_info) {
-                input[i] = extra_info[i];
+                (input as any)[i] = (extra_info as any)[i];
             }
         }
 
@@ -1520,7 +1522,7 @@ export default class LGraphNode {
         pos: Vector2,
         direction: string
     ): INodeConnection {
-        let o = {
+        let o: INodeConnection = {
             name: name,
             type: type,
             pos: pos,
@@ -1604,7 +1606,7 @@ export default class LGraphNode {
         else
             size[1] += widgets_height;
 
-        function compute_text_size(text) {
+        function compute_text_size(text: string) {
             if (!text) {
                 return 0;
             }
@@ -1641,8 +1643,8 @@ export default class LGraphNode {
             }
         }
         //litescene mode using the constructor
-        if (this.constructor["@" + property])
-            info = this.constructor["@" + property];
+        if ((this.constructor as any)["@" + property])
+            info = (this.constructor as any)["@" + property];
 
         if ((this.constructor as any).widgets_info && (this.constructor as any).widgets_info[property])
             info = (this.constructor as any).widgets_info[property];
@@ -2381,7 +2383,7 @@ export default class LGraphNode {
         this.graph.afterChange();
         this.graph.connectionChange(this, linkInfo);
 
-        return linkInfo;
+        return linkInfo as unknown as T;
     }
 
     /**

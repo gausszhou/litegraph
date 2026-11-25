@@ -381,7 +381,7 @@ export default class LGraphCanvas_Events {
                         !this.live_mode
                     ) {
                         var mClikSlot = null;
-                        var mClikSlot_index = null;
+                        var mClikSlot_index: number | null = null;
                         var mClikSlot_isOut = null;
 
                         //search for outputs
@@ -412,7 +412,7 @@ export default class LGraphCanvas_Events {
                             }
                         }
                         //console.log("middleClickSlots? "+mClikSlot+" & "+(mClikSlot_index!==false));
-                        if (mClikSlot && mClikSlot_index !== false) {
+                        if (mClikSlot && mClikSlot_index !== null) {
 
                             var alphaPosY = 0.5 - ((mClikSlot_index + 1) / ((mClikSlot_isOut ? node.outputs.length : node.inputs.length)));
                             var node_bounding = node.getBounding();

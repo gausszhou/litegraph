@@ -1582,7 +1582,7 @@ export default class LGraphCanvas_Rendering {
                     continue;
                 }
                 var start_node_slot = link.origin_slot;
-                var start_node_slotpos = null;
+                var start_node_slotpos: Vector2 = [0, 0];
                 if (start_node_slot == -1) {
                     start_node_slotpos = [
                         start_node.pos[0] + 10,
@@ -1695,7 +1695,7 @@ export default class LGraphCanvas_Rendering {
 
         //choose color
         if (!color && link) {
-            color = link.color || this.link_type_colors[link.type];
+            color = link.color || this.link_type_colors[link.type as string];
         }
         if (!color) {
             color = this.default_link_color;

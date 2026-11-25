@@ -189,7 +189,7 @@ export default class ContextMenu {
             true
         );
 
-        function on_mouse_wheel(e) {
+        function on_mouse_wheel(e: WheelEvent) {
             var pos = parseInt(root.style.top);
             root.style.top =
                 (pos + e.deltaY * options.scroll_speed).toFixed() + "px";
@@ -201,8 +201,8 @@ export default class ContextMenu {
             options.scroll_speed = 0.1;
         }
 
-        root.addEventListener("wheel", on_mouse_wheel, true);
-        root.addEventListener("mousewheel", on_mouse_wheel, true);
+        root.addEventListener("wheel", on_mouse_wheel as unknown as EventListener, true);
+        root.addEventListener("mousewheel", on_mouse_wheel as unknown as EventListener, true);
 
         this.root = root;
 
@@ -359,7 +359,7 @@ export default class ContextMenu {
 
         let ctxMenu = this;
 
-        function inner_over(e: MouseEvent) {
+        function inner_over(this: HTMLElement & { value?: IContextMenuItem }, e: MouseEvent) {
             var value = this.value;
             if (!value || !value.has_submenu) {
                 return;
@@ -369,7 +369,7 @@ export default class ContextMenu {
         }
 
         //menu option clicked
-        function inner_onclick(_e: MouseEvent) {
+        function inner_onclick(this: HTMLElement, _e: MouseEvent) {
             let index = parseInt(this.dataset["value"])
             var value = ctxMenu.values[index];
             if (LiteGraph.debug)
@@ -390,7 +390,7 @@ export default class ContextMenu {
             if (options.callback) {
                 var r = options.callback.call(
                     this,
-                    value,
+                    value as IContextMenuItem,
                     options,
                     e,
                     that,

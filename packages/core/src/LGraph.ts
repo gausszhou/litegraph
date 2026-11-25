@@ -121,9 +121,9 @@ export default class LGraph {
     _is_subgraph: boolean = false;
     _subgraph_node: Subgraph | null = null;
 
-    nodes_executing: boolean[] = [];
-    nodes_actioning: boolean[] = [];
-    nodes_executedAction: string[] = [];
+    nodes_executing: Record<NodeID, boolean> = {};
+    nodes_actioning: Record<NodeID, string | boolean> = {};
+    nodes_executedAction: Record<NodeID, string> = {};
 
     execution_timer_id: ReturnType<typeof setInterval> | -1 = -1;
     execution_time: number = 0;
@@ -203,9 +203,9 @@ export default class LGraph {
 
         this.catch_errors = true;
 
-        this.nodes_executing = [];
-        this.nodes_actioning = [];
-        this.nodes_executedAction = [];
+        this.nodes_executing = {};
+        this.nodes_actioning = {};
+        this.nodes_executedAction = {};
 
         //subgraph_data
         this.inputs = {};
@@ -401,9 +401,9 @@ export default class LGraph {
         this.iteration += 1;
         this.elapsed_time = (now - this.last_update_time) * 0.001;
         this.last_update_time = now;
-        this.nodes_executing = [];
-        this.nodes_actioning = [];
-        this.nodes_executedAction = [];
+        this.nodes_executing = {};
+        this.nodes_actioning = {};
+        this.nodes_executedAction = {};
     }
 
     /**
@@ -434,11 +434,11 @@ export default class LGraph {
 
     /** This is more internal, it computes the executable nodes in order and returns it */
     computeExecutionOrder<T extends LGraphNode>(only_onExecute: boolean = false, set_level?: any): T[] {
-        var L: T[] = [];
-        var S = [];
-        var M = {};
-        var visited_links = {}; //to avoid repeating links
-        var remaining_links = {};
+        var L: LGraphNode[] = [];
+        var S: LGraphNode[] = [];
+        var M: Record<NodeID, LGraphNode> = {};
+        var visited_links: Record<LinkID, boolean> = {}; //to avoid repeating links
+        var remaining_links: Record<NodeID, number> = {};
 
         //search for the nodes without inputs (starting nodes)
         for (var i = 0, l = this._nodes.length; i < l; ++i) {
@@ -567,7 +567,7 @@ export default class LGraph {
             L[i].order = i;
         }
 
-        return L;
+        return L as T[];
     }
 
     /**
@@ -576,9 +576,9 @@ export default class LGraph {
      * @return an array with all the LGraphNodes that affect this node, in order of execution
      */
     getAncestors(node: LGraphNode): LGraphNode[] {
-        var ancestors = [];
-        var pending = [node];
-        var visited = {};
+        var ancestors: LGraphNode[] = [];
+        var pending: LGraphNode[] = [node];
+        var visited: Record<NodeID, boolean> = {};
 
         while (pending.length) {
             var current = pending.shift();
@@ -609,7 +609,7 @@ export default class LGraph {
      */
     arrange(margin: number = 100, layout: LayoutDirection = LayoutDirection.HORIZONTAL_LAYOUT): void {
         const nodes = this.computeExecutionOrder(false, true);
-        const columns = [];
+        const columns: LGraphNode[][] = [];
         for (let i = 0; i < nodes.length; ++i) {
             const node = nodes[i];
             const col = node._level || 1;
@@ -754,15 +754,16 @@ export default class LGraph {
                 continue;
             }
 
-            if (!node[eventName] || node.mode != mode) {
+            const handler = (node as any)[eventName];
+            if (!handler || node.mode != mode) {
                 continue;
             }
             if (params === undefined) {
-                node[eventName]();
+                handler.call(node);
             } else if (params && params.constructor === Array) {
-                node[eventName].apply(node, params);
+                handler.apply(node, params);
             } else {
-                node[eventName](params);
+                handler.call(node, params);
             }
         }
     }
@@ -775,8 +776,9 @@ export default class LGraph {
 
         for (var i = 0; i < this.list_of_graphcanvas.length; ++i) {
             var c = this.list_of_graphcanvas[i];
-            if (c[action]) {
-                c[action].apply(c, params);
+            const handler = (c as any)[action];
+            if (handler) {
+                handler.apply(c, params);
             }
         }
     }
@@ -908,7 +910,7 @@ export default class LGraph {
     /** Called by `LGraph.configure` */
     onConfigure?(data: SerializedLGraph): void;
 
-    onNodeTrace?(node: LGraphNode, message: string)
+    onNodeTrace?(node: LGraphNode, message: string): void
 
     /** Removes a node from the graph */
     remove(node: LGraphNode, options: LGraphRemoveNodeOptions = {}): void {
@@ -1327,7 +1329,7 @@ export default class LGraph {
         return true;
     }
 
-    onOutputAdded?(name: string, type: SlotType, value: any)
+    onOutputAdded?(name: string, type: SlotType, value: any): void
 
     /** Creates a global graph output */
     addOutput(name: string, type: SlotType, value: any): void {
@@ -1389,7 +1391,7 @@ export default class LGraph {
         return true;
     }
 
-    onOutputTypeChanged?(name: string, oldType: SlotType, newType: SlotType)
+    onOutputTypeChanged?(name: string, oldType: SlotType, newType: SlotType): void
 
     /** Changes the type of a global graph output */
     changeOutputType(name: string, type: SlotType): boolean | undefined {
@@ -1557,7 +1559,7 @@ export default class LGraph {
                 );
                 var link2 = LLink.configure(link);
                 for (var j in link) {
-                    link2[j] = link[j];
+                    (link2 as any)[j] = (link as any)[j];
                 }
                 this.links[i] = link2;
                 link = link2;
@@ -1606,7 +1608,7 @@ export default class LGraph {
 
         //decode links info (they are very verbose)
         if (data.links && data.links.constructor === Array) {
-            var links = [];
+            const links: any = [];
             for (var i = 0; i < data.links.length; ++i) {
                 var link_data = data.links[i];
                 if (!link_data) //weird bug
@@ -1624,7 +1626,7 @@ export default class LGraph {
         for (const i in data) {
             if (i == "nodes" || i == "groups") //links must be accepted
                 continue;
-            this[i] = data[i];
+            (this as any)[i] = (data as any)[i];
         }
 
         var error = false;
@@ -1684,7 +1686,7 @@ export default class LGraph {
         return error;
     }
 
-    load(url: string, callback?: (any) => void): void {
+    load(url: string, callback?: (data: any) => void): void {
         var that = this;
 
         //from file

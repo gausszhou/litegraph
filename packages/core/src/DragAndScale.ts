@@ -43,7 +43,7 @@ export default class DragAndScale {
 
     dragging: boolean = false;
 
-    private _binded_mouse_callback: EventListener | null = null;
+    private _binded_mouse_callback: ((e: any) => any) | null = null;
 
     bindEvents(element: HTMLCanvasElement): void {
         this.last_mouse = [0, 0]
