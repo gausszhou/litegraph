@@ -839,4 +839,8 @@ export default class LiteGraph {
 };
 
 
-(window as any).LiteGraph = LiteGraph;
+// Export as a browser global for script-tag usage, but keep the module importable in
+// non-browser environments (Node, jsdom without globals, SSR).
+if (typeof window !== "undefined") {
+    (window as any).LiteGraph = LiteGraph;
+}

@@ -1,6 +1,7 @@
 // used by some widgets to render a curve editor
 import LGraphCanvas from "./LGraphCanvas";
 import { clamp, distance } from "./utils";
+import type { Vector2 } from "./types";
 
 class CurveEditor {
   points: number[][] = [[]]
@@ -79,7 +80,7 @@ class CurveEditor {
     let h = this.size[1] - this.margin * 2;
     let x = localpos[0] - this.margin;
     let y = localpos[1] - this.margin;
-    let pos = [x, y];
+    let pos: Vector2 = [x, y];
     let max_dist = 30 / graphcanvas.ds.scale;
     //search closer one
     this.selected = this.getCloserPoint(pos, max_dist);
@@ -134,13 +135,13 @@ class CurveEditor {
     return false;
   };
 
-  getCloserPoint(pos: number[], max_dist: number = 30) {
+  getCloserPoint(pos: Vector2, max_dist: number = 30) {
     let points = this.points;
     if (!points) return -1;
     let w = this.size[0] - this.margin * 2;
     let h = this.size[1] - this.margin * 2;
     let num = points.length;
-    let p2 = [0, 0];
+    let p2: Vector2 = [0, 0];
     let min_dist = 10;
     let closest = -1;
     for (let i = 0; i < num; ++i) {

@@ -1,4 +1,3 @@
-import "./css/litegraph.css";
 export type { default as INodeConnection } from "./INodeConnection";
 export type { default as INodeSlot } from "./INodeSlot";
 export type { default as IProperty } from "./IProperty";
@@ -19,7 +18,6 @@ export { default as LLink } from "./LLink";
 
 export * from "./ContextMenu";
 export * from "./DragAndScale";
-export * from "./index";
 export * from "./INodeConnection";
 export * from "./INodeSlot";
 export * from "./IProperty";
@@ -39,7 +37,6 @@ export * from "./utils";
 
 export type * from "./ContextMenu";
 export type * from "./DragAndScale";
-export type * from "./index";
 export type * from "./INodeConnection";
 export type * from "./INodeSlot";
 export type * from "./IProperty";

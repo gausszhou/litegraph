@@ -1721,4 +1721,7 @@ export default class LGraph {
     }
 }
 
-(window as any).LGraph = LGraph;
+// Browser global for script-tag usage; guarded so the module stays importable in Node.
+if (typeof window !== "undefined") {
+    (window as any).LGraph = LGraph;
+}
