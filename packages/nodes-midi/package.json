@@ -1,19 +1,57 @@
 {
   "name": "@gausszhou/litegraph-nodes-midi",
   "version": "0.1.0",
-  "description": "",
+  "description": "LiteGraph MIDI nodes",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "private": false,
   "scripts": {
-    "build": "vite build"
+    "build": "vite build && tsc -p tsconfig.json --emitDeclarationOnly --declaration --outDir dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@gausszhou/litegraph-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.3",
-    "vite": "^4.2.1",
-    "vite-plugin-externals": "^0.6.2"
+    "vite": "^4.2.1"
+  },
+  "type": "module",
+  "license": "MIT",
+  "author": "Gauss Zhou <gausszhou@qq.com>",
+  "homepage": "https://gausszhou.github.io/litegraph/docs",
+  "bugs": {
+    "url": "https://github.com/gausszhou/litegraph/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gausszhou/litegraph.git",
+    "directory": "packages/nodes-midi"
+  },
+  "files": [
+    "dist"
+  ],
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "keywords": [
+    "litegraph",
+    "node-graph",
+    "nodes-midi"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

@@ -5,9 +5,14 @@ export default defineConfig({
   build: {
     outDir: "dist",
     lib: {
-      name: "nodes-input",
+      name: "litegraph-nodes-input",
       entry: resolve(__dirname, "src/index.ts"),
-      formats: ["es", "umd"],
+      formats: ["es"],
+      fileName: () => "index.js",
+    },
+    rollupOptions: {
+      // 核心引擎由使用方安装，避免打包出第二份 LiteGraph 实例
+      external: [/^@gausszhou\/litegraph-core(\/.*)?$/],
     },
   },
 });

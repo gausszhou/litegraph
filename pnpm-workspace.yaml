@@ -1,3 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+
+# esbuild 需要执行安装脚本下载平台二进制，显式放行，保证 CI 与本地一致
+allowBuilds:
+  esbuild: true

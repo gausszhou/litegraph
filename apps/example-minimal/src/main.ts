@@ -2,7 +2,7 @@ import { LiteGraph, LGraph, LGraphCanvas } from "@gausszhou/litegraph"
 import { ConstantNumber, Watch } from "@gausszhou/litegraph-nodes-basic"
 
 // Include litegraph's css, required for the UI to function properly
-// import "../../../packages/core/src/css/litegraph.css"
+import "@gausszhou/litegraph-core/style.css"
 
 // Grab canvas element from the index.html
 const root = document.getElementById("main") as HTMLDivElement;

@@ -6,7 +6,8 @@
   "types": "./src/main.ts",
   "private": true,
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {

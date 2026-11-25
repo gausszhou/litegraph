@@ -10,22 +10,19 @@
   "private": false,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && tsc -p tsconfig.json --emitDeclarationOnly --declaration --outDir dist && node ../../scripts/copy-file.mjs src/css/litegraph.css dist/litegraph.css",
     "preview": "vite preview",
-    "test": "jest",
-    "lint": "npx eslint src",
-    "lint:fix": "npx eslint --fix src"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "author": "jagenjo",
+  "author": "Gauss Zhou <gausszhou@qq.com>",
   "license": "MIT",
   "files": [
-    "dist",
-    "css/litegraph.css"
+    "dist"
   ],
   "bugs": {
-    "url": "https://github.com/jagenjo/litegraph.js/issues"
+    "url": "https://github.com/gausszhou/litegraph/issues"
   },
-  "homepage": "https://github.com/jagenjo/litegraph.js#readme",
+  "homepage": "https://gausszhou.github.io/litegraph/docs",
   "dependencies": {
     "uuid": "^9.0.0"
   },
@@ -33,5 +30,42 @@
     "@types/uuid": "^9.0.1",
     "typescript": "^5.0.3",
     "vite": "^4.2.1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gausszhou/litegraph.git",
+    "directory": "packages/core"
+  },
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json",
+    "./style.css": "./src/css/litegraph.css"
+  },
+  "keywords": [
+    "litegraph",
+    "node-editor",
+    "node-graph",
+    "canvas",
+    "blueprints",
+    "graph"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.umd.cjs"
+      },
+      "./style.css": "./dist/litegraph.css",
+      "./package.json": "./package.json"
+    }
   }
 }
