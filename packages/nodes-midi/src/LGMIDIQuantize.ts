@@ -9,9 +9,9 @@ export default  class LGMIDIQuantize extends LGraphNode {
     static color = MIDI_COLOR;
     offset_notes
     valid_notes
-    _current_scale: number;
+    _current_scale!: number;
     notes_pitches: any
-    midi_event: MIDIEvent
+    midi_event!: MIDIEvent;
     constructor() {
         super();
      this.properties = {

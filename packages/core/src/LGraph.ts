@@ -83,28 +83,28 @@ export default class LGraph {
         }
     }
 
-    filter: string;
-    catch_errors: boolean;
+    filter!: string;
+    catch_errors!: boolean;
     /** custom data */
-    config: LGraphConfig;
+    config!: LGraphConfig;
     vars: Record<string, any> = {}
     /** to store custom data */
     extra: Record<string, any> = {}
-    elapsed_time: number;
-    fixedtime: number;
-    fixedtime_lapse: number;
-    globaltime: number;
+    elapsed_time!: number;
+    fixedtime!: number;
+    fixedtime_lapse!: number;
+    globaltime!: number;
     inputs: Record<string, LGraphInput> = {}
     outputs: Record<string, LGraphOutput> = {}
-    iteration: number;
-    last_link_id: number;
-    last_node_id: number;
-    last_update_time: number;
+    iteration!: number;
+    last_link_id!: number;
+    last_node_id!: number;
+    last_update_time!: number;
     links: Record<LinkID, LLink> = {};
     list_of_graphcanvas: LGraphCanvas[] = [];
-    runningtime: number;
-    starttime: number;
-    status: LGraphStatus;
+    runningtime!: number;
+    starttime!: number;
+    status!: LGraphStatus;
 
     _nodes: LGraphNode[] = [];
     _groups: LGraphGroup[] = [];

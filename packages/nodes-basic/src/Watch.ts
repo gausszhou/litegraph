@@ -27,7 +27,7 @@ export default class Watch extends LGraphNode {
     { name: "value", defaultValue: 1.0 },
   ];
 
-  widget: INumberWidget;
+  widget!: INumberWidget;
 
   nameInGraph: string = "";
 

@@ -265,45 +265,45 @@ export default class LGraphCanvas
     allow_reconnect_links: boolean = true;
     /** No effect */
     allow_searchbox: boolean = true;
-    align_to_grid: false; // snap to grid
+    align_to_grid = false; // snap to grid
     always_render_background: boolean = false;
     autoresize?: boolean;
     background_image: string | null = LGraphCanvas.DEFAULT_BACKGROUND_IMAGE;
-    bgcanvas: HTMLCanvasElement;
-    bgctx: CanvasRenderingContext2D;
+    bgcanvas!: HTMLCanvasElement;
+    bgctx!: CanvasRenderingContext2D;
     block_click: boolean = false;
-    canvas: HTMLCanvasElement;
+    canvas!: HTMLCanvasElement;
     canvas_mouse: Vector2;
     clear_background: boolean = true;
-    connecting_node: LGraphNode | null;
+    connecting_node!: LGraphNode | null;
     connecting_pos: Vector2 | null = null;
     connecting_slot: SlotIndex | null = null;
     connecting_input: INodeInputSlot | null = null;
     connecting_output: INodeOutputSlot | null = null;
     connections_width: number = 3;
-    ctx: CanvasRenderingContext2D;
+    ctx!: CanvasRenderingContext2D;
     current_node: LGraphNode | null = null;
     default_link_color: string;
-    dirty_area: Vector4 | null;
+    dirty_area!: Vector4 | null;
     dirty_bgcanvas?: boolean;
     dirty_canvas?: boolean;
     drag_mode: boolean = false;
-    dragging_canvas: boolean;
+    dragging_canvas!: boolean;
     dragging_rectangle: Float32Array | null = null;
     ds: DragAndScale = new DragAndScale();
     /** used for transition */
     editor_alpha: number = 1;
     /** allows to filter to only accept some type of nodes in a graph */
     filter: any = null;
-    fps: number;
-    frame: number;
-    graph: LGraph;
-    highlighted_links: Record<LinkID, boolean>;
+    fps!: number;
+    frame!: number;
+    graph!: LGraph;
+    highlighted_links!: Record<LinkID, boolean>;
     highquality_render: boolean = true;
     inner_text_font: string;
-    is_rendering: boolean;
-    last_draw_time: number;
-    last_mouse: Vector2;
+    is_rendering!: boolean;
+    last_draw_time!: number;
+    last_mouse!: Vector2;
     skip_events: boolean = false;
     /**
      * Possible duplicated with `last_mouse`
@@ -313,7 +313,7 @@ export default class LGraphCanvas
     last_click_position: Vector2 = [0, 0];
     last_click_position_offset: Vector2 = [0, 0];
     /** Timestamp of last mouse click, defaults to 0 */
-    last_mouseclick: number;
+    last_mouseclick!: number;
     last_mouse_dragging: boolean = false;
     links_render_mode: LinkRenderMode = LinkRenderMode.SPLINE_LINK;
     live_mode: boolean = false;
@@ -323,10 +323,10 @@ export default class LGraphCanvas
     offset_mouse: Vector2 = [0, 0];
     /** mouse in graph coordinates, where 0,0 is the top-left corner of the blue rectangle */
     graph_mouse: Vector2 = [0, 0];
-    node_capturing_input: LGraphNode | null;
-    node_dragged: LGraphNode | null;
-    node_in_panel: LGraphNode | null;
-    node_over: LGraphNode | null;
+    node_capturing_input!: LGraphNode | null;
+    node_dragged!: LGraphNode | null;
+    node_in_panel!: LGraphNode | null;
+    node_over!: LGraphNode | null;
     node_title_color: string;
     node_widget: [LGraphNode, IWidget] | null = null;
     maxZoom: number | null = null;
@@ -404,10 +404,10 @@ export default class LGraphCanvas
     render_subgraph_panels: boolean = true;
     render_subgraph_stack_header: boolean = true;
     round_radius: number = 8;
-    selected_group: null | LGraphGroup;
-    selected_group_resizing: boolean;
-    selected_group_moving: boolean;
-    selected_nodes: Record<NodeID, LGraphNode>;
+    selected_group!: null | LGraphGroup;
+    selected_group_resizing!: boolean;
+    selected_group_moving!: boolean;
+    selected_nodes!: Record<NodeID, LGraphNode>;
     /** forces to redraw the canvas if the mouse does anything */
     set_canvas_dirty_on_mouse_event: boolean = true;
     show_info: boolean = true;
@@ -416,7 +416,7 @@ export default class LGraphCanvas
     use_gradients: boolean = false;
     visible_area: DragAndScale["visible_area"];
     visible_links: LLink[] = [];
-    visible_nodes: LGraphNode[];
+    visible_nodes!: LGraphNode[];
     zoom_modify_alpha: boolean = true;
 
     pointer_is_down: boolean = false;

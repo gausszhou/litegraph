@@ -51,6 +51,7 @@ export default class Editor {
   miniwindow: EditorMiniWindowPanel | null = null;
 
   constructor(containerId: string, options: EditorOptions = {}) {
+    this.containerId = containerId;
     this.options = options;
     this.root = this.createRoot();
     this.tools = this.root.querySelector(".tools") as HTMLDivElement;

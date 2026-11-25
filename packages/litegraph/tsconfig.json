@@ -9,8 +9,7 @@
     "module": "es2020",
     "outDir": "./build",
     "moduleResolution": "node",
-    "strict": false,
-    "strictNullChecks": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,8 +19,7 @@
     "noImplicitThis": true,
     "strictBindCallApply": true,
     "alwaysStrict": true,
-    "strictFunctionTypes": true,
-    "useUnknownInCatchVariables": true
+    "strictFunctionTypes": true
   },
   "include": [
     "./src"

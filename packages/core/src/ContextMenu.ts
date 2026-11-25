@@ -302,7 +302,7 @@ export default class ContextMenu {
 
     options: IContextMenuOptions;
     parentMenu?: ContextMenu | null;
-    lock: boolean;
+    lock!: boolean;
     current_submenu?: ContextMenu | null;
     addItem(
         name: string,

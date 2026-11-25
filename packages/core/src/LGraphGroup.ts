@@ -14,7 +14,7 @@ export type SerializedLGraphGroup = {
 export default class LGraphGroup {
     title: string;
     color: string;
-    font: string;
+    font!: string;
     fontSize: number = LiteGraph.DEFAULT_GROUP_FONT_SIZE;
     private _nodes: LGraphNode[] = [];
     graph: LGraph | null = null

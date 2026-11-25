@@ -146,27 +146,27 @@ export default class LGraphNode {
         this.flags = {};
     }
 
-    title: string;
+    title!: string;
     desc: string = "";
     type: null | string;
-    category: null | string;
+    category!: null | string;
     size: Vector2;
     pos: Vector2 = [0, 0]
     graph: null | LGraph;
-    graph_version: number;
+    graph_version!: number;
     subgraph: null | LGraph = null;
     skip_subgraph_button: boolean = false;
-    is_selected: boolean;
-    mouseOver: boolean;
+    is_selected!: boolean;
+    mouseOver!: boolean;
     /** computeExecutionOrder sorts by priority first, then order if priorities are the same */
     priority: number = 0;
-    order: number;
-    redraw_on_mouse: boolean;
+    order!: number;
+    redraw_on_mouse!: boolean;
     removable: boolean = true;
     clonable: boolean = true;
     collapsable: boolean = true;
     titleMode: TitleMode = TitleMode.NORMAL_TITLE;
-    class: new () => LGraphNode;
+    class!: new () => LGraphNode;
 
     id: NodeID;
 
@@ -188,10 +188,10 @@ export default class LGraphNode {
         skip_repeated_outputs: boolean,
     }>;
 
-    color: string;
-    bgcolor: string;
-    boxcolor: string;
-    shape: SlotShape;
+    color!: string;
+    bgcolor!: string;
+    boxcolor!: string;
+    shape!: SlotShape;
 
     serialize_widgets: boolean = false;
     hide_in_node_lists: boolean = false;
@@ -201,21 +201,21 @@ export default class LGraphNode {
     last_serialization?: SerializedLGraphNode | null = null;
 
     _relative_id: string | number | null = null;
-    _level: number;
+    _level!: number;
 
     /** Used in `LGraphCanvas.onMenuNodeMode` */
     mode?: NodeMode;
 
     /** If set to true widgets do not start after the slots */
-    widgets_up: boolean;
+    widgets_up!: boolean;
     /** widgets start at y distance from the top of the node */
-    widgets_start_y: number;
+    widgets_start_y!: number;
     /** if you render outside the node, it will be clipped */
-    clip_area: boolean;
+    clip_area!: boolean;
     /** if set to false it wont be resizable with the mouse */
-    resizable: boolean;
+    resizable!: boolean;
     /** slots are distributed horizontally */
-    horizontal: boolean;
+    horizontal!: boolean;
     /** if true, the node will show the bgcolor as 'red'  */
     has_errors?: boolean;
 
