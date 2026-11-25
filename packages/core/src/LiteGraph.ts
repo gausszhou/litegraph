@@ -695,7 +695,7 @@ export default class LiteGraph {
         } //Remove the '#' char - if there is one.
         hex = hex.toUpperCase();
         var hex_alphabets = "0123456789ABCDEF";
-        let value: [number, number, number];
+        const value: [number, number, number] = [0, 0, 0];
         var k = 0;
         var int1, int2;
         for (var i = 0; i < 6; i += 2) {
@@ -778,16 +778,14 @@ export default class LiteGraph {
         switch (sEvent) {
             //both pointer and move events
             case "down": case "up": case "move": case "over": case "out": case "enter":
-                {
-                    oDOM.addEventListener(sMethod + sEvent, fCall, capture);
-                }
+                oDOM.addEventListener(sMethod + sEvent, fCall, capture);
+                break;
             // only pointerevents
             case "leave": case "cancel": case "gotpointercapture": case "lostpointercapture":
-                {
-                    if (sMethod != "mouse") {
-                        return oDOM.addEventListener(sMethod + sEvent, fCall, capture);
-                    }
+                if (sMethod != "mouse") {
+                    return oDOM.addEventListener(sMethod + sEvent, fCall, capture);
                 }
+                break;
             // not "pointer" || "mouse"
             default:
                 return oDOM.addEventListener(sEvent, fCall, capture);
@@ -802,18 +800,16 @@ export default class LiteGraph {
         switch (sEvent) {
             //both pointer and move events
             case "down": case "up": case "move": case "over": case "out": case "enter":
-                {
-                    if (LiteGraph.pointerevents_method == "pointer" || LiteGraph.pointerevents_method == "mouse") {
-                        oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, fCall, capture);
-                    }
+                if (LiteGraph.pointerevents_method == "pointer" || LiteGraph.pointerevents_method == "mouse") {
+                    oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, fCall, capture);
                 }
+                break;
             // only pointerevents
             case "leave": case "cancel": case "gotpointercapture": case "lostpointercapture":
-                {
-                    if (LiteGraph.pointerevents_method == "pointer") {
-                        return oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, fCall, capture);
-                    }
+                if (LiteGraph.pointerevents_method == "pointer") {
+                    return oDOM.removeEventListener(LiteGraph.pointerevents_method + sEvent, fCall, capture);
                 }
+                break;
             // not "pointer" || "mouse"
             default:
                 return oDOM.removeEventListener(sEvent, fCall, capture);

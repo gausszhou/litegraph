@@ -2204,7 +2204,7 @@ export default class LGraphCanvas
     prompt(
         title: string = "",
         value: any,
-        callback: Function,
+        callback: (...args: any[]) => void,
         event: any,
         multiline: boolean = false,
         style: CSSStyleDeclaration | null = null

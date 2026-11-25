@@ -34,7 +34,7 @@ export default class DragAndScale {
     scale: number = 1;
     max_scale: number = 10
     min_scale: number = 0.1
-    onredraw: Function | null = null;
+    onredraw: ((...args: any[]) => void) | null = null;
     enabled: boolean = true;
     last_mouse: Vector2 = [0, 0];
     element: HTMLCanvasElement | null = null;

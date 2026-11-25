@@ -99,7 +99,7 @@ export default class LiteUtils {
     } //Remove the '#' char - if there is one.
     hex = hex.toUpperCase();
     var hex_alphabets = "0123456789ABCDEF";
-    let value: [number, number, number];
+    const value: [number, number, number] = [0, 0, 0];
     var k = 0;
     var int1, int2;
     for (var i = 0; i < 6; i += 2) {

@@ -1,3 +1,5 @@
+import { LiteGraph } from "@gausszhou/litegraph";
+
 function TestWidgetsNode() {
   this.addOutput("", "number");
   this.properties = {};

@@ -151,7 +151,7 @@ export default class Subgraph extends LGraphNode {
         this.subgraph._is_subgraph = true;
 
         // Support hooking into subclasses of LGraph with the subgraph lifecycle methods
-        const wrap = <T extends Function>(origFn: T, ours: Function): T => {
+        const wrap = <T extends (...args: any[]) => any>(origFn: T, ours: (...args: any[]) => any): T => {
             const oursBound = ours.bind(this);
             return function(this: LGraph, ...args) {
                 origFn?.apply(this, args)

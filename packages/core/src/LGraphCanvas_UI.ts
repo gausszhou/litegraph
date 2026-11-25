@@ -818,7 +818,7 @@ export default class LGraphCanvas_UI {
         this: LGraphCanvas,
         title: string = "",
         value: any,
-        callback: Function,
+        callback: (...args: any[]) => void,
         event: any,
         multiline: boolean = false,
         inputStyle: Partial<CSSStyleDeclaration> | null = null
@@ -1169,7 +1169,7 @@ export default class LGraphCanvas_UI {
                                 iS = 0; // try with first if no name set
                         }
                         iS = iS as SlotIndex;
-                        if (typeof options.node_from.outputs[iS] !== undefined) {
+                        if (typeof options.node_from.outputs[iS] !== "undefined") {
                             if (iS !== null && iS > -1) {
                                 options.node_from.connectByTypeInput(iS, node, options.node_from.outputs[iS].type);
                             }
@@ -1197,7 +1197,7 @@ export default class LGraphCanvas_UI {
                             default:
                                 iS = 0; // try with first if no name set
                         }
-                        if (typeof options.node_to.inputs[iS] !== undefined) {
+                        if (typeof options.node_to.inputs[iS] !== "undefined") {
                             if (iS !== null && iS > -1) {
                                 // try connection
                                 options.node_to.connectByTypeOutput(iS, node, options.node_to.inputs[iS].type);
@@ -2992,7 +2992,7 @@ export default class LGraphCanvas_UI {
                 value_element.innerText = str_value;
 
                 value_element.addEventListener("click", function(event: MouseEvent) {
-                    let values: string[] | Function = (options as any).values || [];
+                    let values: string[] | ((...args: any[]) => any) = (options as any).values || [];
                     if (typeof values === "function") {
                         console.error("Values by callback not supported in panel.addWidget!", values)
                         values = []; // TODO

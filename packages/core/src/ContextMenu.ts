@@ -26,7 +26,7 @@ export interface IContextMenuItem {
 
 export interface IContextMenuOptions {
     callback?: ContextMenuEventListener;
-    ignore_item_callbacks?: Boolean;
+    ignore_item_callbacks?: boolean;
     event?: MouseEventExt | CustomEventExt;
     parentMenu?: ContextMenu;
     autoopen?: boolean;

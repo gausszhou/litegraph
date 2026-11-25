@@ -24,7 +24,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # lint 尚未接入 TypeScript 解析器，见 ROADMAP v0.2
+      - name: Lint
+        run: pnpm lint
+
       - name: Typecheck
         run: pnpm typecheck
 

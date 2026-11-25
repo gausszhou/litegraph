@@ -20,8 +20,8 @@ function runTests<T extends UnitTest>(ctor: new () => T) {
     }
     const classCategory = ctorName.substring(0, idx)
     describe(classCategory, () => {
-        const allTopLevelTests: [string, Function][] = []
-        const allTests: Record<string, [string, Function][]> = {}
+        const allTopLevelTests: [string, (...args: any[]) => any][] = []
+        const allTests: Record<string, [string, (...args: any[]) => any][]> = {}
         for (const key of Object.getOwnPropertyNames(Object.getPrototypeOf(instance))) {
             if (key.startsWith("test")) {
                 const keys = key.split("__")
