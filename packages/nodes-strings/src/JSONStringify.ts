@@ -23,10 +23,10 @@ export default class JSONStringify extends LGraphNode {
         ],
     }
 
-    private _value: string = null;
+    private _value: string | null = null;
     private _obj: any | null = null;
     private _error: string | null = null;
-    private _changed: boolean = false;
+    private _changed: boolean | null = false;
 
     override onExecute() {
         const inputData = this.getInputData(0)

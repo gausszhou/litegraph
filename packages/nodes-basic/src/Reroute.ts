@@ -20,32 +20,37 @@ export default class Reroute extends LGraphNode {
         this.setOutputData(0, this.getInputData(0));
     }
 
-    override getExtraMenuOptions(_: any, options: ContextMenuItem[]): ContextMenuItem[] | null {
+    override getExtraMenuOptions(_: any, options: ContextMenuItem[]): ContextMenuItem[] {
         const canSplice = this.getInputLink(0) != null && this.getOutputLinks(0).length > 0;
 
         options.push({
             content: "Splice & Remove",
             disabled: !canSplice,
             callback: () => {
+                const graph = this.graph;
                 const inputLink = this.getInputLink(0);
                 const outputLinks = this.getOutputLinks(0);
-                if (!inputLink || !outputLinks)
+                if (!graph || !inputLink || !outputLinks)
                     return;
 
-                const inputNode = this.graph.getNodeById(inputLink.origin_id)
-                this.graph.removeLink(inputLink.id);
+                const inputNode = graph.getNodeById(inputLink.origin_id)
+                if (!inputNode)
+                    return;
+                graph.removeLink(inputLink.id);
 
                 for (const outputLink of outputLinks) {
-                    const outputNode = this.graph.getNodeById(outputLink.target_id)
-                    this.graph.removeLink(outputLink.id);
+                    const outputNode = graph.getNodeById(outputLink.target_id)
+                    if (!outputNode)
+                        continue;
+                    graph.removeLink(outputLink.id);
 
                     inputNode.connect(inputLink.origin_slot, outputNode, outputLink.target_slot);
                 }
 
-                this.graph.remove(this);
+                graph.remove(this);
             }
         })
 
-        return null;
+        return options;
     }
 }

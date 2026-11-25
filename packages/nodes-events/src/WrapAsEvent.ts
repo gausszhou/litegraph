@@ -21,6 +21,6 @@ export default class WrapAsEvent extends LGraphNode {
 
     override onAction(action: any, param: any, options: { action_call?: string }) {
         var v = this.getInputData(1);
-        this.triggerSlot(0, v, null, options);
+        this.triggerSlot(0, v, undefined, options);
     }
 }

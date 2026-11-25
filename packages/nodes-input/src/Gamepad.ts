@@ -222,7 +222,7 @@ GamepadInput.prototype.getGamepad = function () {
     if (!gamepads[i]) {
       continue;
     }
-    gamepad = gamepads[i];
+    gamepad = gamepads[i]!;
 
     //xbox controller mapping
     var xbox = this.xbox_mapping;

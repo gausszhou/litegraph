@@ -96,7 +96,7 @@ export default class ConstantJSON extends LGraphNode {
             }
         }
         else {
-            this.valueWidget.type = null;
+            this.valueWidget.type = undefined;
         }
         this.properties.value = this.valueWidget.value;
     }

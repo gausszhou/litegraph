@@ -12,7 +12,7 @@ export default class MIDIInterface extends LGraphNode {
   error
   on_ready
   on_error: any
-  state
+  state!: { note: any[]; cc: any[] }
   input_ports: any
   input_ports_info: any
   output_ports: any

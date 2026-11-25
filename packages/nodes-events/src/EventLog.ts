@@ -28,9 +28,9 @@ export default class LogEvent extends LGraphNode {
 
     constructor(title?: string) {
         super()
-        this.actionWidget = this.addWidget("text", "Action", "", null, { multiline: true, max_length: 100 })
-        this.paramWidget = this.addWidget("text", "Param", "", null, { multiline: true, max_length: 100 })
-        this.optionsWidget = this.addWidget("text", "Opts", "", null, { multiline: true, max_length: 100 })
+        this.actionWidget = this.addWidget("text", "Action", "", undefined, { multiline: true, max_length: 100 })
+        this.paramWidget = this.addWidget("text", "Param", "", undefined, { multiline: true, max_length: 100 })
+        this.optionsWidget = this.addWidget("text", "Opts", "", undefined, { multiline: true, max_length: 100 })
     }
 
     override onAction(action: any, param: any, options: { action_call?: string }) {

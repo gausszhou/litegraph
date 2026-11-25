@@ -54,8 +54,8 @@ export default class Editor {
     this.options = options;
     this.root = this.createRoot();
     this.tools = this.root.querySelector(".tools") as HTMLDivElement;
-    this.toolsLeft = this.root.querySelector(".tools-left");
-    this.toolsRight = this.root.querySelector(".tools-right");
+    this.toolsLeft = this.root.querySelector(".tools-left") as HTMLDivElement;
+    this.toolsRight = this.root.querySelector(".tools-right") as HTMLDivElement;
     this.content = this.root.querySelector(".content") as HTMLDivElement;
     this.footer = this.root.querySelector(".footer") as HTMLDivElement;
     this.canvas = this.root.querySelector(".graphCanvas") as HTMLCanvasElement;

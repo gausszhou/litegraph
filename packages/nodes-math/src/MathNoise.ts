@@ -13,7 +13,7 @@ export default function MathNoise(this: any) {
 
 MathNoise.title = "Noise";
 MathNoise.desc = "Random number with temporal continuity";
-MathNoise.data = null;
+MathNoise.data = null as Float32Array | null;
 
 MathNoise.getValue = function (f: number, smooth: boolean) {
   if (!MathNoise.data) {

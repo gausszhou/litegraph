@@ -93,7 +93,7 @@ WidgetNumber.prototype.onMouseMove = function (this: any, e: MouseEventExt) {
 };
 
 WidgetNumber.prototype.onMouseUp = function (this: any, e: MouseEventExt, pos: [number, number]) {
-  if (e.click_time < 200) {
+  if ((e.click_time ?? 0) < 200) {
     var steps = pos[1] > this.size[1] * 0.5 ? -1 : 1;
     this.properties.value = clamp(
       this.properties.value + steps * this.properties.step,

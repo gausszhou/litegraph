@@ -33,7 +33,7 @@ export default class FrameDelayEvent extends LGraphNode {
     override onAction(action: any, param: any, options: { action_call?: string }) {
         var frames = this.properties.timeInFrames;
         if (frames <= 0) {
-            this.trigger(null, param, options);
+            this.trigger(undefined as any, param, options);
         } else {
             this._pending.push([frames, param]);
         }
@@ -58,7 +58,7 @@ export default class FrameDelayEvent extends LGraphNode {
             --i;
 
             //trigger
-            this.trigger(null, actionPass[1], options);
+            this.trigger(undefined as any, actionPass[1], options);
         }
     }
 }

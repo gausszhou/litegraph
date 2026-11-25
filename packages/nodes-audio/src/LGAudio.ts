@@ -22,7 +22,7 @@ class LGAudio {
         window.AudioContext || (window as any).webkitAudioContext;
       if (!window.AudioContext) {
         console.error("AudioContext not supported by browser");
-        return null;
+        return null as any;
       }
       this._audio_context = new AudioContext();
       this._audio_context.onmessage = function (msg: any) {

@@ -28,7 +28,7 @@ export default class StringSplit extends LGraphNode {
         if (separator == null)
             separator = this.properties.separator;
 
-        let value: string[] = []
+        let value: string[] | null = []
 
         if (str == null)
             value = [];

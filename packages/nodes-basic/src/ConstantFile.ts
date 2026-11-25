@@ -70,7 +70,7 @@ export default class ConstantFile extends LGraphNode {
         var that = this;
         if (!url || url.constructor !== String) {
             that._data = null;
-            that.boxcolor = null;
+            that.boxcolor = null as any;
             return;
         }
 

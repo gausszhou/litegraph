@@ -5,156 +5,56 @@
       "files": {}
     },
     "packages/litegraph": {
-      "total": 61,
-      "files": {
-        "../nodes-audio/src/LGAudio.ts": 1,
-        "../nodes-basic/src/ConstantFile.ts": 1,
-        "../nodes-basic/src/ConstantJSON.ts": 1,
-        "../nodes-basic/src/ConstantNull.ts": 1,
-        "../nodes-basic/src/GenericCompare.ts": 1,
-        "../nodes-basic/src/Reroute.ts": 9,
-        "../nodes-basic/src/Time.ts": 2,
-        "../nodes-events/src/EventBranch.ts": 1,
-        "../nodes-events/src/EventDelay.ts": 3,
-        "../nodes-events/src/EventFilter.ts": 4,
-        "../nodes-events/src/EventFrameDelay.ts": 2,
-        "../nodes-events/src/EventLog.ts": 3,
-        "../nodes-events/src/Sequence.ts": 1,
-        "../nodes-events/src/TriggerEvent.ts": 3,
-        "../nodes-events/src/WrapAsEvent.ts": 1,
-        "../nodes-input/src/Gamepad.ts": 15,
-        "../nodes-math/src/MathNoise.ts": 5,
-        "../nodes-midi/src/LGMIDIFromFile.ts": 1,
-        "../nodes-midi/src/LGMIDIIn.ts": 1,
-        "../nodes-midi/src/LGMIDIOut.ts": 1,
-        "../nodes-midi/src/MIDIInterface.ts": 3,
-        "../nodes-widget/src/WidgetNumber.ts": 1
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-audio": {
-      "total": 1,
-      "files": {
-        "src/LGAudio.ts": 1
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-basic": {
-      "total": 15,
-      "files": {
-        "src/ConstantFile.ts": 1,
-        "src/ConstantJSON.ts": 1,
-        "src/ConstantNull.ts": 1,
-        "src/GenericCompare.ts": 1,
-        "src/Reroute.ts": 9,
-        "src/Time.ts": 2
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-events": {
-      "total": 18,
-      "files": {
-        "src/EventBranch.ts": 1,
-        "src/EventDelay.ts": 3,
-        "src/EventFilter.ts": 4,
-        "src/EventFrameDelay.ts": 2,
-        "src/EventLog.ts": 3,
-        "src/Sequence.ts": 1,
-        "src/TriggerEvent.ts": 3,
-        "src/WrapAsEvent.ts": 1
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-graphics": {
       "total": 0,
       "files": {}
     },
     "packages/nodes-input": {
-      "total": 15,
-      "files": {
-        "src/Gamepad.ts": 15
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-logic": {
       "total": 0,
       "files": {}
     },
     "packages/nodes-math": {
-      "total": 5,
-      "files": {
-        "src/MathNoise.ts": 5
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-midi": {
-      "total": 6,
-      "files": {
-        "src/LGMIDIFromFile.ts": 1,
-        "src/LGMIDIIn.ts": 1,
-        "src/LGMIDIOut.ts": 1,
-        "src/MIDIInterface.ts": 3
-      }
+      "total": 0,
+      "files": {}
     },
     "packages/nodes-strings": {
       "total": 0,
       "files": {}
     },
     "packages/nodes-widget": {
-      "total": 1,
-      "files": {
-        "src/WidgetNumber.ts": 1
-      }
+      "total": 0,
+      "files": {}
     },
     "apps/editor": {
-      "total": 63,
-      "files": {
-        "src/Editor.ts": 2,
-        "../../packages/nodes-audio/src/LGAudio.ts": 1,
-        "../../packages/nodes-basic/src/ConstantFile.ts": 1,
-        "../../packages/nodes-basic/src/ConstantJSON.ts": 1,
-        "../../packages/nodes-basic/src/ConstantNull.ts": 1,
-        "../../packages/nodes-basic/src/GenericCompare.ts": 1,
-        "../../packages/nodes-basic/src/Reroute.ts": 9,
-        "../../packages/nodes-basic/src/Time.ts": 2,
-        "../../packages/nodes-events/src/EventBranch.ts": 1,
-        "../../packages/nodes-events/src/EventDelay.ts": 3,
-        "../../packages/nodes-events/src/EventFilter.ts": 4,
-        "../../packages/nodes-events/src/EventFrameDelay.ts": 2,
-        "../../packages/nodes-events/src/EventLog.ts": 3,
-        "../../packages/nodes-events/src/Sequence.ts": 1,
-        "../../packages/nodes-events/src/TriggerEvent.ts": 3,
-        "../../packages/nodes-events/src/WrapAsEvent.ts": 1,
-        "../../packages/nodes-input/src/Gamepad.ts": 15,
-        "../../packages/nodes-math/src/MathNoise.ts": 5,
-        "../../packages/nodes-midi/src/LGMIDIFromFile.ts": 1,
-        "../../packages/nodes-midi/src/LGMIDIIn.ts": 1,
-        "../../packages/nodes-midi/src/LGMIDIOut.ts": 1,
-        "../../packages/nodes-midi/src/MIDIInterface.ts": 3,
-        "../../packages/nodes-widget/src/WidgetNumber.ts": 1
-      }
+      "total": 0,
+      "files": {}
     },
     "apps/example-minimal": {
-      "total": 62,
-      "files": {
-        "src/main.ts": 1,
-        "../../packages/nodes-audio/src/LGAudio.ts": 1,
-        "../../packages/nodes-basic/src/ConstantFile.ts": 1,
-        "../../packages/nodes-basic/src/ConstantJSON.ts": 1,
-        "../../packages/nodes-basic/src/ConstantNull.ts": 1,
-        "../../packages/nodes-basic/src/GenericCompare.ts": 1,
-        "../../packages/nodes-basic/src/Reroute.ts": 9,
-        "../../packages/nodes-basic/src/Time.ts": 2,
-        "../../packages/nodes-events/src/EventBranch.ts": 1,
-        "../../packages/nodes-events/src/EventDelay.ts": 3,
-        "../../packages/nodes-events/src/EventFilter.ts": 4,
-        "../../packages/nodes-events/src/EventFrameDelay.ts": 2,
-        "../../packages/nodes-events/src/EventLog.ts": 3,
-        "../../packages/nodes-events/src/Sequence.ts": 1,
-        "../../packages/nodes-events/src/TriggerEvent.ts": 3,
-        "../../packages/nodes-events/src/WrapAsEvent.ts": 1,
-        "../../packages/nodes-input/src/Gamepad.ts": 15,
-        "../../packages/nodes-math/src/MathNoise.ts": 5,
-        "../../packages/nodes-midi/src/LGMIDIFromFile.ts": 1,
-        "../../packages/nodes-midi/src/LGMIDIIn.ts": 1,
-        "../../packages/nodes-midi/src/LGMIDIOut.ts": 1,
-        "../../packages/nodes-midi/src/MIDIInterface.ts": 3,
-        "../../packages/nodes-widget/src/WidgetNumber.ts": 1
-      }
+      "total": 0,
+      "files": {}
     }
   }
 }

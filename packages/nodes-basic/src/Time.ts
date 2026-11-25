@@ -23,8 +23,8 @@ export default class Time extends LGraphNode {
     ]
 
     override onExecute() {
-        this.setOutputData(0, this.graph.globaltime * 1000);
-        this.setOutputData(1, this.graph.globaltime);
+        this.setOutputData(0, this.graph!.globaltime * 1000);
+        this.setOutputData(1, this.graph!.globaltime);
     }
 }
 

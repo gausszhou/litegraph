@@ -28,7 +28,7 @@ export default class LGMIDIOut extends LGraphNode {
     this.size = [340, 60];
   }
 
-  onGetPropertyInfo(name: any) {
+  onGetPropertyInfo(name: any): any {
     if (!this._midi) {
       return;
     }

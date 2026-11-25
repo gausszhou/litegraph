@@ -34,7 +34,7 @@ export default class ConstantNull extends LGraphNode {
 
     constructor(title?: string) {
         super()
-        this.widget = this.addWidget("toggle", "value", this.properties.value, "value");
+        this.widget = this.addWidget("toggle", "value", !!this.properties.value, "value");
         this.widgets_up = true;
     }
 

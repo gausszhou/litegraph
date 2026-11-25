@@ -24,7 +24,7 @@ export default class EventBranch extends LGraphNode {
 
     override onAction(action: any, param: any, options: { action_call?: string }) {
         this._value = this.getInputData(1);
-        this.triggerSlot(this._value ? 0 : 1, param, null, options);
+        this.triggerSlot(this._value ? 0 : 1, param, undefined, options);
     }
 }
 

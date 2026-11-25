@@ -21,7 +21,7 @@ export default class JSONParse extends LGraphNode {
         ],
     }
 
-    private _value: string = null;
+    private _value: string | null = null;
     private _str: string | null = null;
     private _error: string | null = null;
 

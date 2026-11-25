@@ -38,7 +38,7 @@ export default class GenericCompare extends LGraphNode {
 
     constructor(name?: string) {
         super()
-        this.opWidget = this.addWidget("combo", "Op.", this.properties.OP, null, { property: "OP", values: GenericCompare.values })
+        this.opWidget = this.addWidget("combo", "Op.", this.properties.OP, undefined, { property: "OP", values: GenericCompare.values })
     }
 
     override getTitle() {

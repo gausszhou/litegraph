@@ -33,14 +33,14 @@ export default class DelayEvent extends LGraphNode {
     override onAction(action: any, param: any, options: { action_call?: string }) {
         var time = this.properties.timeInMs;
         if (time <= 0) {
-            this.trigger(null, param, options);
+            this.trigger(undefined as any, param, options);
         } else {
             this._pending.push([time, param]);
         }
     }
 
     override onExecute(param: any, options: object) {
-        var dt = this.graph.elapsed_time * 1000; //in ms
+        var dt = this.graph!.elapsed_time * 1000; //in ms
 
         if (this.isInputConnected(1)) {
             this.properties.timeInMs = this.getInputData(1);
@@ -58,7 +58,7 @@ export default class DelayEvent extends LGraphNode {
             --i;
 
             //trigger
-            this.trigger(null, actionPass[1], options);
+            this.trigger(undefined as any, actionPass[1], options);
         }
     }
 }

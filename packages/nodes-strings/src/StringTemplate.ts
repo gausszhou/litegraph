@@ -34,7 +34,7 @@ export default class StringTemplate extends LGraphNode {
         { name: "stringQuote", defaultValue: "" }
     ]
 
-    private _value: string = null;
+    private _value: string | null = null;
 
     templateWidget: ITextWidget;
 

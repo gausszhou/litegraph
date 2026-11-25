@@ -6,7 +6,7 @@ import "@gausszhou/litegraph-core/style.css"
 
 // Grab canvas element from the index.html
 const root = document.getElementById("main") as HTMLDivElement;
-const canvas = root.querySelector<HTMLCanvasElement>(".graphCanvas");
+const canvas = root.querySelector<HTMLCanvasElement>(".graphCanvas")!;
 
 // Setup graph (nodes/logic) and graph canvas (rendering/canvas/UI)
 const graph = new LGraph();

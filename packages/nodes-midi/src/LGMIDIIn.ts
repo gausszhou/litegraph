@@ -34,7 +34,7 @@ export default   class LGMIDIIn  extends LGraphNode {
      });
    }
 
-    getPropertyInfo(name: any) {
+    getPropertyInfo(name: any): any {
       if (!this._midi) {
           return;
       }

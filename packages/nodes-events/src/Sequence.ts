@@ -39,7 +39,7 @@ export default class Sequence extends LGraphNode {
                     options.action_call = options.action_call + "_seq_" + i;
                 else
                     options.action_call = this.id + "_" + (action ? action : "action") + "_seq_" + i + "_" + Math.floor(Math.random() * 9999);
-                this.triggerSlot(i, param, null, options);
+                this.triggerSlot(i, param, undefined, options);
             }
         }
     }

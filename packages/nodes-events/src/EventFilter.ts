@@ -39,10 +39,10 @@ export default class FilterEvent extends LGraphNode {
 
     constructor(name?: string) {
         super()
-        this.modeWidget = this.addWidget("combo", "Mode", this.properties.mode, null, { property: "mode", values: ["param", "property"] })
+        this.modeWidget = this.addWidget("combo", "Mode", this.properties.mode, undefined, { property: "mode", values: ["param", "property"] })
         this.propertyNameWidget = this.addWidget("text", "Prop.", this.properties.propertyName, "propertyName")
         this.propertyNameWidget.disabled = true;
-        this.opWidget = this.addWidget("combo", "Op.", this.properties.operation, null, { property: "operation", values: FilterEvent.values })
+        this.opWidget = this.addWidget("combo", "Op.", this.properties.operation, undefined, { property: "operation", values: FilterEvent.values })
         this.compareValueWidget = this.addWidget("text", "Value", this.properties.compareValue, "compareValue")
     }
 
@@ -136,10 +136,10 @@ export default class FilterEvent extends LGraphNode {
 
     override onAction(action: any, param: any, options: { action_call?: string }) {
         if (this.evaluate(param)) {
-            this.triggerSlot(0, param, null, options);
+            this.triggerSlot(0, param, undefined, options);
         }
         else {
-            this.triggerSlot(1, param, null, options);
+            this.triggerSlot(1, param, undefined, options);
         }
     }
 }

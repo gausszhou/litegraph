@@ -45,7 +45,7 @@ export default class LGMIDIFromFile extends LGraphNode {
 
     if (!this._playing) return;
 
-    this._current_time += this.graph.elapsed_time;
+    this._current_time += this.graph!.elapsed_time;
     var current_time = this._current_time * 100;
 
     for (var i = 0; i < this._midi.tracks; ++i) {
