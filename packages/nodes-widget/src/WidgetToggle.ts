@@ -1,6 +1,6 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
-export  default  function WidgetToggle() {
+export default function WidgetToggle(this: any) {
   this.addInput("", "boolean");
   this.addInput("e", BuiltInSlotType.ACTION);
   this.addOutput("v", "boolean");
@@ -12,7 +12,7 @@ export  default  function WidgetToggle() {
 WidgetToggle.title = "Toggle";
 WidgetToggle.desc = "Toggles between true or false";
 
-WidgetToggle.prototype.onDrawForeground = function (ctx) {
+WidgetToggle.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
     return;
   }
@@ -36,12 +36,12 @@ WidgetToggle.prototype.onDrawForeground = function (ctx) {
   ctx.textAlign = "left";
 };
 
-WidgetToggle.prototype.onAction = function (action) {
+WidgetToggle.prototype.onAction = function (this: any, action: any) {
   this.properties.value = !this.properties.value;
   this.trigger("e", this.properties.value);
 };
 
-WidgetToggle.prototype.onExecute = function () {
+WidgetToggle.prototype.onExecute = function (this: any) {
   var v = this.getInputData(0);
   if (v != null) {
     this.properties.value = v;
@@ -49,7 +49,7 @@ WidgetToggle.prototype.onExecute = function () {
   this.setOutputData(0, this.properties.value);
 };
 
-WidgetToggle.prototype.onMouseDown = function (e, local_pos) {
+WidgetToggle.prototype.onMouseDown = function (this: any, e: MouseEvent, local_pos: [number, number]) {
   if (local_pos[0] > 1 && local_pos[1] > 1 && local_pos[0] < this.size[0] - 2 && local_pos[1] < this.size[1] - 2) {
     this.properties.value = !this.properties.value;
     this.graph._version++;

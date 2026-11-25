@@ -30,7 +30,7 @@ export default class LGMIDIPlay extends LGraphNode {
       }
     }
 
-    onAction(event, midi_event) {
+    onAction(event: any, midi_event: any) {
       if (!midi_event || midi_event.constructor !== MIDIEvent) {
           return;
       }

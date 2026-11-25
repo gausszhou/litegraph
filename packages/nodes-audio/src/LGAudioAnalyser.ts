@@ -4,9 +4,9 @@ import LGAudio from "./LGAudio";
 export default class LGAudioAnalyser extends LGraphNode {
   properties
   audionode: AnalyserNode
-  _freq_bin
-  _time_bin
-  constructor(title) {
+  _freq_bin: any
+  _time_bin: any
+  constructor(title: any) {
     super();
     this.properties = {
       fftSize: 2048,
@@ -32,8 +32,8 @@ export default class LGAudioAnalyser extends LGraphNode {
     this._time_bin = null;
   }
 
-  onPropertyChanged(name, value) {
-    this.audionode[name] = value;
+  onPropertyChanged(name: any, value: any) {
+    (this.audionode as any)[name] = value;
   }
 
   onExecute() {
@@ -66,7 +66,7 @@ export default class LGAudioAnalyser extends LGraphNode {
       }
       var v = this.getInputData(i);
       if (v !== undefined) {
-        this.audionode[input.name].value = v;
+        (this.audionode as any)[input.name].value = v;
       }
     }
   }

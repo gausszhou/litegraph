@@ -31,7 +31,7 @@ export default class LGAudioMixer extends LGraphNode {
     this.addOutput("out", "audio");
   }
 
-  getAudioNodeInInputSlot(slot) {
+  getAudioNodeInInputSlot(slot: any) {
     if (slot == 0) {
       return this.audionode1;
     } else if (slot == 2) {
@@ -39,7 +39,7 @@ export default class LGAudioMixer extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "gain1") {
       this.audionode1.gain.value = value;
     } else if (name == "gain2") {

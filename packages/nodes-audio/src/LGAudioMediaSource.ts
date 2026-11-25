@@ -4,9 +4,9 @@ import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class LGAudioMediaSource extends LGraphNode {
   audionode: GainNode
-  _media_stream
-  _waiting_confirmation
-  audiosource_node
+  _media_stream: any
+  _waiting_confirmation: any
+  audiosource_node: any
   onConnectionsChange = LGAudio.onConnectionsChange;
   constructor() {
     super();
@@ -25,7 +25,7 @@ export default class LGAudioMediaSource extends LGraphNode {
   }
 
 
-  onAdded(graph) {
+  onAdded(graph: any) {
     if (graph.status === LGraphStatus.STATUS_RUNNING) {
       this.onStart();
     }
@@ -81,14 +81,14 @@ export default class LGAudioMediaSource extends LGraphNode {
 
     var that = this;
 
-    function onFailSoHard(err) {
+    function onFailSoHard(err: any) {
       console.log("Media rejected", err);
       that._media_stream = false;
       that.boxcolor = "red";
     }
   }
 
-  streamReady(localMediaStream) {
+  streamReady(localMediaStream: any) {
     this._media_stream = localMediaStream;
     //this._waiting_confirmation = false;
 
@@ -125,7 +125,7 @@ export default class LGAudioMediaSource extends LGraphNode {
     }
   }
 
-  onAction(event) {
+  onAction(event: any) {
     if (event == "Play") {
       this.audionode.gain.value = this.properties.gain;
     } else if (event == "Stop") {
@@ -133,7 +133,7 @@ export default class LGAudioMediaSource extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "gain") {
       this.audionode.gain.value = value;
     }

@@ -1,4 +1,4 @@
-export default function WidgetText() {
+export default function WidgetText(this: any) {
   this.addInputs("", 0);
   this.properties = {
     value: "...",
@@ -19,7 +19,7 @@ WidgetText.widgets = [
   { name: "normal_text", text: "Normal", type: "minibutton" }
 ];
 
-WidgetText.prototype.onDrawForeground = function (ctx) {
+WidgetText.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
 
   ctx.fillStyle = this.properties["color"];
   var v = this.properties["value"];
@@ -55,7 +55,7 @@ WidgetText.prototype.onDrawForeground = function (ctx) {
   ctx.textAlign = "left";
 };
 
-WidgetText.prototype.onExecute = function () {
+WidgetText.prototype.onExecute = function (this: any) {
   var v = this.getInputData(0);
   if (v != null) {
     this.properties["value"] = v;
@@ -63,7 +63,7 @@ WidgetText.prototype.onExecute = function () {
   //this.setDirtyCanvas(true);
 };
 
-WidgetText.prototype.resize = function () {
+WidgetText.prototype.resize = function (this: any) {
   if (!this.last_ctx) {
     return;
   }
@@ -83,7 +83,7 @@ WidgetText.prototype.resize = function () {
   this.setDirtyCanvas(true);
 };
 
-WidgetText.prototype.onPropertyChanged = function (name, value) {
+WidgetText.prototype.onPropertyChanged = function (this: any, name: string, value: any) {
   this.properties[name] = value;
   this.str = typeof value == "number" ? value.toFixed(3) : value;
   //this.resize();

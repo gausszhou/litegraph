@@ -106,7 +106,7 @@ export default class StringTemplate extends LGraphNode {
         this.setOutputData(0, this._value)
     };
 
-    private _args = null;
+    private _args: any[] | null = null;
 
     override onAction(action: any, param: any) {
         if (action === "update") {

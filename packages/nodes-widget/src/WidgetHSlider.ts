@@ -1,7 +1,8 @@
+import type { MouseEventExt } from "@gausszhou/litegraph-core";
 import { LiteUtils } from "@gausszhou/litegraph-core";
 
   //Widget H SLIDER
-  export  default  function WidgetHSlider() {
+  export default function WidgetHSlider(this: any) {
     this.size = [160, 26];
     this.addOutput("", "number");
     this.properties = { color: "#7AF", min: 0, max: 1, value: 0.5 };
@@ -11,7 +12,7 @@ import { LiteUtils } from "@gausszhou/litegraph-core";
   WidgetHSlider.title = "H.Slider";
   WidgetHSlider.desc = "Linear slider controller";
 
-  WidgetHSlider.prototype.onDrawForeground = function (ctx) {
+  WidgetHSlider.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
     if (this.value == -1) {
       this.value = (this.properties.value - this.properties.min) / (this.properties.max - this.properties.min);
     }
@@ -28,13 +29,13 @@ import { LiteUtils } from "@gausszhou/litegraph-core";
     ctx.fill();
   };
 
-  WidgetHSlider.prototype.onExecute = function () {
+  WidgetHSlider.prototype.onExecute = function (this: any) {
     this.properties.value = this.properties.min + (this.properties.max - this.properties.min) * this.value;
     this.setOutputData(0, this.properties.value);
     this.boxcolor = LiteUtils.colorToString([this.value, this.value, this.value]);
   };
 
-  WidgetHSlider.prototype.onMouseDown = function (e) {
+  WidgetHSlider.prototype.onMouseDown = function (this: any, e: MouseEventExt) {
     if (e.canvasY - this.pos[1] < 0) {
       return false;
     }
@@ -44,7 +45,7 @@ import { LiteUtils } from "@gausszhou/litegraph-core";
     return true;
   };
 
-  WidgetHSlider.prototype.onMouseMove = function (e) {
+  WidgetHSlider.prototype.onMouseMove = function (this: any, e: MouseEventExt) {
     if (!this.oldmouse) {
       return;
     }
@@ -66,12 +67,12 @@ import { LiteUtils } from "@gausszhou/litegraph-core";
     this.setDirtyCanvas(true);
   };
 
-  WidgetHSlider.prototype.onMouseUp = function (e) {
+  WidgetHSlider.prototype.onMouseUp = function (this: any, e: MouseEventExt) {
     this.oldmouse = null;
     this.captureInput(false);
   };
 
-  WidgetHSlider.prototype.onMouseLeave = function (e) {
+  WidgetHSlider.prototype.onMouseLeave = function (this: any, e: MouseEventExt) {
     //this.oldmouse = null;
   };
 

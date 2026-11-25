@@ -3,7 +3,7 @@ import LGAudio from "./LGAudio";
 
 export default class LGAudioVisualization extends LGraphNode {
 
-  _last_buffer
+  _last_buffer: any
   constructor() {
     super();
     this.properties = {
@@ -26,7 +26,7 @@ export default class LGAudioVisualization extends LGraphNode {
     this.setDirtyCanvas(true, false);
   }
 
-  onDrawForeground(ctx) {
+  onDrawForeground(ctx: any) {
     if (!this._last_buffer) {
       return;
     }

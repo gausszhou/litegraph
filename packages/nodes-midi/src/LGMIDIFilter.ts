@@ -33,7 +33,7 @@ export default class LGMIDIFilter  extends LGraphNode{
     if (this.properties.cmd == -1) {
       str = "Nothing";
     } else {
-      str = MIDIEvent.commands_short[this.properties.cmd] || "Unknown";
+      str = (MIDIEvent.commands_short as any)[this.properties.cmd] || "Unknown";
     }
 
     if (this.properties.min_value != -1 && this.properties.max_value != -1) {
@@ -47,17 +47,17 @@ export default class LGMIDIFilter  extends LGraphNode{
     return "Filter: " + str;
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "cmd") {
       var num = Number(value);
       if (isNaN(num)) {
-        num = MIDIEvent.commands[value] || 0;
+        num = (MIDIEvent.commands as any)[value] || 0;
       }
       this.properties.cmd = num;
     }
   }
 
-  onAction(event, midi_event) {
+  onAction(event: any, midi_event: any) {
     if (!midi_event || midi_event.constructor !== MIDIEvent) {
       return;
     }
@@ -97,7 +97,7 @@ export default class LGMIDIFilter  extends LGraphNode{
   }
 }
 
-LGMIDIFilter["@cmd"] = {
+(LGMIDIFilter as any)["@cmd"] = {
   type: "enum",
   title: "Command",
   values: MIDIEvent.commands_reversed,

@@ -6,7 +6,7 @@ export default class LGMIDIFromFile extends LGraphNode {
   static title = "MIDI fromFile";
   static desc = "Plays a MIDI file";
   static color = MIDI_COLOR;
-  _midi
+  _midi: any
   _current_time: number
   _playing: boolean
   constructor() {
@@ -31,12 +31,12 @@ export default class LGMIDIFromFile extends LGraphNode {
     }
   }
 
-  onAction(name) {
+  onAction(name: any) {
     if (name == "play") this.play();
     else if (name == "pause") this._playing = !this._playing;
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "url") this.loadMIDIFile(value);
   }
 
@@ -82,24 +82,24 @@ export default class LGMIDIFromFile extends LGraphNode {
     }
   }
 
-  loadMIDIFile(url) {
+  loadMIDIFile(url: any) {
     var that = this;
     (LiteGraph as any).fetchFile(
       url,
       "arraybuffer",
-      function (data) {
+      function (data: any) {
         that.boxcolor = "#AFA";
         that._midi = (window as any).MidiParser.parse(new Uint8Array(data));
         if (that.properties.autoplay) that.play();
       },
-      function (err) {
+      function (err: any) {
         that.boxcolor = "#FAA";
         that._midi = null;
       }
     );
   }
 
-  onDropFile(file) {
+  onDropFile(file: any) {
     this.properties.url = "";
     this.loadMIDIFile(file);
   }

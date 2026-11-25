@@ -19,7 +19,7 @@ export default  class LGMIDITranspose extends LGraphNode {
      this.midi_event = new MIDIEvent();
    }
 
-    onAction(event, midi_event) {
+    onAction(event: any, midi_event: any) {
       if (!midi_event || midi_event.constructor !== MIDIEvent) {
           return;
       }

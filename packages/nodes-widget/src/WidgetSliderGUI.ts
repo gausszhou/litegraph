@@ -1,4 +1,4 @@
-export default function WidgetSliderGUI() {
+export default function WidgetSliderGUI(this: any) {
   this.addOutput("", "number");
   this.properties = {
     value: 0.5,
@@ -12,7 +12,7 @@ export default function WidgetSliderGUI() {
     "slider",
     "V",
     this.properties.value,
-    function (v) {
+    function (v: any) {
       that.properties.value = v;
     },
     this.properties
@@ -22,12 +22,12 @@ export default function WidgetSliderGUI() {
 
 WidgetSliderGUI.title = "Inner Slider";
 
-WidgetSliderGUI.prototype.onPropertyChanged = function (name, value) {
+WidgetSliderGUI.prototype.onPropertyChanged = function (this: any, name: string, value: any) {
   if (name == "value") {
     this.slider.value = value;
   }
 };
 
-WidgetSliderGUI.prototype.onExecute = function () {
+WidgetSliderGUI.prototype.onExecute = function (this: any) {
   this.setOutputData(0, this.properties.value);
 };

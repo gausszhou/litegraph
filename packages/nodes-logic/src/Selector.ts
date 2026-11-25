@@ -2,7 +2,7 @@ import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 import { LGraphNode } from "@gausszhou/litegraph-core";
 import { LiteGraph } from "@gausszhou/litegraph-core";
 
-export default   function Selector() {
+export default   function Selector(this: any) {
   this.addInput("sel", "number");
   this.addInput("A");
   this.addInput("B");
@@ -16,7 +16,7 @@ export default   function Selector() {
 Selector.title = "Selector";
 Selector.desc = "selects an output";
 
-Selector.prototype.onDrawBackground = function(ctx) {
+Selector.prototype.onDrawBackground = function(this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
       return;
   }

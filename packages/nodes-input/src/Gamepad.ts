@@ -1,6 +1,6 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
-export default function GamepadInput() {
+export default function GamepadInput(this: any) {
   this.addOutput("left_x_axis", "number");
   this.addOutput("left_y_axis", "number");
   this.addOutput("button_pressed", BuiltInSlotType.EVENT);
@@ -250,7 +250,7 @@ GamepadInput.prototype.getGamepad = function () {
       if (j < 12) {
         xbox.buttons[GamepadInput.mapping_array[j]] =
           gamepad.buttons[j].pressed;
-        if (gamepad.buttons[j].was_pressed)
+        if ((gamepad.buttons[j] as any).was_pressed)
           this.trigger(GamepadInput.mapping_array[j] + "_button_event");
       } //mapping of XBOX
       else
@@ -287,12 +287,12 @@ GamepadInput.prototype.getGamepad = function () {
           default:
         }
     }
-    gamepad.xbox = xbox;
+    (gamepad as any).xbox = xbox;
     return gamepad;
   }
 };
 
-GamepadInput.prototype.onDrawBackground = function (ctx) {
+GamepadInput.prototype.onDrawBackground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
     return;
   }

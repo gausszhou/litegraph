@@ -1,6 +1,6 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
-export default function WidgetCombo() {
+export default function WidgetCombo(this: any) {
   this.addOutput("", "string");
   this.addOutput("change", BuiltInSlotType.EVENT);
   this.size = [80, 60];
@@ -14,7 +14,7 @@ export default function WidgetCombo() {
     "combo",
     "",
     this.properties.value,
-    function (v) {
+    function (v: any) {
       that.properties.value = v;
       that.triggerSlot(1, v);
     },
@@ -25,11 +25,11 @@ export default function WidgetCombo() {
 WidgetCombo.title = "Combo";
 WidgetCombo.desc = "Widget to select from a list";
 
-WidgetCombo.prototype.onExecute = function () {
+WidgetCombo.prototype.onExecute = function (this: any) {
   this.setOutputData(0, this.properties.value);
 };
 
-WidgetCombo.prototype.onPropertyChanged = function (name, value) {
+WidgetCombo.prototype.onPropertyChanged = function (this: any, name: string, value: any) {
   if (name == "values") {
     this._values = value.split(";");
     this.widget.options.values = this._values;

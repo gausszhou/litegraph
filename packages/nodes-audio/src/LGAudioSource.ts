@@ -8,13 +8,13 @@ export default class LGAudioSource  extends LGraphNode {
   static title = "Audio Source"
   static desc = "Plays an audio file";
   static supported_extensions = ["wav", "ogg", "mp3"];
-  _url
-  _dropped_url
-  _request
+  _url: any
+  _dropped_url: any
+  _request: any
   _loading_audio
-  _audiobuffer
-  _audionodes
-  _last_sourcenode
+  _audiobuffer: any
+  _audionodes: any
+  _last_sourcenode: any
   audionode
   onConnectionsChange = LGAudio.onConnectionsChange;
 
@@ -51,7 +51,7 @@ export default class LGAudioSource  extends LGraphNode {
     }
   }
 
-  onAdded(graph) {
+  onAdded(graph: any) {
     if (graph.status === LGraphStatus.STATUS_RUNNING) {
       this.onStart();
     }
@@ -140,7 +140,7 @@ export default class LGAudioSource  extends LGraphNode {
     }
   }
 
-  onAction(event) {
+  onAction(event: any) {
     if (this._audiobuffer) {
       if (event == "Play") {
         this.playBuffer(this._audiobuffer);
@@ -150,7 +150,7 @@ export default class LGAudioSource  extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "src") {
       this.loadSound(value);
     } else if (name == "gain") {
@@ -162,7 +162,7 @@ export default class LGAudioSource  extends LGraphNode {
     }
   }
 
-  playBuffer(buffer) {
+  playBuffer(buffer: any) {
     var context = LGAudio.getAudioContext();
 
     //create a new audionode (this is mandatory, AudioAPI doesnt like to reuse old ones)
@@ -191,7 +191,7 @@ export default class LGAudioSource  extends LGraphNode {
     return audionode;
   }
 
-  loadSound(url) {
+  loadSound(url: any) {
     var that = this;
 
     //kill previous load
@@ -212,7 +212,7 @@ export default class LGAudioSource  extends LGraphNode {
     this._loading_audio = true;
     this.boxcolor = "#AA4";
 
-    function inner(buffer) {
+    function inner(buffer: any) {
       that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
       that._audiobuffer = buffer;
       that._loading_audio = false;
@@ -240,7 +240,7 @@ export default class LGAudioSource  extends LGraphNode {
     ];
   }
 
-  onDropFile(file) {
+  onDropFile(file: any) {
     if (this._dropped_url) {
       URL.revokeObjectURL(this._dropped_url);
     }

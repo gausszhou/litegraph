@@ -22,7 +22,7 @@ export default  class LGMIDIShow extends LGraphNode {
     return this.title;
   }
 
-  onAction(event, midi_event) {
+  onAction(event: any, midi_event: any) {
     if (!midi_event) {
       return;
     }
@@ -33,7 +33,7 @@ export default  class LGMIDIShow extends LGraphNode {
     }
   }
 
-  onDrawForeground(ctx) {
+  onDrawForeground(ctx: any) {
     if (!this._str || this.flags.collapsed) {
       return;
     }

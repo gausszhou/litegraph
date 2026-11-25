@@ -1,4 +1,4 @@
-export  default  function WidgetProgress() {
+export default function WidgetProgress(this: any) {
   this.size = [160, 26];
   this.addInput("", "number");
   this.properties = { min: 0, max: 1, value: 0, color: "#AAF" };
@@ -7,14 +7,14 @@ export  default  function WidgetProgress() {
 WidgetProgress.title = "Progress";
 WidgetProgress.desc = "Shows data in linear progress";
 
-WidgetProgress.prototype.onExecute = function () {
+WidgetProgress.prototype.onExecute = function (this: any) {
   const v = this.getInputData(0);
   if (v != undefined) {
     this.properties["value"] = v;
   }
 };
 
-WidgetProgress.prototype.onDrawForeground = function (ctx) {
+WidgetProgress.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   // border
   ctx.lineWidth = 1;
   ctx.fillStyle = this.properties.color;

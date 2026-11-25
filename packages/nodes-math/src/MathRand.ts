@@ -1,4 +1,4 @@
-export default function MathRand() {
+export default function MathRand(this: any) {
   this.addOutput("value", "number");
   this.addProperty("min", 0);
   this.addProperty("max", 1);
@@ -26,7 +26,7 @@ MathRand.prototype.onExecute = function() {
   this.setOutputData(0, this._last_v);
 };
 
-MathRand.prototype.onDrawBackground = function(ctx) {
+MathRand.prototype.onDrawBackground = function(this: any, ctx: CanvasRenderingContext2D) {
   this.outputs[0].label = (this._last_v || 0).toFixed(3);
 };
 

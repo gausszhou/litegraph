@@ -1,4 +1,4 @@
-export default function MathNoise() {
+export default function MathNoise(this: any) {
   this.addInput("in", "number");
   this.addOutput("out", "number");
   this.addProperty("min", 0);
@@ -15,7 +15,7 @@ MathNoise.title = "Noise";
 MathNoise.desc = "Random number with temporal continuity";
 MathNoise.data = null;
 
-MathNoise.getValue = function (f, smooth) {
+MathNoise.getValue = function (f: number, smooth: boolean) {
   if (!MathNoise.data) {
     MathNoise.data = new Float32Array(1024);
     for (var i = 0; i < MathNoise.data.length; ++i) {
@@ -58,7 +58,7 @@ MathNoise.prototype.onExecute = function () {
   this.setOutputData(0, this._last_v);
 };
 
-MathNoise.prototype.onDrawBackground = function (ctx) {
+MathNoise.prototype.onDrawBackground = function (this: any, ctx: CanvasRenderingContext2D) {
   //show the current value
   this.outputs[0].label = (this._last_v || 0).toFixed(3);
 };

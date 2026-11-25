@@ -1,7 +1,7 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
 //Show value inside the debug console
-export default function TimerEvent() {
+export default function TimerEvent(this: any) {
   this.addProperty("interval", 1000);
   this.addProperty("event", "tick");
   this.addOutput("on_tick", BuiltInSlotType.EVENT);
@@ -13,23 +13,23 @@ export default function TimerEvent() {
 TimerEvent.title = "Timer";
 TimerEvent.desc = "Sends an event every N milliseconds";
 
-TimerEvent.prototype.onStart = function () {
+TimerEvent.prototype.onStart = function (this: any) {
   this.time = 0;
 };
 
-TimerEvent.prototype.getTitle = function () {
+TimerEvent.prototype.getTitle = function (this: any) {
   return "Timer: " + this.last_interval.toString() + "ms";
 };
 
 TimerEvent.on_color = "#AAA";
 TimerEvent.off_color = "#222";
 
-TimerEvent.prototype.onDrawBackground = function () {
+TimerEvent.prototype.onDrawBackground = function (this: any) {
   this.boxcolor = this.triggered ? TimerEvent.on_color : TimerEvent.off_color;
   this.triggered = false;
 };
 
-TimerEvent.prototype.onExecute = function () {
+TimerEvent.prototype.onExecute = function (this: any) {
   var dt = this.graph.elapsed_time * 1000; //in ms
 
   var trigger = this.time == 0;
@@ -55,10 +55,10 @@ TimerEvent.prototype.onExecute = function () {
   }
 };
 
-TimerEvent.prototype.onGetInputs = function () {
+TimerEvent.prototype.onGetInputs = function (this: any) {
   return [["interval", "number"]];
 };
 
-TimerEvent.prototype.onGetOutputs = function () {
+TimerEvent.prototype.onGetOutputs = function (this: any) {
   return [["tick", "boolean"]];
 };

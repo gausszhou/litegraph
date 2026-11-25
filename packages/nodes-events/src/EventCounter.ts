@@ -1,7 +1,7 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
  //Show value inside the debug console
-export default function EventCounter() {
+export default function EventCounter(this: any) {
   this.addInput("inc", BuiltInSlotType.ACTION);
   this.addInput("dec", BuiltInSlotType.ACTION);
   this.addInput("reset", BuiltInSlotType.ACTION);
@@ -15,14 +15,14 @@ export default function EventCounter() {
 EventCounter.title = "Counter";
 EventCounter.desc = "Counts events";
 
-EventCounter.prototype.getTitle = function() {
+EventCounter.prototype.getTitle = function(this: any) {
   if (this.flags.collapsed) {
       return String(this.num);
   }
   return this.title;
 };
 
-EventCounter.prototype.onAction = function(action, param, options) {
+EventCounter.prototype.onAction = function(this: any, action: string, param: any, options: any) {
   var v = this.num;
   if (action == "inc") {
       this.num += 1;
@@ -36,7 +36,7 @@ EventCounter.prototype.onAction = function(action, param, options) {
   }
 };
 
-EventCounter.prototype.onDrawBackground = function(ctx) {
+EventCounter.prototype.onDrawBackground = function(this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
       return;
   }
@@ -46,7 +46,7 @@ EventCounter.prototype.onDrawBackground = function(ctx) {
   ctx.fillText(this.num, this.size[0] * 0.5, this.size[1] * 0.5);
 };
 
-EventCounter.prototype.onExecute = function() {
+EventCounter.prototype.onExecute = function(this: any) {
   if(this.properties.doCountExecution){
       this.num += 1;
   }

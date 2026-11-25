@@ -10,7 +10,7 @@ export default  class LGMIDIQuantize extends LGraphNode {
     offset_notes
     valid_notes
     _current_scale: number;
-    notes_pitches
+    notes_pitches: any
     midi_event: MIDIEvent
     constructor() {
         super();
@@ -26,13 +26,13 @@ export default  class LGMIDIQuantize extends LGraphNode {
      this.processScale(this.properties.scale);
    }
 
-    onPropertyChanged(name, value) {
+    onPropertyChanged(name: any, value: any) {
       if (name == "scale") {
           this.processScale(value);
       }
     }
 
-    processScale(scale) {
+    processScale(scale: any) {
       this._current_scale = scale;
       this.notes_pitches = LGMIDIGenerator.processScale(scale);
       for (var i = 0; i < 12; ++i) {
@@ -56,7 +56,7 @@ export default  class LGMIDIQuantize extends LGraphNode {
       }
     }
 
-    onAction(event, midi_event) {
+    onAction(event: any, midi_event: any) {
       if (!midi_event || midi_event.constructor !== MIDIEvent) {
           return;
       }
@@ -68,7 +68,7 @@ export default  class LGMIDIQuantize extends LGraphNode {
           this.midi_event = new MIDIEvent();
           this.midi_event.setup(midi_event.data);
           var note = midi_event.note;
-          var index = MIDIEvent.note_to_index[note];
+          var index = (MIDIEvent.note_to_index as any)[note];
           var offset = this.offset_notes[index];
           this.midi_event.data[1] += offset;
           this.trigger("out", this.midi_event);

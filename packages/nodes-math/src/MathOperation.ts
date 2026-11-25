@@ -27,7 +27,7 @@ export default class MathOperation extends LGraphNode {
         ],
     }
 
-    private _func = (A, B) => { return A + B }
+    private _func = (A: any, B: any) => { return A + B }
     private _result: any[] = []; //only used for arrays
 
     override size: Vector2 = [100, 60];
@@ -82,7 +82,7 @@ export default class MathOperation extends LGraphNode {
         
         
 
-        var result;
+        var result: any;
         if (A.constructor === Number) {
             result = 0;
             result = this._func(A, B);

@@ -1,6 +1,6 @@
 import { clamp } from "@gausszhou/litegraph-core";
 
-export default function GraphicsPlot() {
+export default function GraphicsPlot(this: any) {
   this.addInput("A", "Number");
   this.addInput("B", "Number");
   this.addInput("C", "Number");
@@ -14,7 +14,7 @@ GraphicsPlot.title = "Plot";
 GraphicsPlot.desc = "Plots data over time";
 GraphicsPlot.colors = ["#FFF", "#F99", "#9F9", "#99F"];
 
-GraphicsPlot.prototype.onExecute = function(ctx) {
+GraphicsPlot.prototype.onExecute = function(this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
       return;
   }
@@ -34,7 +34,7 @@ GraphicsPlot.prototype.onExecute = function(ctx) {
   }
 };
 
-GraphicsPlot.prototype.onDrawBackground = function(ctx) {
+GraphicsPlot.prototype.onDrawBackground = function(this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
       return;
   }

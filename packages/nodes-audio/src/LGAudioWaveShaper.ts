@@ -25,7 +25,7 @@ export default class LGAudioWaveShaper extends LGraphNode{
     this.audionode.curve = v;
   }
 
-  setWaveShape(shape) {
+  setWaveShape(shape: any) {
     this.audionode.curve = shape;
   }
 }

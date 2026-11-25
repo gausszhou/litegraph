@@ -2,7 +2,7 @@ import { LGraphNode } from "@gausszhou/litegraph-core";
 import LGAudio from "./LGAudio";
 
 export default class LGAudioBandSignal extends LGraphNode {
-  _freqs
+  _freqs: any
   constructor() {
     super();
     //default

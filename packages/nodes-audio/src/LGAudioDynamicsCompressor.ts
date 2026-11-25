@@ -31,7 +31,7 @@ export default class LGAudioDynamicsCompressor extends LGraphNode {
       }
       var v = this.getInputData(i);
       if (v !== undefined) {
-        this.audionode[input.name].value = v;
+        (this.audionode as any)[input.name].value = v;
       }
     }
   }

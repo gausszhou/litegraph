@@ -2,13 +2,13 @@ import { LGraphNode, LGraphStatus } from "@gausszhou/litegraph-core";
 import LGAudio from "./LGAudio";
 
 export default class LGAudioScript extends LGraphNode {
-  static default_code
-  static _bypass_function
-  static onaudioprocess
-  audionode
-  _callback
-  _script
-  _old_code
+  static default_code: any
+  static _bypass_function: any
+  static onaudioprocess: any
+  audionode: any
+  _callback: any
+  _script: any
+  _old_code: any
   constructor() {
     super();
     if (!LGAudioScript.default_code) {
@@ -44,7 +44,7 @@ export default class LGAudioScript extends LGraphNode {
   }
 
   static default_function() {
-    this.onaudioprocess = function (audioProcessingEvent) {
+    this.onaudioprocess = function (audioProcessingEvent: any) {
       // The input buffer is the song we loaded earlier
       var inputBuffer = audioProcessingEvent.inputBuffer;
 
@@ -65,7 +65,7 @@ export default class LGAudioScript extends LGraphNode {
     };
   }
 
-  onAdded(graph) {
+  onAdded(graph: any) {
     if (graph.status == LGraphStatus.STATUS_RUNNING) {
       this.audionode.onaudioprocess = this._callback;
     }
@@ -108,7 +108,7 @@ export default class LGAudioScript extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "code") {
       this.properties.code = value;
       this.processCode();
@@ -119,6 +119,6 @@ export default class LGAudioScript extends LGraphNode {
   }
 }
 
-LGAudioScript["@code"] = { widget: "code", type: "code" };
+(LGAudioScript as any)["@code"] = { widget: "code", type: "code" };
 
 LGAudio.createAudioNodeWrapper(LGAudioScript);

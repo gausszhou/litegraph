@@ -22,7 +22,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       { x: 5.75, w: 0.5, h: 0.6, t: 1 },
       { x: 6, w: 1, h: 1, t: 0 }
     ];
-    keys
+    keys: any
     _last_key
     constructor() {
         super();
@@ -38,7 +38,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       this._last_key = -1;
     }
 
-    onDrawForeground(ctx) {
+    onDrawForeground(ctx: any) {
       if (this.flags.collapsed) {
           return;
       }
@@ -77,7 +77,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       }
     }
 
-    getKeyIndex(pos) {
+    getKeyIndex(pos: any) {
       var num_keys = this.properties.num_octaves * 12;
       var key_width = this.size[0] / (this.properties.num_octaves * 7);
       var key_height = this.size[1];
@@ -105,7 +105,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       return -1;
     }
 
-    onAction(event, params) {
+    onAction(event: any, params: any) {
       if (event == "reset") {
           for (var i = 0; i < this.keys.length; ++i) {
               this.keys[i] = false;
@@ -130,7 +130,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       this.trigger("note", midi_event);
     }
 
-    onMouseDown(e, pos) {
+    onMouseDown(e: any, pos: any) {
       if (pos[1] < 0) {
           return;
       }
@@ -144,7 +144,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       return true;
     }
 
-    onMouseMove(e, pos) {
+    onMouseMove(e: any, pos: any) {
       if (pos[1] < 0 || this._last_key == -1) {
           return;
       }
@@ -169,7 +169,7 @@ export default class LGMIDIKeys  extends LGraphNode{
       return true;
     }
 
-    onMouseUp(e, pos) {
+    onMouseUp(e: any, pos: any) {
       if (pos[1] < 0) {
           return;
       }

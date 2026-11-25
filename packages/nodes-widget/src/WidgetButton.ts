@@ -1,6 +1,6 @@
 import { BuiltInSlotType } from "@gausszhou/litegraph-core";
 
-export default function WidgetButton() {
+export default function WidgetButton(this: any) {
   this.addOutput("", BuiltInSlotType.EVENT);
   this.addOutput("", "boolean");
   this.addProperty("text", "click me");
@@ -14,7 +14,7 @@ WidgetButton.title = "Button";
 WidgetButton.desc = "Triggers an event";
 
 WidgetButton.font = "Arial";
-WidgetButton.prototype.onDrawForeground = function (ctx) {
+WidgetButton.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
     return;
   }
@@ -55,7 +55,7 @@ WidgetButton.prototype.onDrawForeground = function (ctx) {
   }
 };
 
-WidgetButton.prototype.onMouseDown = function (e, local_pos) {
+WidgetButton.prototype.onMouseDown = function (this: any, e: MouseEvent, local_pos: [number, number]) {
   if (
     local_pos[0] > 1 &&
     local_pos[1] > 1 &&
@@ -69,10 +69,10 @@ WidgetButton.prototype.onMouseDown = function (e, local_pos) {
   }
 };
 
-WidgetButton.prototype.onExecute = function () {
+WidgetButton.prototype.onExecute = function (this: any) {
   this.setOutputData(1, this.clicked);
 };
 
-WidgetButton.prototype.onMouseUp = function (e) {
+WidgetButton.prototype.onMouseUp = function (this: any, e: MouseEvent) {
   this.clicked = false;
 };

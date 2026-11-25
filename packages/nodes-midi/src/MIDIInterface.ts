@@ -3,22 +3,22 @@ import MIDIEvent from "./MIDIEvent";
 
 export default class MIDIInterface extends LGraphNode {
   
-  static input = null;
-  static output = null;
+  static input: any = null;
+  static output: any = null;
   static MIDIEvent = MIDIEvent;
-  static on_message
-  num_input_ports
-  num_output_ports
+  static on_message: any
+  num_input_ports: any
+  num_output_ports: any
   error
   on_ready
-  on_error
+  on_error: any
   state
-  input_ports
-  input_ports_info
-  output_ports
-  output_ports_info
-  midi
-  constructor(on_ready, on_error?) {
+  input_ports: any
+  input_ports_info: any
+  output_ports: any
+  output_ports_info: any
+  midi: any
+  constructor(on_ready: any, on_error?: any) {
     super();
     if (!navigator.requestMIDIAccess) {
       this.error = "not suppoorted";
@@ -33,8 +33,8 @@ export default class MIDIInterface extends LGraphNode {
     this.on_ready = on_ready;
 
     this.state = {
-      note: [],
-      cc: [],
+      note: [] as any[],
+      cc: [] as any[],
     };
 
     this.input_ports = null;
@@ -47,9 +47,9 @@ export default class MIDIInterface extends LGraphNode {
       .then(this.onMIDISuccess.bind(this), this.onMIDIFailure.bind(this));
   }
 
-  static parseMsg(data) {}
+  static parseMsg(data: any) {}
 
-  onMIDISuccess(midiAccess) {
+  onMIDISuccess(midiAccess: any) {
     console.log("MIDI ready!");
     console.log(midiAccess);
     this.midi = midiAccess; // store in the global (in real usage, would probably keep in an object instance)
@@ -117,18 +117,18 @@ export default class MIDIInterface extends LGraphNode {
     this.num_output_ports = num;
   }
 
-  onMIDIFailure(msg) {
+  onMIDIFailure(msg: any) {
     console.error("Failed to get MIDI access - " + msg);
   }
 
-  openInputPort(port, callback) {
+  openInputPort(port: any, callback: any) {
     var input_port = this.input_ports.get("input-" + port);
     if (!input_port) {
       return false;
     }
     var that = this;
 
-    input_port.onmidimessage = function (a) {
+    input_port.onmidimessage = function (a: any) {
       var midi_event = new MIDIEvent(a.data);
       that.updateState(midi_event);
       if (callback) {
@@ -142,7 +142,7 @@ export default class MIDIInterface extends LGraphNode {
     return true;
   }
 
-  updateState(midi_event) {
+  updateState(midi_event: any) {
     switch (midi_event.cmd) {
       case MIDIEvent.NOTEON:
         this.state.note[midi_event.value1 | 0] = midi_event.value2;
@@ -156,7 +156,7 @@ export default class MIDIInterface extends LGraphNode {
     }
   }
 
-  sendMIDI(port, midi_data) {
+  sendMIDI(port: any, midi_data: any) {
     if (!midi_data) {
       return;
     }

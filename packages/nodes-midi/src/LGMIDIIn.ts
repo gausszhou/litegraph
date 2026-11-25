@@ -8,11 +8,11 @@ export default   class LGMIDIIn  extends LGraphNode {
     static title = "MIDI Input";
     static desc = "Reads MIDI from a input port";
     static color = MIDI_COLOR;
-    _last_midi_event
-    _current_midi_event
+    _last_midi_event: any
+    _current_midi_event: any
     _last_time
-    _midi
-    _waiting
+    _midi: any
+    _waiting: any
     constructor() {
         super();
      this.addOutput("on_midi", BuiltInSlotType.EVENT);
@@ -24,7 +24,7 @@ export default   class LGMIDIIn  extends LGraphNode {
      this._last_time = 0;
 
      var that = this;
-     new MIDIInterface(function(midi) {
+     new MIDIInterface(function(midi: any) {
          //open
          that._midi = midi;
          if (that._waiting) {
@@ -34,13 +34,13 @@ export default   class LGMIDIIn  extends LGraphNode {
      });
    }
 
-    getPropertyInfo(name) {
+    getPropertyInfo(name: any) {
       if (!this._midi) {
           return;
       }
 
       if (name == "port") {
-          var values = {};
+          var values: Record<number, string> = {};
           for (var i = 0; i < this._midi.input_ports_info.length; ++i) {
               var input = this._midi.input_ports_info[i];
               values[i] = i + ".- " + input.name + " version:" + input.version;
@@ -60,7 +60,7 @@ export default   class LGMIDIIn  extends LGraphNode {
       }
     }
 
-    onMIDIEvent(data, midi_event) {
+    onMIDIEvent(data: any, midi_event: any) {
       this._last_midi_event = midi_event;
       this.boxcolor = "#AFA";
       this._last_time = LiteUtils.getTime();
@@ -78,7 +78,7 @@ export default   class LGMIDIIn  extends LGraphNode {
       }
     }
 
-    onDrawBackground(ctx) {
+    onDrawBackground(ctx: any) {
       this.boxcolor = "#AAA";
       if (!this.flags.collapsed && this._last_midi_event) {
           ctx.fillStyle = "white";

@@ -2,7 +2,10 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "es2020",
-    "lib": ["es2020", "DOM"],
+    "lib": [
+      "es2020",
+      "DOM"
+    ],
     "module": "es2020",
     "outDir": "./build",
     "moduleResolution": "node",
@@ -12,8 +15,18 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedParameters": false,
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "alwaysStrict": true,
+    "strictFunctionTypes": true,
+    "useUnknownInCatchVariables": true
   },
-  "include": ["./src"],
-  "exclude": ["./node_modules"]
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }

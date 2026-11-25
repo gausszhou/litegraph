@@ -23,8 +23,8 @@ export default class LGAudioOscillatorNode extends LGraphNode {
   }
 
   onStart() {
-    if (!this.audionode.started) {
-      this.audionode.started = true;
+    if (!(this.audionode as any).started) {
+      (this.audionode as any).started = true;
       try {
         this.audionode.start();
       } catch (err) {}
@@ -32,8 +32,8 @@ export default class LGAudioOscillatorNode extends LGraphNode {
   }
 
   onStop() {
-    if (this.audionode.started) {
-      this.audionode.started = false;
+    if ((this.audionode as any).started) {
+      (this.audionode as any).started = false;
       this.audionode.stop();
     }
   }
@@ -58,7 +58,7 @@ export default class LGAudioOscillatorNode extends LGraphNode {
       }
       var v = this.getInputData(i);
       if (v !== undefined) {
-        this.audionode[input.name].value = v;
+        (this.audionode as any)[input.name].value = v;
       }
     }
   }

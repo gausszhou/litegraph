@@ -84,14 +84,14 @@ export default class MIDIEvent extends LGraphNode {
 
   static commands_reversed = {};
   cmd
-  cmd_str
+  cmd_str: any
   channel
   data: Uint32Array
-  velocity
-  status
-  note
-  octave
-  constructor(data?) {
+  velocity: any
+  status: any
+  note: any
+  octave: any
+  constructor(data?: any) {
     super();
     this.channel = 0;
     this.cmd = 0;
@@ -102,15 +102,15 @@ export default class MIDIEvent extends LGraphNode {
     }
   }
 
-  static computePitch(note) {
+  static computePitch(note: any) {
     return Math.pow(2, (note - 69) / 12) * 440;
   }
 
-  static computePitchBend(v1, v2) {
+  static computePitchBend(v1: any, v2: any) {
     return v1 + (v2 << 7) - 8192;
   }
 
-  static computeCommandFromString(str) {
+  static computeCommandFromString(str: any) {
     if (!str) {
       return 0;
     }
@@ -160,7 +160,7 @@ export default class MIDIEvent extends LGraphNode {
     }
   }
 
-  static toNoteString(d, skip_octave?) {
+  static toNoteString(d: any, skip_octave?: any) {
     d = Math.round(d); //in case it has decimals
     var note = d - 21;
     var octave = Math.floor((d - 24) / 12 + 1);
@@ -171,7 +171,7 @@ export default class MIDIEvent extends LGraphNode {
     return MIDIEvent.notes[note] + (skip_octave ? "" : octave);
   }
 
-  static NoteStringToPitch(str) {
+  static NoteStringToPitch(str: any) {
     str = str.toUpperCase();
     var note = str[0];
     var octave = 4;
@@ -186,18 +186,18 @@ export default class MIDIEvent extends LGraphNode {
         octave = Number(str[1]);
       }
     }
-    var pitch = MIDIEvent.note_to_index[note];
+    var pitch = (MIDIEvent.note_to_index as any)[note];
     if (pitch == null) {
       return null;
     }
     return (octave - 1) * 12 + pitch + 21;
   }
 
-  fromJSON(o) {
+  fromJSON(o: any) {
     this.setup(o.data);
   }
 
-  setup(data) {
+  setup(data: any) {
     var raw_data = data;
     if (data.constructor === Object) {
       raw_data = data.data;
@@ -220,7 +220,7 @@ export default class MIDIEvent extends LGraphNode {
       this.cmd = MIDIEvent.NOTEOFF;
     }
 
-    this.cmd_str = MIDIEvent.commands[this.cmd] || "";
+    this.cmd_str = (MIDIEvent.commands as any)[this.cmd] || "";
 
     if (midiCommand >= MIDIEvent.NOTEON || midiCommand <= MIDIEvent.NOTEOFF) {
       this.channel = midiStatus & 0x0f;
@@ -243,8 +243,8 @@ export default class MIDIEvent extends LGraphNode {
     return this.data[1] + (this.data[2] << 7) - 8192;
   }
 
-  setCommandFromString(str) {
-    this.cmd = MIDIEvent.computeCommandFromString(str);
+  setCommandFromString(str: any) {
+    this.cmd = Number(MIDIEvent.computeCommandFromString(str));
   }
 
   toString() {
@@ -289,7 +289,7 @@ export default class MIDIEvent extends LGraphNode {
 }
 
 for (var i in MIDIEvent.commands) {
-  MIDIEvent.commands_reversed[MIDIEvent.commands[i]] = i;
+  (MIDIEvent.commands_reversed as any)[(MIDIEvent.commands as any)[i]] = i;
 }
 
 Object.defineProperty(MIDIEvent.prototype, "note", {

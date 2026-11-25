@@ -1,4 +1,4 @@
-export  default  function WidgetPanel() {
+export default function WidgetPanel(this: any) {
   this.size = [200, 100];
   this.properties = {
     borderColor: "#ffffff",
@@ -13,7 +13,7 @@ WidgetPanel.title = "Panel";
 WidgetPanel.desc = "Non interactive panel";
 WidgetPanel.widgets = [{ name: "update", text: "Update", type: "button" }];
 
-WidgetPanel.prototype.createGradient = function (ctx) {
+WidgetPanel.prototype.createGradient = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.properties["bgcolorTop"] == "" || this.properties["bgcolorBottom"] == "") {
     this.lineargradient = 0;
     return;
@@ -24,7 +24,7 @@ WidgetPanel.prototype.createGradient = function (ctx) {
   this.lineargradient.addColorStop(1, this.properties["bgcolorBottom"]);
 };
 
-WidgetPanel.prototype.onDrawForeground = function (ctx) {
+WidgetPanel.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
     return;
   }

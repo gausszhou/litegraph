@@ -25,7 +25,7 @@ export default class LGAudioGain extends LGraphNode {
       var input = this.inputs[i];
       var v = this.getInputData(i);
       if (v !== undefined) {
-        this.audionode[input.name].value = v;
+        (this.audionode as any)[input.name].value = v;
       }
     }
   }

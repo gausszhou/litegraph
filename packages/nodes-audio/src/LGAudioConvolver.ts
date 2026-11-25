@@ -3,10 +3,10 @@ import LGAudio from "./LGAudio";
 
 export default class LGAudioConvolver extends LGraphNode {
   audionode: ConvolverNode
-  private  _dropped_url
-  private  _impulse_buffer
-  private  _request
-  private  _loading_impulse
+  private  _dropped_url: any
+  private  _impulse_buffer: any
+  private  _request: any
+  private  _loading_impulse: any
   constructor() {
     super();
     //default
@@ -26,7 +26,7 @@ export default class LGAudioConvolver extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "impulse_src") {
       this.loadImpulse(value);
     } else if (name == "normalize") {
@@ -34,7 +34,7 @@ export default class LGAudioConvolver extends LGraphNode {
     }
   }
 
-  onDropFile(file) {
+  onDropFile(file: any) {
     if (this._dropped_url) {
       URL.revokeObjectURL(this._dropped_url);
     }
@@ -43,7 +43,7 @@ export default class LGAudioConvolver extends LGraphNode {
     this.loadImpulse(this._dropped_url);
   }
 
-  loadImpulse(url) {
+  loadImpulse(url: any) {
     var that = this;
 
     //kill previous load
@@ -63,7 +63,7 @@ export default class LGAudioConvolver extends LGraphNode {
     this._request = LGAudio.loadSound(url, inner);
     this._loading_impulse = true;
     // Decode asynchronously
-    function inner(buffer) {
+    function inner(buffer: any) {
       that._impulse_buffer = buffer;
       that.audionode.buffer = buffer;
       console.log("Impulse signal set");

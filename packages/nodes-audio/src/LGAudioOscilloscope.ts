@@ -3,7 +3,7 @@ import LGAudio from "./LGAudio";
 
 var currentTime = 0
 export default class LGAudioOscilloscope extends LGraphNode {
-  _last_buffer
+  _last_buffer: any
   start_time;
   constructor() {
     super();
@@ -17,7 +17,7 @@ export default class LGAudioOscilloscope extends LGraphNode {
     this._last_buffer =  this.getInputData(0)
     this.setDirtyCanvas(true, false);
   }
-  onDrawForeground(ctx) {
+  onDrawForeground(ctx: any) {
     if (!this._last_buffer) {
       return;
     }

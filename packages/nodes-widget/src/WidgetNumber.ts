@@ -1,6 +1,7 @@
+import type { MouseEventExt } from "@gausszhou/litegraph-core";
 import { clamp } from "@gausszhou/litegraph-core";
 
-export default function WidgetNumber() {
+export default function WidgetNumber(this: any) {
   this.addOutput("", "number");
   this.size = [80, 60];
   this.properties = { min: -1000, max: 1000, value: 1, step: 1 };
@@ -16,7 +17,7 @@ WidgetNumber.desc = "Widget to select number value";
 WidgetNumber.pixels_threshold = 10;
 WidgetNumber.markers_color = "#666";
 
-WidgetNumber.prototype.onDrawForeground = function (ctx) {
+WidgetNumber.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   var x = this.size[0] * 0.5;
   var h = this.size[1];
   if (h > 30) {
@@ -42,16 +43,16 @@ WidgetNumber.prototype.onDrawForeground = function (ctx) {
   ctx.fillText(this.properties.value.toFixed(this._precision), x, h * 0.75);
 };
 
-WidgetNumber.prototype.onExecute = function () {
+WidgetNumber.prototype.onExecute = function (this: any) {
   this.setOutputData(0, this.properties.value);
 };
 
-WidgetNumber.prototype.onPropertyChanged = function (name, value) {
+WidgetNumber.prototype.onPropertyChanged = function (this: any, name: string, value: any) {
   var t = (this.properties.step + "").split(".");
   this._precision = t.length > 1 ? t[1].length : 0;
 };
 
-WidgetNumber.prototype.onMouseDown = function (e, pos) {
+WidgetNumber.prototype.onMouseDown = function (this: any, e: MouseEventExt, pos: [number, number]) {
   if (pos[1] < 0) {
     return;
   }
@@ -63,7 +64,7 @@ WidgetNumber.prototype.onMouseDown = function (e, pos) {
   return true;
 };
 
-WidgetNumber.prototype.onMouseMove = function (e) {
+WidgetNumber.prototype.onMouseMove = function (this: any, e: MouseEventExt) {
   if (!this.mouse_captured) {
     return;
   }
@@ -91,7 +92,7 @@ WidgetNumber.prototype.onMouseMove = function (e) {
   this.setDirtyCanvas(true);
 };
 
-WidgetNumber.prototype.onMouseUp = function (e, pos) {
+WidgetNumber.prototype.onMouseUp = function (this: any, e: MouseEventExt, pos: [number, number]) {
   if (e.click_time < 200) {
     var steps = pos[1] > this.size[1] * 0.5 ? -1 : 1;
     this.properties.value = clamp(

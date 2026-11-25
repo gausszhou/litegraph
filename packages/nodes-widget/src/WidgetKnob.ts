@@ -1,6 +1,7 @@
+import type { MouseEventExt } from "@gausszhou/litegraph-core";
 import { LiteUtils } from "@gausszhou/litegraph-core";
 
-export default function WidgetKnob() {
+export default function WidgetKnob(this: any) {
   this.addOutput("", "number");
   this.size = [64, 84];
   this.properties = {
@@ -17,7 +18,7 @@ WidgetKnob.title = "Knob";
 WidgetKnob.desc = "Circular controller";
 WidgetKnob.size = [80, 100];
 
-WidgetKnob.prototype.onDrawForeground = function (ctx) {
+WidgetKnob.prototype.onDrawForeground = function (this: any, ctx: CanvasRenderingContext2D) {
   if (this.flags.collapsed) {
     return;
   }
@@ -90,12 +91,12 @@ WidgetKnob.prototype.onDrawForeground = function (ctx) {
   );
 };
 
-WidgetKnob.prototype.onExecute = function () {
+WidgetKnob.prototype.onExecute = function (this: any) {
   this.setOutputData(0, this.properties.value);
   this.boxcolor = LiteUtils.colorToString([this.value, this.value, this.value]);
 };
 
-WidgetKnob.prototype.onMouseDown = function (e) {
+WidgetKnob.prototype.onMouseDown = function (this: any, e: MouseEventExt) {
   this.center = [this.size[0] * 0.5, this.size[1] * 0.5 + 20];
   this.radius = this.size[0] * 0.5;
   if (
@@ -112,7 +113,7 @@ WidgetKnob.prototype.onMouseDown = function (e) {
   return true;
 };
 
-WidgetKnob.prototype.onMouseMove = function (e) {
+WidgetKnob.prototype.onMouseMove = function (this: any, e: MouseEventExt) {
   if (!this.oldmouse) {
     return;
   }
@@ -134,14 +135,14 @@ WidgetKnob.prototype.onMouseMove = function (e) {
   this.setDirtyCanvas(true);
 };
 
-WidgetKnob.prototype.onMouseUp = function (e) {
+WidgetKnob.prototype.onMouseUp = function (this: any, e: MouseEventExt) {
   if (this.oldmouse) {
     this.oldmouse = null;
     this.captureInput(false);
   }
 };
 
-WidgetKnob.prototype.onPropertyChanged = function (name, value) {
+WidgetKnob.prototype.onPropertyChanged = function (this: any, name: string, value: any) {
   if (name == "min" || name == "max" || name == "value") {
     this.properties[name] = parseFloat(value);
     return true; //block

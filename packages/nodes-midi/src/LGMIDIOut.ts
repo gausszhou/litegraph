@@ -9,7 +9,7 @@ export default class LGMIDIOut extends LGraphNode {
   static desc = "Sends MIDI to output channel";
   static color = MIDI_COLOR;
   static default_ports = { 0: "unknown" };
-  _midi;
+  _midi: any;
   widget;
   constructor() {
     super();
@@ -17,7 +17,7 @@ export default class LGMIDIOut extends LGraphNode {
     this.properties = { port: 0 };
 
     var that = this;
-    new MIDIInterface((midi) => {
+    new MIDIInterface((midi: any) => {
       this._midi = midi;
       this.widget.options.values = that.getMIDIOutputs();
     });
@@ -28,7 +28,7 @@ export default class LGMIDIOut extends LGraphNode {
     this.size = [340, 60];
   }
 
-  onGetPropertyInfo(name) {
+  onGetPropertyInfo(name: any) {
     if (!this._midi) {
       return;
     }
@@ -40,7 +40,7 @@ export default class LGMIDIOut extends LGraphNode {
   }
 
   getMIDIOutputs() {
-    var values = {};
+    var values: Record<number, string> = {};
     if (!this._midi) return LGMIDIOut.default_ports;
     if (this._midi.output_ports_info)
       for (var i = 0; i < this._midi.output_ports_info.length; ++i) {
@@ -52,7 +52,7 @@ export default class LGMIDIOut extends LGraphNode {
     return values;
   }
 
-  onAction(event, midi_event) {
+  onAction(event: any, midi_event: any) {
     //console.log(midi_event);
     if (!this._midi) {
       return;

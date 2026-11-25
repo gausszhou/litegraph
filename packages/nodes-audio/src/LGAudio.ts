@@ -3,18 +3,18 @@ import { LConnectionKind } from "@gausszhou/litegraph-core";
 
 class LGAudio {
   // 音频上下文
-  private static _audio_context;
+  private static _audio_context: any;
   // 包含已加载音频的 AudioBuffer 格式的解码样本
-  static cached_audios = {};
+  static cached_audios: Record<string, AudioBuffer> = {};
   // 允许设置一个回调函数
   static onProcessAudioURL: any;
 
-  static getAudioNodeInOutputSlot
+  static getAudioNodeInOutputSlot: any
 
-  static audionode;
+  static audionode: any;
 
-  static graph
-  static currentBuffer
+  static graph: any
+  static currentBuffer: any
 
   static getAudioContext(): AudioContext {
     if (!this._audio_context) {
@@ -25,13 +25,13 @@ class LGAudio {
         return null;
       }
       this._audio_context = new AudioContext();
-      this._audio_context.onmessage = function (msg) {
+      this._audio_context.onmessage = function (msg: any) {
         console.log("msg", msg);
       };
-      this._audio_context.onended = function (msg) {
+      this._audio_context.onended = function (msg: any) {
         console.log("ended", msg);
       };
-      this._audio_context.oncomplete = function (msg) {
+      this._audio_context.oncomplete = function (msg: any) {
         console.log("complete", msg);
       };
     }
@@ -43,7 +43,7 @@ class LGAudio {
    * @param audionodeA
    * @param audionodeB
    */
-  static connect(audionodeA, audionodeB) {
+  static connect(audionodeA: any, audionodeB: any) {
     try {
       audionodeA.connect(audionodeB);
     } catch (err) {
@@ -57,7 +57,7 @@ class LGAudio {
    * @param audionodeB
    */
 
-  static disconnect(audionodeA, audionodeB) {
+  static disconnect(audionodeA: any, audionodeB: any) {
     try {
       audionodeA.disconnect(audionodeB);
     } catch (err) {
@@ -65,7 +65,7 @@ class LGAudio {
     }
   }
 
-  static changeAllAudiosConnections(node, connect) {
+  static changeAllAudiosConnections(node: any, connect: any) {
     if (node.inputs) {
       for (var i = 0; i < node.inputs.length; ++i) {
         var input = node.inputs[i];
@@ -136,7 +136,7 @@ class LGAudio {
   }
 
   //used by many nodes
-  static onConnectionsChange(connection, slot, connected, link_info) {
+  static onConnectionsChange(connection: any, slot: any, connected: any, link_info: any) {
     //only process the outputs events
     if (connection != LConnectionKind.OUTPUT) {
       return;
@@ -181,10 +181,10 @@ class LGAudio {
    * 给每个音频节点注册两个回调函数 onPropertyChanged 和 onConnectionsChange
    * @param class_object 
    */
-  static createAudioNodeWrapper(class_object) {
+  static createAudioNodeWrapper(class_object: any) {
     var old_func = class_object.prototype.onPropertyChanged;
 
-    class_object.prototype.onPropertyChanged = function (name, value) {
+    class_object.prototype.onPropertyChanged = function (name: any, value: any) {
       if (old_func) {
         old_func.call(this, name, value);
       }
@@ -207,7 +207,7 @@ class LGAudio {
     class_object.prototype.onConnectionsChange = LGAudio.onConnectionsChange;
   }
 
-  static loadSound(url, on_complete, on_error?) {
+  static loadSound(url: any, on_complete: any, on_error?: any) {
     if (LGAudio.cached_audios[url] && url.indexOf("blob:") == -1) {
       if (on_complete) {
         on_complete(LGAudio.cached_audios[url]);
@@ -244,7 +244,7 @@ class LGAudio {
     };
     request.send();
 
-    function onError(err) {
+    function onError(err: any) {
       console.log("Audio loading sample error:", err);
       if (on_error) {
         on_error(err);

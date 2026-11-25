@@ -27,20 +27,20 @@ export default class LGMIDIGenerator  extends LGraphNode {
       this.sequence_index = 0;
     }
 
-    static processScale(scale) {
+    static processScale(scale: any) {
       var notes = scale.split(",");
       for (var i = 0; i < notes.length; ++i) {
           var n = notes[i];
           if ((n.length == 2 && n[1] != "#") || n.length > 2) {
               notes[i] = - MIDIEvent.NoteStringToPitch(n);
           } else {
-              notes[i] = MIDIEvent.note_to_index[n] || 0;
+              notes[i] = (MIDIEvent.note_to_index as any)[n] || 0;
           }
       }
       return notes;
     }
 
-    onPropertyChanged(name, value) {
+    onPropertyChanged(name: any, value: any) {
       if (name == "notes") {
           this.notes_pitches = LGMIDIGenerator.processScale(value);
       }
@@ -58,7 +58,7 @@ export default class LGMIDIGenerator  extends LGraphNode {
       }
     }
 
-    onAction(event) {
+    onAction(event: any) {
       //var range = this.properties.max - this.properties.min;
       //var pitch = this.properties.min + ((Math.random() * range)|0);
       var pitch = 0;
@@ -85,7 +85,7 @@ export default class LGMIDIGenerator  extends LGraphNode {
 
       //noteoff
       setTimeout(
-          function() {
+          function(this: any) {
               var midi_event = new MIDIEvent();
               midi_event.setup([MIDIEvent.NOTEOFF, pitch, 0]);
               this.trigger("note", midi_event);

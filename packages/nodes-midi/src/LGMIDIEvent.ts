@@ -25,7 +25,7 @@ export default class LGMIDIEvent extends LGraphNode {
     this.gate = false;
   }
 
-  onAction(event, midi_event) {
+  onAction(event: any, midi_event: any) {
     if (event == "assign") {
       this.properties.channel = midi_event.channel;
       this.properties.cmd = midi_event.cmd;
@@ -40,18 +40,18 @@ export default class LGMIDIEvent extends LGraphNode {
     }
 
     //send
-    var midi_event = this.midi_event;
-    midi_event.channel = this.properties.channel;
+    var event_to_send = this.midi_event;
+    event_to_send.channel = this.properties.channel;
     if (this.properties.cmd && this.properties.cmd.constructor === String) {
-      midi_event.setCommandFromString(this.properties.cmd);
+      event_to_send.setCommandFromString(this.properties.cmd);
     } else {
-      midi_event.cmd = this.properties.cmd;
+      event_to_send.cmd = this.properties.cmd;
     }
-    midi_event.data[0] = midi_event.cmd | midi_event.channel;
-    midi_event.data[1] = Number(this.properties.value1);
-    midi_event.data[2] = Number(this.properties.value2);
+    event_to_send.data[0] = event_to_send.cmd | event_to_send.channel;
+    event_to_send.data[1] = Number(this.properties.value1);
+    event_to_send.data[2] = Number(this.properties.value2);
 
-    this.trigger("on_midi", midi_event);
+    this.trigger("on_midi", event_to_send);
   }
 
   onExecute() {
@@ -148,7 +148,7 @@ export default class LGMIDIEvent extends LGraphNode {
     }
   }
 
-  onPropertyChanged(name, value) {
+  onPropertyChanged(name: any, value: any) {
     if (name == "cmd") {
       this.properties.cmd = MIDIEvent.computeCommandFromString(value);
     }
