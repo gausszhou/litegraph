@@ -109,7 +109,7 @@ export type SerializedLGraphNode<T extends LGraphNode = LGraphNode> = {
 
 /** https://github.com/jagenjo/litegraph.js/blob/master/guides/README.md#lgraphnode */
 export default class LGraphNode {
-    get slotLayout(): SlotLayout {
+    get slotLayout(): SlotLayout | null {
         if ("slotLayout" in this.constructor) {
             return this.constructor.slotLayout as SlotLayout;
         }
@@ -198,7 +198,7 @@ export default class LGraphNode {
     block_delete: boolean = false;
     ignore_remove: boolean = false;
 
-    last_serialization?: SerializedLGraphNode = null;
+    last_serialization?: SerializedLGraphNode | null = null;
 
     _relative_id: string | number | null = null;
     _level: number;
@@ -280,11 +280,11 @@ export default class LGraphNode {
         if (this.inputs) {
             for (let i = 0; i < this.inputs.length; ++i) {
                 let input = this.inputs[i];
-                let linkInfo = this.graph ? this.graph.links[input.link] : null;
+                let linkInfo = this.graph && input.link != null ? this.graph.links[input.link] : null;
                 input.properties ||= {}
 
                 if (this.onConnectionsChange)
-                    this.onConnectionsChange(LConnectionKind.INPUT, i, true, linkInfo, input); //linkInfo has been created now, so its updated
+                    this.onConnectionsChange(LConnectionKind.INPUT, i, true, linkInfo as LLink, input); //linkInfo has been created now, so its updated
 
                 if (this.onInputAdded)
                     this.onInputAdded(input);
@@ -302,7 +302,7 @@ export default class LGraphNode {
                 for (let j = 0; j < output.links.length; ++j) {
                     let linkInfo = this.graph ? this.graph.links[output.links[j]] : null;
                     if (this.onConnectionsChange)
-                        this.onConnectionsChange(LConnectionKind.OUTPUT, i, true, linkInfo, output); //linkInfo has been created now, so its updated
+                        this.onConnectionsChange(LConnectionKind.OUTPUT, i, true, linkInfo as LLink, output); //linkInfo has been created now, so its updated
                 }
 
                 if (this.onOutputAdded)
@@ -406,9 +406,9 @@ export default class LGraphNode {
 
     /** Creates a clone of this node  */
     clone(cloneData: LGraphNodeCloneData = { forNode: {} }): LGraphNode {
-        var node = LiteGraph.createNode(this.type);
+        var node = LiteGraph.createNode(this.type as string);
         if (!node) {
-            return null;
+            return null as unknown as LGraphNode;
         }
 
         //we clone it because serialize returns shared containers
@@ -423,13 +423,14 @@ export default class LGraphNode {
 
         if (data.outputs) {
             for (var i = 0; i < data.outputs.length; ++i) {
-                if (data.outputs[i].links) {
-                    data.outputs[i].links.length = 0;
+                const outputInfo = data.outputs[i];
+                if (outputInfo.links) {
+                    outputInfo.links.length = 0;
                 }
             }
         }
 
-        delete data["id"];
+        delete (data as any)["id"];
 
         if (LiteGraph.use_uuids) {
             data["id"] = uuidv4()
@@ -455,7 +456,7 @@ export default class LGraphNode {
         let graph = this.graph;
 
         while (graph && graph._is_subgraph)
-            graph = graph._subgraph_node?.graph
+            graph = graph._subgraph_node?.graph ?? null
 
         if (graph == null || graph._is_subgraph)
             return null;
@@ -464,10 +465,10 @@ export default class LGraphNode {
     }
 
     *iterateParentSubgraphNodes(): Iterable<Subgraph> {
-        let subgraph = this.graph._subgraph_node;
+        let subgraph = this.graph?._subgraph_node;
         while (subgraph) {
             yield subgraph;
-            subgraph = subgraph.graph?._subgraph_node;
+            subgraph = subgraph.graph?._subgraph_node ?? null;
         }
     }
 
@@ -650,6 +651,10 @@ export default class LGraphNode {
         //store data in the output itself in case we want to debug
         output_info.type = type;
 
+        if (!this.graph) {
+            return;
+        }
+
         //if there are connections, pass the data to the connections
         if (this.outputs[slot].links) {
             for (let i = this.outputs[slot].links.length - 1; i >= 0; i--) {
@@ -682,11 +687,11 @@ export default class LGraphNode {
      */
     getInputData<T = any>(slot: number, force_update?: boolean): T {
         if (!this.inputs || !this.graph) {
-            return;
+            return undefined as any;
         }
 
         if (slot >= this.inputs.length || this.inputs[slot].link == null) {
-            return;
+            return undefined as any;
         }
 
         var link_id = this.inputs[slot].link;
@@ -695,7 +700,7 @@ export default class LGraphNode {
             //bug: weird case but it happens sometimes
             if (LiteGraph.debug)
                 console.error(`Link not found in slot ${slot}!`, this, this.inputs[slot], link_id)
-            return null;
+            return null as any;
         }
 
         if (!force_update) {
@@ -723,7 +728,7 @@ export default class LGraphNode {
      * @return datatype in string format
      */
     getInputDataType(slot: number): SlotType | null {
-        if (!this.inputs) {
+        if (!this.inputs || !this.graph) {
             return null;
         } //undefined;
 
@@ -736,7 +741,7 @@ export default class LGraphNode {
             //bug: weird case but it happens sometimes
             if (LiteGraph.debug)
                 console.error(`Link not found in slot ${slot}!`, this, this.inputs[slot], link_id)
-            return null;
+            return null as any;
         }
         var node = this.graph.getNodeById(link.origin_id);
         if (!node) {
@@ -758,7 +763,7 @@ export default class LGraphNode {
     getInputDataByName<T = any>(slot_name: string, force_update?: boolean): T {
         var slot = this.findInputSlotIndexByName(slot_name);
         if (slot == -1) {
-            return null;
+            return null as any;
         }
         return this.getInputData(slot, force_update);
     }
@@ -793,7 +798,10 @@ export default class LGraphNode {
         }
         if (slot < this.inputs.length) {
             var slot_info = this.inputs[slot];
-            return this.graph.links[slot_info.link];
+            if (slot_info.link == null) {
+                return null;
+            }
+            return this.graph.links[slot_info.link] ?? null;
         }
         return null;
     };
@@ -805,6 +813,9 @@ export default class LGraphNode {
         }
         if (slot < this.inputs.length) {
             const link_id = this.inputs[slot].link;
+            if (link_id == null) {
+                return null;
+            }
             const link = this.graph.links[link_id];
             if (!link) {
                 //bug: weird case but it happens sometimes
@@ -823,7 +834,7 @@ export default class LGraphNode {
     /** returns the value of an input with this name, otherwise checks if there is a property with that name */
     getInputOrProperty<T = any>(name: string): T {
         if (!this.inputs || !this.inputs.length || !this.graph) {
-            return this.properties ? this.properties[name] : null;
+            return (this.properties ? this.properties[name] : null) as any;
         }
 
         for (var i = 0, l = this.inputs.length; i < l; ++i) {
@@ -880,8 +891,11 @@ export default class LGraphNode {
             var slot_info = this.inputs[slot];
             if (slot_info.link) {
                 const link = this.graph.links[slot_info.link]
+                if (!link) {
+                    return null;
+                }
                 const node = this.graph.getNodeById(link.origin_id)
-                return node.outputs[link.origin_slot]
+                return node ? node.outputs[link.origin_slot] : null
             }
         }
         return null;
@@ -941,7 +955,9 @@ export default class LGraphNode {
                 var inputs: INodeInputSlot[] = [];
                 for (const linkID of slot_info.links) {
                     const link = this.graph.links[linkID]
+                    if (!link) continue;
                     const node = this.graph.getNodeById(link.target_id)
+                    if (!node) continue;
                     inputs.push(node.inputs[link.target_slot])
                 }
                 return inputs;
@@ -966,7 +982,7 @@ export default class LGraphNode {
         if (!this.outputs || !this.graph) {
             return false;
         }
-        return (
+        return !!(
             slot < this.outputs.length &&
             this.outputs[slot].links &&
             this.outputs[slot].links.length > 0
@@ -979,7 +995,7 @@ export default class LGraphNode {
             return false;
         }
         for (var i = 0; i < this.outputs.length; ++i) {
-            if (this.outputs[i].links && this.outputs[i].links.length) {
+            if (this.outputs[i].links && this.outputs[i].links?.length) {
                 return true;
             }
         }
@@ -989,16 +1005,16 @@ export default class LGraphNode {
     /** retrieves all the nodes connected to this output slot */
     getOutputNodes(slot: SlotIndex): LGraphNode[] {
         if (!this.outputs || this.outputs.length == 0 || !this.graph) {
-            return null;
+            return null as any;
         }
 
         if (slot >= this.outputs.length) {
-            return null;
+            return null as any;
         }
 
         var output = this.outputs[slot];
         if (!output.links || output.links.length == 0) {
-            return null;
+            return null as any;
         }
 
         var r = [];
@@ -1062,7 +1078,7 @@ export default class LGraphNode {
             //console.debug(this.id+":"+this.order+" triggering slot onAfterExecute");
             //console.debug(param);
             //console.debug(options);
-            this.triggerSlot(trigS, param, null, options);
+            this.triggerSlot(trigS, param, null as any, options);
 
         }
     }
@@ -1095,6 +1111,9 @@ export default class LGraphNode {
     }
 
     doExecute(param?: any, options: LActionOptions = {}): void {
+        if (!this.graph) {
+            return;
+        }
         if (this.onExecute) {
             // enable this to give the event an ID
             if (!options.action_call) options.action_call = this.id + "_exec_" + Math.floor(Math.random() * 9999);
@@ -1124,6 +1143,9 @@ export default class LGraphNode {
      * @param {*} param
      */
     actionDo(action: any, param: any, options: LActionOptions = {}) {
+        if (!this.graph) {
+            return;
+        }
         if (this.onAction) {
 
             // enable this to give the event an ID
@@ -1158,7 +1180,7 @@ export default class LGraphNode {
             var output = this.outputs[i];
             if (!output || output.type !== BuiltInSlotType.EVENT || (action && output.name != action))
                 continue;
-            this.triggerSlot(i, param, null, options);
+            this.triggerSlot(i, param, null as any, options);
         }
     }
 
@@ -1191,9 +1213,11 @@ export default class LGraphNode {
             return;
         }
 
-        if (this.graph) {
-            this.graph._last_trigger_time = LiteGraph.getTime();
+        const graph = this.graph;
+        if (!graph) {
+            return;
         }
+        graph._last_trigger_time = LiteGraph.getTime();
 
         //for every link attached here
         for (var k = 0; k < links.length; ++k) {
@@ -1202,13 +1226,13 @@ export default class LGraphNode {
                 //to skip links
                 continue;
             }
-            var linkInfo = this.graph.links[links[k]];
+            var linkInfo = graph.links[links[k]];
             if (!linkInfo) {
                 //not connected
                 continue;
             }
             linkInfo._last_time = LiteGraph.getTime();
-            var node = this.graph.getNodeById(linkInfo.target_id);
+            var node = graph.getNodeById(linkInfo.target_id);
             if (!node) {
                 //node not found?
                 continue;
@@ -1301,7 +1325,7 @@ export default class LGraphNode {
         type?: string,
         extra_info?: Partial<IPropertyInfo>
     ): IProperty {
-        var o: IProperty = { name: name, type: type, default_value: default_value };
+        var o: IProperty = { name: name, type: type as string, default_value: default_value };
         if (extra_info) {
             for (var i in extra_info) {
                 (o as any)[i] = (extra_info as any)[i];
@@ -1371,17 +1395,19 @@ export default class LGraphNode {
 
         this.disconnectOutput(slot);
         this.outputs.splice(slot, 1);
-        for (var i = slot; i < this.outputs.length; ++i) {
-            if (!this.outputs[i] || !this.outputs[i].links) {
-                continue;
-            }
-            var links = this.outputs[i].links;
-            for (var j = 0; j < links.length; ++j) {
-                var link = this.graph.links[links[j]];
-                if (!link) {
+        if (this.graph) {
+            for (var i = slot; i < this.outputs.length; ++i) {
+                if (!this.outputs[i] || !this.outputs[i].links) {
                     continue;
                 }
-                link.origin_slot -= 1;
+                var links = this.outputs[i].links;
+                for (var j = 0; j < links.length; ++j) {
+                    var link = this.graph.links[links[j]];
+                    if (!link) {
+                        continue;
+                    }
+                    link.origin_slot -= 1;
+                }
             }
         }
 
@@ -1402,17 +1428,21 @@ export default class LGraphNode {
 
         const otherOutput = this.outputs[newSlot];
 
+        if (!this.graph) {
+            return;
+        }
+
         if (output.links) {
             for (const linkID of output.links) {
                 const link = this.graph.links[linkID]
-                link.origin_slot = newSlot
+                if (link) link.origin_slot = newSlot
             }
         }
 
         if (otherOutput.links) {
             for (const linkID of otherOutput.links) {
                 const otherLink = this.graph.links[linkID]
-                otherLink.origin_slot = slot
+                if (otherLink) otherLink.origin_slot = slot
             }
         }
 
@@ -1468,15 +1498,17 @@ export default class LGraphNode {
     removeInput(slot: number): void {
         this.disconnectInput(slot);
         var slot_info = this.inputs.splice(slot, 1);
-        for (var i = slot; i < this.inputs.length; ++i) {
-            if (!this.inputs[i]) {
-                continue;
+        if (this.graph) {
+            for (var i = slot; i < this.inputs.length; ++i) {
+                if (!this.inputs[i] || this.inputs[i].link == null) {
+                    continue;
+                }
+                var link = this.graph.links[this.inputs[i].link as LinkID];
+                if (!link) {
+                    continue;
+                }
+                link.target_slot -= 1;
             }
-            var link = this.graph.links[this.inputs[i].link];
-            if (!link) {
-                continue;
-            }
-            link.target_slot -= 1;
         }
         this.setSize(this.computeSize());
         if (this.onInputRemoved) {
@@ -1495,14 +1527,18 @@ export default class LGraphNode {
 
         const otherInput = this.inputs[newSlot];
 
+        if (!this.graph) {
+            return;
+        }
+
         if (input.link != null) {
             const link = this.graph.links[input.link]
-            link.target_slot = newSlot
+            if (link) link.target_slot = newSlot
         }
 
         if (otherInput.link != null) {
             const otherLink = this.graph.links[otherInput.link]
-            otherLink.target_slot = slot
+            if (otherLink) otherLink.target_slot = slot
         }
 
         this.inputs[newSlot] = input;
@@ -1680,8 +1716,8 @@ export default class LGraphNode {
         }
 
         if (!options && callback && callback.constructor === Object) {
-            options = callback;
-            callback = null;
+            options = callback as any;
+            callback = null as any;
         }
 
         if (options && options.constructor === String) //options can be the property name
@@ -1691,17 +1727,17 @@ export default class LGraphNode {
         {
             if (!options)
                 options = {};
-            options.property = callback;
-            callback = null;
+            options.property = callback as string;
+            callback = null as any;
         }
 
         if (callback && callback.constructor !== Function) {
             console.warn("addWidget: callback must be a function");
-            callback = null;
+            callback = null as any;
         }
 
         var w = {
-            type: type.toLowerCase(),
+            type: (type ?? "").toLowerCase(),
             name: name,
             value: value,
             callback: callback,
