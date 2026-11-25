@@ -1,11 +1,9 @@
 {
   "packages": {
     "packages/core": {
-      "total": 305,
+      "total": 226,
       "files": {
-        "src/LGraphCanvas_Rendering.ts": 38,
-        "src/LGraphCanvas_UI.ts": 226,
-        "src/nodes/Subgraph.ts": 41
+        "src/LGraphCanvas_UI.ts": 226
       }
     }
   }

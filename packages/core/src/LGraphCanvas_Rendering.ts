@@ -79,7 +79,7 @@ export default class LGraphCanvas_Rendering {
         this.last_draw_time = now;
 
         if (this.graph) {
-            this.ds.computeVisibleArea(this.viewport);
+            this.ds.computeVisibleArea(this.viewport!);
         }
 
         if (
@@ -106,7 +106,7 @@ export default class LGraphCanvas_Rendering {
         this.dirty_canvas = false;
 
         if (!this.ctx) {
-            this.ctx = this.canvas.getContext("2d");
+            this.ctx = this.canvas.getContext("2d")!;
         }
         var ctx = this.ctx;
         if (!ctx) {
@@ -164,7 +164,7 @@ export default class LGraphCanvas_Rendering {
             //draw nodes
             var drawn_nodes = 0;
             var visible_nodes = this.computeVisibleNodes(
-                null,
+                null as any,
                 this.visible_nodes
             );
 
@@ -202,15 +202,15 @@ export default class LGraphCanvas_Rendering {
 
                 var connInOrOut = this.connecting_output || this.connecting_input;
 
-                var connType = connInOrOut.type;
-                var connDir = connInOrOut.dir;
+                var connType = connInOrOut!.type;
+                var connDir = connInOrOut!.dir;
                 if (connDir == null) {
                     if (this.connecting_output)
-                        connDir = this.connecting_node.horizontal ? Dir.DOWN : Dir.RIGHT;
+                        connDir = this.connecting_node!.horizontal ? Dir.DOWN : Dir.RIGHT;
                     else
-                        connDir = this.connecting_node.horizontal ? Dir.UP : Dir.LEFT;
+                        connDir = this.connecting_node!.horizontal ? Dir.UP : Dir.LEFT;
                 }
-                var connShape = connInOrOut.shape;
+                var connShape = connInOrOut!.shape;
 
                 switch (connType) {
                     case BuiltInSlotType.EVENT:
@@ -225,9 +225,9 @@ export default class LGraphCanvas_Rendering {
                     ctx,
                     this.connecting_pos,
                     [this.graph_mouse[0], this.graph_mouse[1]],
-                    null,
+                    null as any,
                     false,
-                    null,
+                    null as any,
                     link_color,
                     connDir,
                     Dir.CENTER
@@ -278,7 +278,7 @@ export default class LGraphCanvas_Rendering {
                 ctx.fillStyle = "#ffcc00";
                 if (this._highlight_input) {
                     ctx.beginPath();
-                    var shape = this._highlight_input_slot.shape;
+                    var shape = this._highlight_input_slot!.shape;
                     if (shape === BuiltInSlotShape.ARROW_SHAPE) {
                         ctx.moveTo(this._highlight_input[0] + 8, this._highlight_input[1] + 0.5);
                         ctx.lineTo(this._highlight_input[0] - 4, this._highlight_input[1] + 6 + 0.5);
@@ -589,7 +589,7 @@ export default class LGraphCanvas_Rendering {
         }
 
         if (!this.bgctx) {
-            this.bgctx = this.bgcanvas.getContext("2d");
+            this.bgctx = this.bgcanvas.getContext("2d")!;
         }
         var ctx = this.bgctx;
         // if (ctx.start) {
@@ -608,7 +608,7 @@ export default class LGraphCanvas_Rendering {
             ctx.save();
             const top_entry = this._graph_stack[this._graph_stack.length - 1];
             const parent_graph = top_entry.graph
-            const subgraph_node = this.graph._subgraph_node;
+            const subgraph_node = this.graph._subgraph_node!;
             ctx.strokeStyle = subgraph_node.bgcolor;
             ctx.lineWidth = 10;
             ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
@@ -618,7 +618,7 @@ export default class LGraphCanvas_Rendering {
             ctx.fillStyle = subgraph_node.bgcolor || "#AAA";
             let title = "";
             for (let i = 1; i < this._graph_stack.length; ++i) {
-                title += parent_graph._subgraph_node.getTitle() + " >> ";
+                title += parent_graph._subgraph_node!.getTitle() + " >> ";
             }
             ctx.fillText(
                 title + subgraph_node.getTitle(),
@@ -877,7 +877,7 @@ export default class LGraphCanvas_Rendering {
 
                     ctx.globalAlpha = editor_alpha;
                     //change opacity of incompatible slots when dragging a connection
-                    if (this.connecting_output && !LiteGraph.isValidConnection(slot.type, out_slot.type)) {
+                    if (this.connecting_output && !LiteGraph.isValidConnection(slot.type, out_slot!.type)) {
                         ctx.globalAlpha = 0.4 * editor_alpha;
                     }
                     else {
@@ -972,7 +972,7 @@ export default class LGraphCanvas_Rendering {
                     var slot_shape = slot.shape;
 
                     //change opacity of incompatible slots when dragging a connection
-                    if (this.connecting_input && !LiteGraph.isValidConnection(in_slot.type, slot_type)) {
+                    if (this.connecting_input && !LiteGraph.isValidConnection(in_slot!.type, slot_type)) {
                         ctx.globalAlpha = 0.4 * editor_alpha;
                     }
                     else {
@@ -1079,7 +1079,7 @@ export default class LGraphCanvas_Rendering {
                     ctx,
                     this.node_widget && this.node_widget[0] == node
                         ? this.node_widget[1]
-                        : null
+                        : null as any
                 );
             }
         } else if (this.render_collapsed_slots) {
@@ -1112,7 +1112,7 @@ export default class LGraphCanvas_Rendering {
                 var x = 0;
                 var y = LiteGraph.NODE_TITLE_HEIGHT * -0.5; //center
                 if (horizontal) {
-                    x = node._collapsed_width * 0.5;
+                    x = (node._collapsed_width ?? 0) * 0.5;
                     y = -LiteGraph.NODE_TITLE_HEIGHT;
                 }
                 ctx.fillStyle = "#686";
@@ -1131,10 +1131,10 @@ export default class LGraphCanvas_Rendering {
             }
 
             if (output_slot) {
-                var x = node._collapsed_width;
+                x = node._collapsed_width ?? 0;
                 var y = LiteGraph.NODE_TITLE_HEIGHT * -0.5; //center
                 if (horizontal) {
-                    x = node._collapsed_width * 0.5;
+                    x = (node._collapsed_width ?? 0) * 0.5;
                     y = 0;
                 }
                 ctx.fillStyle = "#686";
@@ -1165,6 +1165,9 @@ export default class LGraphCanvas_Rendering {
     /** used by this.over_link_center */
     drawLinkTooltip(this: LGraphCanvas, ctx: CanvasRenderingContext2D, link: LLink) {
         var pos = link._pos;
+        if (!pos) {
+            return;
+        }
         if (this.allow_interaction && !this.read_only) {
             ctx.fillStyle = "black";
             ctx.beginPath();
@@ -1342,7 +1345,7 @@ export default class LGraphCanvas_Rendering {
 
             var colState = null;
             if (LiteGraph.node_box_coloured_by_mode) {
-                if (NODE_MODE_COLORS[node.mode]) {
+                if (node.mode != null && NODE_MODE_COLORS[node.mode]) {
                     colState = NODE_MODE_COLORS[node.mode];
                 }
             }
@@ -1637,7 +1640,7 @@ export default class LGraphCanvas_Rendering {
                     link,
                     false,
                     false,
-                    null,
+                    null as any,
                     startDir,
                     endDir
                 );
@@ -2096,7 +2099,7 @@ export default class LGraphCanvas_Rendering {
                     if (show_text) {
                         ctx.textAlign = "center";
                         ctx.fillStyle = text_color;
-                        ctx.fillText(w.name, widget_width * 0.5, y + H * 0.7);
+                        ctx.fillText(w.name ?? "", widget_width * 0.5, y + H * 0.7);
                     }
                     break;
                 case "toggle":
@@ -2183,7 +2186,7 @@ export default class LGraphCanvas_Rendering {
                             ctx.fill();
                         }
                         ctx.fillStyle = secondary_text_color;
-                        ctx.fillText(w.name, margin * 2 + 5, y + H * 0.7);
+                        ctx.fillText(w.name ?? "", margin * 2 + 5, y + H * 0.7);
                         ctx.fillStyle = text_color;
                         ctx.textAlign = "right";
                         if (w.type == "number") {
