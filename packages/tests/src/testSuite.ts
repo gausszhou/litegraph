@@ -1,3 +1,6 @@
+export { default as LLinkTests } from "./LLinkTests"
+export { default as GraphIONodeTests } from "./GraphIONodeTests"
+export { default as UtilsTests } from "./UtilsTests"
 export { default as InteractionTests } from "./InteractionTests"
 export { default as NodeContractsTests } from "./NodeContractsTests"
 export { default as LGraphNodeTests } from "./LGraphNodeTests"

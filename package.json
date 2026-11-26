@@ -9,26 +9,30 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:serve": "vitepress serve docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "pnpm -r test",
-    "size": "node scripts/size-report.mjs",
-    "verify-umd": "node scripts/verify-umd.mjs",
-    "verify-pack": "node scripts/verify-pack.mjs",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
+    "nullcheck": "node scripts/nullcheck.mjs",
     "remove": "npm run remove:dist && npm run remove:module",
     "remove:dist": "rm -rf packages/**/dist",
     "remove:module": "rm -rf packages/**/node_modules",
-    "nullcheck": "node scripts/nullcheck.mjs"
+    "size": "node scripts/size-report.mjs",
+    "test": "pnpm -r test",
+    "test:coverage": "vitest run --config packages/tests/vite.config.ts --coverage",
+    "typecheck": "pnpm -r typecheck",
+    "verify-pack": "node scripts/verify-pack.mjs",
+    "verify-umd": "node scripts/verify-umd.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@vitest/coverage-c8": "^0.31.0",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
+    "jsdom": "^22.1.0",
     "typescript-eslint": "^8.74.0",
-    "vitepress": "^1.4.3"
+    "vitepress": "^1.4.3",
+    "vitest": "^0.31.4"
   }
 }

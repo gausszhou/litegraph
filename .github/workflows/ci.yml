@@ -33,6 +33,9 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Coverage (core paths, >=70%)
+        run: pnpm test:coverage
+
       - name: strictNullChecks ratchet
         run: pnpm nullcheck
 

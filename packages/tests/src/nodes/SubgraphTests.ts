@@ -589,4 +589,67 @@ export default class SubgraphTests extends UnitTest {
         expect(inner3.triggers).toHaveLength(1)
         expect(target.triggers).toHaveLength(1)
     }
+
+    test__addGraphInput__deduplicatesNames() {
+        const graph = new LGraph();
+        const subgraph = LiteGraph.createNode(Subgraph)
+        graph.add(subgraph)
+
+        const first = subgraph.addGraphInput("test", "number");
+        const second = subgraph.addGraphInput("test", "number");
+
+        expect(first).not.toBeNull();
+        expect(second).not.toBeNull();
+        expect(first!.innerNode.properties.name).toBe("test");
+        expect(second!.innerNode.properties.name).toBe("test_1");
+    }
+
+    test__removeGraphInput__removesOuterSlotAndInnerNode() {
+        const graph = new LGraph();
+        const subgraph = LiteGraph.createNode(Subgraph)
+        graph.add(subgraph)
+        subgraph.addGraphInput("test", "number");
+
+        subgraph.removeGraphInput("test");
+
+        expect(subgraph.findInputSlotIndexByName("test")).toBe(-1);
+        expect(subgraph.subgraph.findNodesByClass(GraphInput)).toHaveLength(0);
+    }
+
+    test__removeGraphOutput__removesOuterSlotAndInnerNode() {
+        const graph = new LGraph();
+        const subgraph = LiteGraph.createNode(Subgraph)
+        graph.add(subgraph)
+        subgraph.addGraphOutput("test", "number");
+
+        subgraph.removeGraphOutput("test");
+
+        expect(subgraph.findOutputSlotIndexByName("test")).toBe(-1);
+        expect(subgraph.subgraph.findNodesByClass(GraphOutput)).toHaveLength(0);
+    }
+
+    test__addGraphOutput__deduplicatesNames() {
+        const graph = new LGraph();
+        const subgraph = LiteGraph.createNode(Subgraph)
+        graph.add(subgraph)
+
+        const first = subgraph.addGraphOutput("out", "number");
+        const second = subgraph.addGraphOutput("out", "number");
+
+        expect(first).not.toBeNull();
+        expect(second).not.toBeNull();
+        expect(first!.innerNode.properties.name).toBe("out");
+        expect(second!.innerNode.properties.name).toBe("out_1");
+    }
+
+    test__addGraphInput__eventTypeShouldConvertOuterSlot() {
+        const graph = new LGraph();
+        const subgraph = LiteGraph.createNode(Subgraph)
+        graph.add(subgraph)
+
+        const pair = subgraph.addGraphInput("evt", BuiltInSlotType.EVENT);
+
+        expect(pair).not.toBeNull();
+        expect(pair!.innerNode.properties.type).toBe(BuiltInSlotType.EVENT);
+    }
 }

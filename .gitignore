@@ -31,3 +31,9 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
+
+# coverage
+coverage
+
+# vite-node debug dumps
+.vite-node

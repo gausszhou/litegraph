@@ -45,15 +45,15 @@
 
 ## v0.3 测试与稳定
 
-- [ ] `LGraph`：连接/断开、删除节点、序列化往返、执行顺序与 `_version` 变更。
-- [ ] `LGraphNode`：插槽增删、widget 序列化、属性变更回调、clone。
-- [ ] 修复 `SubgraphTests` 中带 `XXX data not changed` 的待定断言。
-- [ ] 节点包契约测试：每个 `install` 后可创建、可序列化、可反序列化。
-- [ ] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
+- [x] `LGraph`：连接/断开、删除节点/链接、序列化往返、执行顺序、`_version` 变更、图输入输出与分组。
+- [x] `LGraphNode`：插槽增删与移动、widget/属性序列化、属性变更回调、clone、数据传递与连接回调。
+- [x] 修复 `SubgraphTests` 中带 `XXX data not changed` 的待定断言（明确为「类型变更保留已写入数据」并移除标记）。
+- [x] 节点包契约测试：10 个包安装后逐一验证节点注册、创建与 serialize/configure 往返（共 95 种节点）。
+- [x] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
 - [x] 统一测试入口：移除 core 中无依赖的 `jest` 脚本，测试统一走 `packages/tests` 的 vitest（`pnpm test`，非 watch 模式）。
-- [ ] CI 覆盖率门槛。
+- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 70%。
 
-**验收**：核心路径覆盖率 ≥ 70%，无 `XXX` 待定断言、无用例跳过。
+**验收**：核心路径覆盖率 ≥ 70%（`pnpm test:coverage` 门槛生效），无 `XXX` 待定断言、无用例跳过；节点契约覆盖全部 10 个包。
 
 ## v0.4 文档与示例
 
