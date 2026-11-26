@@ -1,5 +1,5 @@
 export default function WidgetText(this: any) {
-  this.addInputs("", 0);
+  this.addInput("", 0);
   this.properties = {
     value: "...",
     font: "Arial",
