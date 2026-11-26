@@ -8,7 +8,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "pnpm -w exec vitest run --config packages/tests/vite.config.ts --coverage"
+    "coverage": "cd .. && ./tests/node_modules/.bin/vitest run --config tests/vite.config.ts --coverage"
   },
   "dependencies": {
     "@gausszhou/litegraph-core": "workspace:*",
