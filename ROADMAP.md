@@ -24,7 +24,7 @@
 - [x] 节点包补充 UMD 产物：core 以 `window.litegraph` 全局外置，`pnpm verify-umd` 在 VM 中校验 10 个包共享同一个 LiteGraph 实例。
 - [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：lint + typecheck + test + build + 体积报告 + UMD 冒烟 + `pnpm pack` 产物校验。
 - [x] `pnpm size` 输出各产物 gzip 体积，CI 中执行。
-- [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）提交在 git 中，迁到 LFS 或外部托管。
+- [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）仍提交在 git 中。GitHub Pages 不解析 LFS 指针（`gh-pages` 分支需要真实文件），LFS 无法减少仓库体积；后续改为外部托管或构建时按需注入，再清理历史。
 
 **验收**：干净 clone 下 `pnpm install && pnpm build && pnpm test` 全绿；`pnpm verify-pack` 校验全部 tarball；已在独立 Vite 工程中验证 core / nodes-basic / 聚合包的 import、类型与 CSS。
 
