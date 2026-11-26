@@ -128,4 +128,21 @@ export default class InteractionTests extends UnitTest {
 
         expect(document.querySelector(".litecontextmenu")).not.toBeNull()
     }
+
+    test__searchBox__shouldStayInsideViewport() {
+        const graph = new LGraph()
+        graph.add(LiteGraph.createNode(ConstantNumber))
+        const { el, canvas } = this.createCanvas(graph)
+        LGraphCanvas.active_canvas = canvas
+
+        const event = new MouseEvent("mousedown", { clientX: 5000, clientY: 5000 })
+        Object.defineProperty(event, "layerY", { value: 5000 })
+        const dialog = canvas.showSearchBox(event, { show_all_if_empty: false, do_type_filter: false })
+
+        expect(dialog).not.toBeNull()
+        expect(parseFloat(dialog.style.left)).toBeLessThanOrEqual(window.innerWidth)
+        expect(parseFloat(dialog.style.top)).toBeLessThanOrEqual(window.innerHeight)
+        dialog.close()
+        expect(el).not.toBeNull()
+    }
 }

@@ -1005,7 +1005,7 @@ export default class LGraphCanvas_UI {
 
         var dialog = document.createElement("div") as IGraphDialog;
         dialog.className = "litegraph litesearchbox graphdialog rounded";
-        dialog.innerHTML = "<span class='name'>Search</span> <input autofocus type='text' class='value rounded'/>";
+        dialog.innerHTML = "<span class='name'>Search</span> <input autofocus type='text' class='value rounded' placeholder='Search nodes…' aria-label='Search nodes'/>";
         if (options.do_type_filter) {
             dialog.innerHTML += "<select class='slot_in_type_filter'><option value=''></option></select>";
             dialog.innerHTML += "<select class='slot_out_type_filter'><option value=''></option></select>";
@@ -1517,6 +1517,15 @@ export default class LGraphCanvas_UI {
 
         var left = (event ? event.clientX : (rect.left + rect.width * 0.5)) - 80;
         var top = (event ? event.clientY : (rect.top + rect.height * 0.5)) - 20;
+
+        //keep the dialog inside the viewport
+        const margin = 8;
+        const win = graphcanvas.getCanvasWindow();
+        const dialogWidth = dialog.offsetWidth || 440;
+        const reservedHeight = 380;
+        left = Math.min(Math.max(margin, left), Math.max(margin, win.innerWidth - dialogWidth - margin));
+        top = Math.min(Math.max(margin, top), Math.max(margin, win.innerHeight - reservedHeight - margin));
+
         dialog.style.left = left + "px";
         dialog.style.top = top + "px";
 

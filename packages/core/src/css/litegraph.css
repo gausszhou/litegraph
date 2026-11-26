@@ -167,65 +167,6 @@
     padding-right: 10px;
 }
 
-.litegraph.litesearchbox {
-    font-family: Tahoma, sans-serif;
-    position: absolute;
-    padding-top: 4px;
-}
-
-.litegraph.litesearchbox input,
-.litegraph.litesearchbox select {
-    margin-top: 3px;
-    min-width: 60px;
-    min-height: 1.5em;
-    background-color: black;
-    border: 0;
-    color: white;
-    padding-left: 10px;
-    margin-right: 5px;
-}
-
-.litegraph.litesearchbox .name {
-    display: inline-block;
-    min-width: 60px;
-    min-height: 1.5em;
-    padding-left: 10px;
-}
-
-.litegraph.litesearchbox .helper {
-    overflow: auto;
-    max-height: 200px;
-    margin-top: 2px;
-}
-
-.litegraph.lite-search-item {
-    font-family: Tahoma, sans-serif;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding-top: 2px;
-}
-
-.litegraph.lite-search-item.not_in_filter{
-    /*background-color: rgba(50, 50, 50, 0.5);*/
-    /*color: #999;*/
-    color: #B99;
-    font-style: italic;
-}
-
-.litegraph.lite-search-item.generic_type{
-    /*background-color: rgba(50, 50, 50, 0.5);*/
-    /*color: #DD9;*/
-    color: #999;
-    font-style: italic;
-}
-
-.litegraph.lite-search-item:hover,
-.litegraph.lite-search-item.selected {
-    cursor: pointer;
-    background-color: white;
-    color: black;
-}
-
 /* DIALOGs ******/
 
 .litegraph .dialog {
@@ -704,4 +645,147 @@ cursor: pointer;
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                           supported by Chrome and Opera */
+}
+
+
+/* SEARCH BOX ******/
+
+.litegraph.litesearchbox.graphdialog {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 6px 8px;
+    box-sizing: border-box;
+    width: min(440px, calc(100vw - 24px));
+    padding: 10px;
+    background: linear-gradient(180deg, #313131 0%, #262626 100%);
+    border: 1px solid #454545;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform-origin: top left;
+    font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
+    color: #ddd;
+}
+
+.litegraph.litesearchbox .name {
+
+    min-width: 0;
+    min-height: 0;
+    padding: 0 2px;
+    color: #8f8f8f;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 32px;
+    text-transform: uppercase;
+}
+
+.litegraph.litesearchbox input.value {
+    min-width: 0;
+    height: 32px;
+    margin: 0;
+    padding: 0 12px;
+    background: #1a1a1a;
+    border: 1px solid #3d3d3d;
+    border-radius: 6px;
+    color: #f2f2f2;
+    font-size: 14px;
+    line-height: 30px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.litegraph.litesearchbox input.value::placeholder {
+    color: #777;
+}
+
+.litegraph.litesearchbox input.value:focus {
+    border-color: #5b9bf5;
+    box-shadow: 0 0 0 2px rgba(91, 155, 245, 0.22);
+}
+
+.litegraph.litesearchbox select {
+    height: 28px;
+    min-width: 0;
+    margin: 0;
+    padding: 0 6px;
+    background: #1a1a1a;
+    border: 1px solid #3d3d3d;
+    border-radius: 6px;
+    color: #cfcfcf;
+    font-size: 12px;
+    outline: none;
+}
+
+.litegraph.litesearchbox select:focus {
+    border-color: #5b9bf5;
+}
+
+.litegraph.litesearchbox .helper {
+    grid-column: 1 / -1;
+    box-sizing: border-box;
+    max-height: 320px;
+    margin-top: 2px;
+    padding: 4px;
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: #4a4a4a transparent;
+    scrollbar-width: thin;
+}
+
+.litegraph.litesearchbox .helper:empty::before {
+    content: "No matching node";
+    display: block;
+    padding: 10px 12px;
+    color: #777;
+    font-size: 12px;
+}
+
+.litegraph.litesearchbox .helper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.litegraph.litesearchbox .helper::-webkit-scrollbar-thumb {
+    background: #454545;
+    border: 2px solid #1b1b1b;
+    border-radius: 4px;
+}
+
+.litegraph.litesearchbox .helper::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
+
+.litegraph.lite-search-item {
+    margin: 1px 2px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    background: transparent;
+    color: #d2d2d2;
+    font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.litegraph.lite-search-item.not_in_filter {
+    color: #b08a8a;
+    font-style: italic;
+}
+
+.litegraph.lite-search-item.generic_type {
+    color: #8a8a8a;
+    font-style: italic;
+}
+
+.litegraph.lite-search-item:hover,
+.litegraph.lite-search-item.selected {
+    cursor: pointer;
+    background: rgba(91, 155, 245, 0.22);
+    color: #fff;
 }
