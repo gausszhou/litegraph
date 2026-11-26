@@ -27,7 +27,8 @@
     "docs:api": "typedoc && typedoc --out docs/en/api",
     "docs:nodes": "node scripts/gen-node-catalog.mjs",
     "docs:nodes:check": "node scripts/gen-node-catalog.mjs --check",
-    "new-node": "node scripts/new-node.mjs"
+    "new-node": "node scripts/new-node.mjs",
+    "pages:build": "node scripts/build-pages.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

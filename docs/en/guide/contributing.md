@@ -136,6 +136,7 @@ If you only changed node source, remember to run `pnpm docs:nodes` and commit th
 - One thing per PR; keep formatting or rename changes separate from feature changes;
 - Explain the motivation, behaviour changes and verification method in the PR description;
 - CI must be green: `lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `docs:build`.
+- After merging to `master`, the `deploy` job builds `dist/` and pushes it to the `gh-pages` branch once checks pass. The site root is `/litegraph/`, docs live at `/litegraph/docs/` (Chinese) and `/litegraph/docs/en/` (English), and the demo at `/litegraph/demo/`.
 
 ## Roadmap
 

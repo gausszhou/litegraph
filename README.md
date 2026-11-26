@@ -30,7 +30,7 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `apps/editor` | 完整 Demo 编辑器：工具栏、示例下拉、小窗预览、live mode、电路演示节点 |
 | `apps/example-minimal` | 最小集成示例：`LGraph` + `LGraphCanvas` + 两个节点 |
 | `docs` | VitePress 双语文档站：`guide/`（中文）与 `en/guide/`（英文），节点目录与 API 文档由脚本生成 |
-| `shells` | 构建脚本 `build.sh`、Pages 发布脚本 `gh-pages.sh` |
+| `shells` | 构建脚本 `build.sh`、手动发布脚本 `gh-pages.sh`（自动发布见 CI 的 `deploy` job） |
 | `scripts` | 体积报告、UMD 冒烟、tarball 校验、节点目录生成 `gen-node-catalog.mjs`、节点脚手架 `new-node.mjs` |
 | `eslint.config.mjs` | ESLint 10 flat config（typescript-eslint） |
 | `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
@@ -93,6 +93,17 @@ graph.start();
 ```
 
 > 说明：仓库内 `main` / `types` 指向 `src`，方便 workspace 直接调试源码；`pnpm pack` / `pnpm publish` 时由 `publishConfig` 切换到 `dist/index.js` 与 `dist/index.d.ts`。CSS 需单独引入：`import "@gausszhou/litegraph-core/style.css"`（聚合包为 `@gausszhou/litegraph/style.css`）。
+
+## 部署
+
+`master` 上的 push 在 CI（lint / typecheck / test / build / docs:build 等）全部通过后，`deploy` job 会执行 `pnpm pages:build` 生成 `dist/`，并强制推送到 `gh-pages` 分支；GitHub Pages 从该分支发布：
+
+- 文档（中文）：https://gausszhou.github.io/litegraph/docs/
+- 文档（English）：https://gausszhou.github.io/litegraph/docs/en/
+- 在线 Demo：https://gausszhou.github.io/litegraph/demo/
+- 站点入口：https://gausszhou.github.io/litegraph/
+
+`pnpm pages:build` 会构建编辑器 demo 与中英双语文档站，并写入站点入口页与 `.nojekyll`。文档 base 默认 `/litegraph/docs`，可用环境变量 `DOCS_BASE` 覆盖。应急/离线手动发布：`sh shells/gh-pages.sh`。
 
 ## 路线图
 

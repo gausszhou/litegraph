@@ -69,7 +69,7 @@ function apiSidebar(prefix = "") {
 }
 
 export default defineConfig({
-  base: "/litegraph/docs",
+  base: process.env.DOCS_BASE || "/litegraph/docs",
   outDir: "../dist/docs",
   title: "LiteGraph",
   description: "TypeScript 节点图引擎：Canvas2D 编辑器、可执行图与可插拔节点包",
