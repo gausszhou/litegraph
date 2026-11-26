@@ -180,7 +180,8 @@ export default class SubgraphTests extends UnitTest {
         expect(subgraph.inputs[0].type).toEqual("boolean");
         expect(subgraph.subgraph.inputs["test1"].name).toEqual("test1")
         expect(subgraph.subgraph.inputs["test1"].type).toEqual("boolean")
-        expect(subgraph.subgraph.inputs["test1"].value).toEqual("foo") // XXX data not changed
+        // 类型变更只更新插槽与元数据，已写入的数据保持不变
+        expect(subgraph.subgraph.inputs["test1"].value).toEqual("foo")
     }
 
     test__onSubgraphTypeChange__detectsOutputTypeChanges() {
@@ -206,7 +207,8 @@ export default class SubgraphTests extends UnitTest {
         expect(subgraph.outputs[0].type).toEqual("boolean");
         expect(subgraph.subgraph.outputs["test1"].name).toEqual("test1")
         expect(subgraph.subgraph.outputs["test1"].type).toEqual("boolean")
-        expect(subgraph.subgraph.outputs["test1"].value).toEqual("foo") // XXX data not changed
+        // 类型变更只更新插槽与元数据，已写入的数据保持不变
+        expect(subgraph.subgraph.outputs["test1"].value).toEqual("foo")
     }
 
     test__getInnerGraphInput() {
