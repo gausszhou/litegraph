@@ -2198,7 +2198,6 @@ export default class LGraphNode {
         targetNode: LGraphNode,
         targetSlot: number | string
     ): T | null {
-        console.log('connect', slot, targetNode, targetSlot)
         targetSlot = targetSlot || 0;
 
         if (!this.graph) {

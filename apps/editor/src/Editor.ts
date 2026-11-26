@@ -174,11 +174,13 @@ export default class Editor {
       const url = option.dataset["url"];
       this.stop();
       if (url) {
-        this.graph.load(url);
+        this.graph.load(url, () => this.fitToView());
       } else if (option.callback) {
         option.callback();
+        this.fitToView();
       } else {
         this.graph.clear();
+        this.graphCanvas.setDirty(true, true);
       }
     });
     this.toolsLeft.appendChild(elem);
@@ -258,26 +260,67 @@ export default class Editor {
   }
 
   save() {
-    console.log(this)
     try {
       const json = JSON.stringify(this.graph.serialize());
-      localStorage.setItem("graphdemo_save",json);
-      console.log("saved");
+      localStorage.setItem("graphdemo_save", json);
     } catch (error) {
-      console.log("save error", error);
+      console.warn("[demo] 保存失败", error);
     }
   }
 
-  load() {
+  load(): boolean {
     const data = localStorage.getItem("graphdemo_save");
-    if (data) {
-      try {
-        this.graph.configure(JSON.parse(data));
-        console.log("loaded");
-      } catch (error) {
-        console.log("load error", error);
-      }
+    if (!data) {
+      return false;
     }
+    try {
+      this.graph.configure(JSON.parse(data));
+      this.fitToView();
+      return true;
+    } catch (error) {
+      console.warn("[demo] 读取失败", error);
+      return false;
+    }
+  }
+
+  /** 缩放到整张图：加载 demo / JSON / 本地存档后调用，避免图在视口外。 */
+  fitToView(padding = 60): void {
+    const nodes = this.graph._nodes;
+    const canvas = this.graphCanvas.canvas;
+    if (!nodes.length || !canvas.width || !canvas.height) {
+      return;
+    }
+
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    for (const node of nodes) {
+      const [x, y] = node.pos;
+      const width = node.size[0];
+      const height = node.size[1];
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x + width);
+      maxY = Math.max(maxY, y + height);
+    }
+
+    const ds = this.graphCanvas.ds;
+    const graphWidth = Math.max(maxX - minX, 1);
+    const graphHeight = Math.max(maxY - minY, 1);
+    const scale = Math.min(
+      (canvas.width - padding * 2) / graphWidth,
+      (canvas.height - padding * 2) / graphHeight,
+      1
+    );
+
+    ds.scale = Math.max(ds.min_scale, Math.min(ds.max_scale, scale));
+    ds.offset = [
+      canvas.width / (2 * ds.scale) - (minX + maxX) / 2,
+      canvas.height / (2 * ds.scale) - (minY + maxY) / 2,
+    ];
+    this.graphCanvas.setDirty(true, true);
+    this.graphCanvas.draw(true, true);
   }
 
   download() {

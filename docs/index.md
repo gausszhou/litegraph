@@ -31,5 +31,5 @@ features:
   - title: TypeScript + Vite
     details: 全部包产出 ESM + UMD 与 .d.ts；UMD 把 core 外置到 window.litegraph，多包共享同一引擎实例。
   - title: 面向测试与发布
-    details: CI 覆盖 lint、严格类型、241 个用例、覆盖率门槛、UMD 冒烟与 tarball 校验，节点目录与 API 文档由源码生成。
+    details: CI 覆盖 lint、严格类型、243 个用例、覆盖率门槛、UMD 冒烟与 tarball 校验，节点目录与 API 文档由源码生成。
 ---

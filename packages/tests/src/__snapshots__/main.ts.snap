@@ -131,8 +131,8 @@ exports[`examples > demos > builds audio1 1`] = `
         },
       ],
       "pos": [
-        200,
-        100,
+        140,
+        120,
       ],
       "properties": {
         "autoplay": true,
@@ -162,8 +162,8 @@ exports[`examples > demos > builds audio1 1`] = `
       "order": 1,
       "outputs": [],
       "pos": [
-        400,
-        100,
+        480,
+        120,
       ],
       "properties": {},
       "size": [
@@ -244,8 +244,8 @@ exports[`examples > demos > builds audio2 1`] = `
         },
       ],
       "pos": [
-        50,
-        50,
+        80,
+        80,
       ],
       "properties": {
         "color": "#7AF",
@@ -293,8 +293,8 @@ exports[`examples > demos > builds audio2 1`] = `
         },
       ],
       "pos": [
-        200,
-        50,
+        280,
+        80,
       ],
       "properties": {
         "autoplay": true,
@@ -324,8 +324,8 @@ exports[`examples > demos > builds audio2 1`] = `
       "order": 2,
       "outputs": [],
       "pos": [
-        400,
-        50,
+        540,
+        80,
       ],
       "properties": {},
       "size": [
@@ -369,8 +369,8 @@ exports[`examples > demos > builds audio2 1`] = `
         },
       ],
       "pos": [
-        400,
-        300,
+        540,
+        280,
       ],
       "properties": {
         "fftSize": 2048,
@@ -407,8 +407,8 @@ exports[`examples > demos > builds audio2 1`] = `
       "order": 4,
       "outputs": [],
       "pos": [
-        600,
-        50,
+        820,
+        240,
       ],
       "properties": {
         "continuous": true,
@@ -443,8 +443,8 @@ exports[`examples > demos > builds audio2 1`] = `
       "order": 5,
       "outputs": [],
       "pos": [
-        600,
-        300,
+        1060,
+        240,
       ],
       "properties": {
         "continuous": true,
@@ -490,23 +490,23 @@ exports[`examples > demos > builds audio3 1`] = `
       3,
       2,
       0,
-      4,
+      5,
       0,
       "audio",
     ],
     [
       4,
-      4,
-      0,
       5,
+      0,
+      6,
       0,
       "array",
     ],
     [
       5,
-      4,
+      5,
       1,
-      6,
+      7,
       0,
       "array",
     ],
@@ -514,7 +514,7 @@ exports[`examples > demos > builds audio3 1`] = `
       6,
       2,
       1,
-      7,
+      4,
       0,
       "buffer",
     ],
@@ -536,8 +536,8 @@ exports[`examples > demos > builds audio3 1`] = `
         },
       ],
       "pos": [
-        50,
-        50,
+        80,
+        80,
       ],
       "properties": {
         "color": "#7AF",
@@ -587,8 +587,8 @@ exports[`examples > demos > builds audio3 1`] = `
         },
       ],
       "pos": [
-        200,
-        50,
+        280,
+        80,
       ],
       "properties": {
         "autoplay": true,
@@ -618,8 +618,8 @@ exports[`examples > demos > builds audio3 1`] = `
       "order": 2,
       "outputs": [],
       "pos": [
-        400,
-        50,
+        540,
+        80,
       ],
       "properties": {},
       "size": [
@@ -632,6 +632,32 @@ exports[`examples > demos > builds audio3 1`] = `
     {
       "flags": {},
       "id": 4,
+      "inputs": [
+        {
+          "link": 6,
+          "name": "xy",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        80,
+        240,
+      ],
+      "properties": {},
+      "size": [
+        320,
+        220,
+      ],
+      "title": "Oscilloscope",
+      "type": "audio/oscilloscope",
+    },
+    {
+      "flags": {},
+      "id": 5,
       "inputs": [
         {
           "link": 3,
@@ -663,8 +689,8 @@ exports[`examples > demos > builds audio3 1`] = `
         },
       ],
       "pos": [
-        400,
-        100,
+        540,
+        280,
       ],
       "properties": {
         "fftSize": 2048,
@@ -681,7 +707,7 @@ exports[`examples > demos > builds audio3 1`] = `
     },
     {
       "flags": {},
-      "id": 5,
+      "id": 6,
       "inputs": [
         {
           "link": 4,
@@ -701,8 +727,8 @@ exports[`examples > demos > builds audio3 1`] = `
       "order": 5,
       "outputs": [],
       "pos": [
-        600,
-        50,
+        820,
+        240,
       ],
       "properties": {
         "continuous": true,
@@ -717,7 +743,7 @@ exports[`examples > demos > builds audio3 1`] = `
     },
     {
       "flags": {},
-      "id": 6,
+      "id": 7,
       "inputs": [
         {
           "link": 5,
@@ -737,8 +763,8 @@ exports[`examples > demos > builds audio3 1`] = `
       "order": 6,
       "outputs": [],
       "pos": [
-        600,
-        300,
+        1060,
+        240,
       ],
       "properties": {
         "continuous": true,
@@ -750,32 +776,6 @@ exports[`examples > demos > builds audio3 1`] = `
       ],
       "title": "Visualization",
       "type": "audio/visualization",
-    },
-    {
-      "flags": {},
-      "id": 7,
-      "inputs": [
-        {
-          "link": 6,
-          "name": "xy",
-          "properties": {},
-          "type": "buffer",
-        },
-      ],
-      "mode": 0,
-      "order": 4,
-      "outputs": [],
-      "pos": [
-        200,
-        200,
-      ],
-      "properties": {},
-      "size": [
-        300,
-        300,
-      ],
-      "title": "Oscilloscope",
-      "type": "audio/oscilloscope",
     },
   ],
   "version": 10,
@@ -817,8 +817,8 @@ exports[`examples > demos > builds basic1 1`] = `
         },
       ],
       "pos": [
-        200,
-        100,
+        120,
+        120,
       ],
       "properties": {
         "value": 5,
@@ -846,8 +846,8 @@ exports[`examples > demos > builds basic1 1`] = `
       "order": 1,
       "outputs": [],
       "pos": [
-        500,
-        100,
+        440,
+        120,
       ],
       "properties": {
         "value": 1,
@@ -907,7 +907,7 @@ exports[`examples > demos > builds basic2 1`] = `
         },
       ],
       "pos": [
-        200,
+        120,
         100,
       ],
       "properties": {
@@ -937,8 +937,8 @@ exports[`examples > demos > builds basic2 1`] = `
         },
       ],
       "pos": [
-        200,
-        200,
+        120,
+        220,
       ],
       "properties": {
         "value": 10,
@@ -966,7 +966,7 @@ exports[`examples > demos > builds basic2 1`] = `
       "order": 2,
       "outputs": [],
       "pos": [
-        500,
+        440,
         100,
       ],
       "properties": {
@@ -995,8 +995,8 @@ exports[`examples > demos > builds basic2 1`] = `
       "order": 3,
       "outputs": [],
       "pos": [
-        500,
-        200,
+        440,
+        220,
       ],
       "properties": {
         "value": 1,
@@ -1025,37 +1025,37 @@ exports[`examples > demos > builds basic3 1`] = `
       1,
       1,
       0,
+      4,
+      0,
+      "number",
+    ],
+    [
+      2,
+      2,
+      0,
       5,
+      0,
+      "number",
+    ],
+    [
+      3,
+      1,
+      0,
+      3,
       0,
       "number,array,object",
     ],
     [
-      2,
-      2,
-      0,
-      5,
-      1,
-      "number",
-    ],
-    [
-      3,
-      1,
-      0,
-      3,
-      0,
-      "number",
-    ],
-    [
       4,
       2,
       0,
-      4,
-      0,
+      3,
+      1,
       "number",
     ],
     [
       5,
-      5,
+      3,
       0,
       6,
       0,
@@ -1081,8 +1081,8 @@ exports[`examples > demos > builds basic3 1`] = `
         },
       ],
       "pos": [
-        200,
-        100,
+        120,
+        80,
       ],
       "properties": {
         "value": 5,
@@ -1112,7 +1112,7 @@ exports[`examples > demos > builds basic3 1`] = `
         },
       ],
       "pos": [
-        200,
+        120,
         200,
       ],
       "properties": {
@@ -1130,8 +1130,53 @@ exports[`examples > demos > builds basic3 1`] = `
       "id": 3,
       "inputs": [
         {
-          "label": "",
           "link": 3,
+          "name": "A",
+          "properties": {},
+          "type": "number,array,object",
+        },
+        {
+          "link": 4,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": [
+            5,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        380,
+        160,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "label": "",
+          "link": 1,
           "name": "value",
           "properties": {},
           "type": 0,
@@ -1141,37 +1186,8 @@ exports[`examples > demos > builds basic3 1`] = `
       "order": 2,
       "outputs": [],
       "pos": [
-        500,
-        100,
-      ],
-      "properties": {
-        "value": 1,
-      },
-      "size": [
-        140,
-        26,
-      ],
-      "title": "Watch",
-      "type": "basic/watch",
-    },
-    {
-      "flags": {},
-      "id": 4,
-      "inputs": [
-        {
-          "label": "",
-          "link": 4,
-          "name": "value",
-          "properties": {},
-          "type": 0,
-        },
-      ],
-      "mode": 0,
-      "order": 4,
-      "outputs": [],
-      "pos": [
-        500,
-        200,
+        660,
+        80,
       ],
       "properties": {
         "value": 1,
@@ -1188,45 +1204,29 @@ exports[`examples > demos > builds basic3 1`] = `
       "id": 5,
       "inputs": [
         {
-          "link": 1,
-          "name": "A",
-          "properties": {},
-          "type": "number,array,object",
-        },
-        {
+          "label": "",
           "link": 2,
-          "name": "B",
+          "name": "value",
           "properties": {},
-          "type": "number",
+          "type": 0,
         },
       ],
       "mode": 0,
       "order": 3,
-      "outputs": [
-        {
-          "links": [
-            5,
-          ],
-          "name": "=",
-          "properties": {},
-          "type": "number",
-        },
-      ],
+      "outputs": [],
       "pos": [
-        500,
-        300,
+        660,
+        200,
       ],
       "properties": {
-        "A": 1,
-        "B": 1,
-        "OP": "+",
+        "value": 1,
       },
       "size": [
         140,
-        46,
+        26,
       ],
-      "title": "Operation",
-      "type": "math/operation",
+      "title": "Watch",
+      "type": "basic/watch",
     },
     {
       "flags": {},
@@ -1244,8 +1244,8 @@ exports[`examples > demos > builds basic3 1`] = `
       "order": 5,
       "outputs": [],
       "pos": [
-        700,
-        100,
+        660,
+        320,
       ],
       "properties": {
         "value": 1,
@@ -1297,8 +1297,8 @@ exports[`examples > demos > builds circuit1 1`] = `
         },
       ],
       "pos": [
-        200,
-        100,
+        140,
+        120,
       ],
       "properties": {
         "freq": 1,
@@ -1324,8 +1324,8 @@ exports[`examples > demos > builds circuit1 1`] = `
       "order": 1,
       "outputs": [],
       "pos": [
-        500,
-        100,
+        480,
+        120,
       ],
       "properties": {},
       "size": [
@@ -1333,6 +1333,441 @@ exports[`examples > demos > builds circuit1 1`] = `
         26,
       ],
       "type": "circuit/led",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds events 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 3,
+  "last_node_id": 4,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      -1,
+    ],
+    [
+      2,
+      2,
+      1,
+      3,
+      0,
+      "number",
+    ],
+    [
+      3,
+      2,
+      0,
+      4,
+      0,
+      -1,
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "on_tick",
+          "properties": {},
+          "shape": 1,
+          "type": -2,
+        },
+      ],
+      "pos": [
+        120,
+        120,
+      ],
+      "properties": {
+        "event": "tick",
+        "interval": 1000,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "TimerEvent",
+      "type": "events/timer",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "inc",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "dec",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "reset",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            3,
+          ],
+          "name": "change",
+          "properties": {},
+          "shape": 1,
+          "type": -2,
+        },
+        {
+          "links": [
+            2,
+          ],
+          "name": "num",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        400,
+        100,
+      ],
+      "properties": {
+        "doCountExecution": false,
+      },
+      "size": [
+        210,
+        98,
+      ],
+      "title": "EventCounter",
+      "type": "events/counter",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "label": "",
+          "link": 2,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [],
+      "pos": [
+        720,
+        200,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "event",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        400,
+        340,
+      ],
+      "properties": {},
+      "size": [
+        210,
+        106,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds widgets 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 3,
+  "last_node_id": 6,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "boolean",
+    ],
+    [
+      3,
+      5,
+      0,
+      6,
+      0,
+      -1,
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        100,
+        80,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "value": 0.65,
+      },
+      "size": [
+        64,
+        84,
+      ],
+      "title": "WidgetKnob",
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "pos": [
+        400,
+        100,
+      ],
+      "properties": {
+        "color": "#AAF",
+        "max": 1,
+        "min": 0,
+        "value": 0,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "WidgetProgress",
+      "type": "widget/progress",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": null,
+          "name": "",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "link": null,
+          "name": "e",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "v",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "links": [],
+          "name": "e",
+          "properties": {},
+          "shape": 1,
+          "type": -2,
+        },
+      ],
+      "pos": [
+        100,
+        260,
+      ],
+      "properties": {
+        "font": "",
+        "value": false,
+      },
+      "size": [
+        160,
+        44,
+      ],
+      "title": "WidgetToggle",
+      "type": "widget/toggle",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "label": "",
+          "link": 2,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        400,
+        260,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 5,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            3,
+          ],
+          "name": "",
+          "properties": {},
+          "shape": 1,
+          "type": -2,
+        },
+        {
+          "links": [],
+          "name": "",
+          "properties": {},
+          "type": "boolean",
+        },
+      ],
+      "pos": [
+        100,
+        400,
+      ],
+      "properties": {
+        "font_size": 30,
+        "message": "",
+        "text": "click me",
+      },
+      "size": [
+        164,
+        84,
+      ],
+      "title": "WidgetButton",
+      "type": "widget/button",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "event",
+          "properties": {},
+          "shape": 1,
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [],
+      "pos": [
+        400,
+        420,
+      ],
+      "properties": {},
+      "size": [
+        210,
+        106,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
     },
   ],
   "version": 10,
@@ -2791,7 +3226,7 @@ exports[`examples > json > loads benchmark.json 1`] = `
       ],
       "color": "#3f789e",
       "font": undefined,
-      "title": "Group",
+      "title": "Slots & widgets",
     },
     {
       "bounding": [
@@ -2802,7 +3237,7 @@ exports[`examples > json > loads benchmark.json 1`] = `
       ],
       "color": "#A88",
       "font": undefined,
-      "title": "Group",
+      "title": "Mixed nodes",
     },
     {
       "bounding": [
@@ -2813,7 +3248,7 @@ exports[`examples > json > loads benchmark.json 1`] = `
       ],
       "color": "#8A8",
       "font": undefined,
-      "title": "Group",
+      "title": "Slot grid",
     },
   ],
   "last_link_id": 50,
@@ -5350,7 +5785,18 @@ exports[`examples > json > loads features.json 1`] = `
       ],
       "color": "#3f789e",
       "font": undefined,
-      "title": "Group",
+      "title": "Ports, widgets & shapes",
+    },
+    {
+      "bounding": [
+        405,
+        85,
+        600,
+        205,
+      ],
+      "color": "#8A8",
+      "font": undefined,
+      "title": "Math, input & events",
     },
   ],
   "last_link_id": 14,

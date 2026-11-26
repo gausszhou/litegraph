@@ -11,7 +11,8 @@ pnpm --filter @litegraph/editor dev
 On top of the minimal example, the editor adds:
 
 - Toolbar: run / pause, save / load, clear, maximize, mini preview, live mode toggle;
-- Example dropdown: load built-in demos and `public/examples/*.json` with one click;
+- Example dropdown: load built-in demos and `public/examples/*.json` with one click; the view auto-fits the loaded graph;
+- Local recovery: the current graph is backed up to `localStorage` when the page unloads and restored on the next visit (you can also switch back from the dropdown);
 - Node search box: search nodes by type / title and drag them onto the canvas to create;
 - Context menu, properties panel, widget interaction, box selection, snap alignment, groups;
 - Two editor-only plugins: `features/*` (ports / widgets / shapes demo nodes) and `circuit/*` (oscillator, LED), installed via `LiteGraph.use()` in `apps/editor/src/Editor.ts`.
@@ -23,6 +24,8 @@ On top of the minimal example, the editor adds:
 | `Basic1` | One constant into one watch |
 | `Basic2` | Two constants, each into its own watch |
 | `Basic3` | Two constants + a math operation + three watches |
+| `Widgets` | Knob → progress bar, toggle → watch, button event → log |
+| `Events` | Timer → counter → watch, logging every change event |
 | `Audio1` | `audio/source` → `audio/destination` |
 | `Audio2` | Source + knob + analyser + visualization |
 | `Audio3` | Audio2 plus an oscilloscope |
@@ -80,7 +83,7 @@ if (graph.configure(data)) {
 
 ## Example snapshot regression
 
-`packages/tests/src/ExamplesSnapshotTests.ts` brings the examples into automated regression, covering 15 cases:
+`packages/tests/src/ExamplesSnapshotTests.ts` brings the examples into automated regression, covering 17 cases:
 
 - every JSON file in `apps/editor/public/examples/*.json`: `configure()` returns `false`, the node count matches the file, and serialize → `configure()` again → serialize again is deeply equal;
 - every demo in `apps/editor/src/demos.ts`: node count > 0 after building and serialization is stable;

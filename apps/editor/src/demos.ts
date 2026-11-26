@@ -1,188 +1,148 @@
 import { LGraph, LiteGraph } from "@gausszhou/litegraph";
+import type { LGraphNode } from "@gausszhou/litegraph";
 
-export function basic1(graph: LGraph) {
+type Vec2 = [number, number];
+
+/** 创建并放置节点；类型未注册时立即报错，避免 demo 静默变成空图。 */
+function addNode(graph: LGraph, type: string, pos: Vec2, size?: Vec2): LGraphNode {
+  const node = LiteGraph.createNode(type);
+  if (!node) {
+    throw new Error(`[demo] 节点类型未注册：${type}`);
+  }
+  node.pos = pos;
+  if (size) {
+    node.size = size;
+  }
+  graph.add(node);
+  return node;
+}
+
+/** 连接两个插槽；失败时抛错，方便在测试里发现示例失效。 */
+function connect(from: LGraphNode, output: number, to: LGraphNode, input: number): void {
+  if (!from.connect(output, to, input)) {
+    throw new Error(`[demo] 连接失败：${from.type}[${output}] -> ${to.type}[${input}]`);
+  }
+}
+
+export function basic1(graph: LGraph): void {
   graph.clear();
-  const node_const_A = LiteGraph.createNode<any>("basic/number");
-  node_const_A.pos = [200, 100];
-  node_const_A.setValue(5);
-  
-  const node_watch1 = LiteGraph.createNode<any>("basic/watch");
-  node_watch1.pos = [500, 100];
-
-  graph.add(node_const_A);
-  graph.add(node_watch1);
-  node_const_A.connect(0, node_watch1, 0);
+  const value = addNode(graph, "basic/number", [120, 120]);
+  value.setProperty("value", 5);
+  const watch = addNode(graph, "basic/watch", [440, 120]);
+  connect(value, 0, watch, 0);
 }
 
-export function basic2(graph: LGraph) {
-  graph.clear()
-  var node_const_A = LiteGraph.createNode<any>("basic/number");
-  node_const_A.pos = [200, 100];
-  node_const_A.setValue(5);
-  
-  var node_const_B = LiteGraph.createNode<any>("basic/number");
-  node_const_B.pos = [200, 200];
-  node_const_B.setValue(10);
-  
-  var node_watch1 = LiteGraph.createNode("basic/watch");
-  node_watch1.pos = [500, 100];
-
-  var node_watch2 = LiteGraph.createNode("basic/watch");
-  node_watch2.pos = [500, 200];
-  
-  graph.add(node_const_A);
-  graph.add(node_const_B);
-  graph.add(node_watch1);
-  graph.add(node_watch2);
-  node_const_A.connect(0, node_watch1, 0);
-  node_const_B.connect(0, node_watch2, 0);
-}
-
-export function basic3(graph: LGraph) {
-  graph.clear()
-  var node_const_A = LiteGraph.createNode<any>("basic/number");
-  node_const_A.pos = [200, 100];
-  node_const_A.setValue(5);
-  
-  var node_const_B = LiteGraph.createNode<any>("basic/number");
-  node_const_B.pos = [200, 200];
-  node_const_B.setValue(10);
-  
-  var node_watch1 = LiteGraph.createNode("basic/watch");
-  node_watch1.pos = [500, 100];
-  
-  var node_watch2 = LiteGraph.createNode("basic/watch");
-  node_watch2.pos = [500, 200];
-  
-  var node_math = LiteGraph.createNode("math/operation");
-  node_math.pos = [500, 300];
-  
-  var node_watch3 = LiteGraph.createNode("basic/watch");
-  node_watch3.pos = [700, 100];
-  
-  graph.add(node_const_A);
-  graph.add(node_const_B);
-  graph.add(node_watch1);
-  graph.add(node_watch2);
-  graph.add(node_math);
-  graph.add(node_watch3);
-
-  node_const_A.connect(0, node_math, 0);
-  node_const_B.connect(0, node_math, 1);
-  node_const_A.connect(0, node_watch1, 0);
-  node_const_B.connect(0, node_watch2, 0);
-  node_math.connect(0, node_watch3, 0);
-}
-
-export function audio1(graph: LGraph) {
-  graph.clear()
-  const node_audio_source = LiteGraph.createNode("audio/source");
-  node_audio_source.pos = [200, 100];
-  node_audio_source.setProperty("src", "./demodata/audio.wav")
-
-  const node_audio_dest = LiteGraph.createNode("audio/destination");
-  node_audio_dest.pos = [400, 100];
-
-  graph.add(node_audio_source);
-  graph.add(node_audio_dest);
-  node_audio_source.connect(0, node_audio_dest, 0)
-
-}
-
-export function audio2(graph: LGraph) {
-  graph.clear()
-
-  const node_audio_gain = LiteGraph.createNode("widget/knob");
-  node_audio_gain.pos = [50, 50];
-
-  const node_audio_source = LiteGraph.createNode("audio/source");
-  node_audio_source.pos = [200, 50];
-  node_audio_source.setProperty("src", "./demodata/audio.wav")
-  
-  const node_audio_dest = LiteGraph.createNode("audio/destination");
-  node_audio_dest.pos = [400, 50];
-
-  const node_audio_analyser = LiteGraph.createNode("audio/analyser");
-  node_audio_analyser.pos = [400, 300];
-
-  const node_audio_vis = LiteGraph.createNode("audio/visualization");
-  node_audio_vis.pos = [600, 50];
-
-  const node_audio_vis2 = LiteGraph.createNode("audio/visualization");
-  node_audio_vis2.pos = [600, 300];
-  
-  graph.add(node_audio_gain);
-  graph.add(node_audio_source);
-  graph.add(node_audio_dest);
-  graph.add(node_audio_analyser);
-  graph.add(node_audio_vis);
-  graph.add(node_audio_vis2);
-
-  node_audio_gain.connect(0, node_audio_source, 0)
-  node_audio_source.connect(0, node_audio_dest, 0)
-  node_audio_source.connect(0, node_audio_analyser, 0)
-  node_audio_analyser.connect(0, node_audio_vis, 0)
-  node_audio_analyser.connect(1, node_audio_vis2, 0)
-
-}
-
-export function audio3(graph: LGraph) {
-
-  graph.clear()
-
-  const node_audio_gain = LiteGraph.createNode("widget/knob");
-  node_audio_gain.pos = [50, 50];
-
-  const node_audio_source = LiteGraph.createNode("audio/source");
-  node_audio_source.pos = [200, 50];
-  node_audio_source.setProperty("src", "./demodata/oscillofun.mp3")
-  
-  const node_audio_dest = LiteGraph.createNode("audio/destination");
-  node_audio_dest.pos = [400, 50];
-
-  const node_audio_analyser = LiteGraph.createNode("audio/analyser");
-  node_audio_analyser.pos = [400, 100];
-
-  const node_audio_vis = LiteGraph.createNode("audio/visualization");
-  node_audio_vis.pos = [600, 50];
-
-  const node_audio_vis2 = LiteGraph.createNode("audio/visualization");
-  node_audio_vis2.pos = [600, 300];
-
-  const node_audio_oscillo = LiteGraph.createNode("audio/oscilloscope");
-  node_audio_oscillo.pos = [200, 200];
-  node_audio_oscillo.size = [300, 300]
-  
-  graph.add(node_audio_gain);
-  graph.add(node_audio_source);
-  graph.add(node_audio_dest);
-  graph.add(node_audio_analyser);
-  graph.add(node_audio_vis);
-  graph.add(node_audio_vis2);
-  graph.add(node_audio_oscillo);
-
-  node_audio_gain.connect(0, node_audio_source, 0)
-  node_audio_source.connect(0, node_audio_dest, 0)
-  node_audio_source.connect(0, node_audio_analyser, 0)
-  node_audio_analyser.connect(0, node_audio_vis, 0)
-  node_audio_analyser.connect(1, node_audio_vis2, 0)
-  node_audio_source.connect(1, node_audio_oscillo, 0)
-  
-
-
-}
-
-
-export function circuit1(graph: LGraph) {
+export function basic2(graph: LGraph): void {
   graph.clear();
-  const node_oscillator = LiteGraph.createNode<any>("circuit/oscillator");
-  node_oscillator.pos = [200, 100];
-  
-  
-  const node_led = LiteGraph.createNode<any>("circuit/led");
-  node_led.pos = [500, 100];
+  const a = addNode(graph, "basic/number", [120, 100]);
+  a.setProperty("value", 5);
+  const b = addNode(graph, "basic/number", [120, 220]);
+  b.setProperty("value", 10);
+  const watchA = addNode(graph, "basic/watch", [440, 100]);
+  const watchB = addNode(graph, "basic/watch", [440, 220]);
+  connect(a, 0, watchA, 0);
+  connect(b, 0, watchB, 0);
+}
 
-  graph.add(node_oscillator);
-  graph.add(node_led);
-  node_oscillator.connect(0, node_led, 0);
+export function basic3(graph: LGraph): void {
+  graph.clear();
+  const a = addNode(graph, "basic/number", [120, 80]);
+  a.setProperty("value", 5);
+  const b = addNode(graph, "basic/number", [120, 200]);
+  b.setProperty("value", 10);
+  const math = addNode(graph, "math/operation", [380, 160]);
+  const watchA = addNode(graph, "basic/watch", [660, 80]);
+  const watchB = addNode(graph, "basic/watch", [660, 200]);
+  const watchSum = addNode(graph, "basic/watch", [660, 320]);
+  connect(a, 0, watchA, 0);
+  connect(b, 0, watchB, 0);
+  connect(a, 0, math, 0);
+  connect(b, 0, math, 1);
+  connect(math, 0, watchSum, 0);
+}
+
+export function widgets(graph: LGraph): void {
+  graph.clear();
+
+  // 旋钮 -> 进度条：演示带可编辑属性的控件节点
+  const knob = addNode(graph, "widget/knob", [100, 80]);
+  knob.setProperty("value", 0.65);
+  const progress = addNode(graph, "widget/progress", [400, 100]);
+  connect(knob, 0, progress, 0);
+
+  // 开关 -> watch：布尔控件节点的输出
+  const toggle = addNode(graph, "widget/toggle", [100, 260]);
+  const watch = addNode(graph, "basic/watch", [400, 260]);
+  connect(toggle, 0, watch, 0);
+
+  // 按钮事件 -> 日志：控件节点也可以发出 action
+  const button = addNode(graph, "widget/button", [100, 400]);
+  const log = addNode(graph, "events/log", [400, 420]);
+  connect(button, 0, log, 0);
+}
+
+export function events(graph: LGraph): void {
+  graph.clear();
+
+  // 定时器每秒触发一次计数器，计数结果与每次 change 事件分别接到 watch / log
+  const timer = addNode(graph, "events/timer", [120, 120]);
+  timer.setProperty("interval", 1000);
+  timer.setProperty("event", "tick");
+  const counter = addNode(graph, "events/counter", [400, 100]);
+  const watch = addNode(graph, "basic/watch", [720, 200]);
+  const log = addNode(graph, "events/log", [400, 340]);
+  connect(timer, 0, counter, 0);
+  connect(counter, 1, watch, 0);
+  connect(counter, 0, log, 0);
+}
+
+export function audio1(graph: LGraph): void {
+  graph.clear();
+  const source = addNode(graph, "audio/source", [140, 120]);
+  source.setProperty("src", "./demodata/audio.wav");
+  const destination = addNode(graph, "audio/destination", [480, 120]);
+  connect(source, 0, destination, 0);
+}
+
+export function audio2(graph: LGraph): void {
+  graph.clear();
+  const gain = addNode(graph, "widget/knob", [80, 80]);
+  const source = addNode(graph, "audio/source", [280, 80]);
+  source.setProperty("src", "./demodata/audio.wav");
+  const destination = addNode(graph, "audio/destination", [540, 80]);
+  const analyser = addNode(graph, "audio/analyser", [540, 280]);
+  const visualizeFreq = addNode(graph, "audio/visualization", [820, 240]);
+  const visualizeWave = addNode(graph, "audio/visualization", [1060, 240]);
+
+  connect(gain, 0, source, 0);
+  connect(source, 0, destination, 0);
+  connect(source, 0, analyser, 0);
+  connect(analyser, 0, visualizeFreq, 0);
+  connect(analyser, 1, visualizeWave, 0);
+}
+
+export function audio3(graph: LGraph): void {
+  graph.clear();
+  const gain = addNode(graph, "widget/knob", [80, 80]);
+  const source = addNode(graph, "audio/source", [280, 80]);
+  source.setProperty("src", "./demodata/oscillofun.mp3");
+  const destination = addNode(graph, "audio/destination", [540, 80]);
+  const oscilloscope = addNode(graph, "audio/oscilloscope", [80, 240], [320, 220]);
+  const analyser = addNode(graph, "audio/analyser", [540, 280]);
+  const visualizeFreq = addNode(graph, "audio/visualization", [820, 240]);
+  const visualizeWave = addNode(graph, "audio/visualization", [1060, 240]);
+
+  connect(gain, 0, source, 0);
+  connect(source, 0, destination, 0);
+  connect(source, 0, analyser, 0);
+  connect(analyser, 0, visualizeFreq, 0);
+  connect(analyser, 1, visualizeWave, 0);
+  connect(source, 1, oscilloscope, 0);
+}
+
+export function circuit1(graph: LGraph): void {
+  graph.clear();
+  const oscillator = addNode(graph, "circuit/oscillator", [140, 120]);
+  const led = addNode(graph, "circuit/led", [480, 120]);
+  connect(oscillator, 0, led, 0);
 }
