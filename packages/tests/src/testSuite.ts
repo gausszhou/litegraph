@@ -1,3 +1,4 @@
+export { default as LGraphNodeTests } from "./LGraphNodeTests"
 export { default as CanvasMixinsTests } from "./CanvasMixinsTests"
 export { default as LGraphTests } from "./LGraphTests"
 export { default as SubgraphTests } from "./nodes/SubgraphTests"
