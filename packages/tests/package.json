@@ -12,11 +12,22 @@
   },
   "dependencies": {
     "@gausszhou/litegraph-core": "workspace:*",
-    "@gausszhou/litegraph-nodes-basic": "workspace:*"
+    "@gausszhou/litegraph-nodes-basic": "workspace:*",
+    "@gausszhou/litegraph-nodes-audio": "workspace:*",
+    "@gausszhou/litegraph-nodes-events": "workspace:*",
+    "@gausszhou/litegraph-nodes-graphics": "workspace:*",
+    "@gausszhou/litegraph-nodes-input": "workspace:*",
+    "@gausszhou/litegraph-nodes-logic": "workspace:*",
+    "@gausszhou/litegraph-nodes-math": "workspace:*",
+    "@gausszhou/litegraph-nodes-midi": "workspace:*",
+    "@gausszhou/litegraph-nodes-strings": "workspace:*",
+    "@gausszhou/litegraph-nodes-widget": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.3",
     "vite": "^4.2.1",
-    "vitest": "^0.31.0"
+    "vitest": "^0.31.0",
+    "jsdom": "^22.1.0",
+    "@vitest/coverage-c8": "^0.31.0"
   }
 }
