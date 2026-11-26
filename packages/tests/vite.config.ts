@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url"
 import { defineConfig } from 'vitest/config'
 
 const packagesRoot = fileURLToPath(new URL("..", import.meta.url))
+const repoRoot = fileURLToPath(new URL("../..", import.meta.url))
 const requireFromTests = createRequire(import.meta.url)
 // 覆盖率 provider 需要在 tests 包内解析（根目录不保证安装）
 const coveragePkg = requireFromTests.resolve("@vitest/coverage-c8/package.json")
@@ -19,6 +20,8 @@ export default defineConfig({
         },
     },
     test: {
+        // 缓存与报告统一放回仓库根目录，避免在 packages/ 下产生临时目录
+        cache: { dir: join(repoRoot, "node_modules/.vitest") },
         include: ["tests/src/main.ts"],
         setupFiles: [
             join(packagesRoot, "tests/src/setup/jsdom-setup.ts"),
@@ -39,6 +42,7 @@ export default defineConfig({
                 "core/src/types.ts",
             ],
             exclude: ["**/*.d.ts", "core/src/index.ts"],
+            reportsDirectory: join(repoRoot, "coverage"),
             reporter: ["text", "lcov"],
             thresholds: { lines: 70, statements: 70, branches: 60, functions: 66 },
         },
