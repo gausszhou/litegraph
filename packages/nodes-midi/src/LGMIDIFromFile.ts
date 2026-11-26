@@ -84,6 +84,12 @@ export default class LGMIDIFromFile extends LGraphNode {
 
   loadMIDIFile(url: any) {
     var that = this;
+    // 该文件名解析依赖宿主的 fetchFile 扩展，未注入时优雅降级
+    if (typeof (LiteGraph as any).fetchFile !== "function") {
+      console.warn("LiteGraph.fetchFile 不可用，跳过 MIDI 文件加载:", url);
+      this.boxcolor = "#FAA";
+      return;
+    }
     (LiteGraph as any).fetchFile(
       url,
       "arraybuffer",
