@@ -47,7 +47,7 @@ export default class LGraphCanvas_Events {
         var skip_dragging = false;
         var skip_action = false;
         var now = LiteGraph.getTime();
-        var is_primary = (!(e instanceof PointerEvent) || !e.isPrimary);
+        var is_primary = (typeof PointerEvent === "undefined" || !(e instanceof PointerEvent) || !e.isPrimary);
         var is_double_click = (now - this.last_mouseclick < 300) && is_primary;
         this.mouse[0] = e.clientX;
         this.mouse[1] = e.clientY;
@@ -782,7 +782,7 @@ export default class LGraphCanvas_Events {
     processMouseUp(this: LGraphCanvas, _e: MouseEvent): boolean | undefined {
         let e = _e as MouseEventExt;
 
-        var is_primary = (!(e instanceof PointerEvent) || !e.isPrimary);
+        var is_primary = (typeof PointerEvent === "undefined" || !(e instanceof PointerEvent) || !e.isPrimary);
 
         //early exit for extra pointer
         if (!is_primary) {
