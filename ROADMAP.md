@@ -51,7 +51,7 @@
 - [x] 节点包契约测试：10 个包安装后逐一验证节点注册、创建与 serialize/configure 往返（共 95 种节点）。
 - [x] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
 - [x] 统一测试入口：移除 core 中无依赖的 `jest` 脚本，测试统一走 `packages/tests` 的 vitest（`pnpm test`，非 watch 模式）。
-- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 70%。
+- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 70.45%（224 个用例）。
 
 **验收**：核心路径覆盖率 ≥ 70%（`pnpm test:coverage` 门槛生效），无 `XXX` 待定断言、无用例跳过；节点契约覆盖全部 10 个包。
 

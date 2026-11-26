@@ -394,4 +394,15 @@ export default class LGraphTests extends UnitTest {
         expect(() => graph.removeLink(999)).not.toThrow();
         expect(Object.keys(graph.links)).toHaveLength(0);
     }
+
+    test__findNodesByTypeAndClass__shouldMatchNodes() {
+        const graph = new LGraph();
+        const node = LiteGraph.createNode(ConstantNumber);
+        graph.add(node);
+        graph.add(LiteGraph.createNode(Watch));
+
+        expect(graph.findNodesByType("basic/const")).toContain(node);
+        expect(graph.findNodesByClass(ConstantNumber)).toContain(node);
+        expect(graph.findNodesByClass(ConstantNumber)).toHaveLength(1);
+    }
 }

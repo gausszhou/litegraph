@@ -387,4 +387,39 @@ export default class LGraphNodeTests extends UnitTest {
         expect(node.getPropertyInfo("value").type).toBeDefined();
         expect(node.getPropertyInfo("missing")).toBeDefined();
     }
+
+    test__getSlotInPosition__shouldDetectOutputSlots() {
+        const graph = new LGraph();
+        const node = new LGraphNode();
+        graph.add(node);
+        node.pos = [0, 0];
+        node.addInput("in", "number");
+        node.addOutput("out", "number");
+        node.setSize([100, 50]);
+        const outputPos = node.getConnectionPos(false, 0);
+
+        const slot = node.getSlotInPosition(outputPos[0], outputPos[1]);
+
+        expect(slot?.output?.name).toBe("out");
+    }
+
+    test__setSize__shouldApplyMinimumConstraints() {
+        const node = new LGraphNode();
+
+        node.setSize([10, 10]);
+
+        expect(node.size[0]).toBeGreaterThanOrEqual(0);
+        expect(node.size[1]).toBeGreaterThanOrEqual(0);
+    }
+
+    test__getBounding__shouldAllowCustomCallback() {
+        const node = new LGraphNode();
+        let called = false;
+        node.onBounding = (bounding) => { called = true; bounding[2] += 10; };
+
+        const bounding = node.getBounding();
+
+        expect(called).toBe(true);
+        expect(bounding[2]).toBe(node.size[0] + 14);
+    }
 }
