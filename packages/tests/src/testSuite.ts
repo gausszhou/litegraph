@@ -1,3 +1,4 @@
+export { default as InteractionTests } from "./InteractionTests"
 export { default as NodeContractsTests } from "./NodeContractsTests"
 export { default as LGraphNodeTests } from "./LGraphNodeTests"
 export { default as CanvasMixinsTests } from "./CanvasMixinsTests"
