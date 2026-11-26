@@ -2,7 +2,7 @@
 
 本文档记录 LiteGraph 的发布计划、各阶段的交付物与验收标准。路线图随进展更新，完成一项勾选一项。
 
-现状速览：代码结构与功能主体已经成型（core 拆分、节点插件化、编辑器与文档站可运行），但「可发布、可验证、可上手」三件事还没闭环——缺少 CI 与锁文件、包元数据与产物未按 npm 规范配置、测试仅覆盖两个套件、文档仍停留在上游 litegraph.js 的用法。
+现状速览：v0.1~v0.3 已完成，工程基线、类型收紧与测试门槛都已闭环；v0.4 已完成：文档站重写为面向本仓库的中英双语站点，API 与节点目录改为源码生成，示例纳入快照回归。剩下的是功能补齐（v0.5）与正式发布（v1.0）。
 
 | 版本 | 主题 | 关键交付 |
 | --- | --- | --- |
@@ -24,7 +24,7 @@
 - [x] 节点包补充 UMD 产物：core 以 `window.litegraph` 全局外置，`pnpm verify-umd` 在 VM 中校验 10 个包共享同一个 LiteGraph 实例。
 - [x] 接入 GitHub Actions（`.github/workflows/ci.yml`）：lint + typecheck + test + build + 体积报告 + UMD 冒烟 + `pnpm pack` 产物校验。
 - [x] `pnpm size` 输出各产物 gzip 体积，CI 中执行。
-- [ ] Demo 资源瘦身：`apps/editor/public/demodata` 约 10 MB（video/webm 4.3 MB、wav/mp3 合计 5 MB）仍提交在 git 中。GitHub Pages 不解析 LFS 指针（`gh-pages` 分支需要真实文件），LFS 无法减少仓库体积；后续改为外部托管或构建时按需注入，再清理历史。
+- [x] ~~Demo 资源瘦身~~：2026-11 决定不做。`apps/editor/public/demodata` 约 10 MB 仍保留在仓库——GitHub Pages 不解析 LFS 指针，外置托管/构建注入的收益不足以抵消改动成本。
 
 **验收**：干净 clone 下 `pnpm install && pnpm build && pnpm test` 全绿；`pnpm verify-pack` 校验全部 tarball；已在独立 Vite 工程中验证 core / nodes-basic / 聚合包的 import、类型与 CSS。
 
@@ -51,19 +51,19 @@
 - [x] 节点包契约测试：10 个包安装后逐一验证节点注册、创建与 serialize/configure 往返（共 95 种节点）。
 - [x] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
 - [x] 统一测试入口：移除 core 中无依赖的 `jest` 脚本，测试统一走 `packages/tests` 的 vitest（`pnpm test`，非 watch 模式）。
-- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 70.45%（224 个用例）。
+- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 71.26%（241 个用例）。
 
 **验收**：核心路径覆盖率 ≥ 70%（`pnpm test:coverage` 门槛生效），无 `XXX` 待定断言、无用例跳过；节点契约覆盖全部 10 个包。
 
 ## v0.4 文档与示例
 
-- [ ] 按本仓库重写 `docs/`：包名、pnpm 用法、Vite 集成；清除上游 `litegraph.js` / `tamats.com` 等外链。
-- [ ] 由源码生成 API 文档（Typedoc 或 VitePress 插件），覆盖 core 公共 API。
-- [ ] 节点目录页：95 个节点的分类清单与参数说明（从各 `install.ts` 提取，避免手工维护）。
-- [ ] 示例页与回归：`apps/editor` 的内置 demo 与 `public/examples/*.json` 纳入加载快照测试；`apps/example-minimal` 已恢复样式引入，可一并作为快照基线。
-- [ ] 贡献指南 + 新节点模板（脚手架或 plop 生成器）。
+- [x] 按本仓库重写 `docs/`：以「core + 可插拔节点包 + 示例应用」为主线，覆盖 pnpm/workspace 用法、Vite 集成、按需引入与 UMD；清除上游 `litegraph.js` / `tamats.com` 的安装与 Demo 外链。站点提供简体中文与 English 两套页面（`docs/` 与 `docs/en/`），导航、侧边栏、搜索与页脚均本地化。
+- [x] 由源码生成 API 文档：接入 Typedoc + `typedoc-plugin-markdown`（`typedoc.json`），从 `packages/core/src/index.ts` 生成 `docs/api/` 与 `docs/en/api/`（两份内容相同，供语言切换），`pnpm docs:api` 可重跑；产物不提交，构建时生成。
+- [x] 节点目录页：`scripts/gen-node-catalog.mjs` 用 TypeScript AST 从各 `install.ts` 与 core 内建节点提取 95 个节点（类型、标题、说明、输入/输出/控件/属性、源码链接），生成中英文 `docs/nodes/*.md`；`pnpm docs:nodes:check` 在 CI 校验生成物是否与源码一致。
+- [x] 示例页与回归：`apps/editor` 的 7 个内置 demo 与 `public/examples/*.json` 全部纳入加载快照测试，另以 `apps/example-minimal` 的 ConstantNumber → Watch 作为最小示例基线；共 15 个用例，校验无缺失节点、节点数量、序列化往返稳定并固化快照。
+- [x] 贡献指南 + 节点模板：`docs/guide/contributing.md` 说明分层约定、测试与文档流程；`scripts/new-node.mjs`（`pnpm new-node <pack> <Class>`）生成节点类并自动补 `install.ts` 注册与 `index.ts` 导出，支持 `--dry-run`。
 
-**验收**：新人按文档 10 分钟内跑通最小示例，并写出一个自定义节点。
+**验收**：`pnpm docs:build` 在干净 clone 下通过（节点目录 + API 文档 + VitePress 双语站点）；新人按文档 10 分钟内跑通最小示例并写出一个自定义节点；`pnpm docs:nodes:check` 保证节点目录不漂移。
 
 ## v0.5 功能补齐
 

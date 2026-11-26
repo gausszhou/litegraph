@@ -1,165 +1,94 @@
-# What is LiteGraph?
+# LiteGraph 是什么
 
-## 摘要
+LiteGraph 是一个用 TypeScript 编写的**节点图引擎**：节点、插槽与连线绘制在 HTML5 Canvas 上，整张图可以被编辑、执行与序列化。它既是可视化编辑器（拖拽节点、连线、改属性），也是一个纯数据流运行时（在浏览器或 Node 中直接跑图，不需要画布）。
 
-LiteGraph 是一个 JavaScript 库，用于在类似于 Unreal Blueprints 虚幻蓝图的浏览器中创建图形。
+本仓库是 [jagenjo/litegraph.js](https://github.com/jagenjo/litegraph.js) 的 TypeScript 重写版本（并参考了 [space-nuko/litegraph.ts](https://github.com/space-nuko/litegraph.ts)），拆成了 pnpm monorepo：**核心引擎 + 可插拔节点包 + 示例应用 + 文档站**。与上游相比，这里的节点包是独立的 npm 包，可以按需安装；类型检查开启了 `strict`；构建产物同时提供 ESM、UMD 与 `.d.ts`。
 
-它可以轻松编程节点，它包括要构造和测试图形的编辑器。
+## 它能做什么
 
-它可以在任何现有的 Web 应用程序中轻松集成，并且可以在不需要编辑器的情况下运行图形。
+- **可视化脚本**：把业务逻辑拆成节点图，让非程序员在浏览器里连线和调参。
+- **数据/信号流编辑**：音频处理链、MIDI 生成、数学运算、字符串处理等内置节点可以直接组合。
+- **实时界面**：`live_mode` 隐藏编辑器的网格、边框与插槽，只保留节点自绘内容，适合做仪表盘或控制面板。
+- **图即配置**：`graph.serialize()` 得到纯 JSON，可以存数据库、随应用分发，或作为插件格式。
+- **嵌入任意 Web 应用**：只需要一个 `<canvas>` 和一个容器元素；核心包不隐式依赖样式，样式通过 `style.css` 子路径显式引入。
 
-这里有一个[Demo](https://tamats.com/projects/litegraph/editor)供您尝试。
+## 架构
 
-LiteGraph 开源在 Github 上，这是它的[Github 仓库地址](https://github.com/jagenjo/litegraph.js)
-
-## 特性
-
-- 在 Canvas2D 上渲染（放大/缩小和平移，易于渲染复杂的界面，可以在 WebGLTexture 中使用）
-- 易于使用的编辑器（搜索框、键盘快捷键、多选、上下文菜单等）
-- 优化为每个图支持数百个节点（在编辑器上和执行上）
-- 可定制的主题（颜色、形状、背景）
-- 回调以个性化节点的每个动作/绘图/事件
-- 子图（包含图本身的节点）
-- 实时模式系统（隐藏图形但调用节点以呈现它们想要的任何内容，有助于创建 UI）
-- 图形可以在 NodeJS 中执行
-- 高度可定制的节点（颜色、形状、垂直或水平插槽、小部件、自定义渲染）
-- 易于集成到任何 JS 应用程序中（单个文件，无依赖关系）
-- 支持 Typescript
-
-## 内置节点
-
-尽管创建新节点类型很容易，但 LiteGraph 附带了一些默认节点，这些节点在许多情况下都很有用：
-
-- 界面（小部件）
-- 数学（三角学、数学运算）
-- 音频（AudioAPI 和 MIDI）
-- 3D 图形（WebGL 中的后处理）
-- 输入（读取游戏手柄）
-
-## 安装
-
-你可以使用 npm 安装它
-
-```bash
-npm install litegraph.js
+```text
+LiteGraph（全局注册表 + 配置）
+├── LGraph            一张图：节点、连线、分组、输入输出、执行循环、序列化
+│   ├── LGraphNode    节点基类：插槽、widget、属性、序列化、onExecute 等回调
+│   ├── LLink         连线
+│   └── LGraphGroup   画布上的分组框
+├── LGraphCanvas      画布：事件、渲染、UI（三个 mixin 拼装成一个类）
+│   ├── DragAndScale  视口缩放与平移
+│   └── ContextMenu   右键菜单
+└── 内建节点           GraphInput、GraphOutput、Subgraph
 ```
 
-或者从这个存储库下载 `build/litegraph.js` 和 `css/litegraph.css` 版本。
+几个关键设计：
 
-## 第一个项目
+- **注册表模式**：节点类型在运行时注册到 `LiteGraph.registered_node_types`。`LiteGraph.use(install)` 负责安装一个节点包并去重，`LiteGraph.registerNodeType()` 负责单个注册、补全 `category` 与默认标题。因此节点包之间互不 import，只依赖 core。
+- **类 + interface 声明合并 + `applyMixins`**：`LGraphCanvas` 把事件、渲染、UI 三个文件里的原型方法混入自身，避免 42 个手写包装方法；类型层面仍然是一个完整的类。
+- **数据流 + 事件流**：普通插槽通过 `getInputData()` / `setOutputData()` 传递值；类型为 `event`（`BuiltInSlotType.EVENT`）的插槽传递动作，触发 `onAction`。
+- **执行顺序**：`LGraph.computeExecutionOrder()` 按连线依赖做拓扑排序；`graph.start()` 每帧对可执行节点依次调用 `onExecute`，`graph.stop()` 结束循环。
+- **两套画布**：`LGraphCanvas` 内部维护背景层与交互层两个 canvas，`draw()` 时先绘制背景再绘制前景，避免每帧重绘静态内容。
 
-```html
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="litegraph.css" />
-    <script type="text/javascript" src="litegraph.js"></script>
-  </head>
-  <body style="width:100%; height:100%">
-    <canvas id="mycanvas" width="1024" height="720" style="border: 1px solid"></canvas>
-    <script>
-      // new 一个Graph对象，保存图形描述数据
-      var graph = new LGraph();
-      // 将Graph和Canvas画布进行绑定
-      var canvas = new LGraphCanvas("#mycanvas", graph);
+## 包矩阵
 
-      // node basic/const
-      var node_const = LiteGraph.createNode("basic/const");
-      node_const.pos = [200, 200];
-      graph.add(node_const);
-      node_const.setValue(4.5);
-      // node basic/watch
-      var node_watch = LiteGraph.createNode("basic/watch");
-      node_watch.pos = [700, 200];
-      graph.add(node_watch);
+| 包 | 说明 | 节点数 |
+| --- | --- | --- |
+| `@gausszhou/litegraph-core` | 引擎核心：注册表、图、节点、画布、连线、分组、子图、内建 graph 节点 | 3 |
+| `@gausszhou/litegraph` | 聚合包：安装全部节点包，并重新导出 core 的全部 API 与样式 | — |
+| `@gausszhou/litegraph-nodes-basic` | 常量、watch、reroute、时间、比较、数组取值 | 16 |
+| `@gausszhou/litegraph-nodes-math` | 数学运算、取整、随机、近似相等 | 5 |
+| `@gausszhou/litegraph-nodes-logic` | 与/或/非、比较、分支、选择器 | 8 |
+| `@gausszhou/litegraph-nodes-strings` | 字符串拼接、JSON 解析/序列化、比较、替换 | 12 |
+| `@gausszhou/litegraph-nodes-events` | 定时器、延迟、过滤、日志、分支 | 10 |
+| `@gausszhou/litegraph-nodes-input` | 手柄输入 | 1 |
+| `@gausszhou/litegraph-nodes-widget` | 按钮、开关、滑块、旋钮、进度条、面板等控件节点 | 10 |
+| `@gausszhou/litegraph-nodes-graphics` | 曲线绘图 | 1 |
+| `@gausszhou/litegraph-nodes-audio` | 振荡器、滤波器、延迟、混响、示波器等 Web Audio 节点 | 17 |
+| `@gausszhou/litegraph-nodes-midi` | MIDI 输入/输出、生成、量化、移调 | 12 |
 
-      // 通用方法 连接 source_node.connect(source_slot,target_node,target_slot)
-      node_const.connect(0, node_watch, 0);
-      graph.start();
-    </script>
-  </body>
-</html>
+核心 3 个内建节点是 `graph/input`、`graph/output` 与 `graph/subgraph`；10 个节点包合计 92 个节点，总共 **95 个节点类型**。完整清单见[节点目录](/nodes/)。
+
+## 仓库结构
+
+```text
+packages/
+  core/            引擎核心（不依赖任何节点包）
+  litegraph/       聚合包（core + 全部节点包）
+  nodes-basic/     ┐
+  nodes-math/      │
+  nodes-logic/     │
+  nodes-strings/   ├ 10 个节点包，每个只依赖 core
+  nodes-events/    │
+  nodes-input/     │
+  nodes-widget/    │
+  nodes-graphics/  │
+  nodes-audio/     │
+  nodes-midi/      ┘
+  tests/           跨包测试：核心路径、节点契约、交互、示例快照
+apps/
+  editor/          完整 Demo 编辑器（工具栏、示例下拉、小窗、live mode）
+  example-minimal/ 最小集成示例
+docs/              VitePress 文档站
+scripts/           构建/校验/文档生成脚本
 ```
 
-## 创建一个节点类
+## 适用边界
 
-以下是如何构建一个将两个输入相加的节点的示例：
+LiteGraph 只负责「图」本身：节点管理、连线、执行调度、画布交互与序列化。以下内容需要你自己提供或由节点实现：
 
-```js
-// node constructor class
-// 1.构造一个节点类
-function MyAddNode() {
-  this.addInput("A", "number");
-  this.addInput("B", "number");
-  this.addOutput("A+B", "number");
-  this.properties = { precision: 1 };
-}
+- 节点的业务逻辑（`onExecute`、`onDrawForeground`、`onAction` 等回调）；
+- 具体渲染后端（核心只有 Canvas2D；`enableWebGL()` 目前是空实现，见[路线图](/guide/contributing#路线图)）；
+- 持久化与权限（序列化结果是 JSON，存哪里、谁能改由应用决定）；
+- 无头运行时的 DOM 依赖：core 入口不会隐式访问 `window`，但 `LGraphCanvas` 仍然需要 DOM。
 
-//name to show
-// 2.设置节点类的属性，可以被示例属性重写
-MyAddNode.title = "Sum";
+## 下一步
 
-//function to call when the node is executed
-// 3.配置，执行节点时调用的函数
-MyAddNode.prototype.onExecute = function () {
-  var A = this.getInputData(0);
-  if (A === undefined) A = 0;
-  var B = this.getInputData(1);
-  if (B === undefined) B = 0;
-  this.setOutputData(0, A + B);
-};
-
-// register in the system
-// 4.注册节点
-LiteGraph.registerNodeType("basic/sum", MyAddNode);
-```
-
-或者你可以包装一个现有的函数：
-
-```js
-function sum(a, b) {
-  return a + b;
-}
-// 直接将一个函数作为节点
-LiteGraph.wrapFunctionAsNode("math/sum", sum, ["Number", "Number"], "Number");
-```
-
-## 服务端
-
-它也可以使用 NodeJS 在服务器端工作，尽管有些节点在服务器（音频、图形、输入等）中不起作用。
-
-```js
-var LiteGraph = require("./litegraph.js").LiteGraph;
-
-var graph = new LiteGraph.LGraph();
-
-var node_time = LiteGraph.createNode("basic/time");
-graph.add(node_time);
-
-var node_console = LiteGraph.createNode("basic/console");
-node_console.mode = LiteGraph.ALWAYS;
-graph.add(node_console);
-
-node_time.connect(0, node_console, 1);
-
-graph.start();
-```
-
-## 在线演示
-
-该演示包括一些图形示例。 为了试用它们，您可以访问 [演示站点](http://tamats.com/projects/litegraph/editor)
-
-或者将其安装在您的本地计算机上，为此您需要 `git`、`node` 和 `npm `. 鉴于已安装这些依赖项，请运行以下命令进行试用：
-
-```sh
-$ git clone https://github.com/jagenjo/litegraph.js.git
-$ cd litegraph.js
-$ npm install
-$ node utils/server.js
-Example app listening on port 80!
-```
-
-打开浏览器并将其指向 http://localhost:8000/ 。 您可以从页面顶部的下拉列表中选择一个演示。
-
-
-
-
+- [快速开始](/guide/getting-started)：5 分钟跑起编辑器或最小示例。
+- [包与导入方式](/guide/packages)：按需引入 core、单个节点包或聚合包。
+- [节点目录](/nodes/)：95 个节点类型的输入、输出、控件与属性。
+- [API 参考](/api/)：由源码生成的公开 API 文档。

@@ -1,0 +1,7918 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`examples > builds example-minimal baseline 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 1,
+  "last_node_id": 2,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        200,
+      ],
+      "properties": {
+        "value": 4.5,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "label": "",
+          "link": 1,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [],
+      "pos": [
+        600,
+        300,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds audio1 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 1,
+  "last_node_id": 2,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "audio",
+    ],
+  ],
+  "nodes": [
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 1,
+      "inputs": [
+        {
+          "link": null,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        200,
+        100,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 1,
+        "src": "./demodata/audio.wav",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "audio/source",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [],
+      "pos": [
+        400,
+        100,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds audio2 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 5,
+  "last_node_id": 6,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "audio",
+    ],
+    [
+      3,
+      2,
+      0,
+      4,
+      0,
+      "audio",
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      0,
+      "array",
+    ],
+    [
+      5,
+      4,
+      1,
+      6,
+      0,
+      "array",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        50,
+        50,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "value": 0.5,
+      },
+      "size": [
+        64,
+        84,
+      ],
+      "title": "WidgetKnob",
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+            3,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        200,
+        50,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 1,
+        "src": "./demodata/audio.wav",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "audio/source",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": 2,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        400,
+        50,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            4,
+          ],
+          "name": "freqs",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "links": [
+            5,
+          ],
+          "name": "samples",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+      ],
+      "pos": [
+        400,
+        300,
+      ],
+      "properties": {
+        "fftSize": 2048,
+        "maxDecibels": -10,
+        "minDecibels": -100,
+        "smoothingTimeConstant": 0.5,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Analyser",
+      "type": "audio/analyser",
+    },
+    {
+      "flags": {},
+      "id": 5,
+      "inputs": [
+        {
+          "link": 4,
+          "name": "data",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "link": null,
+          "name": "mark",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        600,
+        50,
+      ],
+      "properties": {
+        "continuous": true,
+        "mark": -1,
+      },
+      "size": [
+        300,
+        200,
+      ],
+      "title": "Visualization",
+      "type": "audio/visualization",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "link": 5,
+          "name": "data",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "link": null,
+          "name": "mark",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [],
+      "pos": [
+        600,
+        300,
+      ],
+      "properties": {
+        "continuous": true,
+        "mark": -1,
+      },
+      "size": [
+        300,
+        200,
+      ],
+      "title": "Visualization",
+      "type": "audio/visualization",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds audio3 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 6,
+  "last_node_id": 7,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "audio",
+    ],
+    [
+      3,
+      2,
+      0,
+      4,
+      0,
+      "audio",
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      0,
+      "array",
+    ],
+    [
+      5,
+      4,
+      1,
+      6,
+      0,
+      "array",
+    ],
+    [
+      6,
+      2,
+      1,
+      7,
+      0,
+      "buffer",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        50,
+        50,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "value": 0.5,
+      },
+      "size": [
+        64,
+        84,
+      ],
+      "title": "WidgetKnob",
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+            3,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [
+            6,
+          ],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        200,
+        50,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 1,
+        "src": "./demodata/oscillofun.mp3",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "audio/source",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": 2,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        400,
+        50,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            4,
+          ],
+          "name": "freqs",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "links": [
+            5,
+          ],
+          "name": "samples",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+      ],
+      "pos": [
+        400,
+        100,
+      ],
+      "properties": {
+        "fftSize": 2048,
+        "maxDecibels": -10,
+        "minDecibels": -100,
+        "smoothingTimeConstant": 0.5,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Analyser",
+      "type": "audio/analyser",
+    },
+    {
+      "flags": {},
+      "id": 5,
+      "inputs": [
+        {
+          "link": 4,
+          "name": "data",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "link": null,
+          "name": "mark",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [],
+      "pos": [
+        600,
+        50,
+      ],
+      "properties": {
+        "continuous": true,
+        "mark": -1,
+      },
+      "size": [
+        300,
+        200,
+      ],
+      "title": "Visualization",
+      "type": "audio/visualization",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "link": 5,
+          "name": "data",
+          "properties": {},
+          "shape": 6,
+          "type": "array",
+        },
+        {
+          "link": null,
+          "name": "mark",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 6,
+      "outputs": [],
+      "pos": [
+        600,
+        300,
+      ],
+      "properties": {
+        "continuous": true,
+        "mark": -1,
+      },
+      "size": [
+        300,
+        200,
+      ],
+      "title": "Visualization",
+      "type": "audio/visualization",
+    },
+    {
+      "flags": {},
+      "id": 7,
+      "inputs": [
+        {
+          "link": 6,
+          "name": "xy",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        200,
+        200,
+      ],
+      "properties": {},
+      "size": [
+        300,
+        300,
+      ],
+      "title": "Oscilloscope",
+      "type": "audio/oscilloscope",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds basic1 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 1,
+  "last_node_id": 2,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        100,
+      ],
+      "properties": {
+        "value": 5,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "label": "",
+          "link": 1,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [],
+      "pos": [
+        500,
+        100,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds basic2 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 2,
+  "last_node_id": 4,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "number",
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        100,
+      ],
+      "properties": {
+        "value": 5,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        200,
+      ],
+      "properties": {
+        "value": 10,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "label": "",
+          "link": 1,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        500,
+        100,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "label": "",
+          "link": 2,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [],
+      "pos": [
+        500,
+        200,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds basic3 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 5,
+  "last_node_id": 6,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      5,
+      0,
+      "number,array,object",
+    ],
+    [
+      2,
+      2,
+      0,
+      5,
+      1,
+      "number",
+    ],
+    [
+      3,
+      1,
+      0,
+      3,
+      0,
+      "number",
+    ],
+    [
+      4,
+      2,
+      0,
+      4,
+      0,
+      "number",
+    ],
+    [
+      5,
+      5,
+      0,
+      6,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+            3,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        100,
+      ],
+      "properties": {
+        "value": 5,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+            4,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        200,
+        200,
+      ],
+      "properties": {
+        "value": 10,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "label": "",
+          "link": 3,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        500,
+        100,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "label": "",
+          "link": 4,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        500,
+        200,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 5,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "A",
+          "properties": {},
+          "type": "number,array,object",
+        },
+        {
+          "link": 2,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            5,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        500,
+        300,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "label": "",
+          "link": 5,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [],
+      "pos": [
+        700,
+        100,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > demos > builds circuit1 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 1,
+  "last_node_id": 2,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "Boolean",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "level",
+          "properties": {},
+          "type": "Boolean",
+        },
+      ],
+      "pos": [
+        200,
+        100,
+      ],
+      "properties": {
+        "freq": 1,
+      },
+      "size": [
+        210,
+        58,
+      ],
+      "type": "circuit/oscillator",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "level",
+          "properties": {},
+          "type": "Boolean",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [],
+      "pos": [
+        500,
+        100,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "type": "circuit/led",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads audio.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 16,
+  "last_node_id": 16,
+  "links": [
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      null,
+    ],
+    [
+      1,
+      2,
+      0,
+      1,
+      0,
+      null,
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      null,
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      null,
+    ],
+    [
+      4,
+      5,
+      0,
+      2,
+      1,
+      null,
+    ],
+    [
+      5,
+      6,
+      0,
+      0,
+      0,
+      null,
+    ],
+    [
+      6,
+      7,
+      0,
+      0,
+      1,
+      null,
+    ],
+    [
+      7,
+      8,
+      0,
+      0,
+      2,
+      null,
+    ],
+    [
+      8,
+      9,
+      0,
+      0,
+      3,
+      null,
+    ],
+    [
+      9,
+      9,
+      0,
+      10,
+      0,
+      null,
+    ],
+    [
+      10,
+      3,
+      0,
+      11,
+      0,
+      null,
+    ],
+    [
+      11,
+      12,
+      0,
+      11,
+      1,
+      null,
+    ],
+    [
+      12,
+      11,
+      0,
+      13,
+      0,
+      null,
+    ],
+    [
+      13,
+      12,
+      0,
+      4,
+      1,
+      null,
+    ],
+    [
+      14,
+      13,
+      0,
+      14,
+      0,
+      null,
+    ],
+    [
+      15,
+      12,
+      0,
+      15,
+      0,
+      null,
+    ],
+  ],
+  "nodes": [
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 9,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            8,
+            9,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        440,
+        81,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 4,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.24000000000000002,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        80,
+        100,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 10,
+      "inputs": [
+        {
+          "label": "0.000",
+          "link": 9,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 6,
+      "outputs": [
+        {
+          "label": "",
+          "links": null,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "pos": [
+        537,
+        81,
+      ],
+      "properties": {
+        "value": 0.24000000000000002,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 10,
+      "outputs": [],
+      "pos": [
+        699,
+        83,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 6,
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            5,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        116,
+        179,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5099999999999996,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        80,
+        100,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 0,
+      "inputs": [
+        {
+          "link": 5,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 6,
+          "name": "Play",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 7,
+          "name": "Stop",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 8,
+          "name": "playbackRate",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 8,
+      "outputs": [
+        {
+          "links": [
+            0,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        272,
+        192,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 0.24000000000000002,
+        "src": "./demodata/audio.wav",
+      },
+      "size": [
+        140,
+        86,
+      ],
+      "type": "audio/source",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 0,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 4,
+          "name": "frequency",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 9,
+      "outputs": [
+        {
+          "links": [
+            1,
+            2,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "pos": [
+        442,
+        228,
+      ],
+      "properties": {
+        "Q": 1,
+        "detune": 0,
+        "frequency": 350,
+        "type": "lowpass",
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "BiquadFilter",
+      "type": "audio/biquadfilter",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": 2,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 11,
+      "outputs": [
+        {
+          "links": [
+            3,
+            10,
+          ],
+          "name": "freqs",
+          "properties": {},
+          "type": "array",
+        },
+        {
+          "links": null,
+          "name": "samples",
+          "properties": {},
+          "type": "array",
+        },
+      ],
+      "pos": [
+        704,
+        231,
+      ],
+      "properties": {
+        "fftSize": 2048,
+        "maxDecibels": -10,
+        "minDecibels": -100,
+        "smoothingTimeConstant": 0.5,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Analyser",
+      "type": "audio/analyser",
+    },
+    {
+      "flags": {},
+      "id": 11,
+      "inputs": [
+        {
+          "link": 10,
+          "name": "freqs",
+          "properties": {},
+          "type": "array",
+        },
+        {
+          "link": 11,
+          "name": "band",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 13,
+      "outputs": [
+        {
+          "links": [
+            12,
+          ],
+          "name": "signal",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        882,
+        395,
+      ],
+      "properties": {
+        "amplitude": 1,
+        "band": 440,
+        "samplerate": 44100,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Signal",
+      "type": "audio/signal",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "freqs",
+          "properties": {},
+          "type": "array",
+        },
+        {
+          "link": 13,
+          "name": "mark",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 12,
+      "outputs": [],
+      "pos": [
+        885,
+        503,
+      ],
+      "properties": {
+        "continuous": true,
+        "mark": 12000.000000000005,
+        "samplerate": 44100,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Visualization",
+      "type": "audio/visualization",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 5,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            4,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        112,
+        314,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 20000,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 14800.00000000001,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        80,
+        100,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 13,
+      "inputs": [
+        {
+          "label": "0.000",
+          "link": 12,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 14,
+      "outputs": [
+        {
+          "label": "",
+          "links": [
+            14,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "pos": [
+        110,
+        458,
+      ],
+      "properties": {
+        "value": 0.3843137254901945,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Max. Signal",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 14,
+      "inputs": [
+        {
+          "link": 14,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 15,
+      "pos": [
+        300,
+        460,
+      ],
+      "properties": {
+        "color": "#AAF",
+        "max": 1,
+        "min": 0,
+        "value": 0.3843137254901945,
+        "wcolor": "#AAF",
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "widget/progress",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 12,
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            11,
+            13,
+            15,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        460,
+        458,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 24000,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 12000.000000000005,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        80,
+        100,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 15,
+      "inputs": [
+        {
+          "label": "0.000",
+          "link": 15,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 7,
+      "outputs": [
+        {
+          "label": "",
+          "links": null,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "pos": [
+        888,
+        598,
+      ],
+      "properties": {
+        "value": 12000.000000000005,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 7,
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": [
+            6,
+          ],
+          "name": "clicked",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": [],
+          "name": "",
+          "properties": {},
+          "type": "boolean",
+        },
+      ],
+      "pos": [
+        113,
+        83,
+      ],
+      "properties": {
+        "font": "40px Arial",
+        "font_size": 30,
+        "message": "",
+        "text": "Play",
+      },
+      "size": [
+        141,
+        60,
+      ],
+      "type": "widget/button",
+    },
+    {
+      "flags": {},
+      "id": 8,
+      "mode": 0,
+      "order": 5,
+      "outputs": [
+        {
+          "links": [
+            7,
+          ],
+          "name": "clicked",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": [],
+          "name": "",
+          "properties": {},
+          "type": "boolean",
+        },
+      ],
+      "pos": [
+        273,
+        83,
+      ],
+      "properties": {
+        "font": "40px Arial",
+        "font_size": 30,
+        "message": "",
+        "text": "Stop",
+      },
+      "size": [
+        143,
+        62,
+      ],
+      "type": "widget/button",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads audio_delay.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 7,
+  "last_node_id": 7,
+  "links": [
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      null,
+    ],
+    [
+      1,
+      0,
+      0,
+      2,
+      0,
+      null,
+    ],
+    [
+      2,
+      2,
+      0,
+      1,
+      2,
+      null,
+    ],
+    [
+      3,
+      1,
+      0,
+      3,
+      0,
+      null,
+    ],
+    [
+      4,
+      4,
+      0,
+      1,
+      1,
+      null,
+    ],
+    [
+      5,
+      5,
+      0,
+      1,
+      3,
+      null,
+    ],
+    [
+      6,
+      6,
+      0,
+      2,
+      1,
+      null,
+    ],
+  ],
+  "nodes": [
+    {
+      "boxcolor": "rgba(112,112,112,1.0)",
+      "flags": {},
+      "id": 6,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            6,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        199,
+        296,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 2,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.8799999999999999,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        64,
+        84,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 0,
+      "inputs": [
+        {
+          "link": null,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            0,
+            1,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        195,
+        187,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 1,
+        "src": "demodata/audio.wav",
+      },
+      "size": [
+        137,
+        33,
+      ],
+      "type": "audio/source",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 4,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            4,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        408,
+        59,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.24000000000000007,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        82,
+        75,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 6,
+          "name": "time",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "pos": [
+        385,
+        255,
+      ],
+      "properties": {
+        "delayTime": 0.5,
+        "time": 1,
+      },
+      "size": [
+        143,
+        49,
+      ],
+      "title": "Delay",
+      "type": "audio/delay",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 5,
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            5,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        433,
+        371,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5199999999999996,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        79,
+        79,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [
+        {
+          "link": 0,
+          "name": "in1",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 4,
+          "name": "in1 gain",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 2,
+          "name": "in2",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 5,
+          "name": "in2 gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [
+        {
+          "links": [
+            3,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "pos": [
+        657,
+        180,
+      ],
+      "properties": {
+        "gain1": 0.5,
+        "gain2": 0.8,
+      },
+      "size": [
+        147,
+        91,
+      ],
+      "title": "Mixer",
+      "type": "audio/mixer",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 6,
+      "outputs": [],
+      "pos": [
+        911,
+        180,
+      ],
+      "properties": {},
+      "size": [
+        145,
+        30,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads audio_reverb.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 9,
+  "last_node_id": 8,
+  "links": [
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      null,
+    ],
+    [
+      1,
+      0,
+      0,
+      2,
+      0,
+      null,
+    ],
+    [
+      3,
+      1,
+      0,
+      3,
+      0,
+      null,
+    ],
+    [
+      4,
+      4,
+      0,
+      1,
+      1,
+      null,
+    ],
+    [
+      5,
+      5,
+      0,
+      1,
+      3,
+      null,
+    ],
+    [
+      6,
+      6,
+      0,
+      2,
+      1,
+      null,
+    ],
+    [
+      7,
+      0,
+      0,
+      7,
+      0,
+      null,
+    ],
+    [
+      8,
+      7,
+      0,
+      1,
+      2,
+      null,
+    ],
+  ],
+  "nodes": [
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 4,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            4,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        408,
+        59,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.21000000000000002,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        81,
+        93,
+      ],
+      "title": "Main",
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 5,
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            5,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        398,
+        350,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.4099999999999999,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        84,
+        100,
+      ],
+      "title": "Reverb",
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 7,
+      "inputs": [
+        {
+          "link": 7,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            8,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "pos": [
+        421,
+        253,
+      ],
+      "properties": {
+        "impulse_src": "demodata/impulse.wav",
+        "normalize": true,
+      },
+      "size": [
+        140,
+        31,
+      ],
+      "title": "Convolver",
+      "type": "audio/convolver",
+    },
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [
+        {
+          "link": 0,
+          "name": "in1",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 4,
+          "name": "in1 gain",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 8,
+          "name": "in2",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "link": 5,
+          "name": "in2 gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": [
+            3,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "pos": [
+        655,
+        183,
+      ],
+      "properties": {
+        "gain1": 0.5,
+        "gain2": 0.8,
+      },
+      "size": [
+        145,
+        94,
+      ],
+      "title": "Mixer",
+      "type": "audio/mixer",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": 3,
+          "name": "in",
+          "properties": {},
+          "type": "audio",
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [],
+      "pos": [
+        911,
+        180,
+      ],
+      "properties": {},
+      "size": [
+        141,
+        34,
+      ],
+      "title": "Destination",
+      "type": "audio/destination",
+    },
+    {
+      "boxcolor": "#AA4",
+      "flags": {},
+      "id": 0,
+      "inputs": [
+        {
+          "link": null,
+          "name": "gain",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            0,
+            7,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "audio",
+        },
+        {
+          "links": [],
+          "name": "buffer",
+          "properties": {},
+          "type": "buffer",
+        },
+      ],
+      "pos": [
+        195,
+        187,
+      ],
+      "properties": {
+        "autoplay": true,
+        "gain": 0.5,
+        "loop": true,
+        "playbackRate": 1,
+        "src": "demodata/audio.wav",
+      },
+      "size": [
+        143,
+        30,
+      ],
+      "type": "audio/source",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads benchmark.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [
+    {
+      "bounding": [
+        417,
+        292,
+        564,
+        255,
+      ],
+      "color": "#3f789e",
+      "font": undefined,
+      "title": "Group",
+    },
+    {
+      "bounding": [
+        1120,
+        678,
+        642,
+        461,
+      ],
+      "color": "#A88",
+      "font": undefined,
+      "title": "Group",
+    },
+    {
+      "bounding": [
+        411,
+        777,
+        679,
+        361,
+      ],
+      "color": "#8A8",
+      "font": undefined,
+      "title": "Group",
+    },
+  ],
+  "last_link_id": 50,
+  "last_node_id": 60,
+  "links": [
+    [
+      1,
+      4,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      5,
+      0,
+      4,
+      0,
+      "number",
+    ],
+    [
+      6,
+      7,
+      1,
+      9,
+      0,
+      "number",
+    ],
+    [
+      9,
+      10,
+      0,
+      4,
+      1,
+      "number",
+    ],
+    [
+      10,
+      7,
+      0,
+      8,
+      0,
+      "number",
+    ],
+    [
+      12,
+      12,
+      2,
+      13,
+      0,
+      -1,
+    ],
+    [
+      13,
+      14,
+      0,
+      7,
+      0,
+      "number",
+    ],
+    [
+      16,
+      24,
+      0,
+      18,
+      0,
+      "number",
+    ],
+    [
+      17,
+      18,
+      0,
+      19,
+      0,
+      "number",
+    ],
+    [
+      18,
+      18,
+      0,
+      20,
+      0,
+      "number",
+    ],
+    [
+      21,
+      26,
+      0,
+      25,
+      0,
+      "number",
+    ],
+    [
+      22,
+      27,
+      0,
+      26,
+      0,
+      "number",
+    ],
+    [
+      23,
+      34,
+      0,
+      28,
+      0,
+      "number",
+    ],
+    [
+      24,
+      28,
+      0,
+      29,
+      0,
+      "number",
+    ],
+    [
+      25,
+      28,
+      0,
+      30,
+      0,
+      "number",
+    ],
+    [
+      26,
+      36,
+      0,
+      35,
+      0,
+      "number",
+    ],
+    [
+      27,
+      37,
+      0,
+      36,
+      0,
+      "number",
+    ],
+    [
+      28,
+      44,
+      0,
+      38,
+      0,
+      "number",
+    ],
+    [
+      29,
+      38,
+      0,
+      39,
+      0,
+      "number",
+    ],
+    [
+      30,
+      38,
+      0,
+      40,
+      0,
+      "number",
+    ],
+    [
+      31,
+      31,
+      0,
+      26,
+      1,
+      "number",
+    ],
+    [
+      32,
+      32,
+      2,
+      33,
+      0,
+      -1,
+    ],
+    [
+      33,
+      19,
+      0,
+      45,
+      0,
+      "number",
+    ],
+    [
+      34,
+      19,
+      1,
+      46,
+      0,
+      "number",
+    ],
+    [
+      35,
+      20,
+      0,
+      47,
+      0,
+      "number",
+    ],
+    [
+      36,
+      20,
+      1,
+      48,
+      0,
+      "number",
+    ],
+    [
+      37,
+      29,
+      0,
+      49,
+      0,
+      "number",
+    ],
+    [
+      38,
+      29,
+      1,
+      50,
+      0,
+      "number",
+    ],
+    [
+      39,
+      30,
+      0,
+      51,
+      0,
+      "number",
+    ],
+    [
+      40,
+      30,
+      1,
+      52,
+      0,
+      "number",
+    ],
+    [
+      42,
+      54,
+      0,
+      23,
+      0,
+      -1,
+    ],
+    [
+      43,
+      21,
+      0,
+      16,
+      0,
+      "number",
+    ],
+    [
+      44,
+      16,
+      0,
+      54,
+      0,
+      "number",
+    ],
+    [
+      45,
+      55,
+      0,
+      16,
+      1,
+      "number",
+    ],
+    [
+      46,
+      32,
+      0,
+      56,
+      1,
+      0,
+    ],
+    [
+      47,
+      32,
+      1,
+      56,
+      2,
+      0,
+    ],
+    [
+      48,
+      56,
+      0,
+      57,
+      0,
+      "Number",
+    ],
+    [
+      49,
+      58,
+      0,
+      56,
+      0,
+      "boolean",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 9,
+      "inputs": [
+        {
+          "link": 6,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 32,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        846,
+        473,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 8,
+      "inputs": [
+        {
+          "link": 10,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 31,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        671,
+        475,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 18,
+      "inputs": [
+        {
+          "link": 16,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 21,
+      "outputs": [
+        {
+          "links": [
+            17,
+            18,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        751.5619834710739,
+        854.9586776859505,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 28,
+      "inputs": [
+        {
+          "link": 23,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 18,
+      "outputs": [
+        {
+          "links": [
+            24,
+            25,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1386.361032999997,
+        389.62936599999995,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {},
+      "id": 35,
+      "inputs": [
+        {
+          "link": 26,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 37,
+      "outputs": [
+        {
+          "links": null,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1555.6387189504107,
+        741.7260602148749,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        39,
+      ],
+      "type": "features/shape",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 38,
+      "inputs": [
+        {
+          "link": 28,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 22,
+      "outputs": [
+        {
+          "links": [
+            29,
+            30,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1461.838718950411,
+        987.9260602148759,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 39,
+      "inputs": [
+        {
+          "link": 29,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 35,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1376.8387189504106,
+        1088.9260602148756,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 40,
+      "inputs": [
+        {
+          "link": 30,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 36,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1551.838718950411,
+        1086.9260602148754,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 45,
+      "inputs": [
+        {
+          "link": 33,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 46,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        588.5619834710739,
+        1055.9586776859496,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 46,
+      "inputs": [
+        {
+          "link": 34,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 47,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        721.5619834710739,
+        1058.9586776859496,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 19,
+      "inputs": [
+        {
+          "link": 17,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 33,
+      "outputs": [
+        {
+          "links": [
+            33,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            34,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        666.5619834710739,
+        955.9586776859505,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 47,
+      "inputs": [
+        {
+          "link": 35,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 48,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        846.5619834710739,
+        1060.9586776859496,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 48,
+      "inputs": [
+        {
+          "link": 36,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 49,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        976.5619834710739,
+        1059.9586776859496,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 20,
+      "inputs": [
+        {
+          "link": 18,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 34,
+      "outputs": [
+        {
+          "links": [
+            35,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            36,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        841.5619834710739,
+        953.9586776859505,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 29,
+      "inputs": [
+        {
+          "link": 24,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 29,
+      "outputs": [
+        {
+          "links": [
+            37,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            38,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1307,
+        490,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 30,
+      "inputs": [
+        {
+          "link": 25,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 30,
+      "outputs": [
+        {
+          "links": [
+            39,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            40,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1476.3610329999974,
+        488.62936599999995,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+        "horizontal": true,
+      },
+      "id": 7,
+      "inputs": [
+        {
+          "link": 13,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 20,
+      "outputs": [
+        {
+          "links": [
+            10,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            6,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        756,
+        374,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 34,
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            23,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1054,
+        349,
+      ],
+      "properties": {},
+      "size": [
+        189,
+        176,
+      ],
+      "type": "features/widgets",
+      "widgets_values": [
+        0.5,
+        0.5,
+        "red",
+        "edit me",
+        "multiline",
+        true,
+        null,
+        true,
+      ],
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 12,
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": null,
+          "name": "left_x_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "left_y_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            12,
+          ],
+          "name": "button_pressed",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        607,
+        204,
+      ],
+      "properties": {
+        "gamepad_index": 0,
+        "threshold": 0.1,
+      },
+      "size": [
+        155,
+        69,
+      ],
+      "type": "input/gamepad",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 4,
+      "inputs": [
+        {
+          "link": 2,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 9,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 24,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        604,
+        106,
+      ],
+      "properties": {
+        "A": 2,
+        "B": 0.5,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        164,
+        51,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 38,
+      "outputs": [
+        {
+          "links": null,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        867,
+        112,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        39,
+      ],
+      "type": "features/shape",
+    },
+    {
+      "flags": {},
+      "id": 13,
+      "inputs": [
+        {
+          "link": 12,
+          "name": "event",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 19,
+      "outputs": [],
+      "pos": [
+        868,
+        215,
+      ],
+      "properties": {},
+      "size": [
+        143,
+        30,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+    {
+      "flags": {},
+      "id": 14,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            13,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        432,
+        357,
+      ],
+      "properties": {},
+      "size": [
+        209,
+        178,
+      ],
+      "type": "features/widgets",
+      "widgets_values": [
+        0.5,
+        0.5,
+        "red",
+        "edit me",
+        "multiline",
+        true,
+        null,
+        true,
+      ],
+    },
+    {
+      "flags": {},
+      "id": 24,
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            16,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        429,
+        841,
+      ],
+      "properties": {},
+      "size": [
+        184.9173583984375,
+        176.34710693359375,
+      ],
+      "type": "features/widgets",
+      "widgets_values": [
+        0.5,
+        0.5,
+        "red",
+        "edit me",
+        "multiline",
+        true,
+        null,
+        true,
+      ],
+    },
+    {
+      "flags": {},
+      "id": 44,
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": [
+            28,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1154,
+        942,
+      ],
+      "properties": {},
+      "size": [
+        191,
+        174,
+      ],
+      "type": "features/widgets",
+      "widgets_values": [
+        0.5,
+        0.5,
+        "red",
+        "edit me",
+        "multiline",
+        true,
+        null,
+        true,
+      ],
+    },
+    {
+      "flags": {},
+      "id": 36,
+      "inputs": [
+        {
+          "link": 27,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 23,
+      "outputs": [
+        {
+          "links": [
+            26,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1333,
+        729,
+      ],
+      "properties": {
+        "A": 2,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        144,
+        45,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 42,
+      "mode": 0,
+      "order": 5,
+      "outputs": [
+        {
+          "links": null,
+          "name": "left_x_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "left_y_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [],
+          "name": "button_pressed",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1316,
+        821,
+      ],
+      "properties": {
+        "gamepad_index": 0,
+        "threshold": 0.1,
+      },
+      "size": [
+        182.3612823486328,
+        69.27394104003906,
+      ],
+      "type": "input/gamepad",
+    },
+    {
+      "flags": {},
+      "id": 43,
+      "inputs": [
+        {
+          "link": null,
+          "name": "event",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 6,
+      "outputs": [],
+      "pos": [
+        1562,
+        845,
+      ],
+      "properties": {},
+      "size": [
+        142.16128540039062,
+        31.07394027709961,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 41,
+      "mode": 0,
+      "order": 7,
+      "outputs": [
+        {
+          "links": [],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1155,
+        824,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        54,
+        74,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "bgcolor": "#355",
+      "color": "#233",
+      "flags": {},
+      "id": 37,
+      "inputs": [
+        {
+          "link": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 8,
+      "outputs": [
+        {
+          "links": [
+            27,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1138,
+        739,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        148,
+        44,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 33,
+      "inputs": [
+        {
+          "link": 32,
+          "name": "event",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 26,
+      "outputs": [],
+      "pos": [
+        1493.3610329999974,
+        224.629366,
+      ],
+      "properties": {},
+      "size": [
+        147.6389617919922,
+        29.370634078979492,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+    {
+      "flags": {},
+      "id": 26,
+      "inputs": [
+        {
+          "link": 22,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 31,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 25,
+      "outputs": [
+        {
+          "links": [
+            21,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1268,
+        128,
+      ],
+      "properties": {
+        "A": 2,
+        "B": 0.5,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        144,
+        50,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 5,
+      "inputs": [
+        {
+          "link": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 9,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        437,
+        114,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        140,
+        48,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 27,
+      "inputs": [
+        {
+          "link": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 10,
+      "outputs": [
+        {
+          "links": [
+            22,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1061,
+        129,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        144,
+        44,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 49,
+      "inputs": [
+        {
+          "link": 37,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 42,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1210,
+        589,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 50,
+      "inputs": [
+        {
+          "link": 38,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 43,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1342,
+        591,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 51,
+      "inputs": [
+        {
+          "link": 39,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 44,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1471,
+        590,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 52,
+      "inputs": [
+        {
+          "link": 40,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 45,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1597,
+        588,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {},
+      "id": 25,
+      "inputs": [
+        {
+          "link": 21,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 39,
+      "outputs": [
+        {
+          "links": null,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1500,
+        116,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        39,
+      ],
+      "type": "features/shape",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 10,
+      "mode": 0,
+      "order": 11,
+      "outputs": [
+        {
+          "links": [
+            9,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        435,
+        161,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        91,
+        111,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 31,
+      "mode": 0,
+      "order": 12,
+      "outputs": [
+        {
+          "links": [
+            31,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1058,
+        182,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        95,
+        114,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 32,
+      "mode": 0,
+      "order": 13,
+      "outputs": [
+        {
+          "links": [
+            46,
+          ],
+          "name": "left_x_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            47,
+          ],
+          "name": "left_y_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            32,
+          ],
+          "name": "button_pressed",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1232,
+        231,
+      ],
+      "properties": {
+        "gamepad_index": 0,
+        "threshold": 0.1,
+      },
+      "size": [
+        191.6389617919922,
+        73.37063598632812,
+      ],
+      "type": "input/gamepad",
+    },
+    {
+      "flags": {},
+      "id": 57,
+      "inputs": [
+        {
+          "link": 48,
+          "name": "A",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": null,
+          "name": "C",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": null,
+          "name": "D",
+          "properties": {},
+          "type": "Number",
+        },
+      ],
+      "mode": 0,
+      "order": 40,
+      "pos": [
+        1722,
+        335,
+      ],
+      "properties": {
+        "scale": 2,
+      },
+      "size": [
+        140,
+        86,
+      ],
+      "type": "graphics/plot",
+    },
+    {
+      "boxcolor": "rgba(186,186,186,1.0)",
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 21,
+      "mode": 0,
+      "order": 14,
+      "outputs": [
+        {
+          "links": [
+            43,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        435,
+        591,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.7297408895318863,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        72,
+        90,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 16,
+      "inputs": [
+        {
+          "link": 43,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 45,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 28,
+      "outputs": [
+        {
+          "links": [
+            44,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        583,
+        611,
+      ],
+      "properties": {
+        "A": 0.7297408895318863,
+        "B": 5000,
+        "OP": "*",
+      },
+      "shape": 2,
+      "size": [
+        140,
+        47,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "boxcolor": "#222",
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 54,
+      "inputs": [
+        {
+          "link": 44,
+          "name": "interval",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 41,
+      "outputs": [
+        {
+          "links": [
+            42,
+          ],
+          "name": "on_tick",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        764,
+        620,
+      ],
+      "properties": {
+        "event": "tick",
+        "interval": 1000,
+      },
+      "shape": 2,
+      "size": [
+        147,
+        30,
+      ],
+      "type": "events/timer",
+    },
+    {
+      "flags": {},
+      "id": 23,
+      "inputs": [
+        {
+          "link": 42,
+          "name": "event",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 50,
+      "outputs": [],
+      "pos": [
+        961,
+        622,
+      ],
+      "properties": {},
+      "size": [
+        137,
+        28,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+    {
+      "flags": {},
+      "id": 56,
+      "inputs": [
+        {
+          "link": 49,
+          "name": "enabled",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "link": 46,
+          "name": "AxisX",
+          "properties": {},
+          "type": "",
+        },
+        {
+          "link": 47,
+          "name": "AxisY",
+          "properties": {},
+          "type": "",
+        },
+      ],
+      "mode": 0,
+      "order": 27,
+      "outputs": [
+        {
+          "links": [
+            48,
+          ],
+          "name": "sum",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "pos": [
+        1543,
+        336,
+      ],
+      "properties": {
+        "enabled": true,
+      },
+      "size": [
+        140,
+        86,
+      ],
+      "subgraph": {
+        "config": {},
+        "extra": {},
+        "groups": [],
+        "last_link_id": 4,
+        "last_node_id": 6,
+        "links": [
+          [
+            1,
+            2,
+            0,
+            6,
+            0,
+            "number",
+          ],
+          [
+            2,
+            3,
+            0,
+            6,
+            1,
+            "number",
+          ],
+          [
+            3,
+            6,
+            0,
+            4,
+            0,
+            0,
+          ],
+        ],
+        "nodes": [
+          {
+            "flags": {},
+            "id": 4,
+            "inputs": [
+              {
+                "link": 3,
+                "name": "",
+                "properties": {},
+                "shape": 0,
+                "type": 0,
+              },
+            ],
+            "mode": 0,
+            "order": 3,
+            "outputs": [],
+            "pos": [
+              1655,
+              311,
+            ],
+            "properties": {
+              "name": "sum",
+              "subgraphID": 56,
+              "type": 0,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Output",
+            "type": "graph/output",
+          },
+          {
+            "flags": {},
+            "id": 2,
+            "inputs": [],
+            "mode": 0,
+            "order": 0,
+            "outputs": [
+              {
+                "links": [
+                  1,
+                ],
+                "name": "",
+                "properties": {},
+                "shape": 0,
+                "type": "",
+              },
+            ],
+            "pos": [
+              1227,
+              233,
+            ],
+            "properties": {
+              "name": "AxisX",
+              "subgraphID": 56,
+              "type": "",
+              "value": null,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Input",
+            "type": "graph/input",
+          },
+          {
+            "flags": {},
+            "id": 3,
+            "inputs": [],
+            "mode": 0,
+            "order": 1,
+            "outputs": [
+              {
+                "links": [
+                  2,
+                ],
+                "name": "",
+                "properties": {},
+                "shape": 0,
+                "type": "",
+              },
+            ],
+            "pos": [
+              1234,
+              341,
+            ],
+            "properties": {
+              "name": "AxisY",
+              "subgraphID": 56,
+              "type": "",
+              "value": null,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Input",
+            "type": "graph/input",
+          },
+          {
+            "flags": {},
+            "id": 6,
+            "inputs": [
+              {
+                "link": 1,
+                "name": "A",
+                "properties": {},
+                "type": "number",
+              },
+              {
+                "link": 2,
+                "name": "B",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "mode": 0,
+            "order": 2,
+            "outputs": [
+              {
+                "links": [
+                  3,
+                ],
+                "name": "=",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "pos": [
+              1496,
+              268,
+            ],
+            "properties": {
+              "A": 1,
+              "B": 1,
+              "OP": "+",
+            },
+            "size": [
+              100,
+              60,
+            ],
+            "title": "Operation",
+            "type": "math/operation",
+          },
+        ],
+        "version": 10,
+      },
+      "title": "Subgraph",
+      "type": "graph/subgraph",
+    },
+    {
+      "flags": {},
+      "id": 58,
+      "inputs": [
+        {
+          "link": null,
+          "name": "",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "link": null,
+          "name": "e",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 15,
+      "outputs": [
+        {
+          "links": [
+            49,
+          ],
+          "name": "v",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "links": null,
+          "name": "e",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1686,
+        131,
+      ],
+      "properties": {
+        "font": "",
+        "value": true,
+      },
+      "size": [
+        160,
+        44,
+      ],
+      "type": "widget/toggle",
+    },
+    {
+      "flags": {},
+      "id": 60,
+      "mode": 0,
+      "order": 16,
+      "outputs": [
+        {
+          "links": null,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        626,
+        706,
+      ],
+      "properties": {
+        "max": 1000,
+        "min": -1000,
+        "step": 1,
+        "value": 1,
+      },
+      "size": [
+        74,
+        54,
+      ],
+      "type": "widget/number",
+    },
+    {
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 55,
+      "inputs": [],
+      "mode": 0,
+      "order": 17,
+      "outputs": [
+        {
+          "label": "5000.000",
+          "links": [
+            45,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        422,
+        738,
+      ],
+      "properties": {
+        "value": 5000,
+      },
+      "size": [
+        139,
+        28,
+      ],
+      "title": "Const Number",
+      "type": "basic/const",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads features.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [
+    {
+      "bounding": [
+        418,
+        298,
+        609,
+        255,
+      ],
+      "color": "#3f789e",
+      "font": undefined,
+      "title": "Group",
+    },
+  ],
+  "last_link_id": 14,
+  "last_node_id": 14,
+  "links": [
+    [
+      1,
+      4,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      5,
+      0,
+      4,
+      0,
+      "number",
+    ],
+    [
+      6,
+      7,
+      1,
+      9,
+      0,
+      "number",
+    ],
+    [
+      9,
+      10,
+      0,
+      4,
+      1,
+      "number",
+    ],
+    [
+      10,
+      7,
+      0,
+      8,
+      0,
+      "number",
+    ],
+    [
+      12,
+      12,
+      2,
+      13,
+      0,
+      -1,
+    ],
+    [
+      13,
+      14,
+      0,
+      7,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 9,
+      "inputs": [
+        {
+          "link": 6,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 8,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        847,
+        479,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 7,
+      "inputs": [
+        {
+          "link": 13,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 5,
+      "outputs": [
+        {
+          "links": [
+            10,
+          ],
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            6,
+          ],
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        757,
+        380,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "horizontal": true,
+      },
+      "id": 8,
+      "inputs": [
+        {
+          "link": 10,
+          "name": "C",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 7,
+      "outputs": [
+        {
+          "links": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        672,
+        481,
+      ],
+      "properties": {},
+      "size": [
+        100,
+        40,
+      ],
+      "type": "features/slots",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 5,
+      "inputs": [
+        {
+          "link": null,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        413,
+        101,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        140,
+        34,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 12,
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": null,
+          "name": "left_x_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": null,
+          "name": "left_y_axis",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            12,
+          ],
+          "name": "button_pressed",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        593,
+        208,
+      ],
+      "properties": {
+        "gamepad_index": 0,
+        "threshold": 0.1,
+      },
+      "size": [
+        175,
+        74,
+      ],
+      "type": "input/gamepad",
+    },
+    {
+      "flags": {},
+      "id": 13,
+      "inputs": [
+        {
+          "link": 12,
+          "name": "event",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [],
+      "pos": [
+        862,
+        246,
+      ],
+      "properties": {},
+      "size": [
+        144,
+        32,
+      ],
+      "title": "Log Event",
+      "type": "events/log",
+    },
+    {
+      "flags": {},
+      "id": 14,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            13,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        441,
+        365,
+      ],
+      "properties": {},
+      "size": [
+        180,
+        170,
+      ],
+      "type": "features/widgets",
+      "widgets_values": [
+        0.5,
+        0.5,
+        "red",
+        "edit me",
+        "multiline",
+        true,
+        null,
+        true,
+      ],
+    },
+    {
+      "flags": {},
+      "id": 10,
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "links": [
+            9,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        421,
+        197,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.5,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        74,
+        92,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 2,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 9,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 6,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        596,
+        116,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 1,
+        "OP": "+",
+      },
+      "shape": 2,
+      "size": [
+        148,
+        48,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 9,
+      "outputs": [
+        {
+          "links": null,
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        850,
+        97,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        39,
+      ],
+      "type": "features/shape",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads midi_generation.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 64,
+  "last_node_id": 47,
+  "links": [
+    [
+      5,
+      3,
+      0,
+      7,
+      0,
+      -1,
+    ],
+    [
+      7,
+      7,
+      0,
+      6,
+      0,
+      -1,
+    ],
+    [
+      10,
+      8,
+      0,
+      11,
+      0,
+      -1,
+    ],
+    [
+      11,
+      12,
+      0,
+      8,
+      0,
+      -1,
+    ],
+    [
+      12,
+      7,
+      0,
+      13,
+      0,
+      -1,
+    ],
+    [
+      14,
+      14,
+      0,
+      15,
+      0,
+      "number",
+    ],
+    [
+      15,
+      15,
+      0,
+      16,
+      0,
+      "number",
+    ],
+    [
+      16,
+      16,
+      0,
+      13,
+      1,
+      "number",
+    ],
+    [
+      17,
+      17,
+      0,
+      4,
+      1,
+      "number",
+    ],
+    [
+      18,
+      18,
+      0,
+      11,
+      1,
+      "number",
+    ],
+    [
+      19,
+      8,
+      0,
+      20,
+      0,
+      -1,
+    ],
+    [
+      21,
+      20,
+      0,
+      21,
+      0,
+      -1,
+    ],
+    [
+      33,
+      4,
+      0,
+      28,
+      0,
+      -1,
+    ],
+    [
+      34,
+      11,
+      0,
+      28,
+      1,
+      -1,
+    ],
+    [
+      35,
+      19,
+      0,
+      28,
+      2,
+      -1,
+    ],
+    [
+      36,
+      18,
+      0,
+      19,
+      1,
+      "number",
+    ],
+    [
+      38,
+      30,
+      1,
+      29,
+      0,
+      "Number",
+    ],
+    [
+      39,
+      4,
+      0,
+      30,
+      1,
+      -1,
+    ],
+    [
+      42,
+      31,
+      1,
+      29,
+      1,
+      "Number",
+    ],
+    [
+      43,
+      11,
+      0,
+      31,
+      1,
+      -1,
+    ],
+    [
+      44,
+      19,
+      0,
+      32,
+      1,
+      -1,
+    ],
+    [
+      45,
+      32,
+      1,
+      29,
+      2,
+      "Number",
+    ],
+    [
+      46,
+      10,
+      0,
+      34,
+      1,
+      0,
+    ],
+    [
+      47,
+      34,
+      0,
+      8,
+      1,
+      "string",
+    ],
+    [
+      48,
+      34,
+      0,
+      7,
+      1,
+      "string",
+    ],
+    [
+      49,
+      34,
+      0,
+      21,
+      1,
+      "string",
+    ],
+    [
+      50,
+      35,
+      0,
+      34,
+      2,
+      0,
+    ],
+    [
+      52,
+      34,
+      0,
+      37,
+      0,
+      0,
+    ],
+    [
+      53,
+      21,
+      0,
+      19,
+      0,
+      -1,
+    ],
+    [
+      54,
+      13,
+      0,
+      4,
+      0,
+      -1,
+    ],
+    [
+      55,
+      34,
+      0,
+      41,
+      1,
+      "string",
+    ],
+    [
+      57,
+      3,
+      0,
+      41,
+      0,
+      -1,
+    ],
+    [
+      58,
+      44,
+      0,
+      34,
+      0,
+      "number",
+    ],
+    [
+      59,
+      43,
+      0,
+      34,
+      3,
+      0,
+    ],
+    [
+      60,
+      46,
+      0,
+      39,
+      1,
+      "number",
+    ],
+    [
+      62,
+      41,
+      0,
+      47,
+      0,
+      -1,
+    ],
+    [
+      63,
+      47,
+      0,
+      39,
+      0,
+      -1,
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 8,
+      "inputs": [
+        {
+          "link": 11,
+          "name": "generate",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 47,
+          "name": "scale",
+          "properties": {},
+          "type": "string",
+        },
+        {
+          "link": null,
+          "name": "octave",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 13,
+      "outputs": [
+        {
+          "links": [
+            10,
+            19,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        548,
+        390,
+      ],
+      "properties": {
+        "duration": 0.5,
+        "mode": "sequence",
+        "notes": "A,B,C",
+        "octave": 2,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/generator",
+    },
+    {
+      "flags": {},
+      "id": 20,
+      "inputs": [
+        {
+          "link": 19,
+          "name": "in",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "amount",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 18,
+      "outputs": [
+        {
+          "links": [
+            21,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        726,
+        489,
+      ],
+      "properties": {
+        "amount": 5,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "midi/transpose",
+    },
+    {
+      "flags": {},
+      "id": 32,
+      "inputs": [
+        {
+          "link": null,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 44,
+          "name": "assign",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 29,
+      "outputs": [
+        {
+          "links": null,
+          "name": "on_midi",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": [
+            45,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1465,
+        656,
+      ],
+      "properties": {
+        "channel": 0,
+        "cmd": 128,
+        "value1": 0,
+        "value2": 0,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "midi/event",
+    },
+    {
+      "boxcolor": "red",
+      "flags": {},
+      "id": 19,
+      "inputs": [
+        {
+          "link": 53,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 36,
+          "name": "volume",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "duration",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 26,
+      "outputs": [
+        {
+          "links": [
+            35,
+            44,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1132,
+        611,
+      ],
+      "properties": {
+        "duration": 4,
+        "value": 0,
+        "volume": 0.3599999999999999,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/play",
+    },
+    {
+      "flags": {},
+      "id": 21,
+      "inputs": [
+        {
+          "link": 21,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 49,
+          "name": "scale",
+          "properties": {},
+          "type": "string",
+        },
+      ],
+      "mode": 0,
+      "order": 23,
+      "outputs": [
+        {
+          "links": [
+            53,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        903,
+        589,
+      ],
+      "properties": {
+        "amount": "A,B,C,D,E,F,G",
+        "scale": "A,A#,B,C,C#,D,D#,E,F,F#,G,G#",
+      },
+      "size": [
+        159.60000610351562,
+        46,
+      ],
+      "type": "midi/quantize",
+    },
+    {
+      "flags": {},
+      "id": 37,
+      "inputs": [
+        {
+          "label": "A,B,C,B",
+          "link": 52,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 15,
+      "outputs": [],
+      "pos": [
+        547,
+        615,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 35,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "label": "A,B,C",
+          "links": [
+            50,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "string",
+        },
+      ],
+      "pos": [
+        79,
+        456,
+      ],
+      "properties": {
+        "value": "A,B,C,B",
+      },
+      "size": [
+        210,
+        58,
+      ],
+      "title": "NOTE SCALE",
+      "type": "basic/string",
+    },
+    {
+      "flags": {},
+      "id": 7,
+      "inputs": [
+        {
+          "link": 5,
+          "name": "generate",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 48,
+          "name": "scale",
+          "properties": {},
+          "type": "string",
+        },
+        {
+          "link": null,
+          "name": "octave",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 14,
+      "outputs": [
+        {
+          "links": [
+            7,
+            12,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        549,
+        289,
+      ],
+      "properties": {
+        "duration": 0.5,
+        "mode": "random",
+        "notes": "A,B,C",
+        "octave": 2,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/generator",
+    },
+    {
+      "flags": {},
+      "id": 41,
+      "inputs": [
+        {
+          "link": 57,
+          "name": "generate",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 55,
+          "name": "scale",
+          "properties": {},
+          "type": "string",
+        },
+        {
+          "link": null,
+          "name": "octave",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 16,
+      "outputs": [
+        {
+          "links": [
+            62,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        552,
+        189,
+      ],
+      "properties": {
+        "duration": 0.5,
+        "mode": "sequence",
+        "notes": "A,B,C",
+        "octave": 3,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/generator",
+    },
+    {
+      "boxcolor": "#222",
+      "flags": {},
+      "id": 12,
+      "inputs": [
+        {
+          "link": null,
+          "name": "interval",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            11,
+          ],
+          "name": "on_tick",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        180,
+        284,
+      ],
+      "properties": {
+        "event": "tick",
+        "interval": 1200,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "events/timer",
+    },
+    {
+      "flags": {},
+      "id": 34,
+      "inputs": [
+        {
+          "link": 58,
+          "name": "sel",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": 46,
+          "name": "A",
+          "properties": {},
+          "type": 0,
+        },
+        {
+          "link": 50,
+          "name": "B",
+          "properties": {},
+          "type": 0,
+        },
+        {
+          "link": 59,
+          "name": "C",
+          "properties": {},
+          "type": 0,
+        },
+        {
+          "link": null,
+          "name": "D",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 11,
+      "outputs": [
+        {
+          "links": [
+            47,
+            48,
+            49,
+            52,
+            55,
+          ],
+          "name": "out",
+          "properties": {},
+        },
+      ],
+      "pos": [
+        351,
+        468,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        106,
+      ],
+      "type": "logic/selector",
+    },
+    {
+      "flags": {},
+      "id": 47,
+      "inputs": [
+        {
+          "link": 62,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "reset",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 21,
+      "outputs": [
+        {
+          "links": [
+            63,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1153,
+        88,
+      ],
+      "properties": {
+        "num_octaves": 2,
+        "start_octave": 3,
+      },
+      "size": [
+        423,
+        104,
+      ],
+      "type": "midi/keys",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 15,
+      "inputs": [
+        {
+          "link": 14,
+          "name": "in",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 10,
+      "outputs": [
+        {
+          "links": [
+            15,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        505,
+        85,
+      ],
+      "properties": {},
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Floor",
+      "type": "math/floor",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 14,
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "label": "1.191",
+          "links": [
+            14,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        344,
+        83,
+      ],
+      "properties": {
+        "max": 2,
+        "min": -1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "math/rand",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 16,
+      "inputs": [
+        {
+          "link": 15,
+          "name": "A",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "B",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 12,
+      "outputs": [
+        {
+          "links": [
+            16,
+          ],
+          "name": "=",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        645,
+        85,
+      ],
+      "properties": {
+        "A": 1,
+        "B": 12,
+        "OP": "*",
+      },
+      "size": [
+        100,
+        50,
+      ],
+      "title": "Operation",
+      "type": "math/operation",
+    },
+    {
+      "flags": {},
+      "id": 10,
+      "inputs": [],
+      "mode": 0,
+      "order": 3,
+      "outputs": [
+        {
+          "label": "A,B,C",
+          "links": [
+            46,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "string",
+        },
+      ],
+      "pos": [
+        77,
+        360,
+      ],
+      "properties": {
+        "value": "A,B,C,D,E,F,G",
+      },
+      "size": [
+        208,
+        48,
+      ],
+      "title": "NOTE SCALE",
+      "type": "basic/string",
+    },
+    {
+      "flags": {},
+      "id": 43,
+      "inputs": [],
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "label": "A,B,C",
+          "links": [
+            59,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "string",
+        },
+      ],
+      "pos": [
+        79,
+        556,
+      ],
+      "properties": {
+        "value": "D,E,F,G,F,E",
+      },
+      "size": [
+        210,
+        58,
+      ],
+      "title": "NOTE SCALE",
+      "type": "basic/string",
+    },
+    {
+      "flags": {},
+      "id": 44,
+      "mode": 0,
+      "order": 5,
+      "outputs": [
+        {
+          "label": "0.750",
+          "links": [
+            58,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        143,
+        664,
+      ],
+      "properties": {
+        "max": 1,
+        "min": 0,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "math/rand",
+    },
+    {
+      "boxcolor": "red",
+      "flags": {},
+      "id": 11,
+      "inputs": [
+        {
+          "link": 10,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 18,
+          "name": "volume",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "duration",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 17,
+      "outputs": [
+        {
+          "links": [
+            34,
+            43,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1135,
+        496,
+      ],
+      "properties": {
+        "duration": 4,
+        "value": 0,
+        "volume": 0.3599999999999999,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/play",
+    },
+    {
+      "flags": {},
+      "id": 13,
+      "inputs": [
+        {
+          "link": 12,
+          "name": "in",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 16,
+          "name": "amount",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 20,
+      "outputs": [
+        {
+          "links": [
+            54,
+          ],
+          "name": "out",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        893,
+        258,
+      ],
+      "properties": {
+        "amount": 12,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "midi/transpose",
+    },
+    {
+      "boxcolor": "red",
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "link": 54,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 17,
+          "name": "volume",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "duration",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 24,
+      "outputs": [
+        {
+          "links": [
+            33,
+            39,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1155,
+        249,
+      ],
+      "properties": {
+        "duration": 1,
+        "value": 0,
+        "volume": 0.21000000000000005,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/play",
+    },
+    {
+      "flags": {},
+      "id": 30,
+      "inputs": [
+        {
+          "link": null,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 39,
+          "name": "assign",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 27,
+      "outputs": [
+        {
+          "links": null,
+          "name": "on_midi",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": [
+            38,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1433,
+        260,
+      ],
+      "properties": {
+        "channel": 0,
+        "cmd": 128,
+        "value1": 57,
+        "value2": 0,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "midi/event",
+    },
+    {
+      "flags": {},
+      "id": 28,
+      "inputs": [
+        {
+          "link": 33,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 34,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 35,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 28,
+      "outputs": [],
+      "pos": [
+        1428,
+        414,
+      ],
+      "properties": {
+        "port": 0,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/output",
+    },
+    {
+      "flags": {},
+      "id": 31,
+      "inputs": [
+        {
+          "link": null,
+          "name": "send",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 43,
+          "name": "assign",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 22,
+      "outputs": [
+        {
+          "links": null,
+          "name": "on_midi",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": [
+            42,
+          ],
+          "name": "note",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1469,
+        563,
+      ],
+      "properties": {
+        "channel": 0,
+        "cmd": 128,
+        "value1": 50,
+        "value2": 0,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "type": "midi/event",
+    },
+    {
+      "flags": {},
+      "id": 29,
+      "inputs": [
+        {
+          "link": 38,
+          "name": "A",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": 42,
+          "name": "B",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": 45,
+          "name": "C",
+          "properties": {},
+          "type": "Number",
+        },
+        {
+          "link": null,
+          "name": "D",
+          "properties": {},
+          "type": "Number",
+        },
+      ],
+      "mode": 0,
+      "order": 30,
+      "pos": [
+        1675,
+        328,
+      ],
+      "properties": {
+        "scale": 100,
+      },
+      "size": [
+        348,
+        139,
+      ],
+      "type": "graphics/plot",
+    },
+    {
+      "flags": {
+        "collapsed": true,
+      },
+      "id": 46,
+      "mode": 0,
+      "order": 6,
+      "outputs": [
+        {
+          "label": "0.007",
+          "links": [
+            60,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        1455,
+        42,
+      ],
+      "properties": {
+        "max": 0.2,
+        "min": 0,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "math/rand",
+    },
+    {
+      "boxcolor": "red",
+      "flags": {},
+      "id": 39,
+      "inputs": [
+        {
+          "link": 63,
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": 60,
+          "name": "volume",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "link": null,
+          "name": "duration",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 25,
+      "outputs": [
+        {
+          "links": [],
+          "name": "note",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        1656,
+        116,
+      ],
+      "properties": {
+        "duration": 1,
+        "value": 0,
+        "volume": 0.006812153971126511,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "midi/play",
+    },
+    {
+      "boxcolor": "#222",
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "link": null,
+          "name": "interval",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 7,
+      "outputs": [
+        {
+          "links": [
+            5,
+            57,
+          ],
+          "name": "on_tick",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        178,
+        212,
+      ],
+      "properties": {
+        "event": "tick",
+        "interval": 300,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "events/timer",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {},
+      "id": 18,
+      "mode": 0,
+      "order": 8,
+      "outputs": [
+        {
+          "links": [
+            18,
+            36,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        819,
+        62,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.4504132231404958,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        82.78512396694214,
+        93.87603305785123,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "boxcolor": "rgba(128,128,128,1.0)",
+      "flags": {
+        "collapsed": false,
+      },
+      "id": 17,
+      "mode": 0,
+      "order": 9,
+      "outputs": [
+        {
+          "links": [
+            17,
+          ],
+          "name": "",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        916,
+        62,
+      ],
+      "properties": {
+        "color": "#7AF",
+        "max": 1,
+        "min": 0,
+        "precision": 2,
+        "size": 50,
+        "value": 0.21000000000000005,
+        "wcolor": "#7AF",
+      },
+      "size": [
+        78.34710743801656,
+        94.70247933884298,
+      ],
+      "type": "widget/knob",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "link": 7,
+          "name": "on_midi",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 19,
+      "outputs": [],
+      "pos": [
+        898,
+        357,
+      ],
+      "properties": {},
+      "size": [
+        266.5950413223138,
+        61.685950413223,
+      ],
+      "type": "midi/show",
+    },
+  ],
+  "version": 10,
+}
+`;
+
+exports[`examples > json > loads subgraph.json 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 5,
+  "last_node_id": 6,
+  "links": [
+    [
+      1,
+      3,
+      1,
+      2,
+      1,
+      0,
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      0,
+      0,
+    ],
+    [
+      3,
+      5,
+      0,
+      2,
+      2,
+      -1,
+    ],
+    [
+      4,
+      2,
+      1,
+      6,
+      0,
+      -1,
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": null,
+          "name": "in ms",
+          "properties": {},
+          "type": "number",
+        },
+        {
+          "links": [
+            1,
+          ],
+          "name": "in sec",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        312,
+        145,
+      ],
+      "properties": {
+        "enabled": true,
+      },
+      "size": [
+        140,
+        46,
+      ],
+      "title": "Time",
+      "type": "basic/time",
+    },
+    {
+      "flags": {},
+      "id": 4,
+      "inputs": [
+        {
+          "label": "5.000",
+          "link": 2,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 3,
+      "outputs": [],
+      "pos": [
+        864,
+        156,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+    {
+      "flags": {},
+      "id": 6,
+      "inputs": [
+        {
+          "link": 4,
+          "name": "inc",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "dec",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "link": null,
+          "name": "reset",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 4,
+      "outputs": [
+        {
+          "links": null,
+          "name": "change",
+          "properties": {},
+          "type": -1,
+        },
+        {
+          "links": null,
+          "name": "num",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        864,
+        229,
+      ],
+      "properties": {
+        "doCountExecution": false,
+      },
+      "size": [
+        140,
+        66,
+      ],
+      "type": "events/counter",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": null,
+          "name": "enabled",
+          "properties": {},
+          "type": "boolean",
+        },
+        {
+          "link": 1,
+          "name": "foo",
+          "properties": {},
+          "type": "",
+        },
+        {
+          "link": 3,
+          "name": "EV",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "faa",
+          "properties": {},
+          "type": 0,
+        },
+        {
+          "links": [
+            4,
+          ],
+          "name": "EV",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        573,
+        168,
+      ],
+      "properties": {
+        "enabled": true,
+      },
+      "size": [
+        140,
+        86,
+      ],
+      "subgraph": {
+        "config": {},
+        "extra": {},
+        "groups": [],
+        "last_link_id": 6,
+        "last_node_id": 7,
+        "links": [
+          [
+            1,
+            2,
+            0,
+            4,
+            0,
+            "number",
+          ],
+          [
+            2,
+            4,
+            0,
+            3,
+            0,
+            0,
+          ],
+          [
+            4,
+            5,
+            0,
+            7,
+            0,
+            -1,
+          ],
+          [
+            5,
+            7,
+            0,
+            6,
+            0,
+            -1,
+          ],
+        ],
+        "nodes": [
+          {
+            "flags": {},
+            "id": 3,
+            "inputs": [
+              {
+                "link": 2,
+                "name": "",
+                "properties": {},
+                "shape": 0,
+                "type": 0,
+              },
+            ],
+            "mode": 0,
+            "order": 4,
+            "outputs": [],
+            "pos": [
+              1119,
+              139,
+            ],
+            "properties": {
+              "name": "faa",
+              "subgraphID": 2,
+              "type": 0,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Output",
+            "type": "graph/output",
+          },
+          {
+            "flags": {},
+            "id": 4,
+            "inputs": [
+              {
+                "link": 1,
+                "name": "in",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "mode": 0,
+            "order": 2,
+            "outputs": [
+              {
+                "links": [
+                  2,
+                ],
+                "name": "out",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "pos": [
+              872,
+              194,
+            ],
+            "properties": {},
+            "size": [
+              112,
+              28,
+            ],
+            "title": "Floor",
+            "type": "math/floor",
+          },
+          {
+            "flags": {},
+            "id": 2,
+            "inputs": [],
+            "mode": 0,
+            "order": 0,
+            "outputs": [
+              {
+                "links": [
+                  1,
+                ],
+                "name": "",
+                "properties": {},
+                "shape": 0,
+                "type": "",
+              },
+            ],
+            "pos": [
+              440,
+              149,
+            ],
+            "properties": {
+              "name": "foo",
+              "subgraphID": 2,
+              "type": "",
+              "value": null,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Input",
+            "type": "graph/input",
+          },
+          {
+            "flags": {},
+            "id": 5,
+            "inputs": [],
+            "mode": 0,
+            "order": 1,
+            "outputs": [
+              {
+                "links": [
+                  4,
+                ],
+                "name": "",
+                "properties": {},
+                "shape": 1,
+                "type": -1,
+              },
+            ],
+            "pos": [
+              460,
+              282,
+            ],
+            "properties": {
+              "name": "EV",
+              "subgraphID": 2,
+              "type": -1,
+              "value": null,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Input",
+            "type": "graph/input",
+          },
+          {
+            "flags": {},
+            "id": 6,
+            "inputs": [
+              {
+                "link": 5,
+                "name": "",
+                "properties": {},
+                "shape": 1,
+                "type": -1,
+              },
+            ],
+            "mode": 0,
+            "order": 5,
+            "outputs": [],
+            "pos": [
+              1054,
+              293,
+            ],
+            "properties": {
+              "name": "EV",
+              "subgraphID": 2,
+              "type": -1,
+            },
+            "size": [
+              180,
+              60,
+            ],
+            "title": "Output",
+            "type": "graph/output",
+          },
+          {
+            "flags": {},
+            "id": 7,
+            "inputs": [
+              {
+                "link": 4,
+                "name": "event",
+                "properties": {},
+                "type": -1,
+              },
+            ],
+            "mode": 0,
+            "order": 3,
+            "outputs": [
+              {
+                "links": [
+                  5,
+                ],
+                "name": "on_time",
+                "properties": {},
+                "type": -1,
+              },
+            ],
+            "pos": [
+              742,
+              300,
+            ],
+            "properties": {
+              "timeInMs": 1000,
+              "time_in_ms": 1000,
+            },
+            "size": [
+              140,
+              26,
+            ],
+            "title": "Delay",
+            "type": "events/delay",
+          },
+        ],
+        "version": 10,
+      },
+      "title": "Subgraph",
+      "type": "graph/subgraph",
+    },
+    {
+      "boxcolor": "#222",
+      "flags": {},
+      "id": 5,
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            3,
+          ],
+          "name": "on_tick",
+          "properties": {},
+          "type": -1,
+        },
+      ],
+      "pos": [
+        311,
+        240,
+      ],
+      "properties": {
+        "event": "tick",
+        "interval": 2000,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "type": "events/timer",
+    },
+  ],
+  "version": 10,
+}
+`;

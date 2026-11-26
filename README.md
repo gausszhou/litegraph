@@ -5,7 +5,7 @@
 LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲染节点、插槽与连线，既能作为可视化编辑器使用，也能在无编辑器的状态下直接执行图逻辑，思路类似虚幻蓝图、Pure Data。本仓库基于 [jagenjo/litegraph.js](https://github.com/jagenjo/litegraph.js) 与 [space-nuko/litegraph.ts](https://github.com/space-nuko/litegraph.ts) 重构，使用 TypeScript 重写，并拆分为「核心引擎 + 可插拔节点包 + 示例应用 + 文档站」的 pnpm monorepo。
 
 - 在线 Demo：https://gausszhou.github.io/litegraph/demo
-- 文档：https://gausszhou.github.io/litegraph/docs
+- 文档：[简体中文](https://gausszhou.github.io/litegraph/docs/) / [English](https://gausszhou.github.io/litegraph/docs/en/)
 - 路线图：[ROADMAP.md](ROADMAP.md)
 
 ## 特性
@@ -29,9 +29,9 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `packages/tests` | Vitest 测试（`LGraphTests`、`SubgraphTests`） |
 | `apps/editor` | 完整 Demo 编辑器：工具栏、示例下拉、小窗预览、live mode、电路演示节点 |
 | `apps/example-minimal` | 最小集成示例：`LGraph` + `LGraphCanvas` + 两个节点 |
-| `docs` | VitePress 文档站（`docs:dev` / `docs:build`） |
+| `docs` | VitePress 双语文档站：`guide/`（中文）与 `en/guide/`（英文），节点目录与 API 文档由脚本生成 |
 | `shells` | 构建脚本 `build.sh`、Pages 发布脚本 `gh-pages.sh` |
-| `scripts` | 体积报告 `size-report.mjs`、UMD 冒烟 `verify-umd.mjs`、发布产物校验 `verify-pack.mjs` |
+| `scripts` | 体积报告、UMD 冒烟、tarball 校验、节点目录生成 `gen-node-catalog.mjs`、节点脚手架 `new-node.mjs` |
 | `eslint.config.mjs` | ESLint 10 flat config（typescript-eslint） |
 | `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
 
@@ -53,13 +53,19 @@ pnpm build
 pnpm lint           # ESLint（flat config + typescript-eslint）
 pnpm typecheck      # 各包 tsc --noEmit
 pnpm nullcheck      # strictNullChecks 存量基线校验（防止新增）
-pnpm test           # vitest（42 个用例）
+pnpm test           # vitest（241 个用例，含示例快照）
 pnpm size           # 各产物体积（raw / gzip）
 pnpm verify-umd     # 在 VM 中加载 core 与各节点包 UMD，校验共享实例与注册
 pnpm verify-pack    # 逐个 pnpm pack 并校验 tarball 内容
 
-# 文档
-pnpm docs:dev
+# 文档（中文 + English）
+pnpm docs:dev       # 生成节点目录与 API 文档后启动 VitePress
+pnpm docs:build     # 构建到 dist/docs
+pnpm docs:nodes     # 只重新生成中英文节点目录
+pnpm docs:api       # 只重新生成 Typedoc API 文档
+
+# 新增节点脚手架
+pnpm new-node math Square --title "Square" --desc "Squares its input"
 ```
 
 最小用法（完整版见 `apps/example-minimal`）：

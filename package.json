@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "docs:build": "vitepress build docs",
-    "docs:dev": "vitepress dev docs",
+    "docs:build": "pnpm docs:nodes && pnpm docs:api && vitepress build docs",
+    "docs:dev": "pnpm docs:nodes && pnpm docs:api && vitepress dev docs",
     "docs:serve": "vitepress serve docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -23,12 +23,19 @@
     "test:coverage": "pnpm --filter @gausszhou/litegraph-tests coverage",
     "typecheck": "pnpm -r typecheck",
     "verify-pack": "node scripts/verify-pack.mjs",
-    "verify-umd": "node scripts/verify-umd.mjs"
+    "verify-umd": "node scripts/verify-umd.mjs",
+    "docs:api": "typedoc && typedoc --out docs/en/api",
+    "docs:nodes": "node scripts/gen-node-catalog.mjs",
+    "docs:nodes:check": "node scripts/gen-node-catalog.mjs --check",
+    "new-node": "node scripts/new-node.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.14.1",
+    "typescript": "5.9.3",
     "typescript-eslint": "^8.74.0",
     "vitepress": "^1.4.3"
   }

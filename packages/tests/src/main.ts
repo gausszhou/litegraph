@@ -4,6 +4,7 @@ import installBasicNodes from "@gausszhou/litegraph-nodes-basic"
 import { describe, it } from "vitest"
 import UnitTest from "./UnitTest"
 import * as testSuite from "./testSuite"
+import { registerExampleSnapshots } from "./ExamplesSnapshotTests"
 import { LiteGraph } from "@gausszhou/litegraph-core"
 
 // Node packages are plugins: they must be installed into LiteGraph explicitly.
@@ -79,3 +80,6 @@ function runTestSuite(use_uuids: boolean) {
 
 describe("integer IDs", () => runTestSuite(false))
 describe("string UUIDs", () => runTestSuite(true))
+
+// Example/demo snapshots run once in a fixed (integer ID) environment.
+registerExampleSnapshots()

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "entryPoints": ["packages/core/src/index.ts"],
+  "tsconfig": "packages/core/tsconfig.json",
+  "out": "docs/api",
+  "readme": "none",
+  "entryFileName": "index",
+  "hidePageHeader": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "skipErrorChecking": true,
+  "cleanOutputDir": true,
+  "useCodeBlocks": true,
+  "expandObjects": true
+}

@@ -50,3 +50,9 @@ jobs:
 
       - name: Verify publish tarballs
         run: pnpm verify-pack
+
+      - name: Node catalog freshness
+        run: pnpm docs:nodes:check
+
+      - name: Docs build (zh + en)
+        run: pnpm docs:build
