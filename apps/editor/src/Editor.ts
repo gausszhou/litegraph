@@ -278,6 +278,8 @@ export default class Editor {
   }
 
   load(): boolean {
+    // 从子图里点 Load 时先回到顶层图，否则会把新图配置进内层画布
+    this.graphCanvas.closeAllSubgraphs();
     const data = localStorage.getItem("graphdemo_save");
     if (!data) {
       return false;
