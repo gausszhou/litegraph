@@ -60,7 +60,7 @@
     "blueprints",
     "graph"
   ],
-  "sideEffects": false,
+  "sideEffects": true,
   "publishConfig": {
     "main": "./dist/index.js",
     "module": "./dist/index.js",

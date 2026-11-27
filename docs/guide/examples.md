@@ -96,6 +96,8 @@ pnpm test          # 全量
 pnpm --filter @gausszhou/litegraph-tests test
 ```
 
+另外 `pnpm demo:smoke` 会用本机 Chrome / Chromium 打开构建后的 demo，逐个切换示例并检查：画布与 Empty 状态有像素差异、节点与连线数量大于 0、没有 JS 异常或 console.error。CI 也会执行这一步（需要先 `pnpm build` 或单独构建 editor）。
+
 快照文件在 `packages/tests/src/__snapshots__/main.ts.snap`。**只有在确认序列化格式的变更是有意为之**时才更新快照：
 
 ```bash

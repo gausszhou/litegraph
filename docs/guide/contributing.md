@@ -135,7 +135,7 @@ pnpm docs:build    # 生成节点目录 + API 文档 + VitePress 构建
 - 提交信息使用 Conventional Commits：`feat:` / `fix:` / `test:` / `docs:` / `style:` / `chore:`；
 - 一个 PR 只做一件事；格式化/重命名类改动不要和功能改动混在一起；
 - PR 描述里写清楚动机、行为变化与验证方式；
-- CI 必须全绿：`lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `docs:build`。
+- CI 必须全绿：`lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `demo:smoke` → `docs:build`。
 - 合并到 `master` 后，CI 的 `deploy` job 会在检查通过后构建 `dist/` 并推送到 `gh-pages` 分支；站点入口是 `/litegraph/`，文档在 `/litegraph/docs/`（中文）与 `/litegraph/docs/en/`（English），Demo 在 `/litegraph/demo/`。
 
 ## 路线图

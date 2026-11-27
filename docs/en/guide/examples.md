@@ -102,6 +102,8 @@ Snapshots live in `packages/tests/src/__snapshots__/main.ts.snap`. Update them *
 pnpm --filter @gausszhou/litegraph-tests exec vitest run -u
 ```
 
+`pnpm demo:smoke` also opens the built demo in the local Chrome / Chromium, switches through every example and checks that the canvas differs from the Empty state, that node and link counts are greater than zero, and that there are no JS exceptions or `console.error` calls. CI runs this step too (build the editor first).
+
 To add an example:
 
 1. Put the graph JSON in `apps/editor/public/examples/`;

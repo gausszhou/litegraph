@@ -118,7 +118,8 @@ export default class MIDIInterface extends LGraphNode {
   }
 
   onMIDIFailure(msg: any) {
-    console.error("Failed to get MIDI access - " + msg);
+    // 浏览器未授权 / 不支持 Web MIDI 时是预期情况，降级为 warning
+    console.warn("Failed to get MIDI access - " + msg);
   }
 
   openInputPort(port: any, callback: any) {

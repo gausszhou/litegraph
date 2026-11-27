@@ -23,6 +23,9 @@ const BACKUP_KEY = "litegraph demo backup";
 const editor = new Editor("main", { miniwindow: false });
 editor.graphCanvas.pause_rendering = false;
 
+// 供 demo 冒烟测试与浏览器调试使用
+(window as unknown as { __editor: Editor }).__editor = editor;
+
 window.addEventListener("resize", () => {
   editor.graphCanvas.resize();
 });

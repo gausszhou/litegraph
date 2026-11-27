@@ -28,12 +28,14 @@
     "docs:nodes": "node scripts/gen-node-catalog.mjs",
     "docs:nodes:check": "node scripts/gen-node-catalog.mjs --check",
     "new-node": "node scripts/new-node.mjs",
-    "pages:build": "node scripts/build-pages.mjs"
+    "pages:build": "node scripts/build-pages.mjs",
+    "demo:smoke": "node scripts/smoke-demo.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
+    "playwright-core": "^1.65.1",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.14.1",
     "typescript": "5.9.3",

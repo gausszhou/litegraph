@@ -444,7 +444,6 @@ export default class Subgraph extends LGraphNode {
     };
 
     override onResize(size: Vector2) {
-        console.error("TEST subgraph resize");
         // size[1] += 20;
     };
 

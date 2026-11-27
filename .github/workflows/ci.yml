@@ -48,6 +48,9 @@ jobs:
       - name: Bundle size
         run: pnpm size
 
+      - name: Demo smoke test (headless Chrome)
+        run: pnpm demo:smoke
+
       - name: UMD smoke test
         run: pnpm verify-umd
 
