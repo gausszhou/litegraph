@@ -41,3 +41,6 @@ coverage
 # generated API reference (built by pnpm docs:api)
 docs/api
 docs/en/api
+
+# demo smoke screenshots
+artifacts/

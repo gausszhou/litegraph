@@ -57,7 +57,7 @@ pnpm test           # vitest（244 个用例，含示例快照）
 pnpm size           # 各产物体积（raw / gzip）
 pnpm verify-umd     # 在 VM 中加载 core 与各节点包 UMD，校验共享实例与注册
 pnpm verify-pack    # 逐个 pnpm pack 并校验 tarball 内容
-pnpm demo:smoke     # 无头 Chrome 逐个加载 demo，校验节点/连线/画布与控制台
+pnpm demo:smoke     # 无头 Chrome 逐个加载 demo，校验节点/连线/画布/视口（-- --screenshots 存图）
 
 # 文档（中文 + English）
 pnpm docs:dev       # 生成节点目录与 API 文档后启动 VitePress

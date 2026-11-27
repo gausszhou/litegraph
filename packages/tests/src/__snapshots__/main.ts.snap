@@ -6079,21 +6079,21 @@ exports[`examples > json > loads features.json 1`] = `
   "groups": [
     {
       "bounding": [
-        418,
-        298,
-        609,
-        352,
+        50,
+        40,
+        720,
+        440,
       ],
       "color": "#3f789e",
       "font": undefined,
-      "title": "Ports, widgets & shapes",
+      "title": "Slots & widgets",
     },
     {
       "bounding": [
-        405,
-        85,
-        600,
-        205,
+        50,
+        500,
+        820,
+        460,
       ],
       "color": "#8A8",
       "font": undefined,
@@ -6191,8 +6191,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        847,
-        479,
+        640,
+        260,
       ],
       "properties": {},
       "size": [
@@ -6235,8 +6235,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        757,
-        380,
+        360,
+        120,
       ],
       "properties": {},
       "size": [
@@ -6275,8 +6275,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        672,
-        481,
+        640,
+        100,
       ],
       "properties": {},
       "size": [
@@ -6317,8 +6317,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        413,
-        101,
+        260,
+        580,
       ],
       "properties": {
         "A": 1,
@@ -6361,8 +6361,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        593,
-        208,
+        90,
+        760,
       ],
       "properties": {
         "gamepad_index": 0,
@@ -6389,8 +6389,8 @@ exports[`examples > json > loads features.json 1`] = `
       "order": 5,
       "outputs": [],
       "pos": [
-        862,
-        246,
+        360,
+        760,
       ],
       "properties": {},
       "size": [
@@ -6416,8 +6416,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        441,
-        365,
+        90,
+        100,
       ],
       "properties": {},
       "size": [
@@ -6452,8 +6452,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        421,
-        197,
+        90,
+        580,
       ],
       "properties": {
         "color": "#7AF",
@@ -6500,8 +6500,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        596,
-        116,
+        480,
+        580,
       ],
       "properties": {
         "A": 1,
@@ -6538,8 +6538,8 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "pos": [
-        850,
-        97,
+        700,
+        580,
       ],
       "properties": {},
       "size": [
@@ -6554,8 +6554,8 @@ exports[`examples > json > loads features.json 1`] = `
       "mode": 0,
       "order": 4,
       "pos": [
-        420,
-        560,
+        90,
+        360,
       ],
       "properties": {
         "age": 10,

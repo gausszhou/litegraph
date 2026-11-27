@@ -297,13 +297,15 @@ export default class Editor {
   /** 缩放到整张图：加载 demo / JSON / 本地存档后调用，避免图在视口外。 */
   fitToView(padding = 60): void {
     // 进入子图后 graphCanvas.graph 才是当前显示的图
-    const nodes = (this.graphCanvas.graph ?? this.graph)._nodes;
+    const graph = this.graphCanvas.graph ?? this.graph;
+    const nodes = graph._nodes;
+    const groups = graph._groups ?? [];
     const canvas = this.graphCanvas.canvas;
     // canvas.width 是设备像素（HiDPI 下已按 devicePixelRatio 放大），
     // 而 ds 的坐标空间是 CSS 像素，所以这里必须用 clientWidth/clientHeight。
     const width = canvas.clientWidth || canvas.width;
     const height = canvas.clientHeight || canvas.height;
-    if (!nodes.length || !width || !height) {
+    if ((!nodes.length && !groups.length) || !width || !height) {
       return;
     }
 
@@ -319,6 +321,14 @@ export default class Editor {
       minY = Math.min(minY, y);
       maxX = Math.max(maxX, x + nodeWidth);
       maxY = Math.max(maxY, y + nodeHeight);
+    }
+    // 分组框也纳入视野，避免标题或边框被裁掉
+    for (const group of groups) {
+      const [x, y, groupWidth, groupHeight] = group.bounding;
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x + groupWidth);
+      maxY = Math.max(maxY, y + groupHeight);
     }
 
     const ds = this.graphCanvas.ds;

@@ -13,12 +13,25 @@
  * 只依赖 playwright-core（不下载浏览器），CI 使用 GitHub runner 自带的 Chrome。
  */
 import { createServer } from "node:http";
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync } from "node:fs";
 import { extname, join, normalize, resolve, sep } from "node:path";
 import { chromium } from "playwright-core";
 
 const repoRoot = resolve(import.meta.dirname, "..");
 const demoRoot = join(repoRoot, "dist", "demo");
+
+const args = process.argv.slice(2);
+const screenshotsIndex = args.findIndex((arg) => arg === "--screenshots" || arg.startsWith("--screenshots="));
+let screenshotsDir = null;
+if (screenshotsIndex !== -1) {
+  const value = args[screenshotsIndex].includes("=")
+    ? args[screenshotsIndex].split("=")[1]
+    : args[screenshotsIndex + 1] && !args[screenshotsIndex + 1].startsWith("--")
+      ? args[screenshotsIndex + 1]
+      : "artifacts/demo-smoke";
+  screenshotsDir = resolve(repoRoot, value);
+  mkdirSync(screenshotsDir, { recursive: true });
+}
 const indexFile = join(demoRoot, "index.html");
 
 if (!existsSync(indexFile)) {
@@ -191,7 +204,43 @@ async function main() {
       });
       const sample = await sampleCanvas(page);
       const ratio = diffRatio(baseline, sample);
-      const ok = info.nodes > 0 && info.links > 0 && ratio > 0.002;
+
+      // Fit 之后所有节点都应落在画布内（允许 4px 误差），防止布局/视图回归
+      const offscreen = await page.evaluate(() => {
+        const editor = window.__editor;
+        const canvas = editor.graphCanvas.canvas;
+        const ds = editor.graphCanvas.ds;
+        const width = canvas.clientWidth || canvas.width;
+        const height = canvas.clientHeight || canvas.height;
+        return editor.graph._nodes
+          .map((node) => {
+            const [x, y] = ds.convertOffsetToCanvas([node.pos[0], node.pos[1]]);
+            return {
+              type: node.type,
+              left: x,
+              top: y,
+              right: x + node.size[0] * ds.scale,
+              bottom: y + node.size[1] * ds.scale,
+            };
+          })
+          .filter(
+            (rect) =>
+              rect.left < -4 ||
+              rect.top < -4 ||
+              rect.right > width + 4 ||
+              rect.bottom > height + 4,
+          )
+          .map((rect) => rect.type);
+      });
+
+      if (screenshotsDir) {
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        await page.locator("#main canvas.graphCanvas").screenshot({
+          path: join(screenshotsDir, `${slug}.png`),
+        });
+      }
+
+      const ok = info.nodes > 0 && info.links > 0 && ratio > 0.002 && offscreen.length === 0;
       console.log(
         `${ok ? "ok  " : "FAIL"} ${name.padEnd(18)} nodes=${String(info.nodes).padStart(2)} links=${String(
           info.links,
@@ -199,7 +248,9 @@ async function main() {
       );
       if (!ok) {
         failures.push(
-          `${name}: nodes=${info.nodes} links=${info.links} diff=${(ratio * 100).toFixed(2)}%`,
+          `${name}: nodes=${info.nodes} links=${info.links} diff=${(ratio * 100).toFixed(2)}% offscreen=${
+            offscreen.join(",") || "-"
+          }`,
         );
       }
     }
@@ -218,6 +269,9 @@ async function main() {
     process.exit(1);
   }
   console.log("\n✓ 全部示例渲染正常");
+  if (screenshotsDir) {
+    console.log(`截图已保存到 ${screenshotsDir}`);
+  }
 }
 
 main().catch((error) => {
