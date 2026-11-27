@@ -9,6 +9,7 @@ import {
   basic3,
   circuit1,
   events,
+  subgraph,
   widgets,
 } from "./demos";
 import Editor from "./Editor";
@@ -91,6 +92,7 @@ addDemo("Basic2", "两个常量分别接到 watch", () => basic2(editor.graph));
 addDemo("Basic3", "两个常量求和并监视", () => basic3(editor.graph));
 addDemo("Widgets", "旋钮、进度条、开关与按钮", () => widgets(editor.graph));
 addDemo("Events", "定时器触发计数器与日志", () => events(editor.graph));
+addDemo("Subgraph", "内层图 Add 10，双击子图节点进入/返回", () => subgraph(editor.graph));
 addDemo("Audio1", "播放 audio.wav", () => audio1(editor.graph));
 addDemo("Audio2", "音源 + 旋钮 + 分析器可视化", () => audio2(editor.graph));
 addDemo("Audio3", "音源 + 分析器 + 示波器", () => audio3(editor.graph));
@@ -99,7 +101,7 @@ addDemo("Circuit1", "振荡器点亮 LED", () => circuit1(editor.graph));
 // JSON 示例：由 graph.load() 异步加载，加载完成后自动缩放到整张图
 addDemo("Features", "插槽、控件与自定义形状", "examples/features.json");
 addDemo("Benchmark", "大量节点与连线的渲染基准", "examples/benchmark.json");
-addDemo("Subgraph", "子图与 graph/input、graph/output", "examples/subgraph.json");
+addDemo("Subgraph (JSON)", "与函数式 Subgraph 相同的图的 JSON 版本", "examples/subgraph.json");
 addDemo("Audio", "完整音频处理链", "examples/audio.json");
 addDemo("Audio Delay", "延迟节点示例", "examples/audio_delay.json");
 addDemo("Audio Reverb", "混响节点示例", "examples/audio_reverb.json");

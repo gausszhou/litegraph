@@ -173,6 +173,8 @@ export default class Editor {
       const option = this.selector.options[index] as OptionElemExt;
       const url = option.dataset["url"];
       this.stop();
+      // 在子图里切换示例时先回到顶层图，避免把新图加载到内层
+      this.graphCanvas.closeAllSubgraphs();
       if (url) {
         this.graph.load(url, () => this.fitToView());
       } else if (option.callback) {
@@ -220,6 +222,13 @@ export default class Editor {
       "Download",
       "",
       this.download.bind(this),
+      ".tools-left"
+    );
+    this.addToolsButton(
+      "fit",
+      "Fit",
+      "",
+      () => this.fitToView(),
       ".tools-left"
     );
   }
@@ -285,7 +294,8 @@ export default class Editor {
 
   /** 缩放到整张图：加载 demo / JSON / 本地存档后调用，避免图在视口外。 */
   fitToView(padding = 60): void {
-    const nodes = this.graph._nodes;
+    // 进入子图后 graphCanvas.graph 才是当前显示的图
+    const nodes = (this.graphCanvas.graph ?? this.graph)._nodes;
     const canvas = this.graphCanvas.canvas;
     if (!nodes.length || !canvas.width || !canvas.height) {
       return;

@@ -31,5 +31,5 @@ features:
   - title: TypeScript + Vite
     details: All packages ship ESM + UMD and .d.ts; UMD externalizes core to window.litegraph so multiple packs share one engine instance.
   - title: Built for testing and release
-    details: CI covers lint, strict types, 243 test cases, coverage thresholds, a UMD smoke test and tarball verification; the node catalog and API docs are generated from source.
+    details: CI covers lint, strict types, 244 test cases, coverage thresholds, a UMD smoke test and tarball verification; the node catalog and API docs are generated from source.
 ---

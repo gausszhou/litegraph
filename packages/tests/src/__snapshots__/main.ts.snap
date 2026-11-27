@@ -1526,6 +1526,307 @@ exports[`examples > demos > builds events 1`] = `
 }
 `;
 
+exports[`examples > demos > builds subgraph 1`] = `
+{
+  "config": {},
+  "extra": {},
+  "groups": [],
+  "last_link_id": 2,
+  "last_node_id": 3,
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "number",
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "number",
+    ],
+  ],
+  "nodes": [
+    {
+      "flags": {},
+      "id": 1,
+      "inputs": [],
+      "mode": 0,
+      "order": 0,
+      "outputs": [
+        {
+          "links": [
+            1,
+          ],
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        100,
+        140,
+      ],
+      "properties": {
+        "value": 5,
+      },
+      "size": [
+        210,
+        38,
+      ],
+      "title": "Const Number",
+      "type": "basic/number",
+    },
+    {
+      "flags": {},
+      "id": 2,
+      "inputs": [
+        {
+          "link": 1,
+          "name": "value",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "mode": 0,
+      "order": 1,
+      "outputs": [
+        {
+          "links": [
+            2,
+          ],
+          "name": "result",
+          "properties": {},
+          "type": "number",
+        },
+      ],
+      "pos": [
+        380,
+        120,
+      ],
+      "properties": {
+        "enabled": true,
+      },
+      "size": [
+        200,
+        30,
+      ],
+      "subgraph": {
+        "config": {},
+        "extra": {},
+        "groups": [],
+        "last_link_id": 3,
+        "last_node_id": 4,
+        "links": [
+          [
+            1,
+            1,
+            0,
+            3,
+            0,
+            "number,array,object",
+          ],
+          [
+            2,
+            2,
+            0,
+            3,
+            1,
+            "number",
+          ],
+          [
+            3,
+            3,
+            0,
+            4,
+            0,
+            "number",
+          ],
+        ],
+        "nodes": [
+          {
+            "flags": {},
+            "id": 1,
+            "inputs": [],
+            "mode": 0,
+            "order": 0,
+            "outputs": [
+              {
+                "links": [
+                  1,
+                ],
+                "name": "",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "pos": [
+              80,
+              120,
+            ],
+            "properties": {
+              "name": "value",
+              "subgraphID": null,
+              "type": "number",
+              "value": 0,
+            },
+            "size": [
+              210,
+              86,
+            ],
+            "title": "Input",
+            "type": "graph/input",
+          },
+          {
+            "flags": {},
+            "id": 2,
+            "inputs": [],
+            "mode": 0,
+            "order": 1,
+            "outputs": [
+              {
+                "links": [
+                  2,
+                ],
+                "name": "value",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "pos": [
+              80,
+              260,
+            ],
+            "properties": {
+              "value": 10,
+            },
+            "size": [
+              210,
+              38,
+            ],
+            "title": "Const Number",
+            "type": "basic/number",
+          },
+          {
+            "flags": {},
+            "id": 3,
+            "inputs": [
+              {
+                "link": 1,
+                "name": "A",
+                "properties": {},
+                "type": "number,array,object",
+              },
+              {
+                "link": 2,
+                "name": "B",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "mode": 0,
+            "order": 2,
+            "outputs": [
+              {
+                "links": [
+                  3,
+                ],
+                "name": "=",
+                "properties": {},
+                "type": "number",
+              },
+            ],
+            "pos": [
+              360,
+              160,
+            ],
+            "properties": {
+              "A": 1,
+              "B": 1,
+              "OP": "+",
+            },
+            "size": [
+              140,
+              46,
+            ],
+            "title": "Operation",
+            "type": "math/operation",
+          },
+          {
+            "flags": {},
+            "id": 4,
+            "inputs": [
+              {
+                "link": 3,
+                "name": "",
+                "properties": {},
+                "type": "",
+              },
+            ],
+            "mode": 0,
+            "order": 3,
+            "outputs": [],
+            "pos": [
+              620,
+              140,
+            ],
+            "properties": {
+              "name": "result",
+              "subgraphID": null,
+              "type": "number",
+            },
+            "size": [
+              210,
+              62,
+            ],
+            "title": "Output",
+            "type": "graph/output",
+          },
+        ],
+        "version": 10,
+      },
+      "title": "Add 10",
+      "type": "graph/subgraph",
+    },
+    {
+      "flags": {},
+      "id": 3,
+      "inputs": [
+        {
+          "label": "",
+          "link": 2,
+          "name": "value",
+          "properties": {},
+          "type": 0,
+        },
+      ],
+      "mode": 0,
+      "order": 2,
+      "outputs": [],
+      "pos": [
+        720,
+        140,
+      ],
+      "properties": {
+        "value": 1,
+      },
+      "size": [
+        140,
+        26,
+      ],
+      "title": "Watch",
+      "type": "basic/watch",
+    },
+  ],
+  "version": 10,
+}
+`;
+
 exports[`examples > demos > builds widgets 1`] = `
 {
   "config": {},

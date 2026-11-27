@@ -1,10 +1,10 @@
 import { LGraph, LiteGraph } from "@gausszhou/litegraph";
-import type { LGraphNode } from "@gausszhou/litegraph";
+import type { LGraphNode, Subgraph } from "@gausszhou/litegraph";
 
 type Vec2 = [number, number];
 
-/** 创建并放置节点；类型未注册时立即报错，避免 demo 静默变成空图。 */
-function addNode(graph: LGraph, type: string, pos: Vec2, size?: Vec2): LGraphNode {
+/** 创建节点；类型未注册时立即报错，避免 demo 静默变成空图。 */
+function createNode(type: string, pos: Vec2, size?: Vec2): LGraphNode {
   const node = LiteGraph.createNode(type);
   if (!node) {
     throw new Error(`[demo] 节点类型未注册：${type}`);
@@ -13,6 +13,12 @@ function addNode(graph: LGraph, type: string, pos: Vec2, size?: Vec2): LGraphNod
   if (size) {
     node.size = size;
   }
+  return node;
+}
+
+/** 创建并加入指定图（外层图或子图内部图）。 */
+function addNode(graph: LGraph, type: string, pos: Vec2, size?: Vec2): LGraphNode {
+  const node = createNode(type, pos, size);
   graph.add(node);
   return node;
 }
@@ -94,6 +100,41 @@ export function events(graph: LGraph): void {
   connect(timer, 0, counter, 0);
   connect(counter, 1, watch, 0);
   connect(counter, 0, log, 0);
+}
+
+export function subgraph(graph: LGraph): void {
+  graph.clear();
+
+  const source = addNode(graph, "basic/number", [100, 140]);
+  source.setProperty("value", 5);
+
+  // 子图节点本身也是一张 LGraph：内部是「输入 + 常量 10 -> 求和 -> 输出」
+  const sub = addNode(graph, "graph/subgraph", [380, 120], [220, 120]) as Subgraph;
+  sub.title = "Add 10";
+  const inner = sub.subgraph;
+
+  const innerInput = createNode("graph/input", [80, 120]);
+  inner.add(innerInput);
+  innerInput.setProperty("type", "number");
+  innerInput.setProperty("name", "value");
+
+  const ten = addNode(inner, "basic/number", [80, 260]);
+  ten.setProperty("value", 10);
+
+  const sum = addNode(inner, "math/operation", [360, 160]);
+  const innerOutput = createNode("graph/output", [620, 140]);
+  inner.add(innerOutput);
+  innerOutput.setProperty("type", "number");
+  innerOutput.setProperty("name", "result");
+
+  connect(innerInput, 0, sum, 0);
+  connect(ten, 0, sum, 1);
+  connect(sum, 0, innerOutput, 0);
+
+  // 外层：常量 -> 子图 value -> 子图 result -> watch
+  const watch = addNode(graph, "basic/watch", [720, 140]);
+  connect(source, 0, sub, sub.findInputSlotIndexByName("value"));
+  connect(sub, sub.findOutputSlotIndexByName("result"), watch, 0);
 }
 
 export function audio1(graph: LGraph): void {

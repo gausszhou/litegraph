@@ -53,7 +53,7 @@ pnpm build
 pnpm lint           # ESLint（flat config + typescript-eslint）
 pnpm typecheck      # 各包 tsc --noEmit
 pnpm nullcheck      # strictNullChecks 存量基线校验（防止新增）
-pnpm test           # vitest（243 个用例，含示例快照）
+pnpm test           # vitest（244 个用例，含示例快照）
 pnpm size           # 各产物体积（raw / gzip）
 pnpm verify-umd     # 在 VM 中加载 core 与各节点包 UMD，校验共享实例与注册
 pnpm verify-pack    # 逐个 pnpm pack 并校验 tarball 内容

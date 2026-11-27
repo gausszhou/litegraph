@@ -51,7 +51,7 @@
 - [x] 节点包契约测试：10 个包安装后逐一验证节点注册、创建与 serialize/configure 往返（共 95 种节点）。
 - [x] 交互测试（jsdom + pointer 事件）：选中、拖拽节点、连线、缩放、右键菜单。
 - [x] 统一测试入口：移除 core 中无依赖的 `jest` 脚本，测试统一走 `packages/tests` 的 vitest（`pnpm test`，非 watch 模式）。
-- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 71.26%（243 个用例）。
+- [x] CI 覆盖率门槛：`pnpm test:coverage` 统计核心路径（LGraph/LGraphNode/LLink/Subgraph/GraphInput/GraphOutput/utils/types），行/语句 ≥ 70%、分支 ≥ 60%、函数 ≥ 66%，当前行覆盖 71.26%（244 个用例）。
 
 **验收**：核心路径覆盖率 ≥ 70%（`pnpm test:coverage` 门槛生效），无 `XXX` 待定断言、无用例跳过；节点契约覆盖全部 10 个包。
 
@@ -60,7 +60,7 @@
 - [x] 按本仓库重写 `docs/`：以「core + 可插拔节点包 + 示例应用」为主线，覆盖 pnpm/workspace 用法、Vite 集成、按需引入与 UMD；清除上游 `litegraph.js` / `tamats.com` 的安装与 Demo 外链。站点提供简体中文与 English 两套页面（`docs/` 与 `docs/en/`），导航、侧边栏、搜索与页脚均本地化。
 - [x] 由源码生成 API 文档：接入 Typedoc + `typedoc-plugin-markdown`（`typedoc.json`），从 `packages/core/src/index.ts` 生成 `docs/api/` 与 `docs/en/api/`（两份内容相同，供语言切换），`pnpm docs:api` 可重跑；产物不提交，构建时生成。
 - [x] 节点目录页：`scripts/gen-node-catalog.mjs` 用 TypeScript AST 从各 `install.ts` 与 core 内建节点提取 95 个节点（类型、标题、说明、输入/输出/控件/属性、源码链接），生成中英文 `docs/nodes/*.md`；`pnpm docs:nodes:check` 在 CI 校验生成物是否与源码一致。
-- [x] 示例页与回归：`apps/editor` 的 9 个内置 demo 与 `public/examples/*.json` 全部纳入加载快照测试，另以 `apps/example-minimal` 的 ConstantNumber → Watch 作为最小示例基线；共 17 个用例，校验无缺失节点、节点数量、序列化往返稳定并固化快照。
+- [x] 示例页与回归：`apps/editor` 的 10 个内置 demo 与 `public/examples/*.json` 全部纳入加载快照测试，另以 `apps/example-minimal` 的 ConstantNumber → Watch 作为最小示例基线；共 18 个用例，校验无缺失节点、节点数量、序列化往返稳定并固化快照。
 - [x] 贡献指南 + 节点模板：`docs/guide/contributing.md` 说明分层约定、测试与文档流程；`scripts/new-node.mjs`（`pnpm new-node <pack> <Class>`）生成节点类并自动补 `install.ts` 注册与 `index.ts` 导出，支持 `--dry-run`。
 
 **验收**：`pnpm docs:build` 在干净 clone 下通过（节点目录 + API 文档 + VitePress 双语站点）；新人按文档 10 分钟内跑通最小示例并写出一个自定义节点；`pnpm docs:nodes:check` 保证节点目录不漂移。

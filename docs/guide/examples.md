@@ -13,6 +13,7 @@ pnpm --filter @litegraph/editor dev
 - 工具栏：运行/暂停、保存/加载、清空、最大化、小窗预览、live mode 切换；
 - 示例下拉框：内置 demo 与 `public/examples/*.json` 都可以一键加载，加载后自动缩放到整张图；
 - 本地恢复：关闭页面时自动备份当前图到 `localStorage`，下次打开自动恢复（也可从下拉框手动切回）；
+- 工具栏 `Fit` 按钮：随时缩放到整张图，进入子图后同样可用；
 - 节点搜索框：按类型/标题搜索节点，拖到画布即创建；
 - 右键菜单、属性面板、widget 交互、框选、对齐吸附、分组；
 - 两个编辑器专属插件：`features/*`（插槽/控件/形状等演示节点）与 `circuit/*`（振荡器、LED），在 `apps/editor/src/Editor.ts` 中通过 `LiteGraph.use()` 安装。
@@ -26,6 +27,7 @@ pnpm --filter @litegraph/editor dev
 | `Basic3` | 两个常量 + 数学运算 + 三个 watch |
 | `Widgets` | 旋钮 → 进度条、开关 → watch、按钮事件 → 日志 |
 | `Events` | 定时器 → 计数器 → watch，并记录每次 change 事件 |
+| `Subgraph` | 内层图「Add 10」：常量 → 子图 → watch，双击子图节点进入/返回 |
 | `Audio1` | `audio/source` → `audio/destination` |
 | `Audio2` | 音源 + 旋钮 + 分析器 + 可视化 |
 | `Audio3` | 在 Audio2 基础上加示波器 |
@@ -83,10 +85,10 @@ if (graph.configure(data)) {
 
 ## 示例快照回归
 
-`packages/tests/src/ExamplesSnapshotTests.ts` 把示例纳入自动化回归，覆盖 17 个用例：
+`packages/tests/src/ExamplesSnapshotTests.ts` 把示例纳入自动化回归，覆盖 18 个用例：
 
 - `apps/editor/public/examples/*.json` 中的全部 JSON：`configure()` 返回 `false`、节点数量与文件一致、序列化 → 再 `configure()` → 再序列化的结果深相等；
-- `apps/editor/src/demos.ts` 中的 9 个函数式 demo：构建后节点数 > 0 且序列化稳定；
+- `apps/editor/src/demos.ts` 中的 10 个函数式 demo：构建后节点数 > 0 且序列化稳定；
 - 最小示例基线：`ConstantNumber(4.5) → Watch`。
 
 ```bash
