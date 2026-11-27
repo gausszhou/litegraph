@@ -39,7 +39,7 @@ These files live in `apps/editor/public/examples/` and are loaded by the editor 
 
 | File | Contents |
 | --- | --- |
-| `features.json` | Port / widget / shape examples such as `features/slots`, `features/widgets`, `features/shape` |
+| `features.json` | All four demo node types: `features/slots`, `features/widgets`, `features/shape` and `features/properties_editor` |
 | `benchmark.json` | A performance benchmark graph with many nodes and links |
 | `subgraph.json` | Subgraphs with `graph/input` and `graph/output` |
 | `audio.json` | A fairly complete audio processing chain |

@@ -299,7 +299,11 @@ export default class Editor {
     // 进入子图后 graphCanvas.graph 才是当前显示的图
     const nodes = (this.graphCanvas.graph ?? this.graph)._nodes;
     const canvas = this.graphCanvas.canvas;
-    if (!nodes.length || !canvas.width || !canvas.height) {
+    // canvas.width 是设备像素（HiDPI 下已按 devicePixelRatio 放大），
+    // 而 ds 的坐标空间是 CSS 像素，所以这里必须用 clientWidth/clientHeight。
+    const width = canvas.clientWidth || canvas.width;
+    const height = canvas.clientHeight || canvas.height;
+    if (!nodes.length || !width || !height) {
       return;
     }
 
@@ -309,27 +313,27 @@ export default class Editor {
     let maxY = -Infinity;
     for (const node of nodes) {
       const [x, y] = node.pos;
-      const width = node.size[0];
-      const height = node.size[1];
+      const nodeWidth = node.size[0];
+      const nodeHeight = node.size[1];
       minX = Math.min(minX, x);
       minY = Math.min(minY, y);
-      maxX = Math.max(maxX, x + width);
-      maxY = Math.max(maxY, y + height);
+      maxX = Math.max(maxX, x + nodeWidth);
+      maxY = Math.max(maxY, y + nodeHeight);
     }
 
     const ds = this.graphCanvas.ds;
     const graphWidth = Math.max(maxX - minX, 1);
     const graphHeight = Math.max(maxY - minY, 1);
     const scale = Math.min(
-      (canvas.width - padding * 2) / graphWidth,
-      (canvas.height - padding * 2) / graphHeight,
+      (width - padding * 2) / graphWidth,
+      (height - padding * 2) / graphHeight,
       1
     );
 
     ds.scale = Math.max(ds.min_scale, Math.min(ds.max_scale, scale));
     ds.offset = [
-      canvas.width / (2 * ds.scale) - (minX + maxX) / 2,
-      canvas.height / (2 * ds.scale) - (minY + maxY) / 2,
+      width / (2 * ds.scale) - (minX + maxX) / 2,
+      height / (2 * ds.scale) - (minY + maxY) / 2,
     ];
     this.graphCanvas.setDirty(true, true);
     this.graphCanvas.draw(true, true);

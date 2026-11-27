@@ -6082,7 +6082,7 @@ exports[`examples > json > loads features.json 1`] = `
         418,
         298,
         609,
-        255,
+        352,
       ],
       "color": "#3f789e",
       "font": undefined,
@@ -6101,7 +6101,7 @@ exports[`examples > json > loads features.json 1`] = `
     },
   ],
   "last_link_id": 14,
-  "last_node_id": 14,
+  "last_node_id": 15,
   "links": [
     [
       1,
@@ -6175,7 +6175,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 8,
+      "order": 9,
       "outputs": [
         {
           "links": null,
@@ -6215,7 +6215,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 5,
+      "order": 6,
       "outputs": [
         {
           "links": [
@@ -6259,7 +6259,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 7,
+      "order": 8,
       "outputs": [
         {
           "links": null,
@@ -6386,7 +6386,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 4,
+      "order": 5,
       "outputs": [],
       "pos": [
         862,
@@ -6488,7 +6488,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 6,
+      "order": 7,
       "outputs": [
         {
           "links": [
@@ -6528,7 +6528,7 @@ exports[`examples > json > loads features.json 1`] = `
         },
       ],
       "mode": 0,
-      "order": 9,
+      "order": 10,
       "outputs": [
         {
           "links": null,
@@ -6547,6 +6547,35 @@ exports[`examples > json > loads features.json 1`] = `
         39,
       ],
       "type": "features/shape",
+    },
+    {
+      "flags": {},
+      "id": 15,
+      "mode": 0,
+      "order": 4,
+      "pos": [
+        420,
+        560,
+      ],
+      "properties": {
+        "age": 10,
+        "alive": true,
+        "children": [
+          "John",
+          "Emily",
+          "Charles",
+        ],
+        "name": "foo",
+        "skills": {
+          "dexterity": 100,
+          "speed": 10,
+        },
+      },
+      "size": [
+        200,
+        90,
+      ],
+      "type": "features/properties_editor",
     },
   ],
   "version": 10,

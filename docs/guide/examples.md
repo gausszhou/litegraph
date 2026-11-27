@@ -39,7 +39,7 @@ pnpm --filter @litegraph/editor dev
 
 | 文件 | 内容 |
 | --- | --- |
-| `features.json` | `features/slots`、`features/widgets`、`features/shape` 等插槽/控件/形状示例 |
+| `features.json` | `features/slots`、`features/widgets`、`features/shape`、`features/properties_editor` 四类演示节点 |
 | `benchmark.json` | 大量节点与连线的性能基准图 |
 | `subgraph.json` | 子图与 `graph/input`、`graph/output` |
 | `audio.json` | 较完整的音频处理链 |
