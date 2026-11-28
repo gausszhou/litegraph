@@ -111,6 +111,27 @@ export default class MyTests extends UnitTest {
 
 Export the class from `packages/tests/src/testSuite.ts` and `main.ts` registers it; `__` in method names becomes a describe group.
 
+## Specs and changes (OpenSpec)
+
+Any change to observable behaviour (new nodes, API or serialization changes, interaction tweaks) starts as a plan under `openspec/changes/<change>/` before code is written:
+
+1. Have your agent load the `openspec-propose` skill (in DSH, just describe the requirement) to generate `proposal.md`, `specs/`, `design.md` and `tasks.md`;
+2. Review the requirements and scenarios; use `openspec-explore` first when the direction is still open;
+3. Implement and tick the `tasks.md` items, and include the change directory in the PR;
+4. After merge, archive it with `pnpm dlx @fission-ai/openspec@2.2.0 archive <change>`; delta specs are merged into `openspec/specs/`.
+
+Pure refactors, tooling and doc fixes may skip specs, but the change's `.openspec.yaml` must then set `skip_specs: true`.
+
+```bash
+pnpm spec:list                       # in-flight changes + existing specs
+pnpm spec:validate                   # structural validation (CI uses --strict)
+pnpm spec:view                       # terminal dashboard
+pnpm dlx @fission-ai/openspec@2.2.0 show <change>     # inspect one change
+pnpm dlx @fission-ai/openspec@2.2.0 archive <change>  # archive and merge specs
+```
+
+Only `openspec/` is committed; install the agent skills on your machine with `pnpm dlx @fission-ai/openspec@2.2.0 init --scope global --tools dsh` (written to `~/.agents/skills` by default) and keep them out of the repo. Spec bodies are written in Simplified Chinese, while structural headings (`## Requirements`, `### Requirement:`, `#### Scenario:`) and the SHALL/MUST keyword stay in English (see `openspec/config.yaml`). The OpenSpec CLI requires Node ≥ 22.20; Node 18 is still enough for code-only work.
+
 ## Documentation
 
 Docs are **bilingual (Chinese and English)**:
@@ -135,7 +156,7 @@ If you only changed node source, remember to run `pnpm docs:nodes` and commit th
 - Use Conventional Commits: `feat:` / `fix:` / `test:` / `docs:` / `style:` / `chore:`;
 - One thing per PR; keep formatting or rename changes separate from feature changes;
 - Explain the motivation, behaviour changes and verification method in the PR description;
-- CI must be green: `lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `demo:smoke` → `docs:build`.
+- CI must be green: `lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `demo:smoke` → `docs:build`, plus the separate `specs` job (`pnpm spec:validate` on Node 22).
 - After merging to `master`, the `deploy` job builds `dist/` and pushes it to the `gh-pages` branch once checks pass. The site root is `/litegraph/`, docs live at `/litegraph/docs/` (Chinese) and `/litegraph/docs/en/` (English), and the demo at `/litegraph/demo/`.
 
 ## Roadmap

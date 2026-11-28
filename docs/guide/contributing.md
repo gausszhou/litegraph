@@ -111,6 +111,27 @@ export default class MyTests extends UnitTest {
 
 在 `packages/tests/src/testSuite.ts` 中导出类即可被 `main.ts` 注册；方法名里的 `__` 会拆成 describe 分组。
 
+## 规格与变更（OpenSpec）
+
+任何改变可观察行为的改动（新节点、API/序列化变更、交互调整）都先在 `openspec/changes/<change>/` 里写计划，再动代码：
+
+1. 让代理加载 `openspec-propose` skill（DSH 中直接描述需求即可），生成 `proposal.md`、`specs/`、`design.md`、`tasks.md`；
+2. 审阅需求与场景；方向没定就先让代理加载 `openspec-explore`；
+3. 按 `tasks.md` 实现并勾选，PR 里带上变更目录；
+4. 合并后归档：`pnpm dlx @fission-ai/openspec@2.2.0 archive <change>`，增量规格会合并进 `openspec/specs/`。
+
+纯重构、工具链或文档修正可以不新增规格，但要在变更的 `.openspec.yaml` 里写 `skip_specs: true`。
+
+```bash
+pnpm spec:list                       # 进行中的变更 + 已有规格
+pnpm spec:validate                   # 结构校验（CI 使用 --strict）
+pnpm spec:view                       # 终端仪表盘
+pnpm dlx @fission-ai/openspec@2.2.0 show <change>     # 查看变更详情
+pnpm dlx @fission-ai/openspec@2.2.0 archive <change>  # 归档并合并规格
+```
+
+仓库只提交 `openspec/`；代理 skills 装在本机即可（`pnpm dlx @fission-ai/openspec@2.2.0 init --scope global --tools dsh`，默认写到 `~/.agents/skills`），不要提交。规格正文用简体中文，但 `## Requirements` / `### Requirement:` / `#### Scenario:` 等结构标题与 SHALL/MUST 关键词保持英文（见 `openspec/config.yaml`）。OpenSpec CLI 要求 Node ≥ 22.20；只改代码时 Node 18 仍然够用。
+
 ## 文档
 
 文档是**中英双语**的：
@@ -135,7 +156,7 @@ pnpm docs:build    # 生成节点目录 + API 文档 + VitePress 构建
 - 提交信息使用 Conventional Commits：`feat:` / `fix:` / `test:` / `docs:` / `style:` / `chore:`；
 - 一个 PR 只做一件事；格式化/重命名类改动不要和功能改动混在一起；
 - PR 描述里写清楚动机、行为变化与验证方式；
-- CI 必须全绿：`lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `demo:smoke` → `docs:build`。
+- CI 必须全绿：`lint` → `typecheck` → `test` → `test:coverage` → `nullcheck` → `build` → `size` → `verify-umd` → `verify-pack` → `demo:smoke` → `docs:build`，以及独立的 `specs` job（Node 22 上跑 `pnpm spec:validate`）。
 - 合并到 `master` 后，CI 的 `deploy` job 会在检查通过后构建 `dist/` 并推送到 `gh-pages` 分支；站点入口是 `/litegraph/`，文档在 `/litegraph/docs/`（中文）与 `/litegraph/docs/en/`（English），Demo 在 `/litegraph/demo/`。
 
 ## 路线图

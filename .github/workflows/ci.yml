@@ -71,10 +71,27 @@ jobs:
       - name: Docs build (zh + en)
         run: pnpm docs:build
 
+  specs:
+    # OpenSpec CLI 要求 Node >= 22.20，与 check 的 Node 20 分开跑；用 pnpm dlx 临时拉取，不进入依赖
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate OpenSpec specs and changes
+        run: pnpm spec:validate
+
   deploy:
-    # 只在 master 上的 push / 手动触发时发布，且必须等 check 全绿
+    # 只在 master 上的 push / 手动触发时发布，且必须等 check 与 specs 全绿
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-    needs: check
+    needs: [check, specs]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:

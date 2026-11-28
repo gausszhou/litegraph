@@ -1,0 +1,44 @@
+schema: spec-driven
+
+# Project context (optional)
+# Add only constraints that should guide OpenSpec artifacts and workflows.
+# Include constraints an agent cannot infer by reading the code.
+# Keep general project documentation and discoverable codebase facts out.
+context: |
+  Language: 简体中文
+  All artifacts must be written in 简体中文.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  仓库：LiteGraph —— 基于 Canvas2D 的节点图引擎，pnpm monorepo（TypeScript）。
+  分层：packages/core（引擎核心）→ packages/nodes-*（10 个可插拔节点包，只依赖 core）→ packages/litegraph（聚合包，依次注册全部节点包）→ apps/editor、apps/example-minimal → docs（VitePress 中英双语站点）。
+  包名前缀 @gausszhou/litegraph-*；workspace 内 main/types 指向 src，pnpm pack/publish 时由 publishConfig 切到 dist。
+  对外契约以 packages/core 的导出面与各节点包的 install 契约为准；行为变更必须在 packages/tests 中有对应用例。
+
+  规格只描述可观察行为与对外契约，不写实现步骤、内部私有字段或文件路径。
+  变更的 design 与 tasks 必须列出实际验证命令：pnpm lint、pnpm typecheck、pnpm test、pnpm test:coverage、pnpm nullcheck、pnpm build、pnpm verify-umd、pnpm verify-pack、pnpm docs:nodes:check、pnpm docs:build、pnpm demo:smoke（按影响面选择）。
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  proposal:
+    - 明确列出受影响的包与公开 API；破坏性变更标注 **BREAKING**，并说明迁移方式。
+  design:
+    - 优先复用现有分层与导出面；core 不得新增第三方运行时依赖。
+    - 涉及序列化或公开类型时，说明向后兼容策略。
+  tasks:
+    - 每项任务应能在一次提交内完成，并绑定可运行的验证命令（pnpm 脚本）。
+    - 新增或修改节点类型时，包含 pnpm docs:nodes:check 与契约测试。
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+operations:
+  apply:
+    guidance:
+      - 先跑受影响的最小验证集，再跑 pnpm lint 与 pnpm typecheck。
+      - 修改公开 API 或节点注册表时，同步更新 packages/tests 与文档。
+  archive:
+    guidance:
+      - 归档前确认 pnpm test 与 pnpm docs:nodes:check 通过，并在归档说明中记录验证命令。
+
+# Skills are installed per machine (not committed).
+skillsScope: global
