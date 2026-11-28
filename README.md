@@ -30,10 +30,11 @@ LiteGraph 是一个运行在浏览器中的节点图引擎：在 Canvas2D 上渲
 | `apps/editor` | 完整 Demo 编辑器：工具栏、示例下拉、小窗预览、live mode、电路演示节点 |
 | `apps/example-minimal` | 最小集成示例：`LGraph` + `LGraphCanvas` + 两个节点 |
 | `docs` | VitePress 双语文档站：`guide/`（中文）与 `en/guide/`（英文），节点目录与 API 文档由脚本生成 |
+| `openspec` | OpenSpec 规格库：`specs/` 是当前行为契约；有变更时再按需创建 `changes/` |
 | `shells` | 构建脚本 `build.sh`、手动发布脚本 `gh-pages.sh`（自动发布见 CI 的 `deploy` job） |
 | `scripts` | 体积报告、UMD 冒烟、tarball 校验、节点目录生成 `gen-node-catalog.mjs`、节点脚手架 `new-node.mjs` |
 | `eslint.config.mjs` | ESLint 10 flat config（typescript-eslint） |
-| `.github/workflows` | CI：typecheck → test → build → 体积报告 → tarball 校验 |
+| `.github/workflows` | CI：lint → typecheck → test → build → 体积 / tarball / 规格校验 |
 
 ## 快速开始
 
@@ -94,6 +95,25 @@ graph.start();
 ```
 
 > 说明：仓库内 `main` / `types` 指向 `src`，方便 workspace 直接调试源码；`pnpm pack` / `pnpm publish` 时由 `publishConfig` 切换到 `dist/index.js` 与 `dist/index.d.ts`。CSS 需单独引入：`import "@gausszhou/litegraph-core/style.css"`（聚合包为 `@gausszhou/litegraph/style.css`）。
+
+## 规格驱动开发（OpenSpec）
+
+本仓库用 [OpenSpec](https://github.com/Fission-AI/OpenSpec) 记录「先对齐规格、再写代码」的流程，仓库里只提交规格本身：
+
+- `openspec/specs/<capability>/spec.md` 是当前系统的行为契约（基线），按能力分目录；
+- 有变更时再建 `openspec/changes/<change>/`，放 `proposal.md`（为什么改）、`specs/`（增删改的需求与场景）、`design.md`（怎么做）与 `tasks.md`（实现清单）；
+- 实现完成并通过校验后归档，`openspec archive <change>` 会把增量规格合并回 `specs/`。
+
+```bash
+pnpm spec:list       # 进行中的变更 + 已有规格
+pnpm spec:validate   # 结构校验（CI 使用 --strict）
+pnpm spec:view       # 终端仪表盘
+
+pnpm dlx @fission-ai/openspec@2.2.0 show <change>     # 查看变更详情
+pnpm dlx @fission-ai/openspec@2.2.0 archive <change>  # 归档并合并规格
+```
+
+CLI 通过 `pnpm dlx` 按需拉取并固定 2.2.0，不进入依赖与 lockfile（要求 Node ≥ 22.20，仓库其余部分仍支持 Node ≥ 18）。代理侧的 propose / apply / archive skills 用 `pnpm dlx @fission-ai/openspec@2.2.0 init --scope global --tools dsh` 装到本机即可（默认写到 `~/.agents/skills`，DSH 会自动加载），不要提交进仓库。CI 的 `specs` job 单独用 Node 22 执行 `pnpm spec:validate`。
 
 ## 部署
 
